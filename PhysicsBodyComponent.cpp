@@ -2,6 +2,7 @@
 #include "PhysicsBodyComponent.h"
 #include "TransformComponent.h"
 #include "Object.h"
+
 void PhysicsBodyComponent::Init(BodyType type, float32 friction, float32 density, float32 restitution,BOOL isBullet, BOOL isSensor)
 {
 	_trans = _object->GetTrans();
@@ -15,7 +16,7 @@ void PhysicsBodyComponent::Init(BodyType type, float32 friction, float32 density
 
 			b2BodyDef bodyDef;
 			bodyDef.type = b2BodyType::b2_dynamicBody; //static은 무조건 고정,dynamic은 움직임
-			if(isBullet) bodyDef.bullet;
+			bodyDef.bullet = isBullet;
 			bodyDef.userData = _object;
 			bodyDef.position.Set(bodyPosition.x, bodyPosition.y);
 			_body = BOXWORLDMANAGER->GetWorld()->CreateBody(&bodyDef);  //bodyDef의 내용을 바탕으로 body를 만듬
