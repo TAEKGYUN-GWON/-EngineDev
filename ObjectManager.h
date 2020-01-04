@@ -7,6 +7,7 @@
 #include "Computer.h"
 #include "Button.h"
 #include "D2DEffect.h"
+#include "Bullet.h"
 #include <vector>
 #include "ObjectPool.h"
 
@@ -20,7 +21,6 @@ private:
 	vector<Object*>				_vObject;
 	vector<Object*>::iterator	_viObject;
 
-	bool _isTest;
 	ObjectPool*					_objPool;
 
 	vector<D2DEffect*>			_vEffect;
@@ -31,7 +31,7 @@ public:
 	void Release();
 	void Update();
 	void Render();
-
 	void PlasmaOff(string btn, string pla);
+	void Fire();
 };
 

@@ -1,120 +1,133 @@
 #include "stdafx.h"
-#include "enemyManager.h"
-#include "spaceShip.h"
+#include "EnemyManager.h"
+#include"TransformComponent.h"
+#include"GraphicComponent.h"
+#include "Bullet.h"
 
-enemyManager::enemyManager()
+EnemyManager::EnemyManager()
+{
+}
+EnemyManager::~EnemyManager()
 {
 }
 
-
-enemyManager::~enemyManager()
+void EnemyManager::Init()
 {
-}
+	GRAPHICMANAGER->AddFrameImage("greenAttack", L"greenAttack.png", 2, 2);
+	GRAPHICMANAGER->AddFrameImage("greenMove", L"greenMove.png", 3, 2);
+	GRAPHICMANAGER->AddImage("cannon_bullet", L"cannon_bullet.png");
 
-HRESULT enemyManager::init()
-{
-	_bullet = new bullet;
-	_bullet->init("총알", 30, WINSIZEY);
-
-	return S_OK;
-}
-
-void enemyManager::release()
-{
-}
-
-void enemyManager::update()
-{
-	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); ++_viMinion)
 	{
-		(*_viMinion)->update();
+		Enemy* enemy = new Enemy;
+		enemy->Init(Vector2(1772, 600), "greenAttack", 2.f, MOVE_LEFT, false, 0.f, -1);
+
+		_vEnemy.push_back(enemy);
+	}
+	{
+		Enemy* enemy = new Enemy;
+		enemy->Init(Vector2(1000, 880), "greenAttack", 2.f, MOVE_LEFT, false, 0.f, -1);
+
+		_vEnemy.push_back(enemy);
+	}
+	{
+		Enemy* enemy = new Enemy;
+		enemy->Init(Vector2(600, 1534), "greenAttack", 2.f, MOVE_LEFT, false, 0.f, -1);
+
+		_vEnemy.push_back(enemy);
+	}
+	{
+		Enemy* enemy = new Enemy;
+		enemy->Init(Vector2(550, 2000), "greenAttack", 2.f, MOVE_LEFT, false, 0.f, -1);
+
+		_vEnemy.push_back(enemy);
+	}
+	{
+		Enemy* enemy = new Enemy;
+		enemy->Init(Vector2(480, 2233), "greenAttack", 2.f, MOVE_LEFT, false, 0.f, -1);
+
+		_vEnemy.push_back(enemy);
 	}
 
-	_bullet->update();
-	minionBulletFire();
+	GRAPHICMANAGER->AddImage("BulletImage", L"cannon_bullet.png");
 
-	collision();
-}
-
-void enemyManager::render()
-{
-	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); ++_viMinion)
-	{
-		(*_viMinion)->render();
-	}
-
-	_bullet->render();
-}
-
-void enemyManager::setMinion()
-{
+	Bullet *bullet = new Bullet;
+	bullet->Init("BulletImage", "Bullet","enemyBullet");
 	
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 6; j++)
-		{
-			enemy* ufo;
-			ufo = new minion;
-			ufo->init("enemy", PointMake(80 + j * 80, 80 + i * 100));
-
-			_vMinion.push_back(ufo);
-		}
-	}
-
+	_objectPool = new ObjectPool;
+	_objectPool->Init<Bullet>(50, *bullet);
 
 }
 
-void enemyManager::minionBulletFire()
+void EnemyManager::Release()
 {
-	for (_viMinion = _vMinion.begin(); _viMinion != _vMinion.end(); ++_viMinion)
-	{
-		//미니언 벡터안에 담겨있는 미니언의 총알발사 신호가  true면
-		if ((*_viMinion)->bulletCountFire())
-		{
-			RECT rc = (*_viMinion)->getRect();
-
-			/*
-				_bullet->bulletFire(rc.left + (rc.right - rc.left) / 2,
-				rc.bottom + 5, -(PI / 2), 7.0f);
-			*/
-			_bullet->bulletFire(rc.left + (rc.right - rc.left) / 2,
-				rc.bottom + 5, 
-				getAngle((rc.left + rc.right) / 2,
-					(rc.top + rc.bottom) / 2, 
-					_ship->getShipImage()->getCenterX(),
-					_ship->getShipImage()->getCenterY()),
-				7.0f);
-
-		
-		}
-	}
-
 }
 
-void enemyManager::removeMinion(int arrNum)
+void EnemyManager::Update()
 {
-	_vMinion.erase(_vMinion.begin() + arrNum);
-}
+	for (Enemy *enemy : _vEnemy)
+		enemy->Update();
 
-void enemyManager::collision()
-{
-	for (int i = 0; i < _bullet->getVBullet().size(); i++)
-	{
-		RECT temp;
-		RECT rc = RectMakeCenter(_ship->getShipImage()->getCenterX(),
-			_ship->getShipImage()->getCenterY(),
-			_ship->getShipImage()->getWidth(),
-			_ship->getShipImage()->getHeight());
+	//활성화된 총알을 업데이트 해주는 과정
+	for (Object *B : _objectPool->GetActivePool())
+		B->Update();
 
-		if (IntersectRect(&temp, &_bullet->getVBullet()[i].rc, &rc))
-		{
-			//우주선이 총알에 피격되었을때 체력을 닳게해줘랑
-			_ship->hitDamage(10);
-			_bullet->removeBullet(i);
-			break;
-		}
-
-
-	}
 	
+	EnemyFire();
+}
+
+void EnemyManager::Render()
+{
+	for (Enemy *enemy : _vEnemy)
+		enemy->Render();
+
+	//활성화된 총알을 그리는 과정
+	for (Object *B : _objectPool->GetActivePool())
+		B->Render();
+}
+
+void EnemyManager::EnemyFire()
+{
+	for (Enemy *enemy : _vEnemy)
+	{
+		if (enemy->GetState() == ATTACK_LEFT)
+		{
+			if (enemy->IsFire())
+			{
+
+				((Bullet*)_objectPool->GetPoolObject())->Fire(
+					(Vector2(enemy->GetTrans()->pos.x + 10, enemy->GetTrans()->pos.y)),
+					PI, 100);
+				
+				//오브젝트풀에서 총알을 꺼내오는 것
+				_objectPool->InssertActiveObject();
+							
+			}
+		}
+		if (enemy->GetState() == ATTACK_RIGHT)
+		{
+			if (enemy->IsFire())
+			{
+
+				((Bullet*)_objectPool->GetPoolObject())->Fire(
+					(Vector2(enemy->GetTrans()->pos.x + 10, enemy->GetTrans()->pos.y)),
+					0, 100);
+
+				_objectPool->InssertActiveObject();
+			
+			}
+		}
+	}	
+
+	//끝난 총알을 다시 오브젝트풀에 넣는 것
+	for (int i = 0; i < _objectPool->GetActivePoolSize(); i++)
+	{
+		if (!_objectPool->GetActivePool()[i]->GetIsActive())
+		{
+			_objectPool->GetActivePool()[i]->GetComponent<PhysicsBodyComponent>()->GetBody()->SetActive(false);
+			_objectPool->InssertPool(i);
+		}
+	}
+
+
+
 }

@@ -6,8 +6,10 @@
 #include "Ladder.h"
 #include"GraphicComponent.h"
 #include"UnGravityScript.h"
-
-
+#include"ElevatorFloor.h"
+#include"Gate.h"
+#include"GateScript.h"
+#include"ButtonScript.h"
 UIManager::UIManager()
 {
 }
@@ -19,9 +21,13 @@ UIManager::~UIManager()
 
 void UIManager::Init()
 {
+#pragma region img
+
+
+
 	GRAPHICMANAGER->AddImage("UI", L"img/background/UI.png");
 	GRAPHICMANAGER->AddImage("bg", L"img/background/Background2.png");
-
+	GRAPHICMANAGER->AddImage("bg2", L"img/background/Background3.png");
 	GRAPHICMANAGER->AddImage("bLive", L"img/background/BaleogLive.png");
 	GRAPHICMANAGER->AddImage("bDead", L"img/background/BaleogDead.png");
 	GRAPHICMANAGER->AddImage("bDeactive", L"img/background/BaleogDeactivate.png");
@@ -34,6 +40,9 @@ void UIManager::Init()
 	GRAPHICMANAGER->AddImage("oDead", L"img/background/OlafDead.png");
 	GRAPHICMANAGER->AddImage("oDeactive", L"img/background/OlafDeactivate.png");
 
+	GRAPHICMANAGER->AddImage("GateDown", L"img/background/GateDown.png");
+	GRAPHICMANAGER->AddImage("GateUp", L"img/background/GateUp.png");
+
 	GRAPHICMANAGER->AddFrameImage("검빨 가로", L"img/background/twinkle/검빨 가로.png", 6, 1);
 	GRAPHICMANAGER->AddFrameImage("검빨 세로", L"img/background/twinkle/검빨 세로.png", 4, 1);
 	GRAPHICMANAGER->AddFrameImage("검빨", L"img/background/twinkle/검빨.png", 4, 1);
@@ -42,9 +51,11 @@ void UIManager::Init()
 	GRAPHICMANAGER->AddFrameImage("줄", L"img/background/twinkle/일 자 두 줄과 네모 하나가 셋.png", 4, 1);
 	GRAPHICMANAGER->AddFrameImage("검파 매트릭스", L"img/background/twinkle/검파 매트릭스.png", 6, 1);
 
+	
+
 	curFrameX4 = curFrameX6 = 0;
 	count = 0;
-
+#pragma endregion
 	//for (int i = 0; i < 8; i++)
 	//{
 	//	Wall* floor = new Floor;
@@ -55,6 +66,10 @@ void UIManager::Init()
 	//	_vWalls.push_back(floor);
 
 	//}
+#pragma region floorAndBarrier
+
+
+
 	{
 		Wall* floor = new Floor;
 		floor->SetScale(2761.f, 90);
@@ -356,7 +371,7 @@ void UIManager::Init()
 		barrier->SetPos(2744.5f, 615.5f);
 		barrier->AddPbody();
 		barrier->GetGraphic()->SetRectColor(Brush_type::BLACK);
-		barrier->SetName("eBarrier");
+		barrier->SetName("earrier");
 		barrier->getPbody()->GetBody()->GetFixtureList()->SetSensor(true);
 		_vWalls.push_back(barrier);
 
@@ -369,12 +384,18 @@ void UIManager::Init()
 		barrier2->SetName("eBarrier");
 		_vWalls.push_back(barrier2);
 	}
+#pragma endregion
+
+#pragma region Ladder
+
+
 
 	{
 		Ladder* ladder1 = new Ladder;
 		ladder1->SetPos(937, 439.5f);
 		ladder1->SetScale(90, 423);
 		ladder1->SetName("Ladder1");
+		ladder1->SetTag("Ladder");
 		ladder1->AddPbody();
 		ladder1->getPbody()->GetBody()->GetFixtureList()->SetSensor(true);
 		_vWalls.push_back(ladder1);
@@ -383,6 +404,7 @@ void UIManager::Init()
 		ladder2->SetPos(1729, 439.5f);
 		ladder2->SetScale(90, 423);
 		ladder2->SetName("Ladder2");
+		ladder2->SetTag("Ladder");
 		ladder2->AddPbody();
 		ladder2->getPbody()->GetBody()->GetFixtureList()->SetSensor(true);
 		_vWalls.push_back(ladder2);
@@ -391,6 +413,7 @@ void UIManager::Init()
 		ladder3->SetPos(237, 1258);
 		ladder3->SetScale(95, 658);
 		ladder3->SetName("Ladder3");
+		ladder3->SetTag("Ladder");
 		ladder3->AddPbody();
 		ladder3->getPbody()->GetBody()->GetFixtureList()->SetSensor(true);
 		_vWalls.push_back(ladder3);
@@ -399,6 +422,7 @@ void UIManager::Init()
 		ladder4->SetPos(2244.5f, 1326.5f);
 		ladder4->SetScale(95, 330);
 		ladder4->SetName("Ladder4");
+		ladder4->SetTag("Ladder");
 		ladder4->AddPbody();
 		ladder4->getPbody()->GetBody()->GetFixtureList()->SetSensor(true);
 		_vWalls.push_back(ladder4);
@@ -407,6 +431,7 @@ void UIManager::Init()
 		ladder5->SetPos(751.5f, 1818.5f);
 		ladder5->SetScale(95, 467);
 		ladder5->SetName("Ladder5");
+		ladder5->SetTag("Ladder");
 		ladder5->AddPbody();
 		ladder5->getPbody()->GetBody()->GetFixtureList()->SetSensor(true);
 		_vWalls.push_back(ladder5);
@@ -415,11 +440,175 @@ void UIManager::Init()
 		ladder6->SetPos(189.5f, 2168.5f);
 		ladder6->SetScale(95, 235);
 		ladder6->SetName("Ladder6");
+		ladder6->SetTag("Ladder");
 		ladder6->AddPbody();
 		ladder6->getPbody()->GetBody()->GetFixtureList()->SetSensor(true);
 		_vWalls.push_back(ladder6);
 
 	}
+
+#pragma endregion
+
+#pragma region Elevator
+
+
+
+	{
+		Wall* floor = new ElevatorFloor;
+		floor->SetScale(94, 27);
+		floor->SetPos(2803, 638.5f);
+		floor->SetTag("Elevator");
+		floor->SetName("ElevatorTop");
+		floor->Init();
+		_vWalls.push_back(floor);
+
+
+		floor = new ElevatorFloor;
+		floor->SetScale(94, 27);
+		floor->SetPos(2803, 1223.f);
+		floor->SetTag("Elevator");
+		floor->SetName("ElevatorMiddle");
+		floor->Init();
+		_vWalls.push_back(floor);
+
+		floor = new ElevatorFloor;
+		floor->SetScale(94, 15);
+		floor->SetPos(2803, 2151.f);
+		floor->SetTag("Elevator");
+		floor->SetName("ElevatorBottom");
+		floor->Init();
+		_vWalls.push_back(floor);
+
+	}
+	_elevator = new Elevator;
+	_elevator->Init();
+	_vWalls.push_back(_elevator);
+#pragma endregion
+
+
+	{
+		Gate* gate = new Gate;
+		Vector2 pos(683, 543.5f);
+		Vector2 scale(50, 75);
+		string key = "GateUp";
+		gate->Init(pos, scale, key);
+		gate->SetTag("Gate1");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 pos2(683, 618.5);
+		Vector2 scale2(50, 75);
+		key = "GateDown";
+		gate->Init(pos2, scale2, key);
+		gate->SetTag("Gate1");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 posg(683, 570);
+		Vector2 scaleg(95, 140);
+		key = "Gate1";
+		gate->Init(posg, scaleg, key, true);
+		_vWalls.push_back(gate);
+
+
+
+		gate = new Gate;
+		Vector2 pos3(1289, 543.5f);
+		Vector2 scale3(50, 75);
+		key = "GateUp";
+		gate->Init(pos3, scale3, key);
+		gate->SetTag("Gate2");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 pos4(1289, 618.5);
+		Vector2 scale4(50, 75);
+		key = "GateDown";
+		gate->Init(pos4, scale4, key);
+		gate->SetTag("Gate2");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 posr(1289, 570);
+		Vector2 scaler(95, 140);
+		key = "Gate2";
+		gate->Init(posr, scaler, key, true);
+		_vWalls.push_back(gate);
+
+
+		gate = new Gate;
+		Vector2 pos5(308, 1943.5f);
+		Vector2 scale5(50, 75);
+		key = "GateUp";
+		gate->Init(pos5, scale5, key);
+		gate->SetTag("Gate3");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 pos6(308, 2018.5f);
+		Vector2 scale6(50, 75);
+		key = "GateDown";
+		gate->Init(pos6, scale6, key);
+		gate->SetTag("Gate3");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 pose(308, 1980);
+		Vector2 scalee(95, 140);
+		key = "Gate3";
+		gate->Init(pose, scalee, key, true);
+		_vWalls.push_back(gate);
+
+
+
+		gate = new Gate;
+		Vector2 pos7(682, 2179.5f);
+		Vector2 scale7(50, 75);
+		key = "GateUp";
+		gate->Init(pos7, scale7, key);
+		gate->SetTag("Gate4");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 pos8(682, 2254.5f);
+		Vector2 scale8(50, 75);
+		key = "GateDown";
+		gate->Init(pos8, scale8, key);
+		gate->SetTag("Gate4");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 posw(682, 2220);
+		Vector2 scalew(95, 140);
+		key = "Gate4";
+		gate->Init(posw, scalew, key, true);
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 pos9(2135, 535.5f);
+		Vector2 scale9(50, 75);
+		key = "GateUp";
+		gate->Init(pos9, scale9, key);
+		gate->SetTag("Gate5");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 pos10(2135, 610.5f);
+		Vector2 scale10(50, 75);
+		key = "GateDown";
+		gate->Init(pos10, scale10, key);
+		gate->SetTag("Gate5");
+		_vWalls.push_back(gate);
+
+		gate = new Gate;
+		Vector2 posj(2135, 560);
+		Vector2 scalej(95, 140);
+		key = "Gate5";
+		gate->Init(posj, scalej, key, true);
+		_vWalls.push_back(gate);
+	}
+
+
 	GRAPHICMANAGER->AddFrameImage("UnGravity", L"img/background/twinkle/중력 화살표.png", 4, 1);
 	Ladder* unGravity = new Ladder;
 	unGravity->SetPos(1684, 1115);
@@ -428,24 +617,28 @@ void UIManager::Init()
 	unGravity->GetGraphic()->Init(true, true);
 	unGravity->GetGraphic()->SetImgName("UnGravity");
 	unGravity->GetGraphic()->SetPivot(PIVOT::CENTER);
+	unGravity->GetGraphic()->Stop();
 	unGravity->AddPbody();
 	unGravity->getPbody()->GetBody()->GetFixtureList()->SetSensor(true);
 	unGravity->AddComponent<UnGravityScript>();
 	_vWalls.push_back(unGravity);
 
+	_button = new Button;
+	_button->Init(Vector2(1821, 1444));
+	_button->GetGraphic()->Init(true);
+	_button->SetName("switch");
+	_button->GetGraphic()->SetPivot(CENTER);
+	_button->GetGraphic()->SetImgName("switch");
+	_button->GetGraphic()->SetFPS(0.7f);
+	_button->GetTrans()->scale = Vector2(_button->GetGraphic()->GetGraphic()->GetFrameWidth(),
+		_button->GetGraphic()->GetGraphic()->GetFrameHeight());
+	_button->SetPhysics(_button->AddComponent<PhysicsBodyComponent>());
+	_button->GetPhysics()->Init(STATIC, 1, 1.0f, 0.0f, false, true);
+	_button->AddComponent<ButtonScript>();
 	camera = Vector2::zero;
 
-	p = new Object;
-	p->GetTrans()->SetPos(WINSIZEX / 2+100, WINSIZEY / 2);
-	p->GetTrans()->SetScale(80,100);
-	p->SetTag("Player");
-	auto a = p->AddComponent<PhysicsBodyComponent>();
-	//p->AddComponent<ButtonScript>();
-	a->Init(DYNAMIC,0.5f);
-	//a->GetBody()->SetGravityScale(0);
-	//a->GetBody()->GetFixtureList()->SetSensor(true);
-
-	
+	_exit = new EXIT;
+	_exit->Init();
 }
 
 void UIManager::Release()
@@ -455,38 +648,93 @@ void UIManager::Release()
 void UIManager::Update()
 {
 	Frame();
-	//CameraMove();
 
 	for (Wall* wall : _vWalls)
 		wall->Update();
 
-	PMove();
+	if (_button->GetCollision())
+	{
+		if (KEYMANAGER->isOnceKeyDown('S'))
+		{
+			_button->GetGraphic()->Stop();
+			_button->GetGraphic()->Start();
+			if(_button->GetIsActive())
+				_button->SetIsActive(false);
+			else
+				_button->SetIsActive(true);
+		}
+	}
 
-	
+	if (!_button->GetIsActive())
+	{
+		for (Wall* wall : _vWalls)
+
+		{
+			if (wall->GetName() == "UnGravity")
+			{
+				wall->GetComponent<UnGravityScript>()->SetOn(true);
+				wall->GetGraphic()->Resume();
+			}
+		}
+	}
+	else
+	{
+		for (Wall* wall : _vWalls)
+
+		{
+			if (wall->GetName() == "UnGravity")
+			{
+				wall->GetComponent<UnGravityScript>()->SetOn(false);
+				wall->GetGraphic()->Stop();
+			}
+
+		}
+	}
+
+	_exit->Update();
+	ElevatorMove();
+	GateMove();
+	_button->Update();
+
 }
 
 void UIManager::Render()
 {
-	if(KEYMANAGER->isToggleKey(VK_F2))
+	//if(KEYMANAGER->isToggleKey(VK_F2))
 		GRAPHICMANAGER->FindImage("bg")->Render(Vector2(GRAPHICMANAGER->FindImage("bg")->GetWidth() / 2, GRAPHICMANAGER->FindImage("bg")->GetHeight() / 2));
-	for (Wall* wall : _vWalls)
-		wall->Render();
+		for (Wall* wall : _vWalls)
+		{
+			
+			wall->Render();
+		}
 	DrawTwinkle();
 
-	//GRAPHICMANAGER->FindImage("eLive")->RenderUI(Vector2(250, WINSIZEY - GRAPHICMANAGER->FindImage("bLive")->GetHeight() - 20));
-	//GRAPHICMANAGER->FindImage("bLive")->RenderUI(Vector2(WINSIZEX / 2-105, WINSIZEY - GRAPHICMANAGER->FindImage("bLive")->GetHeight()-20));
-	//GRAPHICMANAGER->FindImage("oLive")->RenderUI(Vector2(WINSIZEX-458, WINSIZEY - GRAPHICMANAGER->FindImage("oLive")->GetHeight() - 20));
-	//
-	//GRAPHICMANAGER->FindImage("eDead")->RenderUI(Vector2(250, WINSIZEY - GRAPHICMANAGER->FindImage("bLive")->GetHeight() - 20));
-	//GRAPHICMANAGER->FindImage("bDead")->RenderUI(Vector2(WINSIZEX / 2-105, WINSIZEY - GRAPHICMANAGER->FindImage("bLive")->GetHeight()-20));
-	//GRAPHICMANAGER->FindImage("oDead")->RenderUI(Vector2(WINSIZEX-458, WINSIZEY - GRAPHICMANAGER->FindImage("oLive")->GetHeight() - 20));
-	//
-	//GRAPHICMANAGER->FindImage("eDeactive")->RenderUI(Vector2(250, WINSIZEY - GRAPHICMANAGER->FindImage("bLive")->GetHeight() - 20));
-	//GRAPHICMANAGER->FindImage("bDeactive")->RenderUI(Vector2(WINSIZEX / 2 - 105, WINSIZEY - GRAPHICMANAGER->FindImage("bLive")->GetHeight() - 20));
-	//GRAPHICMANAGER->FindImage("oDeactive")->RenderUI(Vector2(WINSIZEX - 458, WINSIZEY - GRAPHICMANAGER->FindImage("oLive")->GetHeight() - 20));
-	//
-	//GRAPHICMANAGER->FindImage("UI")->RenderUI(Vector2(WINSIZEX / 2, WINSIZEY-GRAPHICMANAGER->FindImage("UI")->GetHeight()/2));
-	p->Render();
+	_exit->Render();
+	_button->Render();
+}
+
+void UIManager::UiRender()
+{
+	GRAPHICMANAGER->FindImage("UI")->RenderUI(Vector2(WINSIZEX / 2, WINSIZEY-GRAPHICMANAGER->FindImage("UI")->GetHeight()/2));
+	
+	GRAPHICMANAGER->FindImage("eLive")->RenderUI(Vector2(245, 596));
+	//GRAPHICMANAGER->FindImage("eDeactive")->RenderUI(Vector2(245, 596));
+	//GRAPHICMANAGER->FindImage("eDead")->RenderUI(Vector2(245, 596));
+	
+	//GRAPHICMANAGER->FindImage("bLive")->RenderUI(Vector2(533,596.5f));
+	GRAPHICMANAGER->FindImage("bDeactive")->RenderUI(Vector2(533,596.5f));
+	//GRAPHICMANAGER->FindImage("bDead")->RenderUI(Vector2(533,596.5f));
+	
+	//GRAPHICMANAGER->FindImage("oLive")->RenderUI(Vector2(821,596.5f));
+	GRAPHICMANAGER->FindImage("oDeactive")->RenderUI(Vector2(821,596.5f));
+	//GRAPHICMANAGER->FindImage("oDead")->RenderUI(Vector2(821,596.5f));
+	
+	
+}
+
+void UIManager::BehindRender()
+{
+	GRAPHICMANAGER->FindImage("bg2")->Render(Vector2(GRAPHICMANAGER->FindImage("bg2")->GetWidth() / 2, GRAPHICMANAGER->FindImage("bg2")->GetHeight() / 2));
 }
 
 void UIManager::Frame()
@@ -611,45 +859,292 @@ void UIManager::DrawTwinkle()
 	}
 }
 
-void UIManager::CameraMove()
+//엘리베이터
+void UIManager::ElevatorMove()
 {
-	if (KEYMANAGER->isStayKeyDown('W'))
+	if (_elevator->GetIsOn())
 	{
-		camera += Vector2::up* 5;
-	}
-	if (KEYMANAGER->isStayKeyDown('S'))
-	{
-		camera += Vector2::down * 5;
-	}
-	if (KEYMANAGER->isStayKeyDown('A'))
-	{
-		camera += Vector2::left * 5;
-	}
-	if (KEYMANAGER->isStayKeyDown('D'))
-	{
-		camera += Vector2::right * 5;
+		if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+		{
+			if (_elevator->GetElevatorPos() == bottom) return;
+			_elevator->getPbody()->GetBody()->SetLinearVelocity(Vector2::b2Down);
+			_elevator->SetIsUp(down);
+			_elevator->SetStop(false);
+			_elevator->SetElevatorPos(middle);
+		}
+
+		if (KEYMANAGER->isOnceKeyDown(VK_UP))
+		{
+			if (_elevator->GetElevatorPos() == top) return;
+			_elevator->getPbody()->GetBody()->SetLinearVelocity(Vector2::b2Up);
+			_elevator->SetIsUp(up);
+			_elevator->SetStop(false);
+			_elevator->SetElevatorPos(middle);
+		}
 	}
 
-	CAMERA->SetPosition(camera);
+	if (_elevator->GetStop())
+	{
+		_elevator->getPbody()->GetBody()->SetLinearVelocity(Vector2::b2Zero);
+	}
 }
 
-void UIManager::PMove()
+void UIManager::GateMove()
 {
-	auto a = p->GetComponent<PhysicsBodyComponent>();
-	a->GetBody()->SetFixedRotation(true);
-		//fixrotation
-	p->GetTrans()->SetPos(a->GetBodyPosition());
-	//a->GetBody()->SetAngularVelocity(0);
-	if (KEYMANAGER->isStayKeyDown(VK_NUMPAD4))
-		a->ApplyForce(Vector2::b2Left * 8);
-	if(KEYMANAGER->isStayKeyDown(VK_NUMPAD6))
-		a->ApplyForce(Vector2::b2Right * 8);
-	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD8))
-		a->ApplyForce(Vector2::b2Up * 300);
-	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD0))
-		a->GetBody()->GetFixtureList()->SetFriction(10);
-	p->Update();
-	CAMERA->SetPosition(Vector2(p->GetTrans()->pos.x, p->GetTrans()->pos.y ));
+	for (Wall* wall : _vWalls)
+	{
+		if (wall->GetName() == "Gate1")
+		{
+			Gate* gate = (Gate*)wall;
+			if (gate->GetIsOn())
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate1")
+					{
 
-	//a->GetBody()->SetGravityScale(0);
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							if (up->GetPos().y > up->GetUpPos().y)
+								up->Up();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							if (down->GetPos().y < down->GetDownPos().y)
+								down->Down();
+						}
+
+					}
+				}
+			}
+
+			else
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate1")
+					{
+
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							up->Originally();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							down->Originally();
+						}
+
+					}
+				}
+			}
+
+		}
+
+
+		if (wall->GetName() == "Gate2")
+		{
+			Gate* gate = (Gate*)wall;
+			if (gate->GetIsOn())
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate2")
+					{
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							if (up->GetPos().y > up->GetUpPos().y)
+								up->Up();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							if (down->GetPos().y < down->GetDownPos().y)
+								down->Down();
+						}
+
+					}
+				}
+			}
+			else
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate2")
+					{
+
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							up->Originally();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							down->Originally();
+						}
+
+					}
+				}
+			}
+
+		}
+
+
+
+		if (wall->GetName() == "Gate3")
+		{
+			Gate* gate = (Gate*)wall;
+			if (gate->GetIsOn())
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate3")
+					{
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							if (up->GetPos().y > up->GetUpPos().y)
+								up->Up();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							if (down->GetPos().y < down->GetDownPos().y)
+								down->Down();
+						}
+
+					}
+				}
+			}
+			else
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate3")
+					{
+
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							up->Originally();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							down->Originally();
+						}
+
+					}
+				}
+			}
+
+		}
+
+
+		if (wall->GetName() == "Gate4")
+		{
+			Gate* gate = (Gate*)wall;
+			if (gate->GetIsOn())
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate4")
+					{
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							if (up->GetPos().y > up->GetUpPos().y)
+								up->Up();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							if (down->GetPos().y < down->GetDownPos().y)
+								down->Down();
+						}
+
+					}
+				}
+			}
+			else
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate4")
+					{
+
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							up->Originally();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							down->Originally();
+						}
+
+					}
+				}
+			}
+
+
+
+
+
+			}
+		if (wall->GetName() == "Gate5")
+		{
+			Gate* gate = (Gate*)wall;
+			if (gate->GetIsOn())
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate5")
+					{
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							if (up->GetPos().y > up->GetUpPos().y)
+								up->Up();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							if (down->GetPos().y < down->GetDownPos().y)
+								down->Down();
+						}
+
+					}
+				}
+			}
+			else
+			{
+				for (Wall* wall2 : _vWalls)
+				{
+					if (wall2->GetTag() == "Gate5")
+					{
+
+						if (wall2->GetName() == "GateUp")
+						{
+							Gate* up = (Gate*)wall2;
+							up->Originally();
+						}
+						else
+						{
+							Gate* down = (Gate*)wall2;
+							down->Originally();
+						}
+
+					}
+				}
+			}
+		}
+	}
+
 }

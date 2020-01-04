@@ -18,8 +18,17 @@ enum Object_STATE
 	LEFT_SPECIAL1,
 	RIGHT_SPECIAL2,
 	LEFT_SPECIAL2,
-	LADDER
-};
+	LADDER,
+	EXTRA1,
+	EXTRA2,
+	EXTRA3,
+	EXTRA4,
+	O_LEFT_SHIELD_CONTROL,
+	O_RIGHT_SHIELD_CONTROL
+}; 
+
+//extra 1, 2, 3, 4문지예가 추가
+//올라프 머리위로 방패들고 움직이는거, 전기로 죽는거 등 필요해서 넣음
 
 class StateComponent : public Component
 {
