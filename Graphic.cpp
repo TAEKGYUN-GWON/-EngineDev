@@ -123,6 +123,7 @@ void Graphic::Render(Vector2 pos, PIVOT pivot)
 	_graphicInfo->size.x *= _graphicInfo->scale.x;
 	_graphicInfo->size.y *= _graphicInfo->scale.y;
 
+	Matrix3x2F sacle = Matrix3x2F::Scale(1, 1);
 	Matrix3x2F rotation = Matrix3x2F::Rotation(_graphicInfo->angle, Point2F());
 	Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
 
@@ -144,7 +145,8 @@ void Graphic::Render(Vector2 pos, PIVOT pivot)
 		break;
 	}
 
-	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
+	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
+	_RT->SetTransform(sacle * rotation * trans * CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha);
 }
 
@@ -267,7 +269,9 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot
 	_graphicInfo->size.x *= _graphicInfo->scale.x;
 	_graphicInfo->size.y *= _graphicInfo->scale.y;
 
-	//Matrix3x2F scale = Matrix3x2F::Scale();
+	Matrix3x2F scale;
+	scale = Matrix3x2F::Scale(1, 1);
+	if(_isFlip) scale = Matrix3x2F::Scale(-1, 1);
 	Matrix3x2F rotation = Matrix3x2F::Rotation(_graphicInfo->angle, Point2F());
 	Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
 
@@ -300,6 +304,7 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot
 
 	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * cameraMatrix);
 
-	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
+	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
+	_RT->SetTransform(scale * rotation * trans * CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, _graphicInfo->alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
 }

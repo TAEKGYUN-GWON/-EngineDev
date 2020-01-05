@@ -57,8 +57,10 @@ private:
 	vector<WICRect>					_vFrameRect;
 	vector<WICRect>::iterator		_viFrameRect;
 
+	bool							_isFlip;
+
 public:
-	Graphic() {};
+	Graphic() { _isFlip = false; };
 	~Graphic() {};
 
 	HRESULT Init(ID2D1Bitmap* bitmap, string key, wstring path);
@@ -72,6 +74,7 @@ public:
 	void FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
 	
+	void SetFlip(bool isFlip) { _isFlip = isFlip; }
 	void SetSize(Vector2 size) { _graphicInfo->size = size; }
 	void SetAngle(float angle) { _graphicInfo->angle = angle; }
 	void SetScale(Vector2 scale) { _graphicInfo->scale = scale; }
@@ -80,6 +83,7 @@ public:
 	void SetCurrentFrameX(int frame) { _graphicInfo->curFrameX = frame; }
 	void SetCurrentFrameY(int frame) { _graphicInfo->curFrameY = frame; }
 
+	bool GetFlip() { return _isFlip; }
 	UINT GetWidth() { return _graphicInfo->bitmap->GetPixelSize().width; }
 	UINT GetHeight() { return _graphicInfo->bitmap->GetPixelSize().height; }
 	Vector2 GetFrameSize(int frame) { return Vector2(_vFrameRect[frame].Width, _vFrameRect[frame].Height); }

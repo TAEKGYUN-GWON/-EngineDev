@@ -195,20 +195,14 @@
     <ClInclude Include="ObjectPool.h">
       <Filter>2DGameFramework\ObjectPool</Filter>
     </ClInclude>
-    <ClInclude Include="Elevator.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ElevatorFloor.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ElevatorScript.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectPool.hpp">
       <Filter>2DGameFramework\ObjectPool</Filter>
     </ClInclude>
     <ClInclude Include="D2DEffect.h">
       <Filter>2DGameFramework\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>playGround</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -317,17 +311,11 @@
     <ClCompile Include="ObjectPool.cpp">
       <Filter>2DGameFramework\ObjectPool</Filter>
     </ClCompile>
-    <ClCompile Include="Elevator.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ElevatorFloor.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ElevatorScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="D2DEffect.cpp">
       <Filter>2DGameFramework\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>playGround</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

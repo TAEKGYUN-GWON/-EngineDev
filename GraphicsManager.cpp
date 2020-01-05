@@ -47,7 +47,6 @@ void GraphicsManager::Release()
 	SafeRelease(_d2dFactory);
 	SafeRelease(_renderTarget);
 	SafeRelease(_wicFactory);
-	SafeRelease(_wicConvert);
 
 	for (int i = 0; i < Brush_type::BRUSH_NONE; ++i)
 	{
@@ -174,7 +173,7 @@ void GraphicsManager::DrawImage(string key, float x, float y, PIVOT pivot)
 void GraphicsManager::DrawImage(string key, Vector2 pos, PIVOT pivot)
 {
 	Graphic* graphic = FindImage(key);
-	if (graphic) graphic->Render(pos.x, pos.y, pivot);
+	if (graphic) graphic->Render(pos, pivot);
 }
 
 void GraphicsManager::DrawFrameImage(string key, Vector2 pos, float curFrameX, float curFrameY, PIVOT pivot)
@@ -193,18 +192,20 @@ ID2D1Bitmap* GraphicsManager::CreateD2DBitmap(wstring file)
 	// 디코더에서 프레임 얻음
 	IWICBitmapFrameDecode* frame = nullptr;
 	decoder->GetFrame(0, &frame);
+	//frame->GetSize()
 
 	// 프레임을 기반으로 포맷 컨버터 만듬
-	SafeRelease(_wicConvert);
-	_wicFactory->CreateFormatConverter(&_wicConvert);
-	_wicConvert->Initialize(frame, GUID_WICPixelFormat32bppPBGRA,
+	IWICFormatConverter* converter;
+	_wicFactory->CreateFormatConverter(&converter);
+	converter->Initialize(frame, GUID_WICPixelFormat32bppPBGRA,
 		WICBitmapDitherTypeNone, NULL, 0.0f, WICBitmapPaletteTypeCustom);
 
 	// 컨버트된 데이터를 기반으로 실제 비트맵 만듬
 	ID2D1Bitmap* bitmap = nullptr;
-	_renderTarget->CreateBitmapFromWicBitmap(_wicConvert, NULL, &bitmap);
+	_renderTarget->CreateBitmapFromWicBitmap(converter, NULL, &bitmap);
 
 	SafeRelease(decoder);
+	SafeRelease(converter);
 	SafeRelease(frame);
 
 	return bitmap;

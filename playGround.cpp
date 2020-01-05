@@ -3,6 +3,8 @@
 #include "TransformComponent.h"
 #include "Object.h"
 #include "PhysicsBodyComponent.h"
+#include "GraphicComponent.h"
+
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 float32 timeStep;
 int32 velocityIterations;
@@ -35,7 +37,14 @@ HRESULT playGround::init()
 
 	//=============================== ÀÌ ¹ØÀ¸·Î init ==============================
 
-	
+	GRAPHICMANAGER->AddFrameImage("number", L"number.png", 4, 1);
+
+	_player = new Player;
+	_player->Init(Vector2(WINSIZEX / 2 - 100, WINSIZEY / 2));
+
+	_player2 = new Player;
+	_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
+	_player2->GetGraphic()->Set
 
 	return S_OK;
 }
@@ -44,13 +53,19 @@ void playGround::release()
 {
 	gameNode::release();
 	
-
+	SAFE_OBJECT_RELEASE(_player);
+	SAFE_DELETE(_player);
+	SAFE_OBJECT_RELEASE(_player2);
+	SAFE_DELETE(_player2);
 }
 
 void playGround::update()
 {
 	gameNode::update();
 	BOXWORLDMANAGER->GetWorld()->Step(timeStep, velocityIterations, positionIterations);
+
+	_player->Update();
+	_player2->Update();
 
 }
 
@@ -61,7 +76,8 @@ void playGround::render()
 
 void playGround::draw()
 {
-
+	_player->Render();
+	_player2->Render();
 }
 
 

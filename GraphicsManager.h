@@ -54,7 +54,7 @@ private:
 
 	// wic
 	IWICImagingFactory*							_wicFactory;
-	IWICFormatConverter*						_wicConvert;
+	//IWICFormatConverter*						_wicConvert;
 
 	IDWriteFactory*								_wFactory;
 	mapTxtFormatList							_txtFormatList;
@@ -71,7 +71,6 @@ public:
 		_d2dFactory = nullptr;
 		_renderTarget = nullptr;
 		_wicFactory = nullptr;
-		_wicConvert = nullptr;
 	};
 	~GraphicsManager() {};
 
