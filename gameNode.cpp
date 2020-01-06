@@ -27,6 +27,7 @@ HRESULT gameNode::init(bool managerInit)
 	if (_managerInit)
 	{
 		SetTimer(_hWnd, 1, 10, NULL);
+		OBJECTMANAGER->Init();
 		KEYMANAGER->init();
 		IMAGEMANAGER->init();
 		TXTDATA->init();

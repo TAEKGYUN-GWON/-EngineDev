@@ -8,9 +8,9 @@ void D2DEffect::Init(Vector2 pos)
 {
 	_trans->pos = pos;
 
-	_graphic->Init(true);
-	_graphic->SetImgName("effect");
-	_graphic->SetFPS(6.0f);
+	_sprite->Init(true);
+	_sprite->SetImgName("effect");
+	_sprite->SetFPS(6.0f);
 
 	_physics = AddComponent<PhysicsBody>();
 	_physics->Init(BodyType::DYNAMIC, 0.3f, 0.1f, 0.0f, false, true);

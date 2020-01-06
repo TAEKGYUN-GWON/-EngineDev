@@ -57,11 +57,13 @@ void playGround::release()
 {
 	gameNode::release();
 	
+	OBJECTMANAGER->Release();
 	//SAFE_OBJECT_RELEASE(_player);
 	//SAFE_DELETE(_player);
 	//SAFE_OBJECT_RELEASE(_player2);
 	//SAFE_DELETE(_player2);
 }
+
 
 void playGround::update()
 {

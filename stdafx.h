@@ -40,6 +40,7 @@ using namespace std;
 #include "PhysicsManager.h"
 #include "GraphicsManager.h"
 #include "Camera.h"
+#include "ObjectManager.h"
 
 using namespace SEVENTEEN_UTIL;
 
@@ -66,6 +67,7 @@ using namespace SEVENTEEN_UTIL;
 #define PHYSICSMANAGER PhysicsManager::GetInstance()
 #define GRAPHICMANAGER GraphicsManager::getSingleton()
 #define CAMERA Camera::getSingleton()
+#define OBJECTMANAGER ObjectManager::getSingleton()
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}
