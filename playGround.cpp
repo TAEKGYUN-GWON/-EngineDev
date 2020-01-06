@@ -41,14 +41,9 @@ HRESULT playGround::init()
 	GRAPHICMANAGER->AddFrameImage("number", L"number.png", 4, 1);
 
 	SCENEMANAGER->addScene("StartScene", new StartScene);
-	//SCENEMANAGER->changeScene("StartScene");
+	SCENEMANAGER->changeScene("StartScene");
 
-	_player = new Player;
-	_player->Init(Vector2(WINSIZEX / 2 - 100, WINSIZEY / 2));
 
-	_player2 = new Player;
-	_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
-	_player2->GetGraphic()->GetGraphic()->SetFlip(true);
 
 	return S_OK;
 }
@@ -58,10 +53,6 @@ void playGround::release()
 	gameNode::release();
 	
 	OBJECTMANAGER->Release();
-	//SAFE_OBJECT_RELEASE(_player);
-	//SAFE_DELETE(_player);
-	//SAFE_OBJECT_RELEASE(_player2);
-	//SAFE_DELETE(_player2);
 }
 
 
@@ -70,10 +61,7 @@ void playGround::update()
 	gameNode::update();
 	BOXWORLDMANAGER->GetWorld()->Step(timeStep, velocityIterations, positionIterations);
 
-	_player->Update();
-	_player2->Update();
-
-	if (KEYMANAGER->isOnceKeyDown(VK_RETURN)) SCENEMANAGER->changeScene("StartScene");
+	SCENEMANAGER->GetNowScene()->update();
 }
 
 void playGround::render()
@@ -83,8 +71,7 @@ void playGround::render()
 
 void playGround::draw()
 {
-	_player->Render();
-	_player2->Render();
+	SCENEMANAGER->GetNowScene()->render();
 }
 
 

@@ -154,6 +154,7 @@
     <ClInclude Include="D2DEffect.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="ObjectManager.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="D2DEffect.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="ObjectManager.cpp" />

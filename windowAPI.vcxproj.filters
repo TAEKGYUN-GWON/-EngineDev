@@ -210,6 +210,9 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -327,6 +330,9 @@
       <Filter>2DGameFramework\Object\Component\cpp</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
