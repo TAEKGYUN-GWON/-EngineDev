@@ -1,9 +1,9 @@
 #include "stdafx.h"
-#include "PhysicsBodyComponent.h"
-#include "TransformComponent.h"
+#include "PhysicsBody.h"
+#include "Transform.h"
 #include "Object.h"
 
-void PhysicsBodyComponent::Init(BodyType type, float32 friction, float32 density, float32 restitution,BOOL isBullet, BOOL isSensor)
+void PhysicsBody::Init(BodyType type, float32 friction, float32 density, float32 restitution,BOOL isBullet, BOOL isSensor)
 {
 	_trans = _object->GetTrans();
 	_type = type;
@@ -97,7 +97,7 @@ void PhysicsBodyComponent::Init(BodyType type, float32 friction, float32 density
 
 
 
-void PhysicsBodyComponent::SetBodyPosition()
+void PhysicsBody::SetBodyPosition()
 {
 
 	Vector2 bodyPosition = { _object->GetTrans()->GetPos().x, _object->GetTrans()->GetPos().y };
@@ -107,17 +107,17 @@ void PhysicsBodyComponent::SetBodyPosition()
 }
 
 
-Vector2 PhysicsBodyComponent::GetBodyPosition()
+Vector2 PhysicsBody::GetBodyPosition()
 {
 	return Vector2(_body->GetPosition().x * 100.f, _body->GetPosition().y * 100.f);
 }
 
-Vector2 PhysicsBodyComponent::GetBodyScale()
+Vector2 PhysicsBody::GetBodyScale()
 {
 	return Vector2(_body->GetTransform().p.x*100.f, _body->GetTransform().p.y*100.f);
 }
 
-Vector2 PhysicsBodyComponent::Convert(Vector2 origin)
+Vector2 PhysicsBody::Convert(Vector2 origin)
 {
 	return Vector2(origin.x*0.01f, origin.y*0.01f);
 }

@@ -3,7 +3,7 @@
 
 class Object;
 
-class GraphicComponent : public Component
+class Sprite : public Component
 {
 private:
 	bool _isFrame;
@@ -26,7 +26,7 @@ private:
 	PIVOT _pivot;
 
 public:
-	GraphicComponent();
+	Sprite();
 	virtual void Init(BOOL isFrame = false, BOOL isLoop = false);
 
 	virtual void Render();

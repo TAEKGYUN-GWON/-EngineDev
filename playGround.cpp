@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "playGround.h"
-#include "TransformComponent.h"
+#include "Transform.h"
 #include "Object.h"
-#include "PhysicsBodyComponent.h"
-#include "GraphicComponent.h"
+#include "PhysicsBody.h"
+#include "Sprite.h"
 #include "StartScene.h"
 
 #pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")

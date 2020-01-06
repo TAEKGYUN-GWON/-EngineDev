@@ -1,3 +1,3 @@
 #include "stdafx.h"
 #include "KeyControlComponent.h"
-#include "TransformComponent.h"
+#include "Transform.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include"GraphicComponent.h"
+#include"Sprite.h"
 
 template<typename T>
 void ObjectPool::Init(int size, Object obj)
