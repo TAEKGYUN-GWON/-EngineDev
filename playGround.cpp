@@ -38,7 +38,7 @@ HRESULT playGround::init()
 
 	//=============================== ÀÌ ¹ØÀ¸·Î init ==============================
 
-	GRAPHICMANAGER->AddFrameImage("number", L"number.png", 4, 1);
+	GRAPHICMANAGER->AddFrameImage("number", L"eric_idle.png", 2, 2);
 
 	SCENEMANAGER->addScene("StartScene", new StartScene);
 	SCENEMANAGER->changeScene("StartScene");
@@ -51,8 +51,8 @@ HRESULT playGround::init()
 void playGround::release()
 {
 	gameNode::release();
-	//OBJECTMANAGER->Release();
-	
+	OBJECTMANAGER->Release();
+	OBJECTMANAGER->releaseSingleton();
 }
 
 

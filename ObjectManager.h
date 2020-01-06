@@ -7,17 +7,17 @@ class ObjectManager : public singletonBase<ObjectManager>
 	typedef unordered_map<string, vector<Object*>>::iterator mObjMgrIter;
 	typedef vector<Object*> vObjMgr;
 	mObjMgr objMgr;
-	vObjMgr allObject;
 public:
 	ObjectManager();
 	~ObjectManager();
 	HRESULT Init();
-	void Release(string sceneName);
+	void Release();
+	void SceneRelease(string sceneName);
 	void AddObject(string sceneName, Object* obj);
 	void Update(string sceneName);
 	void Render(string sceneName);
 	vObjMgr GetSceneObject(string sceneName) { return objMgr.find(sceneName)->second; }
-	vObjMgr GetAllObject() { return allObject; }
-	
+	void Z_OderSort(int left, int right, vObjMgr* vObj);
+	void swap(int i, int j, vObjMgr* vObj);
 };
 
