@@ -4,6 +4,7 @@
 
 ObjectManager::ObjectManager()
 {
+
 }
 
 
@@ -16,21 +17,14 @@ HRESULT ObjectManager::Init()
 	return S_OK;
 }
 
-void ObjectManager::Release()
+void ObjectManager::Release(string sceneName)
 {
-	if (!objMgr.size()) return;
-
-	mObjMgrIter iter = objMgr.begin();
-	for (;iter != objMgr.end();++iter)
+	mObjMgrIter iter = objMgr.find(sceneName);
+	for (int i = iter->second.size() - 1; i <= 0; i--)
 	{
-		for (int j = iter->second.size()-1; j >= 0; j--)
-		{
-			iter->second[j]->Release();
-		}
-		objMgr.erase(iter);
+		SAFE_OBJECT_RELEASE(iter->second[i]);
 	}
-	objMgr.clear();
-	allObject.clear();
+	iter->second.clear();
 }
 
 

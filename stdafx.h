@@ -40,8 +40,7 @@ using namespace std;
 #include "PhysicsManager.h"
 #include "GraphicsManager.h"
 #include "Camera.h"
-#include "ObjectManager.h"
-
+#include"ObjectManager.h"
 using namespace SEVENTEEN_UTIL;
 
 //=========================================

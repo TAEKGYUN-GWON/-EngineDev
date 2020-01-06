@@ -52,11 +52,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	ShowWindow(_hWnd, cmdShow);
 
 	//메시지 루프 돌기이전에
-	//if (FAILED(_pg.init()))
-	//{
+	if (FAILED(_pg.init()))
+	{
 
-	//	return 0;
-	//}
+		return 0;
+	}
 	/*
 	while (GetMessage(&message, 0, 0, 0))
 	{

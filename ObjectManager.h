@@ -12,7 +12,7 @@ public:
 	ObjectManager();
 	~ObjectManager();
 	HRESULT Init();
-	void Release();
+	void Release(string sceneName);
 	void AddObject(string sceneName, Object* obj);
 	void Update(string sceneName);
 	void Render(string sceneName);

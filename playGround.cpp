@@ -51,8 +51,8 @@ HRESULT playGround::init()
 void playGround::release()
 {
 	gameNode::release();
+	//OBJECTMANAGER->Release();
 	
-	OBJECTMANAGER->Release();
 }
 
 

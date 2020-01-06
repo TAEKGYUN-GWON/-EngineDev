@@ -13,13 +13,18 @@ HRESULT StartScene::init()
 	OBJECTMANAGER->AddObject("Start", _player);
 	Player*_player2 = new Player;
 	_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
-	_player2->GetGraphic()->GetGraphic()->SetFlip(true);
+	//_player2->GetGraphic()->GetGraphic()->SetFlip(true);
+	OBJECTMANAGER->AddObject("Start", _player2);
 
+
+	cout << "스타트씬" << endl;
 	return S_OK;
 }
 
 void StartScene::release()
 {
+	cout << "릴리즈" << endl;
+	OBJECTMANAGER->Release("Start");
 }
 
 void StartScene::update()
