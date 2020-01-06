@@ -7,17 +7,17 @@ enum BodyType
 	KINEMATIC
 };
 
-class TransformComponent;
+class Transform;
 
-class PhysicsBodyComponent : public Component
+class PhysicsBody : public Component
 {
 private:
 	b2Body *_body;
 	BodyType _type;
-	TransformComponent* _trans;
+	Transform* _trans;
 
 public:
-	PhysicsBodyComponent() { _name = "PhysicsBodyComponent"; }
+	PhysicsBody() { _name = "PhysicsBody"; }
 	//바디 타입, 마찰력, 밀도(기본1), 반발력 (기본0), bullet인가, 뚫어도 되는 바디인가
 	void Init(BodyType type, float32 friction, float32 density=1, float32 restitution = 0 , BOOL isBullet = FALSE, BOOL isSensor = FALSE);
 	void SetBodyPosition();
@@ -35,5 +35,7 @@ public:
 	inline void SetBodyActive(bool sleep) { _body->SetActive(sleep); }
 	//바디에 힘 작용 시키기
 	inline void ApplyForce(b2Vec2 force, bool wake = true) { _body->ApplyForce(force, _body->GetWorldCenter(), wake); }
+	//센서 세팅
+	inline void SetSensor(bool sensor) { _body->GetFixtureList()->SetSensor(sensor); }
 	Vector2 Convert(Vector2 origin);
 };

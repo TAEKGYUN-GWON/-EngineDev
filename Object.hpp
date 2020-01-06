@@ -18,7 +18,7 @@ T* Object::AddComponent()
 	Component* component = new T();
 
 	component->setGameObject(this);
-	if(component->GetName()!="PhysicsBodyComponent")
+	if(component->GetName()!="PhysicsBody")
 		component->Init();
 	_components.push_back(component);
 

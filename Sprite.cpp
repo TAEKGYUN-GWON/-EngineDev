@@ -1,19 +1,19 @@
 #include "stdafx.h"
-#include "GraphicComponent.h"
-#include "TransformComponent.h"
+#include "Sprite.h"
+#include "Transform.h"
 #include "Object.h"
-#include "PhysicsBodyComponent.h"
+#include "PhysicsBody.h"
 
-GraphicComponent::GraphicComponent()
+Sprite::Sprite()
 {
-	_name = "GraphicComponent";
+	_name = "Sprite";
 
 	_color = Brush_type::BLUE;
 	_pivot = PIVOT::CENTER;
 	_strokeWidth = 3.0f;
 }
 
-void GraphicComponent::Init(BOOL isFrame, BOOL isLoop)
+void Sprite::Init(BOOL isFrame, BOOL isLoop)
 {
 	_imgKey.clear();
 	_isFrame = isFrame;
@@ -25,11 +25,11 @@ void GraphicComponent::Init(BOOL isFrame, BOOL isLoop)
 	_FPS = 1.0f / 1;
 }
 
-void GraphicComponent::Render()
+void Sprite::Render()
 {
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
-		PhysicsBodyComponent* a = _object->GetComponent<PhysicsBodyComponent>();
+		PhysicsBody* a = _object->GetComponent<PhysicsBody>();
 
 		if (a != nullptr)
 			GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), a->GetBody()->GetAngle() * DEGREE, _color, _pivot, _strokeWidth);
@@ -68,36 +68,36 @@ void GraphicComponent::Render()
 	}
 }
 
-void GraphicComponent::Update()
+void Sprite::Update()
 {
 	return;
 }
 
-void GraphicComponent::Start()
+void Sprite::Start()
 {
 	_isPlay = true;
 	_curFrameX = 0;
 	_graphic->SetCurrentFrameX(_curFrameX);
 }
 
-void GraphicComponent::Stop()
+void Sprite::Stop()
 {
 	_isPlay = false;
 	_curFrameX = 0;
 	_graphic->SetCurrentFrameX(_curFrameX);
 }
 
-void GraphicComponent::Pause()
+void Sprite::Pause()
 {
 	_isPlay = false;
 }
 
-void GraphicComponent::Resume()
+void Sprite::Resume()
 {
 	_isPlay = true;
 }
 
-void GraphicComponent::SetImgName(string key)
+void Sprite::SetImgName(string key)
 {
 	 _imgKey = key; 
 	 _graphic = GRAPHICMANAGER->FindImage(_imgKey); 
@@ -106,7 +106,7 @@ void GraphicComponent::SetImgName(string key)
 	 if(_isFrame) _isPlay = true;
 }
 
-bool GraphicComponent::IsFrameEnd()
+bool Sprite::IsFrameEnd()
 {
 	if (_curFrameX >= _maxFrameX)
 	{

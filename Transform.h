@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-class TransformComponent : public Component
+class Transform : public Component
 {
 private:
 	
@@ -11,7 +11,7 @@ public:
 	typedef Component super;
 	Vector2 pos;
 	Vector2 scale;
-	TransformComponent() { _name = "TransformComponent"; }
+	Transform() { _name = "Transform"; }
 	virtual void Init() override;
 	virtual void Update() override;
 	//Vector2 타입 좌표 가져오기

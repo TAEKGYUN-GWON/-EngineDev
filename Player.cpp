@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
-#include "GraphicComponent.h"
-#include "TransformComponent.h"
+#include "Sprite.h"
+#include "Transform.h"
 
 Player::Player()
 {

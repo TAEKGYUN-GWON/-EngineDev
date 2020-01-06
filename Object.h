@@ -3,15 +3,15 @@
 #include "Component.h"
 #include <vector>
 
-class TransformComponent;
-class GraphicComponent;
+class Transform;
+class Sprite;
 
 
 class Object
 {
 protected:
-	TransformComponent* _trans;
-	GraphicComponent *_graphic;
+	Transform* _trans;
+	Sprite *_graphic;
 	vector <Component*> _components;
 	string _name;
 	string _tag;
@@ -26,7 +26,7 @@ public:
 	virtual void Release();
 	virtual void Render();
 
-	virtual inline TransformComponent* GetTrans() { return _trans; }
+	virtual inline Transform* GetTrans() { return _trans; }
 	inline string GetName() { return _name; }
 	inline void SetName(string name) { _name = name; }
 	inline string GetTag() { return _tag; }
@@ -38,7 +38,7 @@ public:
 	inline void SetAllawsUpdate() { allawsUpdate = !allawsUpdate; }
 	inline void SetAllawsUpdate(bool active) { allawsUpdate = active; }
 	
-	inline GraphicComponent* GetGraphic() { return _graphic; }
+	inline Sprite* GetGraphic() { return _graphic; }
 	void RemoveComponent(Component* component);
 	template<typename T>
 	T* AddComponent();

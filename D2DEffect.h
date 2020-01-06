@@ -1,14 +1,14 @@
 #pragma once
 #include "Object.h"
 
-class PhysicsBodyComponent;
+class PhysicsBody;
 
 class D2DEffect : public Object
 {
 private:
 	typedef Object super;
 
-	PhysicsBodyComponent* _physics;
+	PhysicsBody* _physics;
 
 public:
 	void Init(Vector2 pos);

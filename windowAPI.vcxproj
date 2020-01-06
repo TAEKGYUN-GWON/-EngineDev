@@ -156,7 +156,7 @@
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="Graphic.h" />
-    <ClInclude Include="GraphicComponent.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
@@ -168,7 +168,7 @@
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="ObjectPool.h" />
     <ClInclude Include="ObjectPool.hpp" />
-    <ClInclude Include="PhysicsBodyComponent.h" />
+    <ClInclude Include="PhysicsBody.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="playGround.h" />
@@ -184,7 +184,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
-    <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="Transform.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2.h" />
@@ -202,7 +202,7 @@
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="Graphic.cpp" />
-    <ClCompile Include="GraphicComponent.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
@@ -212,7 +212,7 @@
     <ClCompile Include="Matrix3x3.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectPool.cpp" />
-    <ClCompile Include="PhysicsBodyComponent.cpp" />
+    <ClCompile Include="PhysicsBody.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="playGround.cpp" />
@@ -229,7 +229,7 @@
     </ClCompile>
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
-    <ClCompile Include="TransformComponent.cpp" />
+    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="Vector2.cpp" />

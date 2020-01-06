@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "D2DEffect.h"
-#include "PhysicsBodyComponent.h"
-#include "TransformComponent.h"
-#include "GraphicComponent.h"
+#include "PhysicsBody.h"
+#include "Transform.h"
+#include "Sprite.h"
 
 void D2DEffect::Init(Vector2 pos)
 {
@@ -12,7 +12,7 @@ void D2DEffect::Init(Vector2 pos)
 	_graphic->SetImgName("effect");
 	_graphic->SetFPS(6.0f);
 
-	_physics = AddComponent<PhysicsBodyComponent>();
+	_physics = AddComponent<PhysicsBody>();
 	_physics->Init(BodyType::DYNAMIC, 0.3f, 0.1f, 0.0f, false, true);
 	_physics->GetBody()->SetGravityScale(0.1f);
 }

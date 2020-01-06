@@ -123,16 +123,7 @@
     <ClInclude Include="Object.h">
       <Filter>2DGameFramework\Object</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicComponent.h">
-      <Filter>2DGameFramework\Object\Component\header</Filter>
-    </ClInclude>
     <ClInclude Include="KeyControlComponent.h">
-      <Filter>2DGameFramework\Object\Component\header</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysicsBodyComponent.h">
-      <Filter>2DGameFramework\Object\Component\header</Filter>
-    </ClInclude>
-    <ClInclude Include="TransformComponent.h">
       <Filter>2DGameFramework\Object\Component\header</Filter>
     </ClInclude>
     <ClInclude Include="effectManager.h">
@@ -207,6 +198,15 @@
     <ClInclude Include="StartScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>2DGameFramework\Object\Component\header</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsBody.h">
+      <Filter>2DGameFramework\Object\Component\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>2DGameFramework\Object\Component\header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -242,16 +242,7 @@
     <ClCompile Include="Object.cpp">
       <Filter>2DGameFramework\Object</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicComponent.cpp">
-      <Filter>2DGameFramework\Object\Component\cpp</Filter>
-    </ClCompile>
     <ClCompile Include="KeyControlComponent.cpp">
-      <Filter>2DGameFramework\Object\Component\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysicsBodyComponent.cpp">
-      <Filter>2DGameFramework\Object\Component\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformComponent.cpp">
       <Filter>2DGameFramework\Object\Component\cpp</Filter>
     </ClCompile>
     <ClCompile Include="StateComponent.cpp">
@@ -322,6 +313,15 @@
     </ClCompile>
     <ClCompile Include="StartScene.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>2DGameFramework\Object\Component\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsBody.cpp">
+      <Filter>2DGameFramework\Object\Component\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>2DGameFramework\Object\Component\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
