@@ -38,6 +38,8 @@ HRESULT Graphic::Init(ID2D1Bitmap* bitmap, string key, wstring path)
 
 HRESULT Graphic::Init(ID2D1Bitmap * bitmap, string key, wstring path, int maxFrameX, int maxFrameY)
 {
+	if (_graphicInfo != nullptr) Release();
+
 	_graphicInfo = new GRAPHIC_INFO;
 	_graphicInfo->bitmap = bitmap;
 

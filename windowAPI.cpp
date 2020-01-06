@@ -52,11 +52,11 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	ShowWindow(_hWnd, cmdShow);
 
 	//메시지 루프 돌기이전에
-	if (FAILED(_pg.init()))
-	{
+	//if (FAILED(_pg.init()))
+	//{
 
-		return 0;
-	}
+	//	return 0;
+	//}
 	/*
 	while (GetMessage(&message, 0, 0, 0))
 	{
@@ -65,6 +65,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	}
 	*/
 
+	SCENEMANAGER->addScene("playGround", new playGround);
+	SCENEMANAGER->changeScene("playGround");
+	//SCENEMANAGER->changeScene("StartScene");
 	while (true)
 	{
 		if (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
@@ -76,7 +79,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		else
 		{
 			TIMEMANAGER->update(60.0f);
-			_pg.update();
+			SCENEMANAGER->update();
 
 			ID2D1RenderTarget* renderTarget = GRAPHICMANAGER->GetRenderTarget();
 			renderTarget->BeginDraw();
@@ -84,7 +87,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 			//==================================================
 
-			_pg.render();
+			SCENEMANAGER->render();
 
 			//===================================================
 			HRESULT hr = renderTarget->EndDraw();
@@ -94,7 +97,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 
 	//루프문이 다돌면 플레이그라운드 해제
-	_pg.release();
+	SCENEMANAGER->release();
 
 	return message.wParam;
 }

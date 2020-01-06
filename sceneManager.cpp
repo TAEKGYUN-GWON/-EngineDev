@@ -51,7 +51,7 @@ void sceneManager::render()
 gameNode * sceneManager::addScene(string sceneName, gameNode * scene)
 {
 	if(!scene) return nullptr;
-
+	cout << sceneName << endl;
 	_mSceneList.insert(make_pair(sceneName, scene));
 
 	return scene;
@@ -61,13 +61,14 @@ HRESULT sceneManager::changeScene(string sceneName)
 {
 	mapSceneIter find = _mSceneList.find(sceneName);
 
+	cout << sceneName << endl;
 	if (find == _mSceneList.end()) return E_FAIL;
 	if (find->second == _currentScene) return S_OK;
 
 	if (SUCCEEDED(find->second->init()))
 	{
 		//어떤 씬의 정보가 처음에 들어있기 때문에 릴리즈 시켜줘라
-		if (_currentScene) _currentScene->release();
+		//if (_currentScene) _currentScene->release();
 
 		//현재 씬에 바꾸려는 씬을 담는다
 		_currentScene = find->second;
