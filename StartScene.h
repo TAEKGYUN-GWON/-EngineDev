@@ -5,6 +5,7 @@ class StartScene : public gameNode
 {
 private:
 	Player* _player;
+	Player*_player2;
 public:
 	virtual HRESULT init();
 	virtual void release();
