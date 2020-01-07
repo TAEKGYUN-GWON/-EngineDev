@@ -11,7 +11,7 @@ class Object
 {
 protected:
 	Transform* _trans;
-	Sprite *_graphic;
+	Sprite *_sprite;
 	vector <Component*> _components;
 	string _name;
 	string _tag;
@@ -38,7 +38,7 @@ public:
 	inline void SetAllawsUpdate() { allawsUpdate = !allawsUpdate; }
 	inline void SetAllawsUpdate(bool active) { allawsUpdate = active; }
 	
-	inline Sprite* GetGraphic() { return _graphic; }
+	inline Sprite* GetGraphic() { return _sprite; }
 	void RemoveComponent(Component* component);
 	template<typename T>
 	T* AddComponent();

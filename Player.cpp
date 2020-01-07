@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Sprite.h"
 #include "Transform.h"
-
+//ÁÖ¼®
 Player::Player()
 {
 }
@@ -13,14 +13,14 @@ Player::~Player()
 
 void Player::Init(Vector2 pos)
 {
-	_graphic->Init(true, true);
-	_graphic->SetImgName("number");
-	_graphic->SetFPS(0.1f);
+	_sprite->Init(true, true);
+	_sprite->SetImgName("number");
+	_sprite->SetFPS(0.1f);
 
 	_trans->pos = pos;
-	_trans->scale = Vector2(_graphic->GetGraphic()->GetFrameWidth(), _graphic->GetGraphic()->GetFrameHeight());
+	_trans->scale = Vector2(_sprite->GetGraphic()->GetFrameWidth(), _sprite->GetGraphic()->GetFrameHeight());
 
-	_graphic->GetGraphic()->SetFlip(true);
+	_sprite->GetGraphic()->SetFlip(true);
 }
 
 void Player::Update()

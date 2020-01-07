@@ -26,5 +26,6 @@ public:
 	gameNode* addScene(string sceneName, gameNode* scene);
 
 	HRESULT changeScene(string sceneName);
+	gameNode* GetNowScene() { return _currentScene; }
 };
 

@@ -51,7 +51,12 @@ void sceneManager::render()
 gameNode * sceneManager::addScene(string sceneName, gameNode * scene)
 {
 	if(!scene) return nullptr;
-	cout << sceneName << endl;
+
+	for (auto i : _mSceneList)
+	{
+		if (i.first == sceneName) return i.second;
+	}
+	cout << scene << endl;
 	_mSceneList.insert(make_pair(sceneName, scene));
 
 	return scene;
@@ -61,7 +66,6 @@ HRESULT sceneManager::changeScene(string sceneName)
 {
 	mapSceneIter find = _mSceneList.find(sceneName);
 
-	cout << sceneName << endl;
 	if (find == _mSceneList.end()) return E_FAIL;
 	if (find->second == _currentScene) return S_OK;
 

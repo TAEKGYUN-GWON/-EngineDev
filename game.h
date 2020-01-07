@@ -1,15 +1,12 @@
 #pragma once
 #include "gameNode.h"
-#include "Player.h"
-class StartScene : public gameNode
+class game : public gameNode
 {
-private:
-	Player* _player;
-	Player*_player2;
 public:
 	virtual HRESULT init();
 	virtual void release();
 	virtual void update();
 	virtual void render();
+
 };
 

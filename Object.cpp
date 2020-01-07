@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Object.h"
-#include "TransformComponent.h"
-#include "GraphicComponent.h"
+#include "Transform.h"
+#include "Sprite.h"
 
 
 Object::Object()
@@ -9,7 +9,7 @@ Object::Object()
 	_trans = AddComponent<Transform>();
 	_trans->SetPos(Vector2::zero);
 	_trans->SetScale(Vector2(1,1));
-	_graphic = AddComponent<Sprite>();
+	_sprite = AddComponent<Sprite>();
 }
 
 void Object::Update()
@@ -31,7 +31,7 @@ void Object::Release()
 
 void Object::Render()
 {
-	_graphic->Render();
+	_sprite->Render();
 }
 
 void Object::RemoveComponent(Component * component)
