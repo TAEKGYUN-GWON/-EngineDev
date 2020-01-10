@@ -28,8 +28,8 @@ void StartScene::release()
 void StartScene::update()
 {
 	//if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("game");
-	_player->Update();
-	_player2->Update();
+	//_player->Update();
+	//_player2->Update();
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _player->GetTrans()->pos += Vector2::left * 5;
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))_player->GetTrans()->pos += Vector2::right * 5;
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
@@ -38,7 +38,7 @@ void StartScene::update()
 	}	
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _player->GetTrans()->pos += Vector2::down * 5;
 
-	//OBJECTMANAGER->Update("Start");
+	OBJECTMANAGER->Update("Start");
 	
 }
 
@@ -53,7 +53,7 @@ void StartScene::render()
 	GRAPHICMANAGER->DrawTextD2D(Vector2(0, 0), buffer, 15, D2D1::ColorF::Brown);
 
 
-	_player->Render();
-	_player2->Render();
-	//OBJECTMANAGER->Render("Start");
+	//_player->Render();
+	//_player2->Render();
+	OBJECTMANAGER->Render("Start");
 }

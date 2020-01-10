@@ -27,14 +27,12 @@ HRESULT Scene::init(bool managerInit)
 	if (_managerInit)
 	{
 		SetTimer(_hWnd, 1, 10, NULL);
-		OBJECTMANAGER->Init();
 		KEYMANAGER->init();
 		IMAGEMANAGER->init();
 		TXTDATA->init();
 		TIMEMANAGER->init();
 		EFFECTMANAGER->init();
 		SOUNDMANAGER->init();
-		CAMERA->init();
 	}
 
 	return S_OK;
