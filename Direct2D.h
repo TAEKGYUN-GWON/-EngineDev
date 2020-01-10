@@ -10,6 +10,7 @@
 
 #pragma comment(lib, "dwrite.lib")
 #include <dwrite.h>
+
 class Direct2D : public singletonBase<Direct2D>
 {
 private:
@@ -18,6 +19,9 @@ private:
 	ID2D1HwndRenderTarget* _renderTarget;
 	IWICImagingFactory* _wicFactory;
 	Direct2D();
+
 public:
+	ID2D1Bitmap* CreateBitmap(wstring imgPath);
+	IDWriteTextLayout* CreateTextLayout(wstring txt, wstring fontName, float fontSize, float maxWidth, float maxHeight);
 };
 

@@ -64,7 +64,7 @@ void Sprite::Render()
 	}
 	else
 	{
-		GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _pivot);
+		GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _pivot);
 	}
 }
 

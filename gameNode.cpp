@@ -34,8 +34,7 @@ HRESULT Scene::init(bool managerInit)
 		TIMEMANAGER->init();
 		EFFECTMANAGER->init();
 		SOUNDMANAGER->init();
-		GRAPHICMANAGER->init();
-		Graphic::SetRendertarget();
+		//GRAPHICMANAGER->init();
 		CAMERA->init();
 	}
 
@@ -62,8 +61,7 @@ void Scene::release()
 
 		BOXWORLDMANAGER->Release();
 		BOXWORLDMANAGER->releaseSingleton();
-		GRAPHICMANAGER->Release();
-		GRAPHICMANAGER->releaseSingleton();
+
 		//CAMERA->release();
 		CAMERA->releaseSingleton();
 	}

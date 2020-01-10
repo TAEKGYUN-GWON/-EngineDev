@@ -61,6 +61,7 @@ Graphic* GraphicsManager::AddImage(string key, wstring file)
 	if (graphic) return graphic;
 
 	ID2D1Bitmap* bitmap = CreateD2DBitmap(file);
+	//ID2D1Bitmap* bitmap = Direct2D::getSingleton()->CreateBitmap(file);
 
 	if (bitmap)
 	{
@@ -82,6 +83,7 @@ Graphic * GraphicsManager::AddFrameImage(string key, wstring file, int maxFrameX
 	if (graphic) return graphic;
 
 	ID2D1Bitmap* bitmap = CreateD2DBitmap(file);
+	//ID2D1Bitmap* bitmap = Direct2D::getSingleton()->CreateBitmap(file);
 
 	if (bitmap)
 	{
@@ -174,6 +176,12 @@ void GraphicsManager::DrawImage(string key, Vector2 pos, PIVOT pivot)
 {
 	Graphic* graphic = FindImage(key);
 	if (graphic) graphic->Render(pos, pivot);
+}
+
+void GraphicsManager::DrawImage(string key, Vector2 pos, Vector2 scale, float angle, PIVOT pivot)
+{
+	Graphic* graphic = FindImage(key);
+	if (graphic) graphic->Render(pos, scale, angle, pivot);
 }
 
 void GraphicsManager::DrawFrameImage(string key, Vector2 pos, float curFrameX, float curFrameY, PIVOT pivot)
