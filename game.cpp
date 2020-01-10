@@ -19,10 +19,8 @@ void game::update()
 {
 	if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("StartScene");
 
-	OBJECTMANAGER->Update("Start");
 }
 
 void game::render()
 {
-	OBJECTMANAGER->Render("Start");
 }

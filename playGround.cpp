@@ -51,8 +51,6 @@ HRESULT playGround::init()
 void playGround::release()
 {
 	Scene::release();
-	OBJECTMANAGER->Release();
-	OBJECTMANAGER->releaseSingleton();
 }
 
 

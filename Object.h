@@ -9,6 +9,8 @@ class Sprite;
 class Object
 {
 protected:
+	Object();
+
 	Transform* _trans;
 	Sprite *_sprite;
 	vector <Component*> _components;
@@ -16,30 +18,49 @@ protected:
 	string _tag;
 	bool _isActive = true;
 	bool _allawsUpdate = true;
-	Object* _Parents;
+	bool _allawInit = true;
+	Object* _parent;
 	vector<Object*> _children;
 public:
-	Object();
 	~Object() {};
-	virtual void Init() {};
+	virtual void Init();
 	virtual void Update();
 	virtual void Release();
 	virtual void Render();
 
+	static Object* CreateObject(Object* parant = nullptr);
+
+
 	virtual inline Transform* GetTrans() { return _trans; }
+	inline Sprite* GetGraphic() { return _sprite; }
+
 	inline string GetName() { return _name; }
 	inline void SetName(string name) { _name = name; }
+
 	inline string GetTag() { return _tag; }
 	inline void SetTag(string tag) { _tag = tag; }
+
 	inline void SetIsActive() { _isActive = !_isActive; }
 	inline void SetIsActive(bool active) { _isActive = active; }
+
 	inline bool GetIsActive() { return _isActive; }
 	inline bool GetAllawsUpdate() { return _allawsUpdate; }
+
 	inline void SetAllawsUpdate() { _allawsUpdate = !_allawsUpdate; }
 	inline void SetAllawsUpdate(bool active) { _allawsUpdate = active; }
+
+	inline bool GetAllawInit() { return _allawInit; }
 	
-	inline Sprite* GetGraphic() { return _sprite; }
+	void AddChild(Object* child);
 	void RemoveComponent(Component* component);
+	void RemoveChild(Object* child);
+
+	Object* GetChildFromName(string name);
+	vector<Object*>GetChildrenFromTag(string tag);
+	inline vector<Object*>GetChildren() { return _children; }
+	inline Object* GetParent() { return _parent; }
+
+	void SetParent(Object* parent);
 
 	template<typename T>
 	T* AddComponent();
