@@ -2,16 +2,16 @@
 #include "singletonBase.h"
 #include <map>
 
-class gameNode;
+class Scene;
 
 class sceneManager : public singletonBase<sceneManager>
 {
 public:
-	typedef map<string, gameNode*>				mapSceneList;
-	typedef map<string, gameNode*>::iterator	mapSceneIter;
+	typedef map<string, Scene*>				mapSceneList;
+	typedef map<string, Scene*>::iterator	mapSceneIter;
 
 private:
-	static gameNode* _currentScene;
+	static Scene* _currentScene;
 	mapSceneList _mSceneList;
 
 public:
@@ -23,9 +23,9 @@ public:
 	void update();
 	void render();
 
-	gameNode* addScene(string sceneName, gameNode* scene);
+	Scene* addScene(string sceneName, Scene* scene);
 
 	HRESULT changeScene(string sceneName);
-	gameNode* GetNowScene() { return _currentScene; }
+	Scene* GetNowScene() { return _currentScene; }
 };
 

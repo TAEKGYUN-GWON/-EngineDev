@@ -87,9 +87,6 @@
     <ClInclude Include="commonMacroFunction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="gameNode.h">
-      <Filter>2DGameFramework</Filter>
-    </ClInclude>
     <ClInclude Include="playGround.h">
       <Filter>playGround</Filter>
     </ClInclude>
@@ -207,6 +204,12 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
+    <ClInclude Include="Direct2D.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="gameNode.h">
+      <Filter>2DGameFramework</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -214,9 +217,6 @@
     </ClCompile>
     <ClCompile Include="windowAPI.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="gameNode.cpp">
-      <Filter>2DGameFramework</Filter>
     </ClCompile>
     <ClCompile Include="playGround.cpp">
       <Filter>playGround</Filter>
@@ -322,6 +322,12 @@
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="gameNode.cpp">
+      <Filter>2DGameFramework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

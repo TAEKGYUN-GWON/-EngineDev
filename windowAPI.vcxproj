@@ -152,6 +152,7 @@
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="D2DEffect.h" />
+    <ClInclude Include="Direct2D.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="game.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="D2DEffect.cpp" />
+    <ClCompile Include="Direct2D.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="game.cpp" />

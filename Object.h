@@ -17,7 +17,7 @@ protected:
 	bool _isActive = true;
 	bool _allawsUpdate = true;
 	Object* _Parents;
-	vector<Object*> _childs;
+	vector<Object*> _children;
 public:
 	Object();
 	~Object() {};
