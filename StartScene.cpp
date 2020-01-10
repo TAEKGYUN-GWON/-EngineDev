@@ -14,7 +14,8 @@ HRESULT StartScene::init()
 	_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
 	//_player2->GetGraphic()->GetGraphic()->SetFlip(true);
 
-
+	OBJECTMANAGER->AddObject("Start", _player);
+	OBJECTMANAGER->AddObject("Start", _player2);
 	cout << "½ºÅ¸Æ®¾À" << endl;
 	return S_OK;
 }
@@ -26,8 +27,9 @@ void StartScene::release()
 
 void StartScene::update()
 {
-	if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("game");
-
+	//if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("game");
+	_player->Update();
+	_player2->Update();
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _player->GetTrans()->pos += Vector2::left * 5;
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))_player->GetTrans()->pos += Vector2::right * 5;
 	if (KEYMANAGER->isStayKeyDown(VK_UP))
@@ -36,7 +38,7 @@ void StartScene::update()
 	}	
 	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _player->GetTrans()->pos += Vector2::down * 5;
 
-
+	//OBJECTMANAGER->Update("Start");
 	
 }
 
@@ -49,4 +51,9 @@ void StartScene::render()
 
 	sprintf_s(buffer, "%f", _player2->GetTrans()->bottomPos.y);
 	GRAPHICMANAGER->DrawTextD2D(Vector2(0, 0), buffer, 15, D2D1::ColorF::Brown);
+
+
+	_player->Render();
+	_player2->Render();
+	//OBJECTMANAGER->Render("Start");
 }

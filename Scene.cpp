@@ -34,8 +34,6 @@ HRESULT Scene::init(bool managerInit)
 		TIMEMANAGER->init();
 		EFFECTMANAGER->init();
 		SOUNDMANAGER->init();
-	//	GRAPHICMANAGER->init();
-
 		CAMERA->init();
 	}
 
@@ -53,8 +51,8 @@ void Scene::release()
 		IMAGEMANAGER->releaseSingleton();
 		TXTDATA->release();
 		TXTDATA->releaseSingleton();
-		TIMEMANAGER->release();
-		TIMEMANAGER->releaseSingleton();
+
+
 		EFFECTMANAGER->release();
 		EFFECTMANAGER->releaseSingleton();
 		SOUNDMANAGER->release();
@@ -62,8 +60,6 @@ void Scene::release()
 
 		BOXWORLDMANAGER->Release();
 		BOXWORLDMANAGER->releaseSingleton();
-		//CAMERA->release();
-		CAMERA->releaseSingleton();
 	}
 
 	ReleaseDC(_hWnd, _hdc);

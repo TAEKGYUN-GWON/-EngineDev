@@ -54,6 +54,20 @@ void Object::Release()
 	delete this;
 }
 
+bool Compare(Object* a, Object* b)
+{
+
+	Transform* aT = a->GetComponent<Transform>();
+	Transform* bT = b->GetComponent<Transform>();
+
+	if (!aT)
+		return false;
+	else if (!bT)
+		return true;
+
+	return aT->bottomPos.y < bT->bottomPos.y;
+}
+
 void Object::Render()
 {
 	if (_sprite == nullptr || !_isActive) return;
@@ -83,19 +97,7 @@ Object* Object::CreateObject(Object* parent)
 	return Obj;
 }
 
-bool Compare(Object* a, Object* b)
-{
 
-	Transform* aT = a->GetComponent<Transform>();
-	Transform* bT = b->GetComponent<Transform>();
-
-	if (!aT)
-		return false;
-	else if (!bT)
-		return true;
-
-	return aT->bottomPos.y < bT->bottomPos.y;
-}
 
 void Object::AddChild(Object * child)
 {

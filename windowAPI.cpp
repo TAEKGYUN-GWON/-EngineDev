@@ -52,8 +52,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 	ShowWindow(_hWnd, cmdShow);
 
-	Graphic::SetRendertarget();
 	GRAPHICMANAGER->init();
+	Graphic::SetRendertarget();
 	SCENEMANAGER->init();
 	//메시지 루프 돌기이전에
 	if (FAILED(sceneManager::getSingleton()->GetNowScene()->init()))
@@ -101,7 +101,10 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	sceneManager::getSingleton()->GetNowScene()->release();
 
 	GRAPHICMANAGER->Release();
-	GRAPHICMANAGER->releaseSingleton();
+	//GRAPHICMANAGER->releaseSingleton();
+	
+	TIMEMANAGER->release();
+	TIMEMANAGER->releaseSingleton();
 	return message.wParam;
 }
 
