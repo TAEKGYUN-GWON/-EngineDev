@@ -63,7 +63,6 @@ void Scene::release()
 
 void Scene::update()
 {
-	CAMERA->Update();
 }
 
 void Scene::render()
