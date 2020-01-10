@@ -26,7 +26,7 @@ void StartScene::release()
 
 void StartScene::update()
 {
-	//if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("game");
+	if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("game");
 
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _player->GetTrans()->pos += Vector2::left * 5;
 	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))_player->GetTrans()->pos += Vector2::right * 5;

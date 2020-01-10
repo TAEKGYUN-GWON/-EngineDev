@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "sceneManager.h"
-#include "gameNode.h"
+#include "Scene.h"
 #include "playGround.h"
 
 sceneManager::sceneManager()

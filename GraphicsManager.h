@@ -1,8 +1,17 @@
 #pragma once
 #include "singletonBase.h"
 #include <map>
-#include"Direct2D.h"
 
+
+#pragma comment(lib, "d2d1.lib")
+#include <d2d1.h>
+#include <d2d1_1helper.h>
+
+#pragma comment(lib, "windowscodecs.lib")
+#include <wincodec.h>
+
+#pragma comment(lib, "dwrite.lib")
+#include <dwrite.h>
 
 #include "Graphic.h"
 

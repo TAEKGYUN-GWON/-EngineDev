@@ -204,10 +204,7 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2D.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="gameNode.h">
+    <ClInclude Include="Scene.h">
       <Filter>2DGameFramework</Filter>
     </ClInclude>
   </ItemGroup>
@@ -323,10 +320,7 @@
     <ClCompile Include="ObjectManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2D.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="gameNode.cpp">
+    <ClCompile Include="Scene.cpp">
       <Filter>2DGameFramework</Filter>
     </ClCompile>
   </ItemGroup>
