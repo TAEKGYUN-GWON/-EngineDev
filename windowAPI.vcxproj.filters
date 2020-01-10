@@ -61,14 +61,14 @@
     <Filter Include="2DGameFramework\Object\Component\cpp">
       <UniqueIdentifier>{b0910d0b-bbd1-4966-a366-dc3ee1e6ba7a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DGameFramework\Object\Component\header">
-      <UniqueIdentifier>{126cfdf4-4201-448a-8695-e32eaa02db08}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2DGameFramework\Metrix">
       <UniqueIdentifier>{1df28ea1-f73c-49c6-9df3-7d7af41f9860}</UniqueIdentifier>
     </Filter>
     <Filter Include="2DGameFramework\ObjectPool">
       <UniqueIdentifier>{4ca1d902-f8ce-4dd4-bd64-fe87d373a08c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\Object\Component\header">
+      <UniqueIdentifier>{126cfdf4-4201-448a-8695-e32eaa02db08}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +123,6 @@
     <ClInclude Include="Object.h">
       <Filter>2DGameFramework\Object</Filter>
     </ClInclude>
-    <ClInclude Include="KeyControlComponent.h">
-      <Filter>2DGameFramework\Object\Component\header</Filter>
-    </ClInclude>
     <ClInclude Include="effectManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
@@ -140,9 +137,6 @@
     </ClInclude>
     <ClInclude Include="timeManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
-    </ClInclude>
-    <ClInclude Include="StateComponent.h">
-      <Filter>2DGameFramework\Object\Component\header</Filter>
     </ClInclude>
     <ClInclude Include="sceneManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
@@ -247,12 +241,6 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>2DGameFramework\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyControlComponent.cpp">
-      <Filter>2DGameFramework\Object\Component\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="StateComponent.cpp">
-      <Filter>2DGameFramework\Object\Component\cpp</Filter>
     </ClCompile>
     <ClCompile Include="effectManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>

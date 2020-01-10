@@ -14,7 +14,7 @@ Object::Object()
 
 void Object::Update()
 {
-	if (!_isActive)return;
+	if (!_isActive) return;
 	for (int i = 0; i<_components.size();i++)
 		_components[i]->Update();
 

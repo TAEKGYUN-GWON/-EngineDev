@@ -2,9 +2,9 @@
 #include "ObjectManager.h"
 #include"Object.h"
 #include"Transform.h"
+
 ObjectManager::ObjectManager()
 {
-
 }
 
 
@@ -101,16 +101,15 @@ void ObjectManager::Render(string sceneName)
 	mObjMgrIter iter = objMgr.find(sceneName);
 
 	if (iter == objMgr.end()) return;
+
 	vSceneObjec = iter->second;
 
 
 	z_oderList z_List;
+
 	for (Object* vIter : vSceneObjec)
 	{
-		for (int i = 0; i < vSceneObjec.size(); ++i)
-		{
-			z_List.insert(make_pair(vIter->GetTrans()->bottomPos.y, vIter));
-		}
+		z_List.insert(make_pair(vIter->GetTrans()->bottomPos.y, vIter));
 	}
 
 	for (auto i : z_List)

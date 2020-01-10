@@ -15,4 +15,3 @@ public:
 	inline Object* GetGameObject() { return _object; }
 	inline string GetName() { return _name; }
 };
-
