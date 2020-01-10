@@ -58,8 +58,6 @@ void Scene::release()
 		SOUNDMANAGER->release();
 		SOUNDMANAGER->releaseSingleton();
 
-		BOXWORLDMANAGER->Release();
-		BOXWORLDMANAGER->releaseSingleton();
 	}
 
 	ReleaseDC(_hWnd, _hdc);

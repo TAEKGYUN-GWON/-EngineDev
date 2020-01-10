@@ -105,6 +105,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	
 	TIMEMANAGER->release();
 	TIMEMANAGER->releaseSingleton();
+
+	BOXWORLDMANAGER->Release();
+	BOXWORLDMANAGER->releaseSingleton();
 	return message.wParam;
 }
 
