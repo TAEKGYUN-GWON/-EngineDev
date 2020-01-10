@@ -83,6 +83,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		else
 		{
 			TIMEMANAGER->update(60.0f);
+			CAMERA->Update();
 			sceneManager::getSingleton()->GetNowScene()->update();
 
 			ID2D1RenderTarget* renderTarget = GRAPHICMANAGER->GetRenderTarget();
@@ -114,6 +115,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 	BOXWORLDMANAGER->Release();
 	BOXWORLDMANAGER->releaseSingleton();
+
 	return message.wParam;
 }
 
