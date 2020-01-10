@@ -1,8 +1,7 @@
 #pragma once
-
 #include "Component.h"
 #include <vector>
-
+#include <list>
 class Transform;
 class Sprite;
 
@@ -16,8 +15,9 @@ protected:
 	string _name;
 	string _tag;
 	bool _isActive = true;
-	bool allawsUpdate = true;
-
+	bool _allawsUpdate = true;
+	Object* _Parents;
+	vector<Object*> _children;
 public:
 	Object();
 	~Object() {};
@@ -34,12 +34,13 @@ public:
 	inline void SetIsActive() { _isActive = !_isActive; }
 	inline void SetIsActive(bool active) { _isActive = active; }
 	inline bool GetIsActive() { return _isActive; }
-	inline bool GetAllawsUpdate() { return allawsUpdate; }
-	inline void SetAllawsUpdate() { allawsUpdate = !allawsUpdate; }
-	inline void SetAllawsUpdate(bool active) { allawsUpdate = active; }
+	inline bool GetAllawsUpdate() { return _allawsUpdate; }
+	inline void SetAllawsUpdate() { _allawsUpdate = !_allawsUpdate; }
+	inline void SetAllawsUpdate(bool active) { _allawsUpdate = active; }
 	
 	inline Sprite* GetGraphic() { return _sprite; }
 	void RemoveComponent(Component* component);
+
 	template<typename T>
 	T* AddComponent();
 

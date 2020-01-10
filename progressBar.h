@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 
-class progressBar : public gameNode
+class progressBar : public Scene
 {
 private:
 	RECT _rcProgress;

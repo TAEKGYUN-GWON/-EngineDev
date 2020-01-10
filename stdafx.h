@@ -41,6 +41,8 @@ using namespace std;
 #include "GraphicsManager.h"
 #include "Camera.h"
 #include"ObjectManager.h"
+#include"rapidjson/document.h"
+using namespace rapidjson;
 using namespace SEVENTEEN_UTIL;
 
 //=========================================

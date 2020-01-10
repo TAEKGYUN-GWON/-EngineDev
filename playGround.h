@@ -2,7 +2,7 @@
 #include "gameNode.h"
 #include "Player.h"
 
-class playGround : public gameNode
+class playGround : public Scene
 {
 private:
 	Player* _player;

@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "playGround.h"
+#include"sceneManager.h"
 //API : Application Programming Interface
 
 HINSTANCE	_hInstance;
@@ -51,8 +52,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 	ShowWindow(_hWnd, cmdShow);
 
+	SCENEMANAGER->init();
 	//메시지 루프 돌기이전에
-	if (FAILED(_pg.init()))
+	if (FAILED(sceneManager::getSingleton()->GetNowScene()->init()))
 	{
 
 		return 0;
@@ -76,7 +78,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		else
 		{
 			TIMEMANAGER->update(60.0f);
-			_pg.update();
+			sceneManager::getSingleton()->GetNowScene()->update();
 
 			ID2D1RenderTarget* renderTarget = GRAPHICMANAGER->GetRenderTarget();
 			renderTarget->BeginDraw();
@@ -84,7 +86,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 			//==================================================
 
-			_pg.render();
+			sceneManager::getSingleton()->GetNowScene()->render();
 
 			//===================================================
 			HRESULT hr = renderTarget->EndDraw();
@@ -93,18 +95,19 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	}
 
 
-	//루프문이 다돌면 플레이그라운드 해제
-	_pg.release();
+	//루프문이 다돌면 씬 해제
+	sceneManager::getSingleton()->GetNowScene()->release();
 
 	return message.wParam;
 }
 //LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 //{
-//	return _pg.MainProc(hWnd, iMessage, wParam, lParam);
+//	return sceneManager::getSingleton()->GetNowScene()->MainProc( hWnd,  iMessage,  wParam,  lParam);
+//
 //}
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
-	return _pg.MainProc(hWnd, iMessage, wParam, lParam);
+	//return sceneManager::getSingleton()->GetNowScene()->MainProc( hWnd,  iMessage,  wParam,  lParam);
 
 	PAINTSTRUCT ps;
 	HDC			hdc;

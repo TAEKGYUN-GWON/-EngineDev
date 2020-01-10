@@ -1,15 +1,15 @@
 #include "stdafx.h"
 #include "gameNode.h"
 
-gameNode::gameNode()
+Scene::Scene()
 {
 }
 
-gameNode::~gameNode()
+Scene::~Scene()
 {
 }
 
-HRESULT gameNode::init()
+HRESULT Scene::init()
 {
 
 	_hdc = GetDC(_hWnd);
@@ -19,7 +19,7 @@ HRESULT gameNode::init()
 	return S_OK;
 }
 
-HRESULT gameNode::init(bool managerInit)
+HRESULT Scene::init(bool managerInit)
 {
 	_hdc = GetDC(_hWnd);
 	_managerInit = managerInit;
@@ -34,7 +34,6 @@ HRESULT gameNode::init(bool managerInit)
 		TIMEMANAGER->init();
 		EFFECTMANAGER->init();
 		SOUNDMANAGER->init();
-		SCENEMANAGER->init();
 		GRAPHICMANAGER->init();
 		Graphic::SetRendertarget();
 		CAMERA->init();
@@ -43,7 +42,7 @@ HRESULT gameNode::init(bool managerInit)
 	return S_OK;
 }
 
-void gameNode::release()
+void Scene::release()
 {
 	if (_managerInit)
 	{
@@ -60,8 +59,7 @@ void gameNode::release()
 		EFFECTMANAGER->releaseSingleton();
 		SOUNDMANAGER->release();
 		SOUNDMANAGER->releaseSingleton();
-		SCENEMANAGER->release();
-		SCENEMANAGER->releaseSingleton();
+
 		BOXWORLDMANAGER->Release();
 		BOXWORLDMANAGER->releaseSingleton();
 		GRAPHICMANAGER->Release();
@@ -73,16 +71,16 @@ void gameNode::release()
 	ReleaseDC(_hWnd, _hdc);
 }
 
-void gameNode::update()
+void Scene::update()
 {
 	CAMERA->Update();
 }
 
-void gameNode::render()
+void Scene::render()
 {
 }
 
-LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+LRESULT Scene::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 
 	PAINTSTRUCT ps;
@@ -110,7 +108,6 @@ LRESULT gameNode::MainProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lPara
 			}
 		}
 		break;
-
 
 		case WM_DESTROY:
 			PostQuitMessage(0);

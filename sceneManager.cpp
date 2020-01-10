@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "sceneManager.h"
 #include "gameNode.h"
+#include "playGround.h"
 
 sceneManager::sceneManager()
 {
@@ -11,11 +12,12 @@ sceneManager::~sceneManager()
 {
 }
 
-gameNode* sceneManager::_currentScene = NULL;
+Scene* sceneManager::_currentScene = NULL;
 
 HRESULT sceneManager::init()
 {
-	_currentScene = NULL;
+	addScene("PG", new playGround);
+	changeScene("PG");
 
 	return S_OK;
 }
@@ -48,7 +50,7 @@ void sceneManager::render()
 	if (_currentScene) _currentScene->render();
 }
 
-gameNode * sceneManager::addScene(string sceneName, gameNode * scene)
+Scene * sceneManager::addScene(string sceneName, Scene * scene)
 {
 	if(!scene) return nullptr;
 

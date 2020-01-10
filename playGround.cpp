@@ -22,7 +22,7 @@ playGround::~playGround()
 
 HRESULT playGround::init()
 {
-	gameNode::init(true);
+	Scene::init(true);
 	//박스 월드 생성 및 콘텍트 리스너 세팅
 	b2Vec2 gravity(0.f, 10.f);
 	BOXWORLDMANAGER->CreateWorld(gravity);
@@ -50,7 +50,7 @@ HRESULT playGround::init()
 
 void playGround::release()
 {
-	gameNode::release();
+	Scene::release();
 	OBJECTMANAGER->Release();
 	OBJECTMANAGER->releaseSingleton();
 }
@@ -58,7 +58,7 @@ void playGround::release()
 
 void playGround::update()
 {
-	gameNode::update();
+	Scene::update();
 	BOXWORLDMANAGER->GetWorld()->Step(timeStep, velocityIterations, positionIterations);
 
 	SCENEMANAGER->GetNowScene()->update();

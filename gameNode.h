@@ -3,15 +3,15 @@
 //백버퍼는 어차피 한개만 있으면 되니 전역으로 빼봅시당
 static image* _backBuffer = IMAGEMANAGER->addImage("backBuffer", WINSIZEX, WINSIZEY);
 
-class gameNode
+class Scene
 {
 private:
 	HDC _hdc;
 	bool _managerInit;
 
 public:
-	gameNode();
-	virtual ~gameNode();
+	Scene();
+	virtual ~Scene();
 
 	//마이크로소프트 전용 디버깅 반환자인데
 	//S_OK, E_FAIL, SUCCDED 등으로 초기화가 잘됐는지 아닌지 출력창에 호출함.

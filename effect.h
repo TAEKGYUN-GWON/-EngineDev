@@ -3,7 +3,7 @@
 
 class animation;
 
-class effect : public gameNode
+class effect : public Scene
 {
 protected:
 	int			_x;

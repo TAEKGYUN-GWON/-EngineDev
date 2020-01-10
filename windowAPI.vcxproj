@@ -152,6 +152,7 @@
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="D2DEffect.h" />
+    <ClInclude Include="Direct2D.h" />
     <ClInclude Include="effect.h" />
     <ClInclude Include="effectManager.h" />
     <ClInclude Include="game.h" />
@@ -162,7 +163,6 @@
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
-    <ClInclude Include="KeyControlComponent.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="Matrix2x2.h" />
     <ClInclude Include="Matrix3x3.h" />
@@ -181,7 +181,6 @@
     <ClInclude Include="singletonBase.h" />
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="StartScene.h" />
-    <ClInclude Include="StateComponent.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="timeManager.h" />
@@ -200,6 +199,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="D2DEffect.cpp" />
+    <ClCompile Include="Direct2D.cpp" />
     <ClCompile Include="effect.cpp" />
     <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="game.cpp" />
@@ -210,7 +210,6 @@
     <ClCompile Include="GraphicsManager.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
-    <ClCompile Include="KeyControlComponent.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="Matrix2x2.cpp" />
     <ClCompile Include="Matrix3x3.cpp" />
@@ -224,7 +223,6 @@
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="StartScene.cpp" />
-    <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
