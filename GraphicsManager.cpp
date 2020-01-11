@@ -285,7 +285,7 @@ void GraphicsManager::DrawSkewRect(Vector2 pos, Vector2 size, float angle, float
 {
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
 
-	_renderTarget->SetTransform(Matrix3x2F::Skew(PI / 4 * DEGREE, 0.0f, Point2F(pos.x, pos.y)) * rotation * CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Skew(PI / 4 * RadToDeg, 0.0f, Point2F(pos.x, pos.y)) * rotation * CAMERA->GetMatrix());
 	_renderTarget->DrawRectangle(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), _brush[color], strokeWidth);
 }
 

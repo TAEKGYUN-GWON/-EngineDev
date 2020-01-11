@@ -31,9 +31,6 @@
     <Filter Include="2DGameFramework\Util">
       <UniqueIdentifier>{7d7b862c-abb8-408f-a500-97d6ced2a4fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2DGameFramework\progressBar">
-      <UniqueIdentifier>{c1cc7a2a-bdac-47e2-bf6f-f3b70adb4fac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2DGameFramework\txtData">
       <UniqueIdentifier>{511868d2-4d81-4fc3-bf82-6322d9df63e4}</UniqueIdentifier>
     </Filter>
@@ -87,23 +84,14 @@
     <ClInclude Include="commonMacroFunction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="playGround.h">
-      <Filter>playGround</Filter>
-    </ClInclude>
     <ClInclude Include="singletonBase.h">
       <Filter>2DGameFramework\SingletonBase</Filter>
     </ClInclude>
     <ClInclude Include="randomFunction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="image.h">
-      <Filter>2DGameFramework\image</Filter>
-    </ClInclude>
     <ClInclude Include="utils.h">
       <Filter>2DGameFramework\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="progressBar.h">
-      <Filter>2DGameFramework\progressBar</Filter>
     </ClInclude>
     <ClInclude Include="txtData.h">
       <Filter>2DGameFramework\txtData</Filter>
@@ -111,20 +99,8 @@
     <ClInclude Include="timer.h">
       <Filter>2DGameFramework\timer</Filter>
     </ClInclude>
-    <ClInclude Include="animation.h">
-      <Filter>2DGameFramework\animation</Filter>
-    </ClInclude>
-    <ClInclude Include="effect.h">
-      <Filter>2DGameFramework\effect</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>2DGameFramework\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="effectManager.h">
-      <Filter>2DGameFramework\Manager\header</Filter>
-    </ClInclude>
-    <ClInclude Include="imageManager.h">
-      <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
     <ClInclude Include="keyManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
@@ -198,9 +174,6 @@
     <ClInclude Include="Sprite.h">
       <Filter>2DGameFramework\Object\Component\header</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
@@ -215,17 +188,8 @@
     <ClCompile Include="windowAPI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="playGround.cpp">
-      <Filter>playGround</Filter>
-    </ClCompile>
-    <ClCompile Include="image.cpp">
-      <Filter>2DGameFramework\image</Filter>
-    </ClCompile>
     <ClCompile Include="utils.cpp">
       <Filter>2DGameFramework\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="progressBar.cpp">
-      <Filter>2DGameFramework\progressBar</Filter>
     </ClCompile>
     <ClCompile Include="txtData.cpp">
       <Filter>2DGameFramework\txtData</Filter>
@@ -233,17 +197,8 @@
     <ClCompile Include="timer.cpp">
       <Filter>2DGameFramework\timer</Filter>
     </ClCompile>
-    <ClCompile Include="effect.cpp">
-      <Filter>2DGameFramework\effect</Filter>
-    </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>2DGameFramework\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="effectManager.cpp">
-      <Filter>2DGameFramework\Manager\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="imageManager.cpp">
-      <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
     <ClCompile Include="keyManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
@@ -264,9 +219,6 @@
       <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
     <ClCompile Include="BoxWorldManager.cpp">
-      <Filter>2DGameFramework\Manager\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="animation.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsManager.cpp">
@@ -313,9 +265,6 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>2DGameFramework\Object\Component\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>

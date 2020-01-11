@@ -13,9 +13,8 @@ Player::~Player()
 
 void Player::Init(Vector2 pos)
 {
-	_sprite->Init(true, true);
-	_sprite->SetImgName("number");
-	_sprite->SetFPS(0.1f);
+	_sprite->Init();
+	_sprite->SetImgName("eagle");
 
 	_trans->pos = pos;
 	_trans->scale = Vector2(_sprite->GetGraphic()->GetFrameWidth(), _sprite->GetGraphic()->GetFrameHeight());

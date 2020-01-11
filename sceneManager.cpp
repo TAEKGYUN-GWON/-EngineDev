@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "sceneManager.h"
 #include "Scene.h"
-#include "playGround.h"
-
+#include"StartScene.h"
 sceneManager::sceneManager()
 {
 }
@@ -16,7 +15,7 @@ Scene* sceneManager::_currentScene = NULL;
 
 HRESULT sceneManager::init()
 {
-	addScene("PG", new playGround);
+	addScene("PG", new StartScene);
 	changeScene("PG");
 
 	return S_OK;
@@ -30,7 +29,7 @@ void sceneManager::release()
 	{
 		if (miSceneList->second != NULL)
 		{
-			if (miSceneList->second == _currentScene) miSceneList->second->release();
+			if (miSceneList->second == _currentScene) miSceneList->second->Release();
 			SAFE_DELETE(miSceneList->second);
 			miSceneList = _mSceneList.erase(miSceneList);
 		}
@@ -42,12 +41,12 @@ void sceneManager::release()
 
 void sceneManager::update()
 {
-	if (_currentScene) _currentScene->update();
+	if (_currentScene) _currentScene->Update();
 }
 
 void sceneManager::render()
 {
-	if (_currentScene) _currentScene->render();
+	if (_currentScene) _currentScene->Render();
 }
 
 Scene * sceneManager::addScene(string sceneName, Scene * scene)
@@ -71,10 +70,10 @@ HRESULT sceneManager::changeScene(string sceneName)
 	if (find == _mSceneList.end()) return E_FAIL;
 	if (find->second == _currentScene) return S_OK;
 
-	if (SUCCEEDED(find->second->init()))
+	if (SUCCEEDED(!find->second->GetAllowInit()))
 	{
 		//어떤 씬의 정보가 처음에 들어있기 때문에 릴리즈 시켜줘라
-		if (_currentScene) _currentScene->release();
+		if (_currentScene) _currentScene->Release();
 
 		//현재 씬에 바꾸려는 씬을 담는다
 		_currentScene = find->second;

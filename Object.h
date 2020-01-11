@@ -17,8 +17,8 @@ protected:
 	string _name;
 	string _tag;
 	bool _isActive = true;
-	bool _allawsUpdate = true;
-	bool _allawInit = true;
+	bool _allowsUpdate = true;
+	bool _allowInit = true;
 	Object* _parent;
 	vector<Object*> _children;
 public:
@@ -44,12 +44,12 @@ public:
 	inline void SetIsActive(bool active) { _isActive = active; }
 
 	inline bool GetIsActive() { return _isActive; }
-	inline bool GetAllawsUpdate() { return _allawsUpdate; }
+	inline bool GetAllowsUpdate() { return _allowsUpdate; }
 
-	inline void SetAllawsUpdate() { _allawsUpdate = !_allawsUpdate; }
-	inline void SetAllawsUpdate(bool active) { _allawsUpdate = active; }
+	inline void SetAllowsUpdate() { _allowsUpdate = !_allowsUpdate; }
+	inline void SetAllowsUpdate(bool active) { _allowsUpdate = active; }
 
-	inline bool GetAllawInit() { return _allawInit; }
+	inline bool GetAllowInit() { return _allowInit; }
 	
 	void AddChild(Object* child);
 	void RemoveComponent(Component* component);

@@ -17,11 +17,11 @@ void Object::Init()
 {
 	for (Object* child : _children) child->Init();
 
-	if (!_allawInit) return;
+	if (!_allowInit) return;
 
 	for (Component* c : _components) c->Init();
 
-	_allawInit = false;
+	_allowInit = false;
 }
 
 void Object::Update()
@@ -33,7 +33,7 @@ void Object::Update()
 
 	for (Object* child : _children)
 	{
-		if (child->GetAllawInit()) child->Init();
+		if (child->GetAllowInit()) child->Init();
 		child->Update();
 	}
 
@@ -93,6 +93,8 @@ Object* Object::CreateObject(Object* parent)
 		Obj->_parent = SCENEMANAGER->GetNowScene();
 	else
 		Obj->_parent = parent;
+
+	Obj->_parent->AddChild(Obj);
 		
 	return Obj;
 }
@@ -104,7 +106,7 @@ void Object::AddChild(Object * child)
 	_children.push_back(child);
 	child->_parent->RemoveChild(child);
 	child->_parent = this;
-	if (_allawInit)
+	if (_allowInit)
 		child->Init();
 }
 
@@ -139,6 +141,7 @@ Object * Object::GetChildFromName(string name)
 	{
 		if (child->GetName() == name) return child;
 	}
+
 
 	return nullptr;
 }

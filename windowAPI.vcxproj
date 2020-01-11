@@ -145,23 +145,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="animation.h" />
     <ClInclude Include="BoxWorldManager.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="D2DEffect.h" />
-    <ClInclude Include="effect.h" />
-    <ClInclude Include="effectManager.h" />
-    <ClInclude Include="game.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="GraphicsManager.h" />
-    <ClInclude Include="image.h" />
-    <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="Matrix2x2.h" />
     <ClInclude Include="Matrix3x3.h" />
@@ -172,8 +166,6 @@
     <ClInclude Include="PhysicsBody.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="playGround.h" />
-    <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
@@ -192,22 +184,16 @@
     <ClInclude Include="windowAPI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="animation.cpp" />
     <ClCompile Include="BoxWorldManager.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="D2DEffect.cpp" />
-    <ClCompile Include="effect.cpp" />
-    <ClCompile Include="effectManager.cpp" />
-    <ClCompile Include="game.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
-    <ClCompile Include="image.cpp" />
-    <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="Matrix2x2.cpp" />
     <ClCompile Include="Matrix3x3.cpp" />
@@ -216,8 +202,6 @@
     <ClCompile Include="PhysicsBody.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="playGround.cpp" />
-    <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="StartScene.cpp" />

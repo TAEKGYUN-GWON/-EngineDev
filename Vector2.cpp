@@ -86,8 +86,8 @@ float Vector2::SqrMagnitude()
 
 Vector2 Vector2::RotateToDegree(float angle)
 {
-	float newX = x * cos(angle*DEGREE) - y * sin(angle*DEGREE);
-	float newY = y * cos(angle*DEGREE) + x* sin(angle*DEGREE);
+	float newX = x * cos(angle*RadToDeg) - y * sin(angle*RadToDeg);
+	float newY = y * cos(angle*RadToDeg) + x* sin(angle*RadToDeg);
 
 	return Vector2(newX, newY);
 }
