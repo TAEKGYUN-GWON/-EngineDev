@@ -16,7 +16,7 @@ Scene::~Scene()
 
 void Scene::Init()
 {
-	if (_allowRelease)_allowRelease = false;
+	//if (_allowRelease)_allowRelease = false;
 	_b2World = new b2World(b2Vec2(0,0));
 	timeStep = 1.0f / 60.0f;
 	velocityIterations = 8;
@@ -30,12 +30,16 @@ void Scene::Init()
 
 void Scene::Release()
 {
-	if (SCENEMANAGER->GetNowScene() == this)
+	//if (SCENEMANAGER->GetNowScene() == this)
+	//{
+	//	_allowRelease = true;
+	//	return;
+	//}
+	//Object::Release();
+	for (Object* child : _children)
 	{
-		_allowRelease = true;
-		return;
+		child->Release();
 	}
-	Object::Release();
 }
 
 void Scene::Update()
@@ -69,7 +73,7 @@ void Scene::PhysicsUpdate()
 
 void Scene::Render()
 {
-	if (_allowRelease) return;
+	//if (_allowRelease) return;
 	for (Object* child : _children)
 		child->Render();
 }
