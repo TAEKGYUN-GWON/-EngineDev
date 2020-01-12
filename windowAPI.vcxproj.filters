@@ -67,6 +67,9 @@
     <Filter Include="2DGameFramework\Object\Component\header">
       <UniqueIdentifier>{126cfdf4-4201-448a-8695-e32eaa02db08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\Object\Tile">
+      <UniqueIdentifier>{106b0c3d-59b3-4f1c-bcd2-0779441b83c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -183,6 +186,18 @@
     <ClInclude Include="Game.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="iniDataManager.h">
+      <Filter>2DGameFramework\Manager\header</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonManager.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>2DGameFramework\Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Astar.h">
+      <Filter>2DGameFramework\Object\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -277,6 +292,18 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="iniDataManager.cpp">
+      <Filter>2DGameFramework\Manager\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>2DGameFramework\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Astar.cpp">
+      <Filter>2DGameFramework\Object\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

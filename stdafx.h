@@ -40,6 +40,7 @@ using namespace std;
 #include "Camera.h"
 #include"ObjectManager.h"
 #include"rapidjson/document.h"
+#include"iniDataManager.h"
 using namespace rapidjson;
 using namespace SEVENTEEN_UTIL;
 
@@ -65,7 +66,7 @@ using namespace SEVENTEEN_UTIL;
 #define GRAPHICMANAGER GraphicsManager::getSingleton()
 #define CAMERA Camera::getSingleton()
 #define OBJECTMANAGER ObjectManager::getSingleton()
-
+#define INIDATAMANAGER iniDataManager::getSingleton()
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}
 #define SAFE_OBJECT_RELEASE(p) {if(p) {(p)->Release(); (p) = NULL;}}
