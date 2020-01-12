@@ -23,13 +23,5 @@ void StartScene::Init()
 
 	obj->GetGraphic()->GetGraphic()->SetFlip(true);
 	_player = obj;
-	AddChild(_player);
 	cout << "½ºÅ¸Æ®¾À" << endl;
-}
-
-void StartScene::Render()
-{
-	Scene::Render();
-	//_player->Render();
-
 }

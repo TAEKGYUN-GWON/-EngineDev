@@ -90,11 +90,9 @@ Object* Object::CreateObject(Object* parent)
 	Object* Obj = new Object();
 
 	if (parent == nullptr)
-		Obj->_parent = SCENEMANAGER->GetNowScene();
+		Obj->SetParent(SCENEMANAGER->GetNowScene());
 	else
-		Obj->_parent = parent;
-
-	Obj->_parent->AddChild(Obj);
+		Obj->SetParent(parent);
 		
 	return Obj;
 }
@@ -159,7 +157,7 @@ vector<Object*> Object::GetChildrenFromTag(string tag)
 
 void Object::SetParent(Object * parent)
 {
-	this->_parent = parent;
+	_parent = parent;
 	parent->_children.push_back(this);
 }
 

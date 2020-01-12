@@ -24,7 +24,6 @@ void Scene::Init()
 	_b2World->SetContactListener(PHYSICSMANAGER);
 	_b2World->SetAllowSleeping(true);
 	_b2World->SetContinuousPhysics(true);
-	//_allowInit = false;
 }
 
 
