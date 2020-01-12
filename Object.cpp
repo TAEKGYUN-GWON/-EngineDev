@@ -85,18 +85,6 @@ void Object::Render()
 
 }
 
-Object* Object::CreateObject(Object* parent)
-{
-	Object* Obj = new Object();
-
-	if (parent == nullptr)
-		Obj->SetParent(SCENEMANAGER->GetNowScene());
-	else
-		Obj->SetParent(parent);
-		
-	return Obj;
-}
-
 
 
 void Object::AddChild(Object * child)

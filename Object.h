@@ -28,7 +28,8 @@ public:
 	virtual void Release();
 	virtual void Render();
 
-	static Object* CreateObject(Object* parant = nullptr);
+	template<typename T>
+	static T* CreateObject(Object* parant = nullptr);
 
 
 	virtual inline Transform* GetTrans() { return _trans; }

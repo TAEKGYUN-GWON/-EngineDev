@@ -21,8 +21,3 @@ void Player::Init(Vector2 pos)
 
 	_sprite->GetGraphic()->SetFlip(true);
 }
-
-void Player::Update()
-{
-	super::Update();
-}
