@@ -15,6 +15,7 @@ Scene* sceneManager::_currentScene = NULL;
 
 HRESULT sceneManager::init()
 {
+	if (!_isFirstInit) return S_OK;
 	addScene("PG", new StartScene);
 	changeScene("PG");
 
@@ -70,16 +71,14 @@ HRESULT sceneManager::changeScene(string sceneName)
 	if (find == _mSceneList.end()) return E_FAIL;
 	if (find->second == _currentScene) return S_OK;
 
-	if (SUCCEEDED(!find->second->GetAllowInit()))
-	{
-		//어떤 씬의 정보가 처음에 들어있기 때문에 릴리즈 시켜줘라
-		if (_currentScene) _currentScene->Release();
 
-		//현재 씬에 바꾸려는 씬을 담는다
-		_currentScene = find->second;
+	//어떤 씬의 정보가 처음에 들어있기 때문에 릴리즈 시켜줘라
+	if (_currentScene) _currentScene->Release();
 
-		return S_OK;
-	}
 
-	return E_FAIL;
+	//현재 씬에 바꾸려는 씬을 담는다
+	_currentScene = find->second;
+	_currentScene->Init();
+
+	return S_OK;
 }

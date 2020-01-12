@@ -63,7 +63,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	TIMEMANAGER->init();
 	//SetTimer(_hWnd, 1, 10, NULL);
 	//메시지 루프 돌기이전에
-	sceneManager::getSingleton()->GetNowScene()->Init();
+	//sceneManager::getSingleton()->GetNowScene()->Init();
 
 	while (true)
 	{
@@ -96,29 +96,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	//KillTimer(_hWnd, 1);
 
 	//루프문이 다돌면 씬 해제
-	sceneManager::getSingleton()->GetNowScene()->Release();
+	//sceneManager::getSingleton()->GetNowScene()->Release();
 
-	OBJECTMANAGER->Release();
-	OBJECTMANAGER->releaseSingleton();
-
-	GRAPHICMANAGER->Release();
-	GRAPHICMANAGER->releaseSingleton();
-	
-	TIMEMANAGER->release();
-	TIMEMANAGER->releaseSingleton();
-
-	BOXWORLDMANAGER->Release();
-	BOXWORLDMANAGER->releaseSingleton();
-
-	SOUNDMANAGER->release();
-	SOUNDMANAGER->releaseSingleton();
-
-
-	KEYMANAGER->release();
-	KEYMANAGER->releaseSingleton();
-
-	TXTDATA->release();
-	TXTDATA->releaseSingleton();
 
 	return message.wParam;
 }

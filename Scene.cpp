@@ -16,6 +16,7 @@ Scene::~Scene()
 
 void Scene::Init()
 {
+	if (_allowRelease)_allowRelease = false;
 	_b2World = new b2World(b2Vec2(0,0));
 	timeStep = 1.0f / 60.0f;
 	velocityIterations = 8;

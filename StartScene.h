@@ -8,6 +8,6 @@ private:
 	Player*_player2;
 public:
 	virtual void Init();
-
+	virtual void Update();
 };
 
