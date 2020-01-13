@@ -202,23 +202,7 @@ void Astar::Update()
 			_count = 0;
 	}
 
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-	{
-		for (int i = 0; i < _vTotalList.size(); ++i)
-		{
-			if (PtInRect(&(*_vTotalList[i]->GetTrans()->GetRect()), _ptMouse))
-			{
-				if (_vTotalList[i]->GetAttribute() == "start") continue;
-				if (_vTotalList[i]->GetAttribute() == "end") continue;
-
-				_vTotalList[i]->SetIsOpen(false);
-				_vTotalList[i]->SetAttribute("wall");
-				_vTotalList[i]->SetColor(Brush_type::BLUE);
-
-				break;
-			}
-		}
-	}
+	
 
 }
 

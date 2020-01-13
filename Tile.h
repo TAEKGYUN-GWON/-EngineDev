@@ -1,8 +1,7 @@
 #pragma once
-#include "Object.h"
 #define TILEWIDTH 32
 #define TILEHEIGHT 32
-class Tile : public Object
+class Tile
 {
 private:
 	int _idX;
@@ -16,6 +15,8 @@ private:
 	float _costToGoal;		//현재 노드로부터 도착점까지 경로비용
 
 	bool _isOpen;
+
+	Tile* _parent;
 
 	string _attribute;	//타일속성
 
@@ -34,7 +35,7 @@ public:
 	virtual void Update();
 	virtual void Render();
 	virtual void SetParent(Tile* p) { _parent = p; }
-	virtual Tile* GetParent() { return (Tile*)_parent; }
+	virtual Tile* GetParent() { return _parent; }
 
 	int GetIdX() { return _idX; }
 	int GetIdY() { return _idY; }
