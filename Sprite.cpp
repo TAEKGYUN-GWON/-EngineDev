@@ -10,7 +10,7 @@ Sprite::Sprite()
 
 	_color = Brush_type::BLUE;
 	_pivot = PIVOT::CENTER;
-	_strokeWidth = 3.0f;
+	_strokeWidth = 1.0f;
 }
 
 void Sprite::Init(BOOL isFrame, BOOL isLoop)

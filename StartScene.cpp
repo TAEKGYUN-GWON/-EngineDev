@@ -7,15 +7,15 @@ void StartScene::Init()
 {
 	Scene::Init();
 
-	SCENEMANAGER->addScene("game", new Game);
-	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
+	//SCENEMANAGER->addScene("game", new Game);
+	//GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
-	_player =Object::CreateObject<Player>();
-	_player->Init(Vector2(WINSIZEX / 2 - 100, WINSIZEY / 2));
-	
-	_player2 = Object::CreateObject<Player>();
-	_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
-	_player2->GetGraphic()->GetGraphic()->SetFlip(false);
+	//_player =Object::CreateObject<Player>();
+	//_player->Init(Vector2(WINSIZEX / 2 - 100, WINSIZEY / 2));
+	//
+	//_player2 = Object::CreateObject<Player>();
+	//_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
+	//_player2->GetGraphic()->GetGraphic()->SetFlip(false);
 
 	//Object* obj = Object::CreateObject();
 	//auto a = obj->GetGraphic();
@@ -25,12 +25,18 @@ void StartScene::Init()
 	//obj->GetTrans()->scale = Vector2(a->GetGraphic()->GetFrameWidth(), a->GetGraphic()->GetFrameHeight());
 	//
 	//_player = obj;
+	_ast = new Astar;
+	_ast->Init();
 	cout << "½ºÅ¸Æ®¾À" << endl;
 }
 
 void StartScene::Update()
 {
 	Scene::Update();
+	_ast->Update();
+}
 
-	if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("game");
+void StartScene::Render()
+{
+	_ast->Render();
 }
