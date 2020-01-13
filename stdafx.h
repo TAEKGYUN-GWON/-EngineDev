@@ -26,9 +26,7 @@ using namespace std;
 #include "randomFunction.h"
 #include "keyManager.h"
 #include "utils.h"
-#include "imageManager.h"
 #include "timeManager.h"
-#include "effectManager.h"
 #include "txtData.h"
 #include "soundManager.h"
 #include "Vector2.h"
@@ -58,9 +56,7 @@ using namespace SEVENTEEN_UTIL;
 
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()
-#define IMAGEMANAGER imageManager::getSingleton()
 #define TIMEMANAGER timeManager::getSingleton()
-#define EFFECTMANAGER effectManager::getSingleton()
 #define TXTDATA txtData::getSingleton()
 #define SOUNDMANAGER soundManager::getSingleton()
 #define SCENEMANAGER sceneManager::getSingleton()
@@ -90,5 +86,5 @@ extern POINT					_ptMouse;
 //==========================================
 #define world2pWorld 10.f/800
 #define pWorld2world 800.f/10
-#define DEGREE (float)180/PI
-#define RADIAN (float)PI/180
+#define RadToDeg (float)180/PI
+#define DegToRad (float)PI/180

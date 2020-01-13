@@ -28,7 +28,6 @@ private:
 public:
 	Sprite();
 	virtual void Init(BOOL isFrame = false, BOOL isLoop = false);
-
 	virtual void Render();
 	virtual void Update() override;
 

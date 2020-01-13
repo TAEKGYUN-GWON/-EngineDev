@@ -1,17 +1,5 @@
-#include "Object.h"
-template<typename T>
-vector<T*> Object::GetComponents()
-{
-	vector<T*> componentsList;
-	for (auto c : _components)
-	{
-		if (dynamic_cast<T*>(c))
-			componentsList.push_back((T*)c);
-	}
-	return componentsList;
-}
-
 #pragma once
+#include "Object.h"
 template<typename T>
 T* Object::AddComponent()
 {
@@ -24,6 +12,18 @@ T* Object::AddComponent()
 
 	return (T*)component;
 }
+template<typename T>
+vector<T*> Object::GetComponents()
+{
+	vector<T*> componentsList;
+	for (auto c : _components)
+	{
+		if (dynamic_cast<T*>(c))
+			componentsList.push_back((T*)c);
+	}
+	return componentsList;
+}
+
 
 template<typename T>
 inline T * Object::GetComponent()
@@ -34,4 +34,17 @@ inline T * Object::GetComponent()
 			return (T*)c;
 	}
 	return nullptr;
+}
+
+template<typename T>
+T* Object::CreateObject(Object* parent)
+{
+	Object* Obj = new T();
+
+	if (parent == nullptr)
+		Obj->SetParent(SCENEMANAGER->GetNowScene());
+	else
+		Obj->SetParent(parent);
+
+	return (T*)Obj;
 }

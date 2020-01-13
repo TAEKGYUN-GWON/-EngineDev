@@ -13,6 +13,7 @@ public:
 private:
 	static Scene* _currentScene;
 	mapSceneList _mSceneList;
+	bool _isFirstInit = true;
 
 public:
 	sceneManager();

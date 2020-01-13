@@ -7,9 +7,7 @@ private:
 	Player* _player;
 	Player*_player2;
 public:
-	virtual HRESULT init();
-	virtual void release();
-	virtual void update();
-	virtual void render();
+	virtual void Init();
+	virtual void Update();
 };
 

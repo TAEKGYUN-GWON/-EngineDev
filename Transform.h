@@ -25,7 +25,7 @@ public:
 	inline Vector2 GetScale() { return scale; }
 
 	//디그리 값으로 회전값 가져오기
-	inline float GetRotateDegree() { return _rotate * DEGREE; }
+	inline float GetRotateDegree() { return _rotate * RadToDeg; }
 
 	//라디안 값으로 회전값 가져오기
 	inline float GetRotateRadian() { return _rotate; }
@@ -46,7 +46,7 @@ public:
 	inline void SetRotateToRadian(float rotate) { _rotate = rotate; }
 
 	//디그리 값으로 회전값 세팅
-	inline void SetRotateToDegree(float rotate) { _rotate = rotate * DEGREE; }
+	inline void SetRotateToDegree(float rotate) { _rotate = rotate * RadToDeg; }
 
 	inline RECT* GetRect() { return &_rc; }
 

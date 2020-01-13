@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
-#include "playGround.h"
 #include"sceneManager.h"
+#include"Scene.h"
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
 //API : Application Programming Interface
 
 HINSTANCE	_hInstance;
@@ -8,7 +9,6 @@ HWND		_hWnd;
 
 POINT _ptMouse;		//마우스 용 POINT
 
-playGround _pg;
 
 //함수의 프로토타입 선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -56,21 +56,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	Graphic::SetRendertarget();
 	SCENEMANAGER->init();
 	OBJECTMANAGER->Init();
+	SOUNDMANAGER->init();
 	CAMERA->init();
-
+	KEYMANAGER->init();
+	TXTDATA->init();
+	TIMEMANAGER->init();
+	//SetTimer(_hWnd, 1, 10, NULL);
 	//메시지 루프 돌기이전에
-	if (FAILED(sceneManager::getSingleton()->GetNowScene()->init()))
-	{
-
-		return 0;
-	}
-	/*
-	while (GetMessage(&message, 0, 0, 0))
-	{
-		TranslateMessage(&message);
-		DispatchMessage(&message);
-	}
-	*/
+	//sceneManager::getSingleton()->GetNowScene()->Init();
 
 	while (true)
 	{
@@ -83,8 +76,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 		else
 		{
 			TIMEMANAGER->update(60.0f);
+			sceneManager::getSingleton()->GetNowScene()->Update();
+			sceneManager::getSingleton()->GetNowScene()->PhysicsUpdate();
 			CAMERA->Update();
-			sceneManager::getSingleton()->GetNowScene()->update();
 
 			ID2D1RenderTarget* renderTarget = GRAPHICMANAGER->GetRenderTarget();
 			renderTarget->BeginDraw();
@@ -92,29 +86,18 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
 			//==================================================
 
-			sceneManager::getSingleton()->GetNowScene()->render();
+			sceneManager::getSingleton()->GetNowScene()->Render();
 
 			//===================================================
 			HRESULT hr = renderTarget->EndDraw();
 			if (hr == D2DERR_RECREATE_TARGET) GRAPHICMANAGER->Reload();
 		}
 	}
-
+	//KillTimer(_hWnd, 1);
 
 	//루프문이 다돌면 씬 해제
-	sceneManager::getSingleton()->GetNowScene()->release();
+	//sceneManager::getSingleton()->GetNowScene()->Release();
 
-	OBJECTMANAGER->Release();
-	OBJECTMANAGER->releaseSingleton();
-
-	GRAPHICMANAGER->Release();
-	GRAPHICMANAGER->releaseSingleton();
-	
-	TIMEMANAGER->release();
-	TIMEMANAGER->releaseSingleton();
-
-	BOXWORLDMANAGER->Release();
-	BOXWORLDMANAGER->releaseSingleton();
 
 	return message.wParam;
 }

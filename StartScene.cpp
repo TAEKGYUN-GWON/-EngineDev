@@ -1,59 +1,36 @@
 #include "stdafx.h"
 #include "StartScene.h"
-#include "game.h"
 #include "Sprite.h"
 #include"Transform.h"
-HRESULT StartScene::init()
+#include"Game.h"
+void StartScene::Init()
 {
-	GRAPHICMANAGER->AddImage("eagle", L"fatkachu.png");
-	SCENEMANAGER->addScene("game", new game);
+	Scene::Init();
 
-	_player = new Player;
+	SCENEMANAGER->addScene("game", new Game);
+	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
+
+	_player =Object::CreateObject<Player>();
 	_player->Init(Vector2(WINSIZEX / 2 - 100, WINSIZEY / 2));
-	_player2 = new Player;
-	_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
-	//_player2->GetGraphic()->GetGraphic()->SetFlip(true);
-
-	OBJECTMANAGER->AddObject("Start", _player);
-	OBJECTMANAGER->AddObject("Start", _player2);
-	cout << "스타트씬" << endl;
-	return S_OK;
-}
-
-void StartScene::release()
-{
-	cout << "릴리즈" << endl;
-}
-
-void StartScene::update()
-{
-	//if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("game");
-	//_player->Update();
-	//_player2->Update();
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT)) _player->GetTrans()->pos += Vector2::left * 5;
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))_player->GetTrans()->pos += Vector2::right * 5;
-	if (KEYMANAGER->isStayKeyDown(VK_UP))
-	{
-		_player->GetTrans()->pos += Vector2::up * 5;
-	}	
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN)) _player->GetTrans()->pos += Vector2::down * 5;
-
-	OBJECTMANAGER->Update("Start");
 	
+	_player2 = Object::CreateObject<Player>();
+	_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
+	_player2->GetGraphic()->GetGraphic()->SetFlip(false);
+
+	//Object* obj = Object::CreateObject();
+	//auto a = obj->GetGraphic();
+	//a->Init();
+	//obj->GetGraphic()->SetImgName("eagle");
+	//obj->GetTrans()->SetPos(WINSIZEX/2,WINSIZEY/2);
+	//obj->GetTrans()->scale = Vector2(a->GetGraphic()->GetFrameWidth(), a->GetGraphic()->GetFrameHeight());
+	//
+	//_player = obj;
+	cout << "스타트씬" << endl;
 }
 
-void StartScene::render()
+void StartScene::Update()
 {
-	//GRAPHICMANAGER->DrawImage("eagle", Vector2(WINSIZEX / 2, WINSIZEY / 2));
-	char buffer[128];
-	sprintf_s(buffer, "%f", _player->GetTrans()->bottomPos.y);
-	GRAPHICMANAGER->DrawTextD2D(Vector2(WINSIZEX / 2, 0), buffer,15,D2D1::ColorF::Brown);
+	Scene::Update();
 
-	sprintf_s(buffer, "%f", _player2->GetTrans()->bottomPos.y);
-	GRAPHICMANAGER->DrawTextD2D(Vector2(0, 0), buffer, 15, D2D1::ColorF::Brown);
-
-
-	//_player->Render();
-	//_player2->Render();
-	OBJECTMANAGER->Render("Start");
+	if (KEYMANAGER->isOnceKeyDown(VK_F1)) SCENEMANAGER->changeScene("game");
 }

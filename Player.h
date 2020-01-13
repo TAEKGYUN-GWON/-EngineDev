@@ -10,6 +10,5 @@ public:
 	~Player();
 	
 	virtual void Init(Vector2 pos);
-	virtual void Update();
 };
 

@@ -89,7 +89,7 @@ void ObjectManager::Update(string sceneName)
 
 	for (Object* i : vSceneObjec)
 	{
-		if(i->GetAllawsUpdate())
+		if(i->GetAllowsUpdate())
 			i->Update();
 	}
 
