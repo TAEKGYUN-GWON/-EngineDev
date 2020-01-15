@@ -1,7 +1,8 @@
 #pragma once
-#define TILEWIDTH 32
-#define TILEHEIGHT 32
-class Tile
+#define TILEWIDTH 30
+#define TILEHEIGHT 30
+#include"Object.h"
+class Tile : public Object
 {
 private:
 	int _idX;
@@ -32,10 +33,8 @@ public:
 
 	virtual void Init(int idX, int idY);
 	virtual void Release();
-	virtual void Update();
-	virtual void Render();
-	virtual void SetParent(Tile* p) { _parent = p; }
-	virtual Tile* GetParent() { return _parent; }
+	virtual void SetParentNode(Tile* p) { _parent = p; }
+	virtual Tile* GetParentNode() { return _parent; }
 
 	int GetIdX() { return _idX; }
 	int GetIdY() { return _idY; }
@@ -59,6 +58,6 @@ public:
 	bool GetIsOpen() { return _isOpen; }
 
 	void SetColor(Brush_type::Enum color) { _color = color; }
-
+	void SetFrameXY(int x, int y);
 };
 

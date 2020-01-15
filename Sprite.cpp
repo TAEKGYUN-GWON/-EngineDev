@@ -1,8 +1,5 @@
 #include "stdafx.h"
 #include "Sprite.h"
-#include "Transform.h"
-#include "Object.h"
-#include "PhysicsBody.h"
 
 Sprite::Sprite()
 {

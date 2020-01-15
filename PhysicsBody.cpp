@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "PhysicsBody.h"
-#include "Transform.h"
-#include "Object.h"
 
 void PhysicsBody::Init(BodyType type, float32 friction, float32 density, float32 restitution,BOOL isBullet, BOOL isSensor)
 {

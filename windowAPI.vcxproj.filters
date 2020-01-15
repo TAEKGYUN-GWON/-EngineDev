@@ -198,6 +198,12 @@
     <ClInclude Include="Astar.h">
       <Filter>2DGameFramework\Object\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="ObjSound.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="omega.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -304,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="Astar.cpp">
       <Filter>2DGameFramework\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjSound.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

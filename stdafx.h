@@ -89,3 +89,5 @@ extern POINT					_ptMouse;
 #define pWorld2world 800.f/10
 #define RadToDeg (float)180/PI
 #define DegToRad (float)PI/180
+
+#include"omega.h"

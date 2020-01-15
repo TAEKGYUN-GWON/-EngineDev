@@ -155,6 +155,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="iniDataManager.h" />
     <ClInclude Include="JsonManager.h" />
+    <ClInclude Include="ObjSound.h" />
+    <ClInclude Include="omega.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="ObjectManager.h" />
@@ -198,6 +200,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
     <ClCompile Include="JsonManager.cpp" />
+    <ClCompile Include="ObjSound.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
