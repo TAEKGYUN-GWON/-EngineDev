@@ -7,8 +7,8 @@
 class Astar
 {
 private:
-	vector<Tile*>			_vTotalList;
-	vector<Tile*>::iterator _viTotalList;
+	vector<Tile*>				_vTotalList;
+	vector<Tile*>::iterator		_viTotalList;
 
 	vector<Tile*>				_vOpenList;
 	vector<Tile*>::iterator		_viOpenList;
@@ -33,6 +33,7 @@ public:
 	vector<Tile*> AddOpenList(Tile* currentTile);
 
 	void pathFinder(Tile* currentTile);
+	void SetPathObject(Tile* node, Object* obj);
 
 	void Release();
 	void Update();

@@ -6,7 +6,6 @@ Astar::Astar()
 {
 }
 
-
 Astar::~Astar()
 {
 }
@@ -41,6 +40,7 @@ void Astar::SetTiles()
 			if (j == _startTile->GetIdX() && i == _startTile->GetIdY())
 			{
 				_startTile->SetColor(Brush_type::AQUAMARINE);
+				_startTile->SetIsOpen(true);
 				_vTotalList.push_back(_startTile);
 				continue;
 			}
@@ -49,6 +49,7 @@ void Astar::SetTiles()
 			if (j == _endTile->GetIdX() && i == _endTile->GetIdY())
 			{
 				_endTile->SetColor(Brush_type::MAGENTA);
+				_endTile->SetIsOpen(true);
 				_vTotalList.push_back(_endTile);
 				continue;
 			}
@@ -102,7 +103,6 @@ vector<Tile*> Astar::AddOpenList(Tile * currentTile)
 
 void Astar::pathFinder(Tile * currentTile)
 {
-
 	//임의의 경로비용값 설정
 	float tempTotalCost = 5000;
 	Tile* tempTile = NULL;
@@ -139,7 +139,6 @@ void Astar::pathFinder(Tile * currentTile)
 				break;
 			}
 		}
-
 
 		_vOpenList[i]->SetIsOpen(false);
 		if (!addObj) continue;
@@ -183,6 +182,20 @@ void Astar::pathFinder(Tile * currentTile)
 
 }
 
+void Astar::SetPathObject(Tile * node, Object * obj)
+{
+	list<Vector2> path;
+	Tile* curNode = node;
+	while (true)
+	{
+		path.push_front(Vector2(curNode->GetIdX(), curNode->GetIdY()));
+		curNode = curNode->GetParent();
+		if (curNode == nullptr) break;
+	}
+
+	//obj->
+}
+
 void Astar::Release()
 {
 }
@@ -198,15 +211,15 @@ void Astar::Update()
 	{
 		_count++;
 
-			pathFinder(_currentTile);
-			_count = 0;
+		pathFinder(_currentTile);
+		_count = 0;
 	}
 
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		for (int i = 0; i < _vTotalList.size(); ++i)
 		{
-			if (PtInRect(&(*_vTotalList[i]->GetTrans()->GetRect()), _ptMouse))
+			if (PtInRect(&(RectMakeCenter(_vTotalList[i]->GetCenter().x, _vTotalList[i]->GetCenter().y, TILEWIDTH, TILEHEIGHT)), _ptMouse))
 			{
 				if (_vTotalList[i]->GetAttribute() == "start") continue;
 				if (_vTotalList[i]->GetAttribute() == "end") continue;
@@ -219,7 +232,6 @@ void Astar::Update()
 			}
 		}
 	}
-
 }
 
 void Astar::Render()

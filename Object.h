@@ -21,6 +21,7 @@ protected:
 	bool _allowInit = true;
 	Object* _parent;
 	vector<Object*> _children;
+
 public:
 	~Object() {};
 	virtual void Init();
