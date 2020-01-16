@@ -11,7 +11,7 @@ private:
 	Vector2				_endPos;
 
 	Vector2				_shakeUpPos;
-	Vector2				__shakeDownPos;
+	Vector2				_shakeDownPos;
 
 	float				_angle;
 	float				_speed;
