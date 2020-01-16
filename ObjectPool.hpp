@@ -11,7 +11,6 @@ void ObjectPool::Init(int size, Object obj)
 		newObj->Init();
 		newObj->SetTag(obj.GetTag());
 		newObj->SetName(obj.GetName());
-		newObj->GetGraphic()->SetImgName(obj.GetGraphic()->GetImgKey());
 		newObj->SetIsActive(false);
 		pool.push(newObj);
 

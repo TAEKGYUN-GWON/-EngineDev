@@ -10,14 +10,13 @@ private:
 	int _idX;
 	int _idY;
 
-	Vector2 _center;
-
 	//F = G + H
-	float _totalCost;		//총 비용
-	float _costFromStart;	//시작위치로부터 현재 노드
-	float _costToGoal;		//현재 노드로부터 도착점까지 경로비용
+	float _f;		//총 비용
+	float _g;	//시작위치로부터 현재 노드
+	float _h;		//현재 노드로부터 도착점까지 경로비용
 
 	bool _isOpen;
+	bool _isClose;
 
 	Tile* _parent;
 
@@ -26,8 +25,12 @@ private:
 	ColorF::Enum _color;
 
 public:
-	Tile() :_totalCost(0), _costFromStart(0),
-		_costToGoal(0), _idX(0), _idY(0) {}
+	Tile() :_f(0), _g(0),
+		_h(0), _idX(0), _idY(0) 
+	{
+		_attribute.clear();
+	}
+
 	~Tile() {};
 
 	static Vector2 tileSize;
@@ -35,29 +38,32 @@ public:
 
 	virtual void Init(int idX, int idY);
 	virtual void Release();
-	virtual void SetParentNode(Tile* p) { _parent = p; }
-	virtual Tile* GetParentNode() { return _parent; }
+	void SetParentNode(Tile* p) { _parent = p; }
+	Tile* GetParentNode() { return _parent; }
 
 	int GetIdX() { return _idX; }
 	int GetIdY() { return _idY; }
 
-	void SetCenter(Vector2 center) { _center = center; }
-	Vector2 GetCenter() { return _center; }
+	void SetCenter(Vector2 center) { _trans->pos = center; }
+	Vector2 GetCenter() { return _trans->pos; }
 
 	void SetAttribute(string str) { _attribute = str; }
 	string GetAttribute() { return _attribute; }
 
-	void SetTotalCost(float totalCost) { _totalCost = totalCost; }
-	float GetTotalCost() { return _totalCost; }
+	void SetCostF(float totalCost) { _f = totalCost; }
+	float GetCostF() { return _f; }
 
-	void SetCostFromStart(float costFromStart) { _costFromStart = costFromStart; }
-	float GetCostFromStart() { return _costFromStart; }
+	void SetCostG(float costFromStart) { _g = costFromStart; }
+	float GetCostG() { return _g; }
 
-	void SetCostToGoal(float costToGoal) { _costToGoal = costToGoal; }
-	float GetCostToGoal() { return _costToGoal; }
+	void SetCostH(float costToGoal) { _h = costToGoal; }
+	float GetCostH() { return _h; }
 
 	void SetIsOpen(bool isOpen) { _isOpen = isOpen; }
 	bool GetIsOpen() { return _isOpen; }
+	
+	void SetIsClose(bool isClose) { _isClose = isClose; }
+	bool GetIsClose() { return _isClose; }
 
 	void SetColor(ColorF::Enum color) { _color = color; }
 	void SetFrameXY(int x, int y);

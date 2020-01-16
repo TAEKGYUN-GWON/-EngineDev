@@ -5,3 +5,4 @@
 #include"PhysicsBody.h"
 #include"Collider.h"
 #include"Tile.h"
+#include"DrawComponent.h"

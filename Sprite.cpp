@@ -1,14 +1,11 @@
 #include "stdafx.h"
 #include "Sprite.h"
-#include "Transform.h"
-#include "Object.h"
-#include "PhysicsBody.h"
 
 Sprite::Sprite()
 {
 	_name = "Sprite";
 
-	_color = ColorF::Blue;
+	_color = Brush_type::BLUE;
 	_pivot = PIVOT::CENTER;
 	_strokeWidth = 1.0f;
 }
@@ -29,13 +26,8 @@ void Sprite::Render()
 {
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
-		PhysicsBody* a = _object->GetComponent<PhysicsBody>();
 
-		if (a != nullptr)
-			//GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), a->GetBody()->GetAngle() * RadToDeg, _color, _pivot, _strokeWidth);
-			GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), a->GetBody()->GetAngle() * Rad2Deg, _color, _pivot, _strokeWidth);
-		else
-			GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
+		GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
 	}
 
 	if (_imgKey.empty()) return;
@@ -65,7 +57,7 @@ void Sprite::Render()
 	}
 	else
 	{
-		GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _pivot);
+		GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _pivot);
 	}
 }
 
@@ -100,11 +92,11 @@ void Sprite::Resume()
 
 void Sprite::SetImgName(string key)
 {
-	_imgKey = key;
-	_graphic = GRAPHICMANAGER->FindImage(_imgKey);
-	_maxFrameX = _graphic->GetMaxFrameX();
+	 _imgKey = key; 
+	 _graphic = GRAPHICMANAGER->FindImage(_imgKey); 
+	 _maxFrameX = _graphic->GetMaxFrameX();
 
-	if (_isFrame) _isPlay = true;
+	 if(_isFrame) _isPlay = true;
 }
 
 bool Sprite::IsFrameEnd()

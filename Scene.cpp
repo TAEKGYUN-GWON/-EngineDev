@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "Scene.h"
-#include "PhysicsBody.h"
-#include "Transform.h"
 float32 timeStep;
 int32 velocityIterations;
 int32 positionIterations;
@@ -71,9 +69,27 @@ void Scene::PhysicsUpdate()
 	}
 }
 
+
+bool Compare(Object* a, Object* b)
+{
+
+	Transform* aT = a->GetComponent<Transform>();
+	Transform* bT = b->GetComponent<Transform>();
+
+	if (!aT)
+		return false;
+	else if (!bT)
+		return true;
+
+	return aT->bottomPos.y < bT->bottomPos.y;
+}
+
 void Scene::Render()
 {
 	//if (_allowRelease) return;
+
+	sort(_children.begin(), _children.end(), Compare);
+
 	for (Object* child : _children)
 		child->Render();
 }
