@@ -27,8 +27,9 @@ void Astar::SetTiles()
 	{
 		for (int j = 0; j < TILENUMX; ++j)
 		{
-			_mTotalList[Vector2(j, i)] = new Tile;
-			_mTotalList[Vector2(j, i)]->Init(j, i);
+			Tile* node = new Tile;
+			node-> Init(j, i);
+			_mTotalList.insert(make_pair(Vector2(j, i), node));
 		}
 	}
 	int a;

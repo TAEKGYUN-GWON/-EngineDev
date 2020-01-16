@@ -1,5 +1,7 @@
 #pragma once
 #include "Component.h"
+class Transform;
+
 class DrawComponent :
 	public Component
 {

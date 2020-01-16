@@ -16,8 +16,8 @@ private:
 
 	};
 
-	map<Vector2, Tile*> _mTotalList;
-	map<Vector2, Tile*>::iterator _miTotalList;
+	multimap<Vector2, Tile*> _mTotalList;
+	multimap<Vector2, Tile*>::iterator _miTotalList;
 
 	vector <Tile*> _OpenList;
 	vector <Tile*>::iterator _iOpenList;
