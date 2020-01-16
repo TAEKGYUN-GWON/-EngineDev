@@ -12,176 +12,143 @@ Astar::~Astar()
 
 void Astar::Init()
 {
+	_mTotalList.clear();
 	SetTiles();
 
-	_start = _count = 0;
 }
 
 void Astar::SetTiles()
 {
 	//시작 타일
-	_startTile = new Tile;
 
-	_startTile->Init(4, 12);
-	_startTile->SetAttribute("start");
-
-	_endTile = new Tile;
-	_endTile->Init(20, 12);
-	_endTile->SetAttribute("end");
-
-	_currentTile = _startTile;
 
 	//전체 타일 돌아서
 	for (int i = 0; i < TILENUMY; ++i)
 	{
 		for (int j = 0; j < TILENUMX; ++j)
 		{
-			//시작타일의 인덱스와 같은 타일이면 == 시작타일
-			if (j == _startTile->GetIdX() && i == _startTile->GetIdY())
-			{
-				_startTile->SetColor(Brush_type::AQUAMARINE);
-				_startTile->SetIsOpen(true);
-				_vTotalList.push_back(_startTile);
-				continue;
-			}
-
-			//도착타일의 인덱스와 같은 타일이면 == 도착타일
-			if (j == _endTile->GetIdX() && i == _endTile->GetIdY())
-			{
-				_endTile->SetColor(Brush_type::MAGENTA);
-				_endTile->SetIsOpen(true);
-				_vTotalList.push_back(_endTile);
-				continue;
-			}
-
-			Tile* node = new Tile;
-			node->Init(j, i);
-			node->SetIsOpen(true);
-
-			_vTotalList.push_back(node);
+			_mTotalList[Vector2(j, i)] = new Tile;
+			_mTotalList[Vector2(j, i)]->Init(j, i);
 		}
 	}
+	int a;
 }
 
-vector<Tile*> Astar::AddOpenList(Tile * currentTile)
+void Astar::InitTotalList()
 {
-	int startX = currentTile->GetIdX() - 1;
-	int startY = currentTile->GetIdY() - 1;
-
-	for (int i = 0; i < 3; i++)
+	for (auto it = _mTotalList.begin(); it != _mTotalList.end(); it++)
 	{
-		for (int j = 0; j < 3; j++)
-		{
-			Tile* Node = _vTotalList[(startY * TILENUMX) + startX + j + (i * TILENUMX)];
+		(*it).second->SetCostF(-1);
+		(*it).second->SetCostG(0);
+		(*it).second->SetCostH(0);
+		(*it).second->SetIsClose(0);
+		(*it).second->SetIsOpen(0);
+		(*it).second->SetParentNode(nullptr);
 
-			if (!Node->GetIsOpen()) continue;
-			if (Node->GetAttribute() == "start") continue;
-			if (Node->GetAttribute() == "wall") continue;
-
-			//현재 타일로 계속 갱신
-			Node->SetParentNode(_currentTile);
-
-			bool isOpen = true;
-
-			for (_viOpenList = _vOpenList.begin(); _viOpenList != _vOpenList.end(); ++_viOpenList)
-			{
-				if (*_viOpenList == Node)
-				{
-					isOpen = false;
-					break;
-				}
-			}
-
-			if (Node->GetAttribute() != "end") Node->SetColor(Brush_type::GREEN);
-			if (!isOpen) continue;
-
-			_vOpenList.push_back(Node);
-		}
 	}
-	return _vOpenList;
+
+	_OpenList.clear();
+	_ClosedList.clear();
 }
 
-void Astar::pathFinder(Tile * currentTile)
+
+vector <Tile*> Astar::GetDirList(Vector2 idx)
+{
+	vector<Tile*> dirList;
+	vector<Tile*> nodeList;
+
+	_miTotalList = _mTotalList.find(Vector2(idx.x - (int)1, idx.y));
+	if (CanOpenLeft(idx))
+		nodeList.push_back(_miTotalList->second);
+
+
+	_miTotalList = _mTotalList.find(Vector2(idx.x + (int)1, idx.y));
+	if (CanOpenRight(idx))
+		nodeList.push_back(_miTotalList->second);
+
+
+	_miTotalList = _mTotalList.find(Vector2(idx.x, idx.y- (int)1));
+	if (CanOpenUp(idx))
+		nodeList.push_back(_miTotalList->second);
+
+
+	_miTotalList = _mTotalList.find(Vector2(idx.x, idx.y+ (int)1));
+	if (CanOpenDown(idx))
+		nodeList.push_back(_miTotalList->second);
+
+	for (Tile* t : nodeList)
+	{
+		_miTotalList = _mTotalList.find(Vector2(idx.x, idx.y));
+		if (SetCost(t, 10, _miTotalList->second))
+			dirList.push_back(t);
+	}
+
+	nodeList.clear();
+
+
+	_miTotalList = _mTotalList.find(Vector2(idx.x+ (int)1, idx.y + (int)1));
+	if (CanOpenRight(idx) && CanOpenDown(idx))
+		nodeList.push_back(_miTotalList->second);
+
+
+	_miTotalList = _mTotalList.find(Vector2(idx.x - (int)1, idx.y + (int)1));
+	if (CanOpenLeft(idx) && CanOpenDown(idx))
+		nodeList.push_back(_miTotalList->second);
+
+
+	_miTotalList = _mTotalList.find(Vector2(idx.x + (int)1, idx.y - (int)1));
+	if (CanOpenRight(idx) && CanOpenUp(idx))
+		nodeList.push_back(_miTotalList->second);
+
+
+	_miTotalList = _mTotalList.find(Vector2(idx.x - (int)1, idx.y - (int)1));
+	if (CanOpenLeft(idx) && CanOpenUp(idx))
+		nodeList.push_back(_miTotalList->second);
+
+	for (Tile* t : nodeList)
+	{
+		_miTotalList = _mTotalList.find(Vector2(idx.x, idx.y));
+		if (SetCost(t, 14, _miTotalList->second))
+			dirList.push_back(t);
+	}
+
+	return dirList;
+}
+
+list<Vector2> Astar::pathFinder(Vector2 start, Vector2 end)
 {
 
-	//임의의 경로비용값 설정
-	float tempTotalCost = 5000;
-	Tile* tempTile = NULL;
+	Vector2 startId((int)(start.x / TILEWIDTH),	(int)(start.y / TILEHEIGHT));
+	Vector2 endId((int)(end.x / TILEWIDTH),	(int)(end.y / TILEHEIGHT));
 
-	//가장 빠른 길을 뽑아봅시다 어디서? 갈 수 있는 타일 중에서
-	for (int i = 0; i < AddOpenList(currentTile).size(); ++i)
+	_miTotalList = _mTotalList.find(startId);
+	_startTile = _miTotalList->second;
+	_startTile->SetAttribute("start");
+
+	_miTotalList = _mTotalList.find(endId);
+	_endTile = _miTotalList->second;
+	_endTile->SetAttribute("end");
+	_currentTile = _startTile;
+	AddOpenList(_currentTile);
+	while (true)
 	{
-		//F = G + H
-		_vOpenList[i]->SetCostToGoal(
-			(abs(_endTile->GetIdX() - _vOpenList[i]->GetIdX()) +
-				abs(_endTile->GetIdY() - _vOpenList[i]->GetIdY())) * 10);
-
-		Vector2 center1 = _vOpenList[i]->GetParentNode()->GetCenter();
-		Vector2 center2 = _vOpenList[i]->GetCenter();
-
-		_vOpenList[i]->SetCostFromStart(getDistance(center1.x, center1.y, center2.x, center2.y) > TILEWIDTH ? 14 : 10);
-
-		_vOpenList[i]->SetTotalCost(_vOpenList[i]->GetCostToGoal() +
-			_vOpenList[i]->GetCostFromStart());
-
-		if (tempTotalCost > _vOpenList[i]->GetTotalCost())
+		for (Tile* t : GetDirList(Vector2(_currentTile->GetIdX(), _currentTile->GetIdY())))
 		{
-			tempTotalCost = _vOpenList[i]->GetTotalCost();
-			tempTile = _vOpenList[i];
-		}
 
-		bool addObj = true;
-
-		for (_viOpenList = _vOpenList.begin(); _viOpenList != _vOpenList.end(); ++_viOpenList)
-		{
-			if (*_viOpenList == tempTile)
+			if (t == _endTile)
 			{
-				addObj = false;
+				SetPathcList();
 				break;
 			}
+			else
+				AddOpenList(t);
 		}
-
-
-		_vOpenList[i]->SetIsOpen(false);
-		if (!addObj) continue;
-
-		_vOpenList.push_back(tempTile);
+			AddCloseList(_currentTile);
+			_currentTile = GetMinFNode();
+			if (_currentTile == nullptr) break;
 	}
 
-	if (tempTile->GetAttribute() == "end")
-	{
-		while (_currentTile->GetParentNode() != NULL)
-		{
-			_currentTile->SetColor(Brush_type::RED);
-			_currentTile = _currentTile->GetParentNode();
-		}
-
-		return;
-	}
-
-	_vClosedList.push_back(tempTile);
-
-	for (_viOpenList = _vOpenList.begin(); _viOpenList != _vOpenList.end(); ++_viOpenList)
-	{
-		if (*_viOpenList == tempTile)
-		{
-			_viOpenList = _vOpenList.erase(_viOpenList);
-			break;
-		}
-	}
-
-	_currentTile = tempTile;
-
-	//재귀함수 호출
-	//같은 함수내부에서 그 함수를 또 호출하는 것을 말함
-	//장점 : 코드가 극도로 짧아짐
-	//단점 : 한 번 호출할때마다 소량의 메모리가 쌓이는데 1.2메가를 넘기면 터짐
-	//이현상을 Stack overFlow라고 함
-
-	//근데 회사에 들어갔는데 재귀충 만나면 어우우우우 그켬 
-
-	//pathFinder(_currentTile);
-
+	return _pathList;
 }
 
 void Astar::Release()
@@ -190,44 +157,131 @@ void Astar::Release()
 
 void Astar::Update()
 {
-	if (KEYMANAGER->isOnceKeyDown('H'))
-	{
-		_start = true;
-	}
-
-	if (_start)
-	{
-		_count++;
-
-		pathFinder(_currentTile);
-		_count = 0;
-	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-	{
-		for (int i = 0; i < _vTotalList.size(); ++i)
-		{
-			if (PtInRect(&(RectMakeCenter(_vTotalList[i]->GetCenter().x, _vTotalList[i]->GetCenter().y, TILEWIDTH, TILEHEIGHT)), _ptMouse))
-			{
-				cout << "됨" << i << endl;
-				if (_vTotalList[i]->GetAttribute() == "start") continue;
-				if (_vTotalList[i]->GetAttribute() == "end") continue;
-
-				_vTotalList[i]->SetIsOpen(false);
-				_vTotalList[i]->SetAttribute("wall");
-				_vTotalList[i]->SetColor(Brush_type::BLUE);
-
-				break;
-			}
-		}
-	}
-
+	
+	
 }
 
 void Astar::Render()
 {
-	for (int i = 0; i < _vTotalList.size(); ++i)
+	
+	for (_miTotalList = _mTotalList.begin(); _miTotalList!= _mTotalList.end(); ++_miTotalList)
 	{
-		_vTotalList[i]->Render();
+		_miTotalList->second->Render();
+	}
+}
+
+bool Astar::CanOpenLeft(Vector2 idx)
+{
+	_miTotalList = _mTotalList.find(Vector2(idx.x - (int)1, idx.y));
+	if (_miTotalList->second == nullptr) return false;
+	if (idx.x - (int)1 < 0) return false;
+	return true;
+}
+
+bool Astar::CanOpenRight(Vector2 idx)
+{
+	_miTotalList = _mTotalList.find(Vector2(idx.x + (int)1, idx.y));
+	if (_miTotalList->second == nullptr) return false;
+	if (idx.x - (int)1 < 0) return false;
+	return true;
+}
+
+bool Astar::CanOpenUp(Vector2 idx)
+{
+	_miTotalList = _mTotalList.find(Vector2(idx.x, idx.y- (int)1));
+
+	if (_miTotalList->second == nullptr) return false;
+	if (idx.x - (int)1 < 0) return false;
+	return true;
+}
+
+bool Astar::CanOpenDown(Vector2 idx)
+{
+	_miTotalList = _mTotalList.find(Vector2(idx.x , idx.y+ (int)1));
+
+	if (_miTotalList->second == nullptr) return false;
+	if (idx.x - (int)1 < 0) return false;
+	return true;
+}
+
+bool Astar::SetCost(Tile* node, float cost, Tile* parent)
+{
+	if (node == nullptr || node->GetAttribute() == "wall" || node->GetIsClose() || node->GetIsOpen()) return false;
+
+	float valH = 0;
+	cost += node->GetCostG();
+	int x = abs(_endTile->GetIdX() - node->GetIdX());
+	int y = abs(_endTile->GetIdY() - node->GetIdY());
+	valH = (x + y) * 10;
+
+	if (node->GetCostF() < 0 || node->GetCostG() > cost)
+	{
+		node->SetCostG(cost);
+		node->SetCostH (valH);
+		node->SetCostF(cost + valH);
+		node->SetParent (parent);
+	}
+
+	return true;
+}
+
+void Astar::AddOpenList(Tile * node)
+{
+	if (node == nullptr || node->GetAttribute() == "wall") return;
+
+	if (node->GetIsClose()) return;
+	if (node->GetIsOpen()) return;
+
+
+	node->SetIsOpen(true);
+
+	_OpenList.push_back(node);
+
+}
+
+void Astar::AddCloseList(Tile * node)
+{
+
+	if (node == NULL) return;
+	node->SetIsOpen(false);
+	node->SetIsClose(true);
+
+	for (int i = 0; i < _OpenList.size(); i++)
+	{
+		if (_OpenList[i] == node) {
+			_OpenList.erase(_OpenList.begin() + i);
+			break;
+		}
+
+	}
+	_ClosedList.push_back(node);
+
+}
+
+Tile * Astar::GetMinFNode()
+{
+	float tempTotalCost = FLT_MAX;
+	Tile* tempTile = nullptr;
+
+	for (Tile* t : _OpenList)
+	{
+		if (t->GetCostF() < tempTotalCost)
+		{
+			tempTotalCost = t->GetCostF();
+			tempTile = t;
+		}
+	}
+
+	return tempTile;
+}
+
+void Astar::SetPathcList()
+{
+	_pathList.clear();
+
+	while (_currentTile->GetParent() != NULL)
+	{
+		_currentTile = _currentTile->GetParentNode();
+		_pathList.push_front(_currentTile->GetCenter());
 	}
 }

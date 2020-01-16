@@ -32,7 +32,7 @@ public:
 	static b2Vec2 b2Zero;
 	static b2Vec2 b2One;
 
-	static float Distance(Vector2 a, Vector2 b);
+	static float Distance(Vector2 a, Vector2 b, bool check = true);
 	static float Dot(Vector2 lhs, Vector2 rhs);
 	static Vector2 Lerp(Vector2 a, Vector2 b, float i);
 
@@ -44,12 +44,19 @@ public:
 
 
 	Vector2 operator-(Vector2 to);
+	bool operator<(const Vector2& to) const;
+	bool operator>(const Vector2& to) const;
+	bool operator<=(const Vector2& to) const;
+	bool operator>=(const Vector2& to) const;
+	float operator|(const Vector2& to) const;
+	float operator^(const Vector2& to) const;
+
 	Vector2 operator+(Vector2 to);
 	Vector2 operator*(float to);
 	Vector2 operator/(int to);
 	void operator+=(Vector2 to);
 	void operator-=(Vector2 to);
-	bool operator==(Vector2 to);
-	bool operator!=(Vector2 to);
+	bool operator==(Vector2 to)const;
+	bool operator!=(Vector2 to) const;
 };
 

@@ -13,6 +13,6 @@ void Transform::Update()
 
 void Transform::SetRect()
 {
-	RectMakeCenter(pos.x, pos.y, scale.x, scale.y);
+	_rc = RectMakeCenter(pos.x, pos.y, scale.x, scale.y);
 	bottomPos = Vector2(pos.x, pos.y + scale.y / 2);
 }

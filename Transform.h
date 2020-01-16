@@ -48,7 +48,7 @@ public:
 	//디그리 값으로 회전값 세팅
 	inline void SetRotateToDegree(float rotate) { _rotate = rotate * RadToDeg; }
 
-	inline RECT* GetRect() { return &_rc; }
+	inline RECT GetRect() { return _rc; }
 
 	inline void SetRect(RECT rc) { _rc = rc; }
 

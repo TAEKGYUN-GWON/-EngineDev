@@ -6,8 +6,9 @@ T* Object::AddComponent()
 	Component* component = new T();
 
 	component->setGameObject(this);
-	if(component->GetName()!="PhysicsBody")
-		component->Init();
+	component->Init();
+	if (dynamic_cast<DrawComponent*>(component))
+		_draw.push_back((DrawComponent*)component);
 	_components.push_back(component);
 
 	return (T*)component;

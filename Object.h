@@ -4,7 +4,7 @@
 #include <list>
 class Transform;
 class Sprite;
-
+class DrawComponent;
 
 class Object
 {
@@ -12,7 +12,7 @@ protected:
 	Object();
 
 	Transform* _trans;
-	Sprite *_sprite;
+	vector<DrawComponent*> _draw;
 	vector <Component*> _components;
 	string _name;
 	string _tag;
@@ -33,7 +33,7 @@ public:
 
 
 	virtual inline Transform* GetTrans() { return _trans; }
-	inline Sprite* GetGraphic() { return _sprite; }
+	inline vector<DrawComponent*> GetDraw() { return _draw; }
 
 	inline string GetName() { return _name; }
 	inline void SetName(string name) { _name = name; }
