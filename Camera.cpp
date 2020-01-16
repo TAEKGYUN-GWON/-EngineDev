@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Camera.h"
+#include <math.h>
 
 HRESULT Camera::init()
 {
@@ -19,11 +20,11 @@ void Camera::Update()
 	{
 		_pos += Vector2(_speed, 0.f) * TIMEMANAGER->getElapsedTime();
 		UpdateMatrix();
-	}	
+	}
 
 	if (KEYMANAGER->isStayKeyDown('W'))
 	{
-		_pos += Vector2(0.f,-_speed) * TIMEMANAGER->getElapsedTime();
+		_pos += Vector2(0.f, -_speed) * TIMEMANAGER->getElapsedTime();
 		UpdateMatrix();
 
 	}
@@ -57,25 +58,31 @@ void Camera::UpdateMatrix()
 	//_matrix = _matrix * Matrix3x2F::Scale(SizeF(_scale.x, _scale.y));
 	//_matrix = _matrix * Matrix3x2F::Translation(-_pos.x,-_pos.y);
 
-
-	Matrix3x3 * a;
-	a = new Matrix3x3(_distance,		0,		0,
-						  0,		_distance,  0,
-						  0,			0,		1);
-
-	_matrix = _matrix * a->To_D2D1_Matrix_3x2_F() * Matrix3x2F::Translation(-_pos.x, -_pos.y);
+	_matrix = _matrix * _scaleMatrix * Matrix3x2F::Translation(-_pos.x, -_pos.y);
 }
 
 void Camera::SetPosition(Vector2 pos)
 {
-	//_pos = pos; 
 	_pos.x = pos.x - WINSIZEX / 2;
 	_pos.y = pos.y - WINSIZEY / 2;
-	if (_pos.x <= 0)_pos.x = 0;
-	if (_pos.y <= 0)_pos.y = 0;
+
+	if (_pos.x <= 0) _pos.x = 0;
+	if (_pos.y <= 0) _pos.y = 0;
 
 	if (_pos.x + WINSIZEX >= GRAPHICMANAGER->FindImage("bg")->GetWidth()) _pos.x = GRAPHICMANAGER->FindImage("bg")->GetWidth() - WINSIZEX;
 	if (_pos.y + WINSIZEY >= GRAPHICMANAGER->FindImage("bg")->GetHeight()) _pos.y = GRAPHICMANAGER->FindImage("bg")->GetHeight() - WINSIZEY;
+	UpdateMatrix();
+}
+
+void Camera::SetScale(Vector2 scale)
+{
+	_scale += scale;
+	float a = Clamp(_scale.x, 0.5f, 2.0f);
+
+	_scale = Vector2(a, a);
+
+	_scaleMatrix = Matrix3x2F::Scale(_scale.x, _scale.y, Point2F(WINSIZEX / 2, WINSIZEY / 2));
+
 	UpdateMatrix();
 }
 

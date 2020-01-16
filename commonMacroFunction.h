@@ -73,3 +73,8 @@ inline void Ellipse(HDC hdc, RECT& rc)
 {
 	Ellipse(hdc, rc.left, rc.top, rc.right, rc.bottom);
 }
+
+inline float Clamp(float value, float minValue, float maxValue)
+{
+	return max(min(value, maxValue), minValue);
+}

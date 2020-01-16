@@ -22,7 +22,7 @@ private:
 	string _imgKey;
 	Graphic* _graphic;
 
-	Brush_type::Enum _color;
+	ColorF::Enum _color;
 	PIVOT _pivot;
 
 public:
@@ -42,7 +42,7 @@ public:
 
 	void SetImgName(string key);
 	void SetMaxFrameX(int maxFrameX) { _maxFrameX = maxFrameX - 1; }
-	inline void SetRectColor(Brush_type::Enum color) { _color = color; }
+	inline void SetRectColor(ColorF::Enum color) { _color = color; }
 	inline void SetStrokeWidth(float strokeWidth) { _strokeWidth = strokeWidth; }
 	inline void SetPivot(PIVOT pivot) { _pivot = pivot; }
 

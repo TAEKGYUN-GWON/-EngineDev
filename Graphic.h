@@ -69,6 +69,7 @@ public:
 	//void Render(float x, float y);
 	void Render(float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void Render(Vector2 pos, PIVOT pivot = PIVOT::CENTER);
+	void Render(Vector2 pos, Vector2 scale, float angle, PIVOT pivot = PIVOT::CENTER);
 	void RenderUI(float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void RenderUI(Vector2 pos, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);

@@ -1,7 +1,9 @@
 #pragma once
+#include"Object.h"
+
 #define TILEWIDTH 30
 #define TILEHEIGHT 30
-#include"Object.h"
+
 class Tile : public Object
 {
 private:

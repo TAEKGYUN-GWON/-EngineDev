@@ -152,6 +152,49 @@ void Graphic::Render(Vector2 pos, PIVOT pivot)
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha);
 }
 
+void Graphic::Render(Vector2 pos, Vector2 scale, float angle, PIVOT pivot)
+{
+	_graphicInfo->size.x *= _graphicInfo->scale.x;
+	_graphicInfo->size.y *= _graphicInfo->scale.y;
+
+	Matrix3x2F scale_;
+	scale_ = Matrix3x2F::Scale(1, 1);
+	if (_isFlip) scale_ = Matrix3x2F::Scale(-1, 1);
+
+	// TODO : scale ÀâÀÚ..
+	//D2D1_MATRIX_3X2_F scale_ = Matrix3x2F::Identity();
+	//Matrix3x3* size = new Matrix3x3(scale.x, 0,		0,
+	//								   0, scale.y,	0,
+	//								   0,	 0,		1);
+	//
+	//scale_ = scale_ * size->To_D2D1_Matrix_3x2_F() *Matrix3x2F::Scale(0.001f, 0.001f);
+	//if (_isFlip) scale_ = Matrix3x2F::Scale(-scale.x, scale.y);
+
+	Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F());
+	Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
+
+	D2D1_RECT_F dxArea;
+
+	switch (pivot)
+	{
+	case LEFT_TOP:
+		dxArea = RectF(0, 0, _graphicInfo->size.x, _graphicInfo->size.y);
+		break;
+	case CENTER:
+		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y / 2, _graphicInfo->size.x / 2, _graphicInfo->size.y / 2);
+		break;
+	case TOP:
+		dxArea = RectF(-_graphicInfo->size.x / 2, 0, _graphicInfo->size.x / 2, _graphicInfo->size.y);
+		break;
+	case BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
+		break;
+	}
+
+	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
+	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha);
+}
+
 void Graphic::RenderUI(float x, float y, PIVOT pivot)
 {
 	_graphicInfo->size.x *= _graphicInfo->scale.x;
