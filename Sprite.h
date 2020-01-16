@@ -1,9 +1,9 @@
 #pragma once
-#include"Component.h"
+#include"DrawComponent.h"
 
 class Object;
 
-class Sprite : public Component
+class Sprite : public DrawComponent
 {
 private:
 	bool _isFlipX;

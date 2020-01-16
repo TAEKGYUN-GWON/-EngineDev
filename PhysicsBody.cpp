@@ -104,6 +104,12 @@ void PhysicsBody::SetBodyPosition()
 	_body->SetTransform(b2Vec2(bodyPosition.x, bodyPosition.y), _body->GetAngle());
 }
 
+void PhysicsBody::Render()
+{
+	if (KEYMANAGER->isToggleKey(VK_F1))
+		GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _body->GetAngle() * RadToDeg, ColorF::Blue, PIVOT::CENTER, 1.0f);
+}
+
 
 Vector2 PhysicsBody::GetBodyPosition()
 {

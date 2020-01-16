@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "Object.h"
-#include "Transform.h"
-#include "Sprite.h"
 
 #include"Scene.h"
 
@@ -10,7 +8,6 @@ Object::Object()
 	_trans = AddComponent<Transform>();
 	_trans->SetPos(Vector2::zero);
 	_trans->SetScale(Vector2(1,1));
-	_sprite = AddComponent<Sprite>();
 }
 
 void Object::Init()
@@ -54,31 +51,18 @@ void Object::Release()
 	delete this;
 }
 
-bool Compare(Object* a, Object* b)
-{
-
-	Transform* aT = a->GetComponent<Transform>();
-	Transform* bT = b->GetComponent<Transform>();
-
-	if (!aT)
-		return false;
-	else if (!bT)
-		return true;
-
-	return aT->bottomPos.y < bT->bottomPos.y;
-}
 
 void Object::Render()
 {
-	if (_sprite == nullptr || !_isActive) return;
 
-	_sprite->Render();
+	if (!_draw.size() || !_isActive) return;
 
-	sort(_children.begin(), _children.end(), Compare);
+	for(auto d : _draw)
+		d->Render();
 
 	for (Object* child : _children)
 	{
-		if (child->GetGraphic() == nullptr) continue;
+		if (!child->GetDraw().size()) continue;
 
 		child->Render();
 	}

@@ -13,6 +13,8 @@
 #include <tchar.h>
 #include <iostream>
 #include <functional>
+#include<list>
+#include <map>
 
 using namespace std;
 #include "Box2D/Box2D.h"
