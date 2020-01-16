@@ -69,6 +69,8 @@ public:
 
 	Matrix3x3 GetLocalToWorldMatrix() { return localToWorldMatrix; };
 
+	D2D_MATRIX_3X2_F GetLocalToWorldMatrixTo_D2D_MATRIX() { return localToWorldMatrix.To_D2D1_Matrix_3x2_F(); };
+
 	void SetRect();
 };
 
