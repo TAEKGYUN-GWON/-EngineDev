@@ -5,7 +5,7 @@ Sprite::Sprite()
 {
 	_name = "Sprite";
 
-	_color = Brush_type::BLUE;
+	_color = ColorF::Blue;
 	_pivot = PIVOT::CENTER;
 	_strokeWidth = 1.0f;
 }
@@ -57,7 +57,7 @@ void Sprite::Render()
 	}
 	else
 	{
-		GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _pivot);
+		GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _pivot);
 	}
 }
 
@@ -96,7 +96,7 @@ void Sprite::SetImgName(string key)
 	 _graphic = GRAPHICMANAGER->FindImage(_imgKey); 
 	 _maxFrameX = _graphic->GetMaxFrameX();
 
-	 if(_isFrame) _isPlay = true;
+	 if (_isFrame) _isPlay = true;
 }
 
 bool Sprite::IsFrameEnd()
