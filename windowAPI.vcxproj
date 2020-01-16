@@ -152,9 +152,11 @@
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="D2DEffect.h" />
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="iniDataManager.h" />
     <ClInclude Include="JsonManager.h" />
+    <ClInclude Include="Maptool.h" />
     <ClInclude Include="ObjSound.h" />
     <ClInclude Include="omega.h" />
     <ClInclude Include="Scene.h" />
@@ -197,9 +199,11 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="D2DEffect.cpp" />
+    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
     <ClCompile Include="JsonManager.cpp" />
+    <ClCompile Include="Maptool.cpp" />
     <ClCompile Include="ObjSound.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Graphic.cpp" />

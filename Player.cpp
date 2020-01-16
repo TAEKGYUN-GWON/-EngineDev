@@ -19,5 +19,4 @@ void Player::Init(Vector2 pos)
 	_trans->pos = pos;
 	_trans->scale = Vector2(_sprite->GetGraphic()->GetFrameWidth(), _sprite->GetGraphic()->GetFrameHeight());
 
-	_sprite->GetGraphic()->SetFlip(true);
 }

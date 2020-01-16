@@ -3,11 +3,12 @@
 #include "Sprite.h"
 #include"Transform.h"
 #include"Game.h"
+
 void StartScene::Init()
 {
 	Scene::Init();
 
-	//SCENEMANAGER->addScene("game", new Game);
+	SCENEMANAGER->addScene("maptool", new Maptool);
 	//GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
 	//_player =Object::CreateObject<Player>();
@@ -27,13 +28,15 @@ void StartScene::Init()
 	//_player = obj;
 	_ast = new Astar;
 	_ast->Init();
+
+
 	cout << "½ºÅ¸Æ®¾À" << endl;
 }
 
 void StartScene::Update()
 {
 	Scene::Update();
-	_ast->Update();
+	SCENEMANAGER->changeScene("maptool");
 }
 
 void StartScene::Render()

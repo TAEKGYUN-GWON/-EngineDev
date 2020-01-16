@@ -6,6 +6,8 @@ class Object;
 class Sprite : public Component
 {
 private:
+	bool _isFlipX;
+
 	bool _isFrame;
 	bool _isLoop;
 	bool _isPlay;

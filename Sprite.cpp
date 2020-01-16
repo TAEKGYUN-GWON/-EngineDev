@@ -11,6 +11,7 @@ Sprite::Sprite()
 	_color = ColorF::Blue;
 	_pivot = PIVOT::CENTER;
 	_strokeWidth = 1.0f;
+	_isFlipX = false;
 }
 
 void Sprite::Init(BOOL isFrame, BOOL isLoop)
@@ -32,7 +33,6 @@ void Sprite::Render()
 		PhysicsBody* a = _object->GetComponent<PhysicsBody>();
 
 		if (a != nullptr)
-			//GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), a->GetBody()->GetAngle() * RadToDeg, _color, _pivot, _strokeWidth);
 			GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), a->GetBody()->GetAngle() * Rad2Deg, _color, _pivot, _strokeWidth);
 		else
 			GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);

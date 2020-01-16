@@ -17,8 +17,8 @@ HRESULT Graphic::Init(ID2D1Bitmap* bitmap, string key, wstring path)
 	_graphicInfo->imgKey = key;
 	_graphicInfo->imgPath = path;
 
-	_graphicInfo->size.x = (float)_graphicInfo->bitmap->GetPixelSize().width;
-	_graphicInfo->size.y = (float)_graphicInfo->bitmap->GetPixelSize().height;
+	_graphicInfo->size.x = (int)_graphicInfo->bitmap->GetPixelSize().width;
+	_graphicInfo->size.y = (int)_graphicInfo->bitmap->GetPixelSize().height;
 
 	_graphicInfo->scale = Vector2(1.0f, 1.0f);
 	_graphicInfo->alpha = 1.0f;
@@ -46,8 +46,8 @@ HRESULT Graphic::Init(ID2D1Bitmap * bitmap, string key, wstring path, int maxFra
 	_graphicInfo->imgKey = key;
 	_graphicInfo->imgPath = path;
 
-	_graphicInfo->size.x = (float)_graphicInfo->bitmap->GetPixelSize().width;
-	_graphicInfo->size.y = (float)_graphicInfo->bitmap->GetPixelSize().height;
+	_graphicInfo->size.x = (int)_graphicInfo->bitmap->GetPixelSize().width;
+	_graphicInfo->size.y = (int)_graphicInfo->bitmap->GetPixelSize().height;
 
 	_graphicInfo->scale = Vector2(1.0f, 1.0f);
 	_graphicInfo->alpha = 1.0f;
@@ -154,20 +154,22 @@ void Graphic::Render(Vector2 pos, PIVOT pivot)
 
 void Graphic::Render(Vector2 pos, Vector2 scale, float angle, PIVOT pivot)
 {
-	_graphicInfo->size.x *= _graphicInfo->scale.x;
-	_graphicInfo->size.y *= _graphicInfo->scale.y;
+	// 이렇게 잡지말고 제대로 잡자..!
+	_graphicInfo->size.x = scale.x;
+	_graphicInfo->size.y = scale.y;
 
-	Matrix3x2F scale_;
-	scale_ = Matrix3x2F::Scale(1, 1);
-	if (_isFlip) scale_ = Matrix3x2F::Scale(-1, 1);
+	//Matrix3x2F scale_ = Matrix3x2F::Identity();
+	//scale_ = Matrix3x2F::Scale(scale.x, scale.y);
+	//if (_isFlip) scale_ = Matrix3x2F::Scale(-1, 1);
 
-	// TODO : scale 잡자..
+	// MUST TODO : scale 잡자..
 	//D2D1_MATRIX_3X2_F scale_ = Matrix3x2F::Identity();
 	//Matrix3x3* size = new Matrix3x3(scale.x, 0,		0,
 	//								   0, scale.y,	0,
 	//								   0,	 0,		1);
 	//
-	//scale_ = scale_ * size->To_D2D1_Matrix_3x2_F() *Matrix3x2F::Scale(0.001f, 0.001f);
+	//scale_ = scale_ * size->To_D2D1_Matrix_3x2_F() * Matrix3x2F::Scale(0.01f, 0.01f);
+	//scale_ = scale_ * size->To_D2D1_Matrix_3x2_F();// *Matrix3x2F::Scale(1 / scale.x, 1 / scale.y);
 	//if (_isFlip) scale_ = Matrix3x2F::Scale(-scale.x, scale.y);
 
 	Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F());
@@ -191,7 +193,8 @@ void Graphic::Render(Vector2 pos, Vector2 scale, float angle, PIVOT pivot)
 		break;
 	}
 
-	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
+	//_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
+	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha);
 }
 

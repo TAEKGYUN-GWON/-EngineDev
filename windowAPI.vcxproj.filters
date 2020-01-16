@@ -70,6 +70,9 @@
     <Filter Include="2DGameFramework\Object\Tile">
       <UniqueIdentifier>{106b0c3d-59b3-4f1c-bcd2-0779441b83c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\MapTool">
+      <UniqueIdentifier>{4f183df9-7dee-411b-a752-cf66aa8b113f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -204,6 +207,12 @@
     <ClInclude Include="omega.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Maptool.h">
+      <Filter>2DGameFramework\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="Draw.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -312,6 +321,12 @@
       <Filter>2DGameFramework\Object\Tile</Filter>
     </ClCompile>
     <ClCompile Include="ObjSound.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Maptool.cpp">
+      <Filter>2DGameFramework\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
