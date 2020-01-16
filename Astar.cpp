@@ -118,7 +118,7 @@ vector <Tile*> Astar::GetDirList(Vector2 idx)
 
 list<Vector2> Astar::pathFinder(Vector2 start, Vector2 end)
 {
-
+	InitTotalList();
 	Vector2 startId((int)(start.x / TILEWIDTH),	(int)(start.y / TILEHEIGHT));
 	Vector2 endId((int)(end.x / TILEWIDTH),	(int)(end.y / TILEHEIGHT));
 
