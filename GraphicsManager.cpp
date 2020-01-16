@@ -29,15 +29,15 @@ HRESULT GraphicsManager::initRenderTarget()
 	_d2dFactory->CreateHwndRenderTarget(D2D1::RenderTargetProperties(), D2D1::HwndRenderTargetProperties(_hWnd, size), &_renderTarget);
 
 	// brush create
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), &_brush[Brush_type::WHITE]);
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &_brush[Brush_type::BLACK]);
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Blue), &_brush[Brush_type::BLUE]);
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Red), &_brush[Brush_type::RED]);
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Yellow), &_brush[Brush_type::YELLOW]);
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray), &_brush[Brush_type::GRAY]);
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green), &_brush[Brush_type::GREEN]);
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Magenta), &_brush[Brush_type::MAGENTA]);
-	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Aquamarine), &_brush[Brush_type::AQUAMARINE]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), &_brush[Brush_type::White]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), &_brush[Brush_type::Black]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Blue), &_brush[Brush_type::Blue]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Red), &_brush[Brush_type::Red]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Yellow), &_brush[Brush_type::Yellow]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Gray), &_brush[Brush_type::Gray]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Green), &_brush[Brush_type::Green]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Magenta), &_brush[Brush_type::Magenta]);
+	_renderTarget->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Aquamarine), &_brush[Brush_type::Aquamarine]);
 
 	return S_OK;
 }
@@ -219,35 +219,47 @@ ID2D1Bitmap* GraphicsManager::CreateD2DBitmap(wstring file)
 	return bitmap;
 }
 
-void GraphicsManager::DrawLine(int startX, int startY, int destX, int destY, Brush_type::Enum color)
+void GraphicsManager::DrawLine(int startX, int startY, int destX, int destY, ColorF::Enum color, float strokeWidth)
 {
-	_renderTarget->DrawLine(Point2F(startX, startY), Point2F(destX, destY), _brush[color]);
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
+	_renderTarget->DrawLine(Point2F(startX, startY), Point2F(destX, destY), brush, strokeWidth);
+
+	brush->Release();
 }
 
-void GraphicsManager::DrawLine(float startX, float startY, float destX, float destY, Brush_type::Enum color)
+void GraphicsManager::DrawLine(float startX, float startY, float destX, float destY, ColorF::Enum color, float strokeWidth)
 {
-	_renderTarget->DrawLine(Point2F(startX, startY), Point2F(destX, destY), _brush[color]);
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
+	_renderTarget->DrawLine(Point2F(startX, startY), Point2F(destX, destY), brush, strokeWidth);
+
+	brush->Release();
 }
 
-void GraphicsManager::DrawLine(Vector2 start, Vector2 dest, Brush_type::Enum color)
+void GraphicsManager::DrawLine(Vector2 start, Vector2 dest, ColorF::Enum color, float strokeWidth)
 {
-	_renderTarget->DrawLine(Point2F(start.x, start.y), Point2F(dest.x, dest.y), _brush[color]);
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
+	_renderTarget->DrawLine(Point2F(start.x, start.y), Point2F(dest.x, dest.y), brush, strokeWidth);
+
+	brush->Release();
 }
 
-void GraphicsManager::DrawRect(float x, float y, float width, float height, float angle, Brush_type::Enum color)
+void GraphicsManager::DrawRect(float x, float y, float width, float height, float angle, ColorF::Enum color)
 {
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(x, y));
 
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation* CAMERA->GetMatrix());
-	_renderTarget->DrawRectangle(RectF(x, y, x + width, y + height), _brush[color]);
-}
+	_renderTarget->DrawRectangle(RectF(x, y, x + width, y + height), brush);
 
-void GraphicsManager::DrawRect(Vector2 pos, Vector2 size, float angle, float strokeWidth, Brush_type::Enum color)
-{
-	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
-
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation* CAMERA->GetMatrix());
-	_renderTarget->DrawRectangle(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), _brush[color], strokeWidth);
+	brush->Release();
 }
 
 void GraphicsManager::DrawRect(Vector2 pos, Vector2 size, float angle, ColorF::Enum color, PIVOT pivot, float strokeWidth)
@@ -272,76 +284,88 @@ void GraphicsManager::DrawRect(Vector2 pos, Vector2 size, float angle, ColorF::E
 	SafeRelease(brush);
 }
 
-void GraphicsManager::DrawRect(Vector2 pos, Vector2 size, float angle, Brush_type::Enum brush, PIVOT pivot, float strokeWidth)
+void GraphicsManager::DrawSkewRect(Vector2 pos, Vector2 size, float angle, float strokeWidth, ColorF::Enum color)
 {
-	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation* CAMERA->GetMatrix());
-
-	switch (pivot)
-	{
-	case LEFT_TOP:
-		_renderTarget->DrawRectangle(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), _brush[brush], strokeWidth);
-		break;
-	case CENTER:
-		_renderTarget->DrawRectangle(RectF(pos.x - size.x / 2, pos.y - size.y / 2, pos.x + size.x / 2, pos.y + size.y / 2), _brush[brush], strokeWidth);
-		break;
-	}
-}
-
-void GraphicsManager::DrawSkewRect(Vector2 pos, Vector2 size, float angle, float strokeWidth, Brush_type::Enum color)
-{
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
 
 	_renderTarget->SetTransform(Matrix3x2F::Skew(PI / 4 * RadToDeg, 0.0f, Point2F(pos.x, pos.y)) * rotation * CAMERA->GetMatrix());
-	_renderTarget->DrawRectangle(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), _brush[color], strokeWidth);
+	_renderTarget->DrawRectangle(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), brush, strokeWidth);
+
+	brush->Release();
 }
 
-void GraphicsManager::DrawRoundRect(float x, float y, float width, float height, float radiusX, float radiusY, Brush_type::Enum color)
+void GraphicsManager::DrawRoundRect(float x, float y, float width, float height, float radiusX, float radiusY, ColorF::Enum color, float strokeWidth)
 {
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
-	_renderTarget->DrawRoundedRectangle(RoundedRect(RectF(x, y, x + width, y + height), radiusX, radiusY), _brush[color]);
+	_renderTarget->DrawRoundedRectangle(RoundedRect(RectF(x, y, x + width, y + height), radiusX, radiusY), brush, strokeWidth);
+	brush->Release();
 }
 
-void GraphicsManager::DrawRoundRect(Vector2 pos, Vector2 size, Vector2 radius, Brush_type::Enum color)
+void GraphicsManager::DrawRoundRect(Vector2 pos, Vector2 size, Vector2 radius, ColorF::Enum color, float strokeWidth)
 {
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
 	_renderTarget->SetTransform(Matrix3x2F::Identity()* CAMERA->GetMatrix());
-	_renderTarget->DrawRoundedRectangle(RoundedRect(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), radius.x, radius.y), _brush[color]);
+	_renderTarget->DrawRoundedRectangle(RoundedRect(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), radius.x, radius.y), brush, strokeWidth);
+	brush->Release();
 }
 
-void GraphicsManager::DrawEllipse(float x, float y, float radiusX, float radiusY, Brush_type::Enum color)
+void GraphicsManager::DrawEllipse(float x, float y, float radiusX, float radiusY, ColorF::Enum color, float strokeWidth)
 {
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
-	_renderTarget->DrawEllipse(Ellipse(Point2F(x, y), radiusX, radiusY), _brush[color], 3.0f);
+	_renderTarget->DrawEllipse(Ellipse(Point2F(x, y), radiusX, radiusY), brush, strokeWidth);
+	brush->Release();
 }
 
-void GraphicsManager::DrawFillRect(Vector2 pos, Vector2 size, float angle, Brush_type::Enum color, PIVOT pivot)
+void GraphicsManager::DrawFillRect(Vector2 pos, Vector2 size, float angle, ColorF::Enum color, PIVOT pivot)
 {
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
+
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMatrix());
 
 	switch (pivot)
 	{
 	case LEFT_TOP:
-		_renderTarget->FillRectangle(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), _brush[color]);
+		_renderTarget->FillRectangle(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), brush);
 		break;
 	case CENTER:
-		_renderTarget->FillRectangle(RectF(pos.x - size.x / 2, pos.y - size.y / 2, pos.x + size.x / 2, pos.y + size.y / 2), _brush[color]);
+		_renderTarget->FillRectangle(RectF(pos.x - size.x / 2, pos.y - size.y / 2, pos.x + size.x / 2, pos.y + size.y / 2), brush);
 		break;
 	}
+	brush->Release();
 }
 
-void GraphicsManager::DrawFillEllipse(Vector2 pos, Vector2 radius, float angle, Brush_type::Enum color)
+void GraphicsManager::DrawFillEllipse(Vector2 pos, Vector2 radius, float angle, ColorF::Enum color)
 {
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
-	_renderTarget->FillEllipse(Ellipse(Point2F(pos.x, pos.y), radius.x, radius.y), _brush[color]);
+	_renderTarget->FillEllipse(Ellipse(Point2F(pos.x, pos.y), radius.x, radius.y), brush);
+	brush->Release();
 }
 
-void GraphicsManager::DrawFillRoundRect(Vector2 pos, Vector2 size, Vector2 radius, Brush_type::Enum color)
+void GraphicsManager::DrawFillRoundRect(Vector2 pos, Vector2 size, Vector2 radius, ColorF::Enum color)
 {
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
-	_renderTarget->FillRoundedRectangle(RoundedRect(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), radius.x, radius.y), _brush[color]);
+	_renderTarget->FillRoundedRectangle(RoundedRect(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), radius.x, radius.y), brush);
+	brush->Release();
 }
 
 HRESULT GraphicsManager::AddTextFormat(wstring fontName, float size)
@@ -350,95 +374,12 @@ HRESULT GraphicsManager::AddTextFormat(wstring fontName, float size)
 	IDWriteTextFormat* format = nullptr;
 
 	hr = _wFactory->CreateTextFormat(fontName.c_str(), 0, DWRITE_FONT_WEIGHT_REGULAR, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, size, L"ko", &format);
-	
+
 	this->_txtFormatList.insert(make_pair(fontName, format));
 
 	if (FAILED(hr)) return hr;
 
 	return hr;
-}
-
-void GraphicsManager::DrawTextD2D(Vector2 pos, wstring txt, int txtSize, Brush_type::Enum color, DWRITE_TEXT_ALIGNMENT alig, wstring font)
-{
-	_wFactory->CreateTextLayout(txt.c_str(), txt.length(), _txtFormatList[font], txt.length() * txtSize, txtSize, &_txtLayout);
-
-	DWRITE_TEXT_RANGE range;
-	range.startPosition = 0;
-	range.length = txt.length();
-	
-	_txtLayout->SetFontSize(txtSize, range);
-	_txtLayout->SetTextAlignment(alig);
-
-	_renderTarget->SetTransform(Matrix3x2F::Identity());
-	_renderTarget->DrawTextLayout(Point2F(pos.x, pos.y), _txtLayout, _brush[color]);
-
-	_txtLayout->Release();
-}
-
-void GraphicsManager::DrawTextD2D(Vector2 pos, wstring txt, int txtSize, ColorF::Enum color, DWRITE_TEXT_ALIGNMENT alig, wstring font)
-{
-	_wFactory->CreateTextLayout(txt.c_str(), txt.length(), _txtFormatList[font], txt.length() * txtSize, txtSize, &_txtLayout);
-
-	DWRITE_TEXT_RANGE range;
-	range.startPosition = 0;
-	range.length = txt.length();
-
-	_txtLayout->SetFontSize(txtSize, range);
-	_txtLayout->SetTextAlignment(alig);
-
-	ID2D1SolidColorBrush* brush;
-	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
-
-	_renderTarget->SetTransform(Matrix3x2F::Identity());
-	_renderTarget->DrawTextLayout(Point2F(pos.x, pos.y), _txtLayout, brush);
-
-	SafeRelease(brush);
-	_txtLayout->Release();
-}
-
-void GraphicsManager::DrawTextD2D(Vector2 pos, const char * txt, int txtSize, Brush_type::Enum color, DWRITE_TEXT_ALIGNMENT alig, wstring font)
-{
-	string buffer = txt;
-	wstring str;
-	str.assign(buffer.begin(), buffer.end());
-
-	_wFactory->CreateTextLayout(str.c_str(), str.length(), _txtFormatList[font], str.length() * txtSize, txtSize, &_txtLayout);
-
-	DWRITE_TEXT_RANGE range;
-	range.startPosition = 0;
-	range.length = str.length();
-
-	_txtLayout->SetFontSize(txtSize, range);
-	_txtLayout->SetTextAlignment(alig);
-
-	_renderTarget->SetTransform(Matrix3x2F::Identity());
-	_renderTarget->DrawTextLayout(Point2F(pos.x, pos.y), _txtLayout, _brush[color]);
-
-	_txtLayout->Release();
-}
-
-void GraphicsManager::DrawTextD2D(Vector2 pos, const char * txt, int txtSize, ColorF::Enum color, DWRITE_TEXT_ALIGNMENT alig, wstring font)
-{
-	string buffer = txt;
-	wstring str;
-	str.assign(buffer.begin(), buffer.end());
-
-	_wFactory->CreateTextLayout(str.c_str(), str.length(), _txtFormatList[font], str.length() * txtSize, txtSize, &_txtLayout);
-
-	DWRITE_TEXT_RANGE range;
-	range.startPosition = 0;
-	range.length = str.length();
-
-	_txtLayout->SetFontSize(txtSize, range);
-	_txtLayout->SetTextAlignment(alig);
-
-	ID2D1SolidColorBrush* brush;
-	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
-
-	_renderTarget->SetTransform(Matrix3x2F::Identity());
-	_renderTarget->DrawTextLayout(Point2F(pos.x, pos.y), _txtLayout, brush);
-
-	_txtLayout->Release();
 }
 
 void GraphicsManager::DrawTextD2D(Vector2 pos, wstring txt, int txtSize, float alpha, ColorF::Enum color, DWRITE_TEXT_ALIGNMENT alig, wstring font)
@@ -484,24 +425,6 @@ void GraphicsManager::DrawTextD2D(Vector2 pos, const char * txt, int txtSize, fl
 	_renderTarget->DrawTextLayout(Point2F(pos.x, pos.y), _txtLayout, brush);
 
 	brush->Release();
-	_txtLayout->Release();
-}
-
-void GraphicsManager::DrawTextField(Vector2 pos, wstring txt, int txtSize, int width, int height, Brush_type::Enum color, DWRITE_TEXT_ALIGNMENT alig, wstring font)
-{
-	_wFactory->CreateTextLayout(txt.c_str(), txt.length(), _txtFormatList[font], width, height, &_txtLayout);
-
-	DWRITE_TEXT_RANGE range;
-	range.startPosition = 0;
-	range.length = txt.length();
-
-	_txtLayout->SetFontSize(txtSize, range);
-	_txtLayout->SetTextAlignment(alig);
-	_txtLayout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-
-	_renderTarget->SetTransform(Matrix3x2F::Identity());
-	_renderTarget->DrawTextLayout(Point2F(pos.x, pos.y), _txtLayout, _brush[color]);
-
 	_txtLayout->Release();
 }
 

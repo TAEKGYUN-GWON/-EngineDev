@@ -1,7 +1,9 @@
 #pragma once
+#include"Object.h"
+
 #define TILEWIDTH 30
 #define TILEHEIGHT 30
-#include"Object.h"
+
 class Tile : public Object
 {
 private:
@@ -21,7 +23,7 @@ private:
 
 	string _attribute;	//타일속성
 
-	Brush_type::Enum _color;
+	ColorF::Enum _color;
 
 public:
 	Tile() :_totalCost(0), _costFromStart(0),
@@ -57,7 +59,7 @@ public:
 	void SetIsOpen(bool isOpen) { _isOpen = isOpen; }
 	bool GetIsOpen() { return _isOpen; }
 
-	void SetColor(Brush_type::Enum color) { _color = color; }
+	void SetColor(ColorF::Enum color) { _color = color; }
 	void SetFrameXY(int x, int y);
 };
 

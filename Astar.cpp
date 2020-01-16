@@ -39,7 +39,7 @@ void Astar::SetTiles()
 			//시작타일의 인덱스와 같은 타일이면 == 시작타일
 			if (j == _startTile->GetIdX() && i == _startTile->GetIdY())
 			{
-				_startTile->SetColor(Brush_type::AQUAMARINE);
+				_startTile->SetColor(ColorF::Aquamarine);
 				_startTile->SetIsOpen(true);
 				_vTotalList.push_back(_startTile);
 				continue;
@@ -48,7 +48,7 @@ void Astar::SetTiles()
 			//도착타일의 인덱스와 같은 타일이면 == 도착타일
 			if (j == _endTile->GetIdX() && i == _endTile->GetIdY())
 			{
-				_endTile->SetColor(Brush_type::MAGENTA);
+				_endTile->SetColor(ColorF::Magenta);
 				_endTile->SetIsOpen(true);
 				_vTotalList.push_back(_endTile);
 				continue;
@@ -92,7 +92,7 @@ vector<Tile*> Astar::AddOpenList(Tile * currentTile)
 				}
 			}
 
-			if (Node->GetAttribute() != "end") Node->SetColor(Brush_type::GREEN);
+			if (Node->GetAttribute() != "end") Node->SetColor(ColorF::Green);
 			if (!isOpen) continue;
 
 			_vOpenList.push_back(Node);
@@ -152,7 +152,7 @@ void Astar::pathFinder(Tile * currentTile)
 	{
 		while (_currentTile->GetParentNode() != NULL)
 		{
-			_currentTile->SetColor(Brush_type::RED);
+			_currentTile->SetColor(ColorF::Red);
 			_currentTile = _currentTile->GetParentNode();
 		}
 
@@ -215,7 +215,7 @@ void Astar::Update()
 
 				_vTotalList[i]->SetIsOpen(false);
 				_vTotalList[i]->SetAttribute("wall");
-				_vTotalList[i]->SetColor(Brush_type::BLUE);
+				_vTotalList[i]->SetColor(ColorF::Blue);
 
 				break;
 			}

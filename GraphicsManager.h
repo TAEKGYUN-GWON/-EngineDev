@@ -32,15 +32,15 @@ namespace Brush_type
 {
 	enum Enum
 	{
-		WHITE,
-		BLACK,
-		BLUE,
-		RED,
-		YELLOW,
-		GRAY,
-		GREEN,
-		MAGENTA,
-		AQUAMARINE,
+		White,
+		Black,
+		Blue,
+		Red,
+		Yellow,
+		Gray,
+		Green,
+		Magenta,
+		Aquamarine,
 		BRUSH_NONE,
 	};
 }
@@ -78,7 +78,7 @@ private:
 	ID2D1Bitmap* CreateD2DBitmap(wstring file);
 
 public:
-	GraphicsManager() 
+	GraphicsManager()
 	{
 		_d2dFactory = nullptr;
 		_renderTarget = nullptr;
@@ -105,38 +105,29 @@ public:
 
 	void DrawFrameImage(string key, Vector2 pos, float curFrameX, float curFrameY, PIVOT pivot = PIVOT::CENTER);
 
-	void DrawLine(int startX, int startY, int destX, int destY, Brush_type::Enum color = Brush_type::BLACK);
-	void DrawLine(float startX, float startY, float destX, float destY, Brush_type::Enum color = Brush_type::BLACK);
-	void DrawLine(Vector2 start, Vector2 dest, Brush_type::Enum color = Brush_type::BLACK);
+	void DrawLine(int startX, int startY, int destX, int destY, ColorF::Enum color = ColorF::Black, float strokeWidth = 1.0f);
+	void DrawLine(float startX, float startY, float destX, float destY, ColorF::Enum color = ColorF::Black, float strokeWidth = 1.0f);
+	void DrawLine(Vector2 start, Vector2 dest, ColorF::Enum color = ColorF::Black, float strokeWidth = 1.0f);
 
-	void DrawRect(float x, float y, float width, float height, float angle = 0.0f, Brush_type::Enum color = Brush_type::BLACK);
-	void DrawRect(Vector2 pos, Vector2 size, float angle = 0.0f, float strokeWidth = 1.0f, Brush_type::Enum color = Brush_type::BLACK);
+	void DrawRect(float x, float y, float width, float height, float angle = 0.0f, ColorF::Enum color = ColorF::Black);
 	void DrawRect(Vector2 pos, Vector2 size, float angle = 0.0f, ColorF::Enum color = ColorF::Black, PIVOT pivot = PIVOT::CENTER, float strokeWidth = 1.0f);
-	void DrawRect(Vector2 pos, Vector2 size, float angle = 0.0f, Brush_type::Enum brush = Brush_type::Enum::BLACK, PIVOT pivot = PIVOT::CENTER, float strokeWidth = 1.0f);
-	void DrawSkewRect(Vector2 pos, Vector2 size, float angle = 0.0f, float strokeWidth = 1.0f, Brush_type::Enum color = Brush_type::BLACK);
+	void DrawSkewRect(Vector2 pos, Vector2 size, float angle = 0.0f, float strokeWidth = 1.0f, ColorF::Enum color = ColorF::Black);
 
-	void DrawRoundRect(float x, float y, float width, float height, float radiusX, float radiusY, Brush_type::Enum color = Brush_type::BLACK);
-	void DrawRoundRect(Vector2 pos, Vector2 size, Vector2 radius, Brush_type::Enum color = Brush_type::BLACK);
+	void DrawRoundRect(float x, float y, float width, float height, float radiusX, float radiusY, ColorF::Enum color = ColorF::Black, float strokeWidth = 3.0f);
+	void DrawRoundRect(Vector2 pos, Vector2 size, Vector2 radius, ColorF::Enum color = ColorF::Black, float strokeWidth = 3.0f);
 
-	void DrawEllipse(float x, float y, float radiusX, float radiusY, Brush_type::Enum color = Brush_type::BLACK);
+	void DrawEllipse(float x, float y, float radiusX, float radiusY, ColorF::Enum color = ColorF::Black, float strokeWidth = 3.0f);
 
-	void DrawFillRect(Vector2 pos, Vector2 size, float angle = 0.0f, Brush_type::Enum color = Brush_type::BLACK, PIVOT pivot = PIVOT::CENTER);
-	void DrawFillEllipse(Vector2 pos, Vector2 radius, float angle = 0.0f, Brush_type::Enum color = Brush_type::BLACK);
-	void DrawFillRoundRect(Vector2 pos, Vector2 size, Vector2 radius, Brush_type::Enum color = Brush_type::BLACK);
+	void DrawFillRect(Vector2 pos, Vector2 size, float angle = 0.0f, ColorF::Enum color = ColorF::Black, PIVOT pivot = PIVOT::CENTER);
+	void DrawFillEllipse(Vector2 pos, Vector2 radius, float angle = 0.0f, ColorF::Enum color = ColorF::Black);
+	void DrawFillRoundRect(Vector2 pos, Vector2 size, Vector2 radius, ColorF::Enum color = ColorF::Black);
 
 	HRESULT AddTextFormat(wstring fontName, float size);
 
 	// txtSize : ±Û¾¾ Å©±â (±Û¾¾ ±æÀÌ X)
-	void DrawTextD2D(Vector2 pos, wstring txt, int txtSize, Brush_type::Enum color = Brush_type::BLACK, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
-	void DrawTextD2D(Vector2 pos, wstring txt, int txtSize, ColorF::Enum color = ColorF::Black, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
-	
-	void DrawTextD2D(Vector2 pos, const char* txt, int txtSize, Brush_type::Enum color = Brush_type::BLACK, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
-	void DrawTextD2D(Vector2 pos, const char* txt, int txtSize, ColorF::Enum color = ColorF::Black, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
-	
-	void DrawTextD2D(Vector2 pos, wstring txt, int txtSize, float alpha, ColorF::Enum color = ColorF::Black, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
-	void DrawTextD2D(Vector2 pos, const char* txt, int txtSize, float alpha, ColorF::Enum color = ColorF::Black, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
-	
-	void DrawTextField(Vector2 pos, wstring txt, int txtSize, int width, int height, Brush_type::Enum color = Brush_type::BLACK, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
+	void DrawTextD2D(Vector2 pos, wstring txt, int txtSize, float alpha = 1.0f, ColorF::Enum color = ColorF::Black, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
+	void DrawTextD2D(Vector2 pos, const char* txt, int txtSize, float alpha = 1.0f, ColorF::Enum color = ColorF::Black, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
+
 	void DrawTextField(Vector2 pos, wstring txt, int txtSize, int width, int height, float alpha, ColorF::Enum color = ColorF::Black, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
 
 	ID2D1HwndRenderTarget* GetRenderTarget() { return _renderTarget; }

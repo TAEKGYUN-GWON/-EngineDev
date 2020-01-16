@@ -6,7 +6,7 @@ void Tile::Init(int idX, int idY)
 {
 	//_sprite->Init();
 	//_sprite->Stop();
-	_color = Brush_type::Enum::GRAY;
+	_color = ColorF::Enum::Gray;
 
 	_center = Vector2(idX * TILEWIDTH + (TILEWIDTH / 2),
 		idY * TILEHEIGHT + (TILEHEIGHT / 2));
