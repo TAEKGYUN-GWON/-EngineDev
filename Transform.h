@@ -15,6 +15,7 @@ private:
 	Matrix3x3 translateMatrix;
 	Matrix3x3 localToWorldMatrix;
 
+	//매트릭스 업데이트
 	void UpdateMatrix();
 
 public:
@@ -31,6 +32,7 @@ public:
 	//Vector2 타입 좌표 가져오기
 	inline Vector2 GetPos() { return pos; }
 
+	//월드좌표 가져오기
 	Vector2 GetWorldPosition();
 
 	//Vector2 타입 사이즈 가져오기
@@ -49,6 +51,7 @@ public:
 	//float 타입으로 좌표 설정하기
 	inline void SetPos(float x, float y) { pos = Vector2(x, y); }
 
+	//월드좌표 세팅
 	void SetWorldPos(Vector2 pos);
 
 	//Vector2 타입으로 사이즈 설정하기
@@ -67,8 +70,10 @@ public:
 
 	inline void SetRect(RECT rc) { _rc = rc; }
 
+	//3x3 매트릭스로 로컬 투 월드 매트릭스 가져오기
 	Matrix3x3 GetLocalToWorldMatrix() { return localToWorldMatrix; };
 
+	//D2D 3x2 매트릭스로 로컬 투 월드 매트릭스 가져오기
 	D2D_MATRIX_3X2_F GetLocalToWorldMatrixTo_D2D_MATRIX() { return localToWorldMatrix.To_D2D1_Matrix_3x2_F(); };
 
 	void SetRect();
