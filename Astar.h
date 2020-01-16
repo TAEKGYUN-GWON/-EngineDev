@@ -1,8 +1,8 @@
 #pragma once
 #include"Tile.h"
 
-#define TILENUMX (WINSIZEX / TILEWIDTH)
-#define TILENUMY (WINSIZEY / TILEHEIGHT)
+#define TILENUMX (1335 / TILEWIDTH)
+#define TILENUMY (1100 / TILEHEIGHT)
 
 class Astar
 {

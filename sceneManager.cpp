@@ -18,7 +18,6 @@ HRESULT sceneManager::init()
 	if (!_isFirstInit) return S_OK;
 	addScene("PG", new StartScene);
 	changeScene("PG");
-
 	return S_OK;
 }
 

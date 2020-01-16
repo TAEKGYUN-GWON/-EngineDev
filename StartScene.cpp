@@ -13,7 +13,7 @@ void StartScene::Init()
 	//_player =Object::CreateObject<Player>();
 	//_player->Init(Vector2(WINSIZEX / 2 - 100, WINSIZEY / 2));
 	//
-	//_player2 = Object::CreateObject<Player>();
+	_player2 = Object::CreateObject<Player>();
 	//_player2->Init(Vector2(WINSIZEX / 2 + 100, WINSIZEY / 2));
 	//_player2->GetGraphic()->GetGraphic()->SetFlip(false);
 

@@ -67,16 +67,16 @@ float Vector2::Magnitude()
 
 Vector2 Vector2::Nomalized()
 {
-	Vector2 result;
-	float size = Magnitude();
+	//Vector2 result;
+	float size = SqrMagnitude();
 
 	if (!size)	
 		return Vector2::zero;
 
-	result.x /= size;
-	result.y /= size;
+	this->x /= size;
+	this->y /= size;
 
-	return result;
+	return *this;
 }
 
 float Vector2::SqrMagnitude()

@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "Astar.h"
-#include"Transform.h"
 
 Astar::Astar()
 {
 }
+
 
 Astar::~Astar()
 {
@@ -26,7 +26,7 @@ void Astar::SetTiles()
 	_startTile->SetAttribute("start");
 
 	_endTile = new Tile;
-	_endTile->Init(22, 2);
+	_endTile->Init(20, 12);
 	_endTile->SetAttribute("end");
 
 	_currentTile = _startTile;
@@ -79,21 +79,21 @@ vector<Tile*> Astar::AddOpenList(Tile * currentTile)
 			if (Node->GetAttribute() == "wall") continue;
 
 			//현재 타일로 계속 갱신
-			Node->SetParent(_currentTile);
+			Node->SetParentNode(_currentTile);
 
-			bool addObj = true;
+			bool isOpen = true;
 
 			for (_viOpenList = _vOpenList.begin(); _viOpenList != _vOpenList.end(); ++_viOpenList)
 			{
 				if (*_viOpenList == Node)
 				{
-					addObj = false;
+					isOpen = false;
 					break;
 				}
 			}
 
 			if (Node->GetAttribute() != "end") Node->SetColor(Brush_type::GREEN);
-			if (!addObj) continue;
+			if (!isOpen) continue;
 
 			_vOpenList.push_back(Node);
 		}
@@ -103,6 +103,7 @@ vector<Tile*> Astar::AddOpenList(Tile * currentTile)
 
 void Astar::pathFinder(Tile * currentTile)
 {
+
 	//임의의 경로비용값 설정
 	float tempTotalCost = 5000;
 	Tile* tempTile = NULL;
@@ -115,7 +116,7 @@ void Astar::pathFinder(Tile * currentTile)
 			(abs(_endTile->GetIdX() - _vOpenList[i]->GetIdX()) +
 				abs(_endTile->GetIdY() - _vOpenList[i]->GetIdY())) * 10);
 
-		Vector2 center1 = _vOpenList[i]->GetParent()->GetCenter();
+		Vector2 center1 = _vOpenList[i]->GetParentNode()->GetCenter();
 		Vector2 center2 = _vOpenList[i]->GetCenter();
 
 		_vOpenList[i]->SetCostFromStart(getDistance(center1.x, center1.y, center2.x, center2.y) > TILEWIDTH ? 14 : 10);
@@ -140,6 +141,7 @@ void Astar::pathFinder(Tile * currentTile)
 			}
 		}
 
+
 		_vOpenList[i]->SetIsOpen(false);
 		if (!addObj) continue;
 
@@ -148,10 +150,10 @@ void Astar::pathFinder(Tile * currentTile)
 
 	if (tempTile->GetAttribute() == "end")
 	{
-		while (_currentTile->GetParent() != NULL)
+		while (_currentTile->GetParentNode() != NULL)
 		{
 			_currentTile->SetColor(Brush_type::RED);
-			_currentTile = _currentTile->GetParent();
+			_currentTile = _currentTile->GetParentNode();
 		}
 
 		return;
@@ -182,20 +184,6 @@ void Astar::pathFinder(Tile * currentTile)
 
 }
 
-void Astar::SetPathObject(Tile * node, Object * obj)
-{
-	list<Vector2> path;
-	Tile* curNode = node;
-	while (true)
-	{
-		path.push_front(Vector2(curNode->GetIdX(), curNode->GetIdY()));
-		curNode = curNode->GetParent();
-		if (curNode == nullptr) break;
-	}
-
-	//obj->
-}
-
 void Astar::Release()
 {
 }
@@ -221,6 +209,7 @@ void Astar::Update()
 		{
 			if (PtInRect(&(RectMakeCenter(_vTotalList[i]->GetCenter().x, _vTotalList[i]->GetCenter().y, TILEWIDTH, TILEHEIGHT)), _ptMouse))
 			{
+				cout << "됨" << i << endl;
 				if (_vTotalList[i]->GetAttribute() == "start") continue;
 				if (_vTotalList[i]->GetAttribute() == "end") continue;
 
@@ -232,6 +221,7 @@ void Astar::Update()
 			}
 		}
 	}
+
 }
 
 void Astar::Render()
