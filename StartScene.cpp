@@ -50,7 +50,7 @@ void StartScene::Update()
 {
 	Scene::Update();
 	time += TIMEMANAGER->getElapsedTime();
-	if (time >= 0.5)
+	/*if (time >= 0.5)
 	{
 		for (Enemy1* e : vEnemy)
 		{
@@ -59,7 +59,7 @@ void StartScene::Update()
 				e->SetPath(_ast->pathFinder(e->GetTrans()->pos, _player->GetTrans()->pos));
 		}
 		time = 0;
-	}
+	}*/
 }
 
 void StartScene::Render()

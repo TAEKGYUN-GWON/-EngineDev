@@ -7,7 +7,6 @@ enum BodyType
 	KINEMATIC
 };
 
-class Transform;
 
 class PhysicsBody : public DrawComponent
 {

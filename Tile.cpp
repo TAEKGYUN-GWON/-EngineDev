@@ -8,6 +8,8 @@ void Tile::Init(int idX, int idY)
 	//_sprite->Stop();
 	_color = ColorF::Enum::Gray;
 
+	AddComponent<Sprite>();
+
 	_trans->pos = Vector2(idX * TILEWIDTH + (TILEWIDTH / 2),
 		idY * TILEHEIGHT + (TILEHEIGHT / 2));
 	_trans->SetScale(TILEWIDTH, TILEHEIGHT);
