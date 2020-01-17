@@ -2,7 +2,7 @@
 #include"Tile.h"
 #define TILENUMX (1335 / TILEWIDTH)
 #define TILENUMY (1100 / TILEHEIGHT)
-
+//¤·
 class Astar
 {
 private:
