@@ -1,6 +1,9 @@
 #pragma once
 #include"Object.h"
 
+#define TILENUMX (1335 / TILEWIDTH)
+#define TILENUMY (1100 / TILEHEIGHT)
+
 #define TILEWIDTH 30
 #define TILEHEIGHT 30
 

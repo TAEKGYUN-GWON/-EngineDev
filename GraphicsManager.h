@@ -101,7 +101,7 @@ public:
 
 	void DrawImage(string key, float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void DrawImage(string key, Vector2 pos, PIVOT pivot = PIVOT::CENTER);
-	void DrawImage(string key, Vector2 pos, Vector2 scale, float angle, PIVOT pivot = PIVOT::CENTER);
+	void DrawImage(string key, Vector2 pos, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER);
 
 	void DrawFrameImage(string key, Vector2 pos, float curFrameX, float curFrameY, PIVOT pivot = PIVOT::CENTER);
 

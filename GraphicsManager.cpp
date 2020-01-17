@@ -178,10 +178,10 @@ void GraphicsManager::DrawImage(string key, Vector2 pos, PIVOT pivot)
 	if (graphic) graphic->Render(pos, pivot);
 }
 
-void GraphicsManager::DrawImage(string key, Vector2 pos, Vector2 scale, float angle, PIVOT pivot)
+void GraphicsManager::DrawImage(string key, Vector2 pos, Vector2 scale, float angle, bool flipX, float alpha, PIVOT pivot)
 {
 	Graphic* graphic = FindImage(key);
-	if (graphic) graphic->Render(pos, scale, angle, pivot);
+	if (graphic) graphic->Render(pos, scale, angle, flipX, alpha, pivot);
 }
 
 void GraphicsManager::DrawFrameImage(string key, Vector2 pos, float curFrameX, float curFrameY, PIVOT pivot)
