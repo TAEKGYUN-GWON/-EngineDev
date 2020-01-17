@@ -44,6 +44,8 @@ void StartScene::Init()
 	Vector2 b(10, 10);
 	if (a < b) cout<<"맞음"<<endl;
 	else cout << "틀림" << endl;
+
+
 }
 
 void StartScene::Update()
