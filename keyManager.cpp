@@ -1,11 +1,9 @@
 #include "stdafx.h"
 #include "keyManager.h"
 
-
 keyManager::keyManager()
 {
 }
-
 
 keyManager::~keyManager()
 {
@@ -16,6 +14,7 @@ HRESULT keyManager::init()
 	for (int i = 0; i < KEYMAX; i++)
 	{
 		this->getKeyUp().set(i, false);
+		this->getKeyDown().set(i, false);
 	}
 
 	return S_OK;

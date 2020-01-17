@@ -6,6 +6,8 @@ class Object;
 class Sprite : public DrawComponent
 {
 private:
+	bool _isFlipX;
+
 	bool _isFrame;
 	bool _isLoop;
 	bool _isPlay;
@@ -19,6 +21,8 @@ private:
 	float _FPS;
 	float _strokeWidth;
 
+	float _alpha;
+
 	string _imgKey;
 	Graphic* _graphic;
 
@@ -31,10 +35,16 @@ public:
 	virtual void Render();
 	virtual void Update() override;
 
+	inline void SetFlipX(bool value) { _isFlipX = value; }
 	inline void SetFrameX(int frameX) { _curFrameX = frameX; }
 	inline void SetFrameY(int frameY) { _curFrameY = frameY; }
 	inline void SetFPS(float time) { _FPS = 1.0f / time; }
+	inline void SetAlpha(float alpha) { _alpha = alpha; }
+
 	inline string GetImgKey() { return _imgKey; }
+	inline bool GetFlipX() { return _isFlipX; }
+	inline float GetAlpha() { return _alpha; }
+
 	void Start();
 	void Stop();
 	void Pause();

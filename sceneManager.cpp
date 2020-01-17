@@ -2,10 +2,10 @@
 #include "sceneManager.h"
 #include "Scene.h"
 #include"StartScene.h"
+
 sceneManager::sceneManager()
 {
 }
-
 
 sceneManager::~sceneManager()
 {

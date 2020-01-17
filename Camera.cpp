@@ -77,7 +77,7 @@ void Camera::SetPosition(Vector2 pos)
 void Camera::SetScale(Vector2 scale)
 {
 	_scale += scale;
-	float a = Clamp(_scale.x, 0.5f, 2.0f);
+	float a = Clamp(_scale.x, 0.01f, 2.5f);
 
 	_scale = Vector2(a, a);
 

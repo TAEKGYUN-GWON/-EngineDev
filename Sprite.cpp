@@ -8,6 +8,9 @@ Sprite::Sprite()
 	_color = ColorF::Blue;
 	_pivot = PIVOT::CENTER;
 	_strokeWidth = 1.0f;
+
+	_isFlipX = false;
+	_alpha = 1.0f;
 }
 
 void Sprite::Init(BOOL isFrame, BOOL isLoop)
@@ -53,12 +56,20 @@ void Sprite::Render()
 				}
 			}
 		}
-		GRAPHICMANAGER->DrawFrameImage(_imgKey, _object->GetTrans()->GetPos(), _curFrameX, _curFrameY, _pivot);
+		//GRAPHICMANAGER->DrawFrameImage(_imgKey, _object->GetTrans()->GetPos(), _curFrameX, _curFrameY, _pivot);
+		_graphic->FrameRender(_object->GetTrans()->GetPos(), _curFrameX, _curFrameY, _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _isFlipX, _alpha, _pivot);
 	}
 	else
 	{
-		GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _pivot);
+		//GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _isFlipX, _alpha, _pivot);
+		_graphic->Render(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _isFlipX, _alpha, _pivot);
 	}
+
+	//if (KEYMANAGER->isToggleKey(VK_F1))
+	//{
+	//
+	//	GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
+	//}
 }
 
 void Sprite::Update()
@@ -95,6 +106,7 @@ void Sprite::SetImgName(string key)
 	 _imgKey = key; 
 	 _graphic = GRAPHICMANAGER->FindImage(_imgKey); 
 	 _maxFrameX = _graphic->GetMaxFrameX();
+	 _curFrameX = 0;
 
 	 if (_isFrame) _isPlay = true;
 }

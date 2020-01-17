@@ -148,7 +148,7 @@ list<Vector2> Astar::pathFinder(Vector2 start, Vector2 end)
 			_currentTile = GetMinFNode();
 			if (_currentTile == nullptr) break;
 	}
-
+	int a;
 	return _pathList;
 }
 
@@ -169,6 +169,7 @@ void Astar::Render()
 	{
 		_miTotalList->second->Render();
 	}
+	int a;
 }
 
 bool Astar::CanOpenLeft(Vector2 idx)
