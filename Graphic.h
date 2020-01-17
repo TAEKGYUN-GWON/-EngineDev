@@ -32,6 +32,7 @@ public:
 		int							curFrameY;
 		string						imgKey;
 		wstring						imgPath;
+		bool						isFlipX;
 
 		tagGraphicInfo()
 		{
@@ -46,6 +47,7 @@ public:
 			maxFrameY = 0;
 			curFrameX = 0;
 			curFrameY = 0;
+			isFlipX = false;
 			//imgKey = nullptr;
 			//imgPath = nullptr;
 		}
@@ -57,10 +59,8 @@ private:
 	vector<WICRect>					_vFrameRect;
 	vector<WICRect>::iterator		_viFrameRect;
 
-	bool							_isFlip;
-
 public:
-	Graphic() { _isFlip = false; };
+	Graphic() {};
 	~Graphic() {};
 
 	HRESULT Init(ID2D1Bitmap* bitmap, string key, wstring path);
@@ -69,13 +69,14 @@ public:
 	//void Render(float x, float y);
 	void Render(float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void Render(Vector2 pos, PIVOT pivot = PIVOT::CENTER);
-	void Render(Vector2 pos, Vector2 scale, float angle, PIVOT pivot = PIVOT::CENTER);
+	void Render(Vector2 pos, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER);
 	void RenderUI(float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void RenderUI(Vector2 pos, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
+	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER);
 	
-	void SetFlip(bool isFlip) { _isFlip = isFlip; }
+	void SetFlipX(bool isFlip) { _graphicInfo->isFlipX = isFlip; }
 	void SetSize(Vector2 size) { _graphicInfo->size = size; }
 	void SetAngle(float angle) { _graphicInfo->angle = angle; }
 	void SetScale(Vector2 scale) { _graphicInfo->scale = scale; }
@@ -84,7 +85,7 @@ public:
 	void SetCurrentFrameX(int frame) { _graphicInfo->curFrameX = frame; }
 	void SetCurrentFrameY(int frame) { _graphicInfo->curFrameY = frame; }
 
-	bool GetFlip() { return _isFlip; }
+	bool GetFlipX() { return _graphicInfo->isFlipX; }
 	UINT GetWidth() { return _graphicInfo->bitmap->GetPixelSize().width; }
 	UINT GetHeight() { return _graphicInfo->bitmap->GetPixelSize().height; }
 	Vector2 GetFrameSize(int frame) { return Vector2(_vFrameRect[frame].Width, _vFrameRect[frame].Height); }

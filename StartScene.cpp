@@ -2,7 +2,6 @@
 #include "StartScene.h"
 #include "Sprite.h"
 #include"Transform.h"
-#include"Game.h"
 
 void StartScene::Init()
 {
@@ -26,8 +25,8 @@ void StartScene::Init()
 	//obj->GetTrans()->scale = Vector2(a->GetGraphic()->GetFrameWidth(), a->GetGraphic()->GetFrameHeight());
 	//
 	//_player = obj;
-	_ast = new Astar;
-	_ast->Init();
+	//_ast = new Astar;
+	//_ast->Init();
 
 
 	cout << "½ºÅ¸Æ®¾À" << endl;
@@ -41,5 +40,5 @@ void StartScene::Update()
 
 void StartScene::Render()
 {
-	_ast->Render();
+	//_ast->Render();
 }

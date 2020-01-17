@@ -24,16 +24,16 @@ private:
 public:
 	Astar();
 	~Astar();
-
-	void Init();
-	void SetTiles();
-	vector<Tile*> AddOpenList(Tile* currentTile);
-
-	void pathFinder(Tile* currentTile);
-	void SetPathObject(Tile* node, Object* obj);
-
-	void Release();
-	void Update();
-	void Render();
+	//
+	//void Init();
+	//void SetTiles();
+	//vector<Tile*> AddOpenList(Tile* currentTile);
+	//
+	//void pathFinder(Tile* currentTile);
+	//void SetPathObject(Tile* node, Object* obj);
+	//
+	//void Release();
+	//void Update();
+	//void Render();
 };
 

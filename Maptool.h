@@ -32,6 +32,9 @@ private:
 	Object* _btn1;
 	Object* _STGround;
 
+	Object* obj;
+	Object* obj3;
+
 public:
 	virtual void Init();
 	virtual void Update();
