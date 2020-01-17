@@ -33,6 +33,7 @@ private:
 	Object* _STGround;
 
 	Object* obj;
+	Object* obj2;
 	Object* obj3;
 
 public:

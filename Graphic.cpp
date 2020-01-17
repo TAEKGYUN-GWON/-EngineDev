@@ -407,16 +407,6 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 sca
 
 	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
 
-	//D2D1_MATRIX_3X2_F cameraMatrix;
-	//cameraMatrix = Matrix3x2F::Scale(D2D1::SizeF(1, 1));
-	//cameraMatrix = cameraMatrix * Matrix3x2F::Rotation(0);
-	//cameraMatrix = cameraMatrix * Matrix3x2F::Translation(100, 100);
-
-	//Matrix3x2F::in // ¿ªÇà·Ä
-
-	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * cameraMatrix);
-
-	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
 	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
 }

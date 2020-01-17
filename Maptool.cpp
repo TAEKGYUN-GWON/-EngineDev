@@ -32,7 +32,7 @@ void Maptool::Init()
 	//obj->GetTrans()->SetScale(Vector2(obj->GetGraphic()->GetGraphic()->GetFrameWidth(), obj->GetGraphic()->GetGraphic()->GetFrameHeight()));
 	obj->GetTrans()->SetScale(Vector2(a->GetGraphic()->GetFrameWidth(), a->GetGraphic()->GetFrameHeight()));
 
-	Object* obj2 = Object::CreateObject<Object>();
+	obj2 = Object::CreateObject<Object>();
 	obj2->GetTrans()->SetPos(Vector2(WINSIZEX / 2 + 300, WINSIZEY / 2));
 	obj2->AddComponent<Sprite>()->SetImgName("eagle");
 	obj2->GetTrans()->SetScale(Vector2(50, 100));
@@ -63,6 +63,18 @@ void Maptool::Update()
 		//{
 		//	_STGround->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
 		//}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
+	{
+		obj3->GetTrans()->SetScale(Vector2(obj3->GetTrans()->GetScale() - Vector2(10, 10)));
+		//obj2->GetTrans()->SetScale(Vector2(obj2->GetTrans()->GetScale() - Vector2(10,10)));
+
+	}
+	else if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
+	{
+		obj3->GetTrans()->SetScale(Vector2(obj3->GetTrans()->GetScale() + Vector2(10, 10)));
+		//obj2->GetTrans()->SetScale(Vector2(obj2->GetTrans()->GetScale() + Vector2(10, 10)));
 	}
 
 	if (KEYMANAGER->isOnceKeyDown('U')) obj->GetComponent<Sprite>()->SetFlipX(!obj->GetComponent<Sprite>()->GetFlipX());
