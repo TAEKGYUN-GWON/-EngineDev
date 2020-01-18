@@ -18,34 +18,30 @@ b2Vec2 Vector2::b2One = b2Vec2(1, -1);
 Vector2 Vector2::operator-(Vector2 to)
 {
 	
-	return Vector2(x-to.x,y-to.y);
+	return Vector2(x - to.x, y - to.y);
 }
 
 bool Vector2::operator<(const Vector2& to) const
 {
-	int a = to.x - to.y;
-	int b = x - y;
-	float32 me = x * x*x + y * y*y;
-	float32 other = to.x*to.x*to.x + to.y*to.y*to.y;
 
-	return me * a < other*b;
+	return (int)x < (int)to.x && (int)y < (int)to.y;
 
 }
 
 bool Vector2::operator>(const Vector2& to)const
 {
 
-	return x > to.x && y > to.y;
+	return (int)x > (int)to.x && (int)y > (int)to.y;
 }
 
 bool Vector2::operator<=(const Vector2 & to) const
 {
-	return x <= to.x && y <= to.y;
+	return (int)x <= (int)to.x && (int)y <= (int)to.y;
 }
 
 bool Vector2::operator>=(const Vector2 & to) const
 {
-	return x >= to.x && y >= to.y;
+	return (int)x >= (int)to.x && (int)y >= (int)to.y;
 }
 
 float Vector2::operator|(const Vector2 & to) const
@@ -87,11 +83,11 @@ void Vector2::operator-=(Vector2 to)
 
 bool Vector2::operator==(Vector2 to) const
 {
-	return x == to.x && y == to.y;
+	return (int)x == (int)to.x && (int)y == (int)to.y;
 }
 bool Vector2::operator!=(Vector2 to) const
 {
-	return x != to.x || y != to.y;
+	return (int)x != (int)to.x && (int)y != (int)to.y;
 }
 
 float Vector2::Magnitude()
