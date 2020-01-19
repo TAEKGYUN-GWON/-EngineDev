@@ -15,6 +15,7 @@ void Player::Init(Vector2 pos)
 {
 	Object::Init();
 
+	AddComponent<Sprite>();
 	_trans->pos = pos;
 	_trans->scale = Vector2(100,100);
 }

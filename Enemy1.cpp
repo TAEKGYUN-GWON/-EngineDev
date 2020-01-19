@@ -4,6 +4,7 @@
 
 void Enemy1::Init(Vector2 pos)
 {
+	AddComponent<Sprite>();
 	_trans->pos = pos;
 	_trans->scale = Vector2(30, 30);
 }
