@@ -52,9 +52,9 @@ public:
 	inline void SetAllowsUpdate() { _allowRender = !_allowRender; }
 	inline void SetAllowsUpdate(bool active) { _allowRender = active; }
 
-	inline bool GetAllowsRender() { return _allowsUpdate; }
-	inline void SetAllowsRender() { _allowsUpdate = !_allowsUpdate; }
-	inline void SetAllowsRender(bool active) { _allowsUpdate = active; }
+	inline bool GetAllowsRender() { return _allowRender; }
+	inline void SetAllowsRender() { _allowRender = !_allowRender; }
+	inline void SetAllowsRender(bool active) { _allowRender = active; }
 
 	inline bool GetAllowInit() { return _allowInit; }
 	
