@@ -12,8 +12,9 @@ private:
 	Player*_player2;
 	Astar* _ast;
 	Maptool* _maptool;
-	Enemy1* _enemy;
-	int timer;
+	Enemy1* _enemy1;
+	vector<Enemy1*> vEnemy;
+	float time;
 public:
 	virtual void Init();
 	virtual void Update();
