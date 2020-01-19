@@ -6,47 +6,24 @@ void Maptool::Init()
 	Scene::Init();
 
 	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
-	GRAPHICMANAGER->AddFrameImage("idle", L"idle.png", 8, 1);
-	GRAPHICMANAGER->AddFrameImage("fall_right", L"fall_right.png", 10, 1);
 
-	GRAPHICMANAGER->AddFrameImage("1", L"1.png", 9, 1);
-	GRAPHICMANAGER->AddFrameImage("2", L"2.png", 9, 1);
-	GRAPHICMANAGER->AddFrameImage("3", L"3.png", 9, 1);
-	GRAPHICMANAGER->AddFrameImage("4", L"4.png", 9, 1);
+	//GRAPHICMANAGER->AddFrameImage("test", L"pacman_sprite_2.png", 32, 20);
+	GRAPHICMANAGER->AddFrameImage("test", L"pacman_sprite_2.png", 2, 2);
 
+	//obj = Object::CreateObject<Object>();
+	//obj->GetTrans()->SetPos(Vector2(WINSIZEX / 2 - 300, WINSIZEY / 2));
+	//Sprite* a = obj->AddComponent<Sprite>();
+	//a->SetImgName("eagle");
+	////a->SetFlipX(true);
+	//obj->GetTrans()->SetScale(Vector2(a->GetGraphic()->GetFrameWidth(), a->GetGraphic()->GetFrameHeight()));
+	
+	_STState = NONE;
 
-	GRAPHICMANAGER->AddFrameImage("5", L"5.png", 10, 1);
-	GRAPHICMANAGER->AddFrameImage("6", L"6.png", 8, 1);
+	SetUp();
 
-	GRAPHICMANAGER->AddFrameImage("test", L"pacman_sprite_2.png", 32, 20);
+	_isDown = false;
 
-	obj = Object::CreateObject<Object>();
-	obj->GetTrans()->SetPos(Vector2(WINSIZEX / 2 - 300, WINSIZEY / 2));
-	//obj->AddComponent<Sprite>()->SetImgName("eagle");
-	auto a = obj->AddComponent<Sprite>();
-	a->SetImgName("eagle");
-	a->SetFlipX(true);
-	a->GetGraphic()->SetFlipX(obj->GetComponent<Sprite>()->GetFlipX());
-	//obj->GetComponent<Sprite>()->GetGraphic()->SetFlipX(obj->GetComponent<Sprite>()->GetF);
-	//obj->GetGraphic()->SetImgName("eagle");
-	//obj->GetTrans()->SetScale(Vector2(obj->GetGraphic()->GetGraphic()->GetFrameWidth(), obj->GetGraphic()->GetGraphic()->GetFrameHeight()));
-	obj->GetTrans()->SetScale(Vector2(a->GetGraphic()->GetFrameWidth(), a->GetGraphic()->GetFrameHeight()));
-
-	Object* obj2 = Object::CreateObject<Object>();
-	obj2->GetTrans()->SetPos(Vector2(WINSIZEX / 2 + 300, WINSIZEY / 2));
-	obj2->AddComponent<Sprite>()->SetImgName("eagle");
-	obj2->GetTrans()->SetScale(Vector2(50, 100));
-	obj2->GetComponent<Sprite>()->SetAlpha(0.3f);
-
-	obj3 = Object::CreateObject<Object>();
-	obj3->GetTrans()->SetPos(Vector2(WINSIZEX / 2, WINSIZEY / 2 + 200));
-	Sprite* s = obj3->AddComponent<Sprite>();
-	s->Init(true, true);
-	s->SetImgName("idle");
-	//s->SetFlipX(true);
-	obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth() - 10, s->GetGraphic()->GetFrameHeight() - 10));
-
-	//SetUp();
+	_curFrameX = _curFrameY = 0;
 }
 
 void Maptool::Update()
@@ -55,66 +32,126 @@ void Maptool::Update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
+		//_isDown = true;
+		//_prevMouse = _ptMouse;
+
+		if (PtInRect(&_STTab->GetTrans()->GetRect(), _ptMouse))
+		{
+			//_STGround->SetIsActive(true);
+			_STState = OPEN;
+		}
+		if (_STState == SHOW && !PtInRect(&_STGround->GetTrans()->GetRect(), _ptMouse))
+		{
+			//_STGround->SetIsActive(true);
+			_STState = CLOSE;
+		}
+	}
+	if (KEYMANAGER->isOnceKeyUp(VK_LBUTTON))
+	{
+		//_isDown = false;
+
 		//if (PtInRect(&_btn1->GetTrans()->GetRect(), _ptMouse))
 		//{
 		//	_btn1->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
 		//}
-		//if (PtInRect(&_STGround->GetTrans()->GetRect(), _ptMouse))
-		//{
-		//	_STGround->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
-		//}
+		if (PtInRect(&_STGround->GetTrans()->GetRect(), _ptMouse))
+		{
+			_STGround->GetComponent<Sprite>()->SetRectColor(ColorF::Green);
+		}
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('U')) obj->GetComponent<Sprite>()->SetFlipX(!obj->GetComponent<Sprite>()->GetFlipX());
-	if (KEYMANAGER->isOnceKeyDown('P'))
-	{
-		obj3->GetComponent<Sprite>()->SetImgName("fall_right");
-		//Sprite* s = obj3->AddComponent<Sprite>();
-		//obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth(), s->GetGraphic()->GetFrameHeight()));
+	//if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+	//{
+	//	//if (PtInRect(&_btn1->GetTrans()->GetRect(), _ptMouse))
+	//	//{
+	//	//	_btn1->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
+	//	//}
+	//	if (_STGround->GetIsActive() && PtInRect(&_STGround->GetTrans()->GetRect(), _ptMouse))
+	//	{
+	//		_STGround->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
+	//		
+	//		_STGround->GetTrans()->SetPos(
+	//		Vector2(_STGround->GetTrans()->GetPos().x + (_ptMouse.x - _prevMouse.x),
+	//				_STGround->GetTrans()->GetPos().y + (_ptMouse.y - _prevMouse.y)));
+	//	}
+	//}
+	//if (_isDown) _prevMouse = _ptMouse;
+	
 
-	}
-	if (KEYMANAGER->isOnceKeyDown('O'))
+	switch (_STState)
 	{
-		obj3->GetComponent<Sprite>()->SetImgName("idle");
-		//Sprite* s = obj3->AddComponent<Sprite>();
-		//obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth(), s->GetGraphic()->GetFrameHeight()));
+	case OPEN:
+		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2().left * 18.0f);
+		if (_STGround->GetTrans()->GetPos().x <= WINSIZEX - (_STGround->GetTrans()->GetScale().x / 2))
+		{
+			//_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetScale().x / 2);
+			_STGround->GetTrans()->SetPos(Vector2(WINSIZEX - (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
+			_STState = SHOW;
+		}
+		break;
+	case SHOW:
+		break;
+	case CLOSE:
+		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2().right * 18.0f);
+		if (_STGround->GetTrans()->GetPos().x >= WINSIZEX + (_STGround->GetTrans()->GetScale().x / 2))
+		{
+			//_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetScale().x / 2);
+			_STGround->GetTrans()->SetPos(Vector2(WINSIZEX + (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
+			_STState = NONE;
+		}
+		break;
+	case NONE:
+		break;
+	default:
+		break;
 	}
-	if (KEYMANAGER->isOnceKeyDown('4'))
+
+	if (KEYMANAGER->isOnceKeyUp('1'))
 	{
-		obj3->GetComponent<Sprite>()->SetImgName("4");
-		//Sprite* s = obj3->AddComponent<Sprite>();
-		//obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth(), s->GetGraphic()->GetFrameHeight()));
+		_curFrameX = (_curFrameX + 1) % 2;
 	}
-	if (KEYMANAGER->isOnceKeyDown('1'))
+	if (KEYMANAGER->isOnceKeyUp('2'))
 	{
-		obj3->GetComponent<Sprite>()->SetImgName("1");
-		//Sprite* s = obj3->AddComponent<Sprite>();
-		//obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth(), s->GetGraphic()->GetFrameHeight()));
+		_curFrameY = (_curFrameY + 1) % 2;
 	}
-	if (KEYMANAGER->isOnceKeyDown('2'))
+}
+
+void Maptool::Render()
+{
+	Scene::Render();
+
+	//GRAPHICMANAGER->DrawImage("test", _STGround->GetTrans()->GetPos());
+	//GRAPHICMANAGER->DrawFrameImage("test", _STGround->GetTrans()->GetPos(), 3, 1);
+
+	char buffer[128];
+
+	for (int i = 0; i < 20; ++i)
 	{
-		obj3->GetComponent<Sprite>()->SetImgName("2");
-		//Sprite* s = obj3->AddComponent<Sprite>();
-		//obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth(), s->GetGraphic()->GetFrameHeight()));
+		for (int j = 0; j < 20; ++j)
+		{
+			int cullX = CAMERA->GetPosition().x / TILEWIDTH;
+			int cullY = CAMERA->GetPosition().y / TILEHEIGHT;
+
+			//int cullX = 200 / TILEWIDTH;
+			//int cullY = 200 / TILEHEIGHT;
+
+			_index = (i + cullY) * TILENUMX + (j + cullX);
+
+
+			if (_index >= TILENUMX * TILENUMY) continue;
+			_tiles[_index]->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
+			_tiles[_index]->Render();
+
+			sprintf_s(buffer, "%d", _index);
+			GRAPHICMANAGER->DrawTextD2D(_tiles[_index]->GetTrans()->GetPos(), buffer, 10, 1.0f, ColorF::Yellow);
+		}
 	}
-	if (KEYMANAGER->isOnceKeyDown('3'))
-	{
-		obj3->GetComponent<Sprite>()->SetImgName("3");
-		//Sprite* s = obj3->AddComponent<Sprite>();
-		//obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth(), s->GetGraphic()->GetFrameHeight()));
-	}
-	if (KEYMANAGER->isOnceKeyDown('5'))
-	{
-		obj3->GetComponent<Sprite>()->SetImgName("5");
-		//Sprite* s = obj3->AddComponent<Sprite>();
-		//obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth(), s->GetGraphic()->GetFrameHeight()));
-	}
-	if (KEYMANAGER->isOnceKeyDown('6'))
-	{
-		obj3->GetComponent<Sprite>()->SetImgName("6");
-		//Sprite* s = obj3->AddComponent<Sprite>();
-		//obj3->GetTrans()->SetScale(Vector2(s->GetGraphic()->GetFrameWidth(), s->GetGraphic()->GetFrameHeight()));
-	}
+
+	if(_STState == SHOW) GRAPHICMANAGER->DrawFrameImage("test", _STGround->GetTrans()->GetPos(), _curFrameX, _curFrameY);
+
+	
+	obj->Render();
+	//GRAPHICMANAGER->DrawTextD2D(Vector2(200, 100), L"Here!!", 20, 1.0f, ColorF::White);
 }
 
 void Maptool::SetUp()
@@ -129,21 +166,45 @@ void Maptool::SetUp()
 	{
 		for (int j = 0; j < TILENUMX; ++j)
 		{
-			_tiles[i * TILENUMX + j] = Object::CreateObject<Tile>();
-			_tiles[i * TILENUMX + j]->Init(j, i);
+			_index = j + TILENUMX * i;
 
-			SetRect(&_tiles[i * TILENUMX + j]->GetTrans()->GetRect(),
-				j * TILEWIDTH,
-				i * TILEHEIGHT,
-				j * TILEWIDTH + TILEHEIGHT,
-				i * TILEWIDTH + TILEHEIGHT);
+			_tiles[_index] = Object::CreateObject<Tile>();
+			_tiles[_index]->Init(j, i);
+
+			//SetRect(&_tiles[i * TILENUMX + j]->GetTrans()->GetRect(),
+			//	j * TILEWIDTH,
+			//	i * TILEHEIGHT,
+			//	j * TILEWIDTH + TILEHEIGHT,
+			//	i * TILEWIDTH + TILEHEIGHT);
 		}
 	}
+	
+	_STTab = Object::CreateObject<Object>();
+	_STTab->GetTrans()->SetScale(50, 118);
+	_STTab->GetTrans()->SetPos(WINSIZEX - (_STTab->GetTrans()->GetScale().x / 2), (_STTab->GetTrans()->GetScale().y / 2) + 2);
+	_STTab->AddComponent<Sprite>();
+	_STTab->GetComponent<Sprite>()->SetStrokeWidth(3.0f);
+	_STTab->GetComponent<Sprite>()->SetRectColor(ColorF::DarkRed);
+	_STTab->GetComponent<Sprite>()->SetFillRect(true);
+
+
+
 
 	_STGround = Object::CreateObject<Object>();
-	_STGround->GetTrans()->SetPos(Vector2(WINSIZEX / 2, 200));
-	_STGround->GetTrans()->SetScale(Vector2(300, 200));
+	_STGround->GetTrans()->SetScale(Vector2(500, 418));
+	//_STGround->GetTrans()->SetPos(Vector2(WINSIZEX - (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
+	_STGround->GetTrans()->SetPos(Vector2(WINSIZEX + (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
 	_STGround->AddComponent<Sprite>();
+	_STGround->GetComponent<Sprite>()->SetStrokeWidth(3.0f);
+	_STGround->GetComponent<Sprite>()->SetFillRect(true);
+	_STGround->GetComponent<Sprite>()->SetRectColor(ColorF::Green);
+
+
+	
+	obj = Object::CreateObject<Object>();
+	obj->GetTrans()->SetPos(200, 100);
+	obj->AddComponent<Text>();
+	obj->GetComponent<Text>()->CreateText(L"Where are you", 20, 200, 200, ColorF::White);
 }
 
 void Maptool::SetMap()

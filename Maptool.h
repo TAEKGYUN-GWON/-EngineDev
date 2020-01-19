@@ -20,6 +20,14 @@ enum OBJECT
 	OBJ_NONE,							//나중에 지울용도
 };
 
+enum SAMPLE_TILE_TAB
+{
+	OPEN,
+	SHOW,
+	CLOSE,
+	NONE,
+};
+
 class Maptool : public Scene
 {
 private:
@@ -28,16 +36,26 @@ private:
 	Tile* _tiles[TILENUMX * TILENUMY];
 
 	int _ctrSelect;
+	int _curFrameX;
+	int _curFrameY;
+
+	int _index = 0;
 
 	Object* _btn1;
-	Object* _STGround;
-
+	Object* _STGround;	// sample tile
+	Object* _STTab;
 	Object* obj;
-	Object* obj3;
+
+	bool _isDown;
+
+	POINT _prevMouse;
+
+	SAMPLE_TILE_TAB _STState;
 
 public:
 	virtual void Init();
 	virtual void Update();
+	virtual void Render();
 
 	void SetUp();
 	void SetMap();

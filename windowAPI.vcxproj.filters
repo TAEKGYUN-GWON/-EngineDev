@@ -162,9 +162,6 @@
     <ClInclude Include="ObjectPool.hpp">
       <Filter>2DGameFramework\ObjectPool</Filter>
     </ClInclude>
-    <ClInclude Include="D2DEffect.h">
-      <Filter>2DGameFramework\image</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>playGround</Filter>
     </ClInclude>
@@ -186,9 +183,6 @@
     <ClInclude Include="Scene.h">
       <Filter>2DGameFramework</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="iniDataManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
@@ -209,6 +203,18 @@
     </ClInclude>
     <ClInclude Include="Maptool.h">
       <Filter>2DGameFramework\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawComponent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2D.h">
+      <Filter>2DGameFramework\image</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,9 +284,6 @@
     <ClCompile Include="ObjectPool.cpp">
       <Filter>2DGameFramework\ObjectPool</Filter>
     </ClCompile>
-    <ClCompile Include="D2DEffect.cpp">
-      <Filter>2DGameFramework\image</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>playGround</Filter>
     </ClCompile>
@@ -302,9 +305,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>2DGameFramework</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="iniDataManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
@@ -322,6 +322,18 @@
     </ClCompile>
     <ClCompile Include="Maptool.cpp">
       <Filter>2DGameFramework\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawComponent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2D.cpp">
+      <Filter>2DGameFramework\image</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ Sprite::Sprite()
 	_strokeWidth = 1.0f;
 
 	_isFlipX = false;
+	_isFillRect = false;
 	_alpha = 1.0f;
 }
 
@@ -27,11 +28,11 @@ void Sprite::Init(BOOL isFrame, BOOL isLoop)
 
 void Sprite::Render()
 {
-	//if (KEYMANAGER->isToggleKey(VK_F1))
-	//{
-
-	//	GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
-	//}
+	if (KEYMANAGER->isToggleKey(VK_F1))
+	{
+		if(_isFillRect) GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot);
+		else GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
+	}
 
 	if (_imgKey.empty()) return;
 
@@ -65,11 +66,10 @@ void Sprite::Render()
 		_graphic->Render(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _isFlipX, _alpha, _pivot);
 	}
 
-	if (KEYMANAGER->isToggleKey(VK_F1))
-	{
-
-		GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
-	}
+	//if (KEYMANAGER->isToggleKey(VK_F1))
+	//{
+	//	GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
+	//}
 }
 
 void Sprite::Update()

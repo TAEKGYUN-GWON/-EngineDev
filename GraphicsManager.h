@@ -2,17 +2,7 @@
 #include "singletonBase.h"
 #include <map>
 
-//#pragma comment(lib, "d2d1.lib")
-//#include <d2d1.h>
-//#include <d2d1_1helper.h>
-//
-//#pragma comment(lib, "windowscodecs.lib")
-//#include <wincodec.h>
-//
-//#pragma comment(lib, "dwrite.lib")
-//#include <dwrite.h>
-
-#include"Direct2D.h"
+#include "Direct2D.h"
 
 #pragma comment(lib, "d2d1.lib")
 #include <d2d1.h>
@@ -27,23 +17,6 @@
 #include "Graphic.h"
 
 using namespace D2D1;
-
-namespace Brush_type
-{
-	enum Enum
-	{
-		White,
-		Black,
-		Blue,
-		Red,
-		Yellow,
-		Gray,
-		Green,
-		Magenta,
-		Aquamarine,
-		BRUSH_NONE,
-	};
-}
 
 class GraphicsManager : public singletonBase<GraphicsManager>
 {
@@ -66,13 +39,10 @@ private:
 
 	// wic
 	IWICImagingFactory*							_wicFactory;
-	//IWICFormatConverter*						_wicConvert;
 
 	IDWriteFactory*								_wFactory;
 	mapTxtFormatList							_txtFormatList;
 	IDWriteTextLayout*							_txtLayout;
-
-	ID2D1SolidColorBrush*						_brush[Brush_type::BRUSH_NONE];
 
 private:
 	ID2D1Bitmap* CreateD2DBitmap(wstring file);

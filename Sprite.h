@@ -7,6 +7,7 @@ class Sprite : public DrawComponent
 {
 private:
 	bool _isFlipX;
+	bool _isFillRect;
 
 	bool _isFrame;
 	bool _isLoop;
@@ -40,10 +41,13 @@ public:
 	inline void SetFrameY(int frameY) { _curFrameY = frameY; }
 	inline void SetFPS(float time) { _FPS = 1.0f / time; }
 	inline void SetAlpha(float alpha) { _alpha = alpha; }
+	inline void SetStrokeWidth(float strokeWidth) { _strokeWidth = strokeWidth; }
+	inline void SetFillRect(bool fillRect) { _isFillRect = fillRect; }
 
 	inline string GetImgKey() { return _imgKey; }
-	inline bool GetFlipX() { return _isFlipX; }
 	inline float GetAlpha() { return _alpha; }
+	inline bool GetFlipX() { return _isFlipX; }
+	inline bool GetFillRect() { return _isFillRect; }
 
 	void Start();
 	void Stop();
@@ -53,7 +57,6 @@ public:
 	void SetImgName(string key);
 	void SetMaxFrameX(int maxFrameX) { _maxFrameX = maxFrameX - 1; }
 	inline void SetRectColor(ColorF::Enum color) { _color = color; }
-	inline void SetStrokeWidth(float strokeWidth) { _strokeWidth = strokeWidth; }
 	inline void SetPivot(PIVOT pivot) { _pivot = pivot; }
 
 	bool IsFrameEnd();

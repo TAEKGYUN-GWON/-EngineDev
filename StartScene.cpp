@@ -41,4 +41,5 @@ void StartScene::Update()
 void StartScene::Render()
 {
 	//_ast->Render();
+	SCENEMANAGER->render();
 }

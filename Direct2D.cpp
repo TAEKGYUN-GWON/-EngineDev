@@ -20,6 +20,12 @@ Direct2D::Direct2D()
 	//AddTextFormat(L"¸¼Àº°íµñ", 20);
 }
 
+Direct2D * Direct2D::GetInstance()
+{
+	static Direct2D* instance = new Direct2D();
+	return instance;
+}
+
 ID2D1Bitmap * Direct2D::CreateBitmap(wstring imgPath)
 {
 	// µðÄÚ´õ »ý¼º

@@ -7,7 +7,8 @@
 HINSTANCE	_hInstance;
 HWND		_hWnd;
 
-POINT _ptMouse;		//마우스 용 POINT
+POINT		_ptMouse;		//마우스 용 POINT
+BOOL		_leftBtnDown;
 
 
 //함수의 프로토타입 선언
@@ -84,7 +85,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			ID2D1RenderTarget* renderTarget = GRAPHICMANAGER->GetRenderTarget();
 			renderTarget->BeginDraw();
 			renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-			renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::White));
+			renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
 			//==================================================
 
 			sceneManager::getSingleton()->GetNowScene()->Render();
@@ -116,7 +117,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 
 		break;
-
+	case WM_LBUTTONDOWN:
+		_leftBtnDown = true;
+		break;
+	case WM_LBUTTONUP:
+		_leftBtnDown = false;
+		break;
 	case WM_MOUSEMOVE:
 		_ptMouse.x = static_cast<float>(LOWORD(lParam));
 		_ptMouse.y = static_cast<float>(HIWORD(lParam));

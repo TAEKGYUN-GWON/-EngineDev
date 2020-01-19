@@ -1,18 +1,29 @@
 #pragma once
 #include "Component.h"
+#include"Matrix3x3.h"
+class Matrix3x3;
+
 class Transform : public Component
 {
 private:
-	
+
 	float _rotate;
 	RECT _rc;
+
+	Matrix3x3 scaleMatrix;
+	Matrix3x3 rotateMatrix;
+	Matrix3x3 translateMatrix;
+	Matrix3x3 localToWorldMatrix;
+
+	//매트릭스 업데이트
+	void UpdateMatrix();
 
 public:
 	typedef Component super;
 	Vector2 pos;
 	Vector2 bottomPos;
 	Vector2 scale;
-	Transform() { _name = "Transform"; }
+	Transform();
 
 	virtual void Init() override;
 
@@ -21,8 +32,12 @@ public:
 	//Vector2 타입 좌표 가져오기
 	inline Vector2 GetPos() { return pos; }
 
+	//월드좌표 가져오기
+	Vector2 GetWorldPosition();
+
 	//Vector2 타입 사이즈 가져오기
 	inline Vector2 GetScale() { return scale; }
+
 
 	//디그리 값으로 회전값 가져오기
 	inline float GetRotateDegree() { return _rotate * RadToDeg; }
@@ -35,6 +50,9 @@ public:
 
 	//float 타입으로 좌표 설정하기
 	inline void SetPos(float x, float y) { pos = Vector2(x, y); }
+
+	//월드좌표 세팅
+	void SetWorldPos(Vector2 pos);
 
 	//Vector2 타입으로 사이즈 설정하기
 	inline void SetScale(Vector2 scale) { this->scale = scale; }
@@ -51,6 +69,12 @@ public:
 	inline RECT GetRect() { return _rc; }
 
 	inline void SetRect(RECT rc) { _rc = rc; }
+
+	//3x3 매트릭스로 로컬 투 월드 매트릭스 가져오기
+	Matrix3x3 GetLocalToWorldMatrix() { return localToWorldMatrix; };
+
+	//D2D 3x2 매트릭스로 로컬 투 월드 매트릭스 가져오기
+	D2D_MATRIX_3X2_F GetLocalToWorldMatrixTo_D2D_MATRIX() { return localToWorldMatrix.To_D2D1_Matrix_3x2_F(); };
 
 	void SetRect();
 };
