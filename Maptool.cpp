@@ -30,6 +30,27 @@ void Maptool::Update()
 {
 	Scene::Update();
 
+	if(KEYMANAGER->isStayKeyDown('D'))
+	{
+		_STTab->GetTrans()->SetPos(_STTab->GetTrans()->GetPos() + Vector2::right * (300.0f * TIMEMANAGER->getElapsedTime()));
+		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2::right * (300.0f * TIMEMANAGER->getElapsedTime()));
+	}
+	else if (KEYMANAGER->isStayKeyDown('A'))
+	{
+		_STTab->GetTrans()->SetPos(_STTab->GetTrans()->GetPos() + Vector2::left * (300.0f * TIMEMANAGER->getElapsedTime()));
+		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2::left * (300.0f * TIMEMANAGER->getElapsedTime()));
+	}
+	if (KEYMANAGER->isStayKeyDown('W'))
+	{
+		_STTab->GetTrans()->SetPos(_STTab->GetTrans()->GetPos() + Vector2::up * (300.0f * TIMEMANAGER->getElapsedTime()));
+		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2::up * (300.0f * TIMEMANAGER->getElapsedTime()));
+	}
+	else if (KEYMANAGER->isStayKeyDown('S'))
+	{
+		_STTab->GetTrans()->SetPos(_STTab->GetTrans()->GetPos() + Vector2::down * (300.0f * TIMEMANAGER->getElapsedTime()));
+		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2::down * (300.0f * TIMEMANAGER->getElapsedTime()));
+	}
+
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
 		//_isDown = true;
@@ -81,22 +102,22 @@ void Maptool::Update()
 	switch (_STState)
 	{
 	case OPEN:
-		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2().left * 18.0f);
-		if (_STGround->GetTrans()->GetPos().x <= WINSIZEX - (_STGround->GetTrans()->GetScale().x / 2))
+		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2().left * 800.0f * TIMEMANAGER->getElapsedTime());
+		if (_STGround->GetTrans()->GetPos().x <= (CAMERA->GetPosition().x + WINSIZEX) - (_STGround->GetTrans()->GetScale().x / 2))
 		{
 			//_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetScale().x / 2);
-			_STGround->GetTrans()->SetPos(Vector2(WINSIZEX - (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
+			_STGround->GetTrans()->SetPos(Vector2((CAMERA->GetPosition().x + WINSIZEX) - (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
 			_STState = SHOW;
 		}
 		break;
 	case SHOW:
 		break;
 	case CLOSE:
-		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2().right * 18.0f);
-		if (_STGround->GetTrans()->GetPos().x >= WINSIZEX + (_STGround->GetTrans()->GetScale().x / 2))
+		_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetPos() + Vector2().right * 800.0f * TIMEMANAGER->getElapsedTime());
+		if (_STGround->GetTrans()->GetPos().x >= (CAMERA->GetPosition().x + WINSIZEX) + (_STGround->GetTrans()->GetScale().x / 2))
 		{
 			//_STGround->GetTrans()->SetPos(_STGround->GetTrans()->GetScale().x / 2);
-			_STGround->GetTrans()->SetPos(Vector2(WINSIZEX + (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
+			_STGround->GetTrans()->SetPos(Vector2((CAMERA->GetPosition().x + WINSIZEX) + (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
 			_STState = NONE;
 		}
 		break;
@@ -125,9 +146,9 @@ void Maptool::Render()
 
 	char buffer[128];
 
-	for (int i = 0; i < 20; ++i)
+	for (int i = 0; i < 25; ++i)
 	{
-		for (int j = 0; j < 20; ++j)
+		for (int j = 0; j < 43; ++j)
 		{
 			int cullX = CAMERA->GetPosition().x / TILEWIDTH;
 			int cullY = CAMERA->GetPosition().y / TILEHEIGHT;
@@ -136,11 +157,11 @@ void Maptool::Render()
 			//int cullY = 200 / TILEHEIGHT;
 
 			_index = (i + cullY) * TILENUMX + (j + cullX);
-
-
-			if (_index >= TILENUMX * TILENUMY) continue;
-			_tiles[_index]->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
-			_tiles[_index]->Render();
+			
+			if (_index < 0 || _index >= TILENUMX * TILENUMY) continue;
+			
+			//_tiles[_index]->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
+			_tiles[_index]->SetAllowsRender(true);
 
 			sprintf_s(buffer, "%d", _index);
 			GRAPHICMANAGER->DrawTextD2D(_tiles[_index]->GetTrans()->GetPos(), buffer, 10, 1.0f, ColorF::Yellow);
@@ -151,6 +172,10 @@ void Maptool::Render()
 
 	
 	obj->Render();
+
+	_STTab->Render();
+	_STGround->Render();
+
 	//GRAPHICMANAGER->DrawTextD2D(Vector2(200, 100), L"Here!!", 20, 1.0f, ColorF::White);
 }
 
@@ -170,18 +195,19 @@ void Maptool::SetUp()
 
 			_tiles[_index] = Object::CreateObject<Tile>();
 			_tiles[_index]->Init(j, i);
+			_tiles[_index]->SetAllowsRender(false);
 
-			//SetRect(&_tiles[i * TILENUMX + j]->GetTrans()->GetRect(),
-			//	j * TILEWIDTH,
-			//	i * TILEHEIGHT,
-			//	j * TILEWIDTH + TILEHEIGHT,
-			//	i * TILEWIDTH + TILEHEIGHT);
+			SetRect(&_tiles[i * TILENUMX + j]->GetTrans()->GetRect(),
+				j * TILEWIDTH,
+				i * TILEHEIGHT,
+				j * TILEWIDTH + TILEHEIGHT,
+				i * TILEWIDTH + TILEHEIGHT);
 		}
 	}
 	
 	_STTab = Object::CreateObject<Object>();
 	_STTab->GetTrans()->SetScale(50, 118);
-	_STTab->GetTrans()->SetPos(WINSIZEX - (_STTab->GetTrans()->GetScale().x / 2), (_STTab->GetTrans()->GetScale().y / 2) + 2);
+	_STTab->GetTrans()->SetPos((CAMERA->GetPosition().x + WINSIZEX) - (_STTab->GetTrans()->GetScale().x / 2), CAMERA->GetPosition().y + (_STTab->GetTrans()->GetScale().y / 2) + 2);
 	_STTab->AddComponent<Sprite>();
 	_STTab->GetComponent<Sprite>()->SetStrokeWidth(3.0f);
 	_STTab->GetComponent<Sprite>()->SetRectColor(ColorF::DarkRed);
@@ -193,7 +219,7 @@ void Maptool::SetUp()
 	_STGround = Object::CreateObject<Object>();
 	_STGround->GetTrans()->SetScale(Vector2(500, 418));
 	//_STGround->GetTrans()->SetPos(Vector2(WINSIZEX - (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
-	_STGround->GetTrans()->SetPos(Vector2(WINSIZEX + (_STGround->GetTrans()->GetScale().x / 2), _STGround->GetTrans()->GetScale().y / 2 + 2));
+	_STGround->GetTrans()->SetPos(Vector2((CAMERA->GetPosition().x + WINSIZEX) + (_STGround->GetTrans()->GetScale().x / 2), CAMERA->GetPosition().y + _STGround->GetTrans()->GetScale().y / 2 + 2));
 	_STGround->AddComponent<Sprite>();
 	_STGround->GetComponent<Sprite>()->SetStrokeWidth(3.0f);
 	_STGround->GetComponent<Sprite>()->SetFillRect(true);
