@@ -57,9 +57,11 @@ void StartScene::Update()
 	{
 		for (Enemy1* e : vEnemy)
 		{
-			//if (Vector2::Distance(_player->GetTrans()->pos, e->GetTrans()->pos) < 60)break;
-			//if (Vector2::Distance(_player->GetTrans()->pos, e->GetTrans()->pos) < 300)
+	
+			if (Vector2::Distance(_player->GetTrans()->pos, e->GetTrans()->pos) < 60) continue;
+			if (Vector2::Distance(_player->GetTrans()->pos, e->GetTrans()->pos) < 300)
 				e->SetPath(_ast->pathFinder(e->GetTrans()->pos, _player->GetTrans()->pos));
+
 		}
 		time = 0;
 	}

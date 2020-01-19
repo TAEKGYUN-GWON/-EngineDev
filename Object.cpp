@@ -53,15 +53,14 @@ void Object::Release()
 void Object::Render()
 {
 
-	if (!_draw.size() || !_isActive) return;
+	if (!_isActive) return;
 
-	for(auto d : _draw)
-		d->Render();
+	if (_allowRender)
+		for (auto d : _draw)
+			d->Render();
 
 	for (Object* child : _children)
 	{
-		if (!child->GetDraw().size()) continue;
-
 		child->Render();
 	}
 

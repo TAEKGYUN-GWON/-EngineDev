@@ -197,6 +197,8 @@ void Astar::Update()
 
 				_vTotalList[i]->SetIsOpen(false);
 				_vTotalList[i]->SetAttribute("wall");
+				_vTotalList[i]->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
+				_vTotalList[i]->GetComponent<Sprite>()->SetStrokeWidth(3.f);
 
 				break;
 			}
@@ -221,9 +223,12 @@ void Astar::Render()
 bool Astar::CanOpenLeft(Vector2 idx)
 {
 	//_miTotalList = _mTotalList.find(Vector2(idx.x - (int)1, idx.y));
-
 	if (idx.x - (int)1 == 0) return false;
+
+	if (_vTotalList[((int)idx.x + TILENUMX * (int)idx.y) - 1]->GetAttribute() == "wall") return false;
+
 	if (_vTotalList[((int)idx.x + TILENUMX * (int)idx.y) - 1] == nullptr) return false;
+
 	return true;
 }
 
@@ -232,7 +237,11 @@ bool Astar::CanOpenRight(Vector2 idx)
 	//_miTotalList = _mTotalList.find(Vector2(idx.x + (int)1, idx.y));
 
 	if (idx.x + (int)1 == TILENUMX) return false;
+
+	if (_vTotalList[((int)idx.x + TILENUMX * (int)idx.y) + 1]->GetAttribute() == "wall") return false;
+
 	if (_vTotalList[((int)idx.x + TILENUMX * (int)idx.y) + 1] == nullptr) return false;
+
 	return true;
 }
 
@@ -241,7 +250,11 @@ bool Astar::CanOpenUp(Vector2 idx)
 	//_miTotalList = _mTotalList.find(Vector2(idx.x, idx.y- (int)1));
 
 	if (idx.y - (int)1 == -1) return false;
+
+	if (_vTotalList[((int)idx.x + TILENUMX * (int)idx.y) - TILENUMX]->GetAttribute() == "wall") return false;
+
 	if (_vTotalList[((int)idx.x + TILENUMX * (int)idx.y) - TILENUMX] == nullptr) return false;
+
 	return true;
 }
 
@@ -250,7 +263,11 @@ bool Astar::CanOpenDown(Vector2 idx)
 	//_miTotalList = _mTotalList.find(Vector2(idx.x , idx.y+ (int)1));
 
 	if (idx.y + (int)1 == TILENUMY) return false;
+
+	if (_vTotalList[((int)idx.x + TILENUMX * (int)idx.y) + TILENUMX]->GetAttribute() == "wall") return false;
+
 	if (_vTotalList[((int)idx.x + TILENUMX * (int)idx.y) + TILENUMX] == nullptr) return false;
+
 	return true;
 }
 
