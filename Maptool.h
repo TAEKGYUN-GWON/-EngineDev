@@ -2,8 +2,8 @@
 #include "Scene.h"
 #include "Tile.h"
 
-#define SAMPLE_TILE_X_NUM 32
-#define SAMPLE_TILE_Y_NUM 20
+#define SAMPLE_TILE_X_NUM 8//32
+#define SAMPLE_TILE_Y_NUM 10//20
 
 enum TERRAIN
 {
@@ -28,17 +28,22 @@ private:
 	Tile* _tiles[TILENUMX * TILENUMY];
 
 	int _ctrSelect;
+	int _curFrameX;
+	int _curFrameY;
+
+	int _index = 0;
 
 	Object* _btn1;
-	Object* _STGround;
-
 	Object* obj;
-	Object* obj2;
-	Object* obj3;
+
+	bool _isDown;
+
+	POINT _prevMouse;
 
 public:
 	virtual void Init();
 	virtual void Update();
+	virtual void Render();
 
 	void SetUp();
 	void SetMap();

@@ -1,11 +1,14 @@
 #pragma once
 #include"Object.h"
 
-#define TILENUMX (1335 / TILEWIDTH)
-#define TILENUMY (1100 / TILEHEIGHT)
-
 #define TILEWIDTH 30
 #define TILEHEIGHT 30
+
+//#define TILENUMX (1335 / TILEWIDTH)
+//#define TILENUMY (1100 / TILEHEIGHT)
+
+#define TILENUMX 44
+#define TILENUMY 36
 
 class Tile : public Object
 {

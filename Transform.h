@@ -6,7 +6,7 @@ class Matrix3x3;
 class Transform : public Component
 {
 private:
-	
+
 	float _rotate;
 	RECT _rc;
 

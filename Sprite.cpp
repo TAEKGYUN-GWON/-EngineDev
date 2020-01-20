@@ -10,6 +10,10 @@ Sprite::Sprite()
 	_strokeWidth = 1.0f;
 
 	_isFlipX = false;
+	_isFillRect = false;
+	_isShowRect = false;
+	_isCameraAffect = true;
+
 	_alpha = 1.0f;
 }
 
@@ -29,8 +33,8 @@ void Sprite::Render()
 {
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
-
-		GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
+		if(_isFillRect) GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _alpha, _pivot, _isCameraAffect);
+		else GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth, _isCameraAffect);
 	}
 
 	if (_imgKey.empty()) return;
@@ -67,7 +71,6 @@ void Sprite::Render()
 
 	//if (KEYMANAGER->isToggleKey(VK_F1))
 	//{
-	//
 	//	GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _color, _pivot, _strokeWidth);
 	//}
 }
