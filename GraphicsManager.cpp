@@ -168,10 +168,10 @@ void GraphicsManager::DrawImage(string key, Vector2 pos, Vector2 scale, float an
 	if (graphic) graphic->Render(pos, scale, angle, flipX, alpha, pivot);
 }
 
-void GraphicsManager::DrawFrameImage(string key, Vector2 pos, float curFrameX, float curFrameY, PIVOT pivot)
+void GraphicsManager::DrawFrameImage(string key, Vector2 pos, float curFrameX, float curFrameY, PIVOT pivot, bool cameraAffect)
 {
 	Graphic* graphic = FindImage(key);
-	if (graphic) graphic->FrameRender(pos, curFrameX, curFrameY, pivot);
+	if (graphic) graphic->FrameRender(pos, curFrameX, curFrameY, pivot, cameraAffect);
 }
 
 ID2D1Bitmap* GraphicsManager::CreateD2DBitmap(wstring file)
@@ -246,14 +246,15 @@ void GraphicsManager::DrawRect(float x, float y, float width, float height, floa
 	brush->Release();
 }
 
-void GraphicsManager::DrawRect(Vector2 pos, Vector2 size, float angle, ColorF::Enum color, PIVOT pivot, float strokeWidth)
+void GraphicsManager::DrawRect(Vector2 pos, Vector2 size, float angle, ColorF::Enum color, PIVOT pivot, float strokeWidth, bool cameraAffect)
 {
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
 
 	ID2D1SolidColorBrush* brush;
 	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation* CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation);
+	if (cameraAffect) _renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMatrix());
 
 	switch (pivot)
 	{
@@ -311,14 +312,15 @@ void GraphicsManager::DrawEllipse(float x, float y, float radiusX, float radiusY
 	brush->Release();
 }
 
-void GraphicsManager::DrawFillRect(Vector2 pos, Vector2 size, float angle, ColorF::Enum color, PIVOT pivot)
+void GraphicsManager::DrawFillRect(Vector2 pos, Vector2 size, float angle, ColorF::Enum color, float alpha, PIVOT pivot, bool isCameraAffect)
 {
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
 
 	ID2D1SolidColorBrush* brush;
-	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+	_renderTarget->CreateSolidColorBrush(ColorF(color, alpha), &brush);
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation);
+	if(isCameraAffect) _renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMatrix());
 
 	switch (pivot)
 	{

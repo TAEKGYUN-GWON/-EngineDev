@@ -33,6 +33,7 @@ public:
 		string						imgKey;
 		wstring						imgPath;
 		bool						isFlipX;
+		bool						isCameraAffect;
 
 		tagGraphicInfo()
 		{
@@ -73,7 +74,7 @@ public:
 	void RenderUI(float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void RenderUI(Vector2 pos, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
-	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
+	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
 	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER);
 	
 	void SetFlipX(bool isFlip) { _graphicInfo->isFlipX = isFlip; }
@@ -81,6 +82,7 @@ public:
 	void SetAngle(float angle) { _graphicInfo->angle = angle; }
 	void SetScale(Vector2 scale) { _graphicInfo->scale = scale; }
 	void SetAlpha(float alpha) { _graphicInfo->alpha = alpha; }
+	void SetCameraAffect(bool affect) { _graphicInfo->isCameraAffect = affect; }
 
 	void SetCurrentFrameX(int frame) { _graphicInfo->curFrameX = frame; }
 	void SetCurrentFrameY(int frame) { _graphicInfo->curFrameY = frame; }

@@ -8,6 +8,8 @@ class Sprite : public DrawComponent
 private:
 	bool _isFlipX;
 	bool _isFillRect;
+	bool _isShowRect;
+	bool _isCameraAffect;
 
 	bool _isFrame;
 	bool _isLoop;
@@ -43,11 +45,15 @@ public:
 	inline void SetAlpha(float alpha) { _alpha = alpha; }
 	inline void SetStrokeWidth(float strokeWidth) { _strokeWidth = strokeWidth; }
 	inline void SetFillRect(bool fillRect) { _isFillRect = fillRect; }
+	inline void SetShowRect(bool show) { _isShowRect = show; }
+	inline void SetCameraAffect(bool isAffect) { _isCameraAffect = isAffect; }
 
 	inline string GetImgKey() { return _imgKey; }
 	inline float GetAlpha() { return _alpha; }
 	inline bool GetFlipX() { return _isFlipX; }
 	inline bool GetFillRect() { return _isFillRect; }
+	inline bool GetShowRect() { return _isShowRect; }
+	inline bool GetCameraAffect() { return _isCameraAffect; }
 
 	void Start();
 	void Stop();

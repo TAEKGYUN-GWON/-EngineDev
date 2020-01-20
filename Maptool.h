@@ -2,8 +2,8 @@
 #include "Scene.h"
 #include "Tile.h"
 
-#define SAMPLE_TILE_X_NUM 32
-#define SAMPLE_TILE_Y_NUM 20
+#define SAMPLE_TILE_X_NUM 8//32
+#define SAMPLE_TILE_Y_NUM 10//20
 
 enum TERRAIN
 {
@@ -20,14 +20,6 @@ enum OBJECT
 	OBJ_NONE,							//나중에 지울용도
 };
 
-enum SAMPLE_TILE_TAB
-{
-	OPEN,
-	SHOW,
-	CLOSE,
-	NONE,
-};
-
 class Maptool : public Scene
 {
 private:
@@ -42,15 +34,11 @@ private:
 	int _index = 0;
 
 	Object* _btn1;
-	Object* _STGround;	// sample tile
-	Object* _STTab;
 	Object* obj;
 
 	bool _isDown;
 
 	POINT _prevMouse;
-
-	SAMPLE_TILE_TAB _STState;
 
 public:
 	virtual void Init();

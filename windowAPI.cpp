@@ -104,7 +104,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	return message.wParam;
 }
 
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 {
 	//return sceneManager::getSingleton()->GetNowScene()->MainProc( hWnd,  iMessage,  wParam,  lParam);
