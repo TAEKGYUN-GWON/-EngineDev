@@ -15,8 +15,6 @@ void Enemy1::Update()
 {
 	if (path.size())
 	{
-
-
 		if (_trans->pos.x == path.begin()->x
 			&&  _trans->pos.y == path.begin()->y)
 			path.erase(path.begin());

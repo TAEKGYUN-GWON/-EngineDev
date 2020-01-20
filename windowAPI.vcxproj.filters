@@ -73,6 +73,9 @@
     <Filter Include="2DGameFramework\MapTool">
       <UniqueIdentifier>{4f183df9-7dee-411b-a752-cf66aa8b113f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\Scene">
+      <UniqueIdentifier>{5a73e3c0-8ede-475b-b664-f3a41d2e289c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -180,9 +183,6 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>2DGameFramework</Filter>
-    </ClInclude>
     <ClInclude Include="iniDataManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
@@ -215,6 +215,12 @@
     </ClInclude>
     <ClInclude Include="Text.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>2DGameFramework\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingScene.h">
+      <Filter>2DGameFramework\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -302,9 +308,6 @@
     <ClCompile Include="ObjectManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>2DGameFramework</Filter>
-    </ClCompile>
     <ClCompile Include="iniDataManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
@@ -334,6 +337,12 @@
     </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>2DGameFramework\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingScene.cpp">
+      <Filter>2DGameFramework\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

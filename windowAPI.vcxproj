@@ -156,6 +156,7 @@
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="iniDataManager.h" />
     <ClInclude Include="JsonManager.h" />
+    <ClInclude Include="loadingScene.h" />
     <ClInclude Include="Maptool.h" />
     <ClInclude Include="ObjSound.h" />
     <ClInclude Include="omega.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
     <ClCompile Include="JsonManager.cpp" />
+    <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="Maptool.cpp" />
     <ClCompile Include="ObjSound.cpp" />
     <ClCompile Include="Scene.cpp" />
