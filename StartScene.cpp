@@ -45,7 +45,7 @@ void StartScene::Init()
 	if (a < b) cout<<"맞음"<<endl;
 	else cout << "틀림" << endl;
 
-
+	//ff
 }
 
 void StartScene::Update()
