@@ -22,6 +22,7 @@ private:
 	float				_moveTime;
 	float				_prevDistance;
 	bool				_isMoving;
+	bool				_isMain;
 
 public:
 	Camera()
@@ -45,6 +46,7 @@ public:
 	void SetScale(Vector2 scale);// { _scale = scale; };
 	//void SetAngle(float angle) { _angle = angle; };
 	void SetPosition(Vector2 pos);
+	void SetMainCamera(bool active) { _isMain = active; }
 	void MoveTo(Vector2 endPos, float time);
 
 	Vector2 GetPosition() { return _pos; }

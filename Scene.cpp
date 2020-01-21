@@ -16,6 +16,7 @@ void Scene::Init()
 {
 	_mainCmera = AddComponent<Camera>();
 	_mainCmera->init();
+	_mainCmera->SetMainCamera(true);
 	CAMERA->SetMainCamera(_mainCmera);
 	//if (_allowRelease)_allowRelease = false;
 	_b2World = new b2World(b2Vec2(0,0));
