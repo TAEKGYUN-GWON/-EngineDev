@@ -240,7 +240,7 @@ void GraphicsManager::DrawRect(float x, float y, float width, float height, floa
 
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(x, y));
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation* CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation* CAMERA->GetMainCamera()->GetMatrix());
 	_renderTarget->DrawRectangle(RectF(x, y, x + width, y + height), brush);
 
 	brush->Release();
@@ -254,7 +254,7 @@ void GraphicsManager::DrawRect(Vector2 pos, Vector2 size, float angle, ColorF::E
 	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation);
-	if (cameraAffect) _renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMatrix());
+	if (cameraAffect) _renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMainCamera()->GetMatrix());
 
 	switch (pivot)
 	{
@@ -276,7 +276,7 @@ void GraphicsManager::DrawSkewRect(Vector2 pos, Vector2 size, float angle, float
 
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
 
-	_renderTarget->SetTransform(Matrix3x2F::Skew(PI / 4 * RadToDeg, 0.0f, Point2F(pos.x, pos.y)) * rotation * CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Skew(PI / 4 * RadToDeg, 0.0f, Point2F(pos.x, pos.y)) * rotation * CAMERA->GetMainCamera()->GetMatrix());
 	_renderTarget->DrawRectangle(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), brush, strokeWidth);
 
 	brush->Release();
@@ -287,7 +287,7 @@ void GraphicsManager::DrawRoundRect(float x, float y, float width, float height,
 	ID2D1SolidColorBrush* brush;
 	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMainCamera()->GetMatrix());
 	_renderTarget->DrawRoundedRectangle(RoundedRect(RectF(x, y, x + width, y + height), radiusX, radiusY), brush, strokeWidth);
 	brush->Release();
 }
@@ -297,7 +297,7 @@ void GraphicsManager::DrawRoundRect(Vector2 pos, Vector2 size, Vector2 radius, C
 	ID2D1SolidColorBrush* brush;
 	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity()* CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity()* CAMERA->GetMainCamera()->GetMatrix());
 	_renderTarget->DrawRoundedRectangle(RoundedRect(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), radius.x, radius.y), brush, strokeWidth);
 	brush->Release();
 }
@@ -307,7 +307,7 @@ void GraphicsManager::DrawEllipse(float x, float y, float radiusX, float radiusY
 	ID2D1SolidColorBrush* brush;
 	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMainCamera()->GetMatrix());
 	_renderTarget->DrawEllipse(Ellipse(Point2F(x, y), radiusX, radiusY), brush, strokeWidth);
 	brush->Release();
 }
@@ -320,7 +320,7 @@ void GraphicsManager::DrawFillRect(Vector2 pos, Vector2 size, float angle, Color
 	_renderTarget->CreateSolidColorBrush(ColorF(color, alpha), &brush);
 
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation);
-	if(isCameraAffect) _renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMatrix());
+	if(isCameraAffect) _renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMainCamera()->GetMatrix());
 
 	switch (pivot)
 	{
@@ -339,7 +339,7 @@ void GraphicsManager::DrawFillEllipse(Vector2 pos, Vector2 radius, float angle, 
 	ID2D1SolidColorBrush* brush;
 	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMainCamera()->GetMatrix());
 	_renderTarget->FillEllipse(Ellipse(Point2F(pos.x, pos.y), radius.x, radius.y), brush);
 	brush->Release();
 }
@@ -349,7 +349,7 @@ void GraphicsManager::DrawFillRoundRect(Vector2 pos, Vector2 size, Vector2 radiu
 	ID2D1SolidColorBrush* brush;
 	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
 
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMainCamera()->GetMatrix());
 	_renderTarget->FillRoundedRectangle(RoundedRect(RectF(pos.x, pos.y, pos.x + size.x, pos.y + size.y), radius.x, radius.y), brush);
 	brush->Release();
 }
@@ -407,7 +407,7 @@ void GraphicsManager::DrawTextD2D(Vector2 pos, const char * txt, int txtSize, fl
 
 	ID2D1SolidColorBrush* brush;
 	_renderTarget->CreateSolidColorBrush(ColorF(color, alpha), &brush);
-	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMainCamera()->GetMatrix());
 	_renderTarget->DrawTextLayout(Point2F(pos.x, pos.y), _txtLayout, brush);
 
 	brush->Release();

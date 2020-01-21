@@ -222,6 +222,9 @@
     <ClInclude Include="loadingScene.h">
       <Filter>2DGameFramework\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>2DGameFramework\Manager\header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -343,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="loadingScene.cpp">
       <Filter>2DGameFramework\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

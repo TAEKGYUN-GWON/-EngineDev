@@ -61,6 +61,7 @@ void Camera::UpdateMatrix()
 	_matrix = _matrix * _scaleMatrix * Matrix3x2F::Translation(-_pos.x, -_pos.y);
 }
 
+
 void Camera::SetPosition(Vector2 pos)
 {
 	_pos.x = pos.x - WINSIZEX / 2;
@@ -82,6 +83,7 @@ void Camera::SetScale(Vector2 scale)
 	_scale = Vector2(a, a);
 
 	_scaleMatrix = Matrix3x2F::Scale(_scale.x, _scale.y, Point2F(WINSIZEX / 2, WINSIZEY / 2));
+
 
 	UpdateMatrix();
 }

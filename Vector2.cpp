@@ -110,7 +110,7 @@ Vector2 Vector2::Nomalized()
 	const float SquareSum = x * x + y * y;
 	if (SquareSum > 0)
 	{
-		const float Scale = sqrt(SquareSum);
+		const float Scale = 1.f/sqrt(SquareSum);
 		x *= Scale;
 		y *= Scale;
 		return *this;

@@ -87,8 +87,8 @@ void Maptool::Render()
 	{
 		for (int j = 0; j < 43; ++j)
 		{
-			int cullX = CAMERA->GetPosition().x / TILEWIDTH;
-			int cullY = CAMERA->GetPosition().y / TILEHEIGHT;
+			int cullX = CAMERA->GetMainCamera()->GetPosition().x / TILEWIDTH;
+			int cullY = CAMERA->GetMainCamera()->GetPosition().y / TILEHEIGHT;
 
 			_index = (i + cullY) * TILENUMX + (j + cullX);
 

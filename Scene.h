@@ -1,10 +1,12 @@
 #pragma once
 #include "Object.h"
+#include"Camera.h"
 class Scene : public Object
 {
 private:
 	b2World* _b2World;
 	bool  _allowRelease = false;
+	Camera* _mainCmera;
 public:
 	Scene();
 	virtual ~Scene();
@@ -18,5 +20,6 @@ public:
 	virtual void PhysicsUpdate();			//연산 전용 함수
 	virtual void Render();
 
+	Camera* GetMainCamera() { return _mainCmera; }
 };
 

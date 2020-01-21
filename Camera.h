@@ -1,7 +1,7 @@
 #pragma once
-#include "singletonBase.h"
+#include "Component.h"
 
-class Camera :public singletonBase<Camera>
+class Camera : public Component
 {
 private:
 	D2D1_MATRIX_3X2_F	_matrix;

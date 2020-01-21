@@ -3,7 +3,8 @@
 void StartScene::Init()
 {
 	Scene::Init();
-
+	Camera* ca = AddComponent<Camera>();
+	CAMERA->AddCamera(ca);
 	//SCENEMANAGER->addScene("game", new Game);
 	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
@@ -29,16 +30,16 @@ void StartScene::Init()
 	_enemy1 = Object::CreateObject<Enemy1>();
 	_enemy1->Init(Vector2(500, 500));
 	vEnemy.push_back(_enemy1);
-	Enemy1* enemy;
-	enemy = Object::CreateObject<Enemy1>();
-	enemy->Init(Vector2(300, 0));
-	vEnemy.push_back(enemy);
-	enemy = Object::CreateObject<Enemy1>();
-	enemy->Init(Vector2(600, 300));
-	vEnemy.push_back(enemy);
-	enemy = Object::CreateObject<Enemy1>();
-	enemy->Init(Vector2(900, 500));
-	vEnemy.push_back(enemy);
+	//Enemy1* enemy;
+	//enemy = Object::CreateObject<Enemy1>();
+	//enemy->Init(Vector2(300, 0));
+	//vEnemy.push_back(enemy);
+	//enemy = Object::CreateObject<Enemy1>();
+	//enemy->Init(Vector2(600, 300));
+	//vEnemy.push_back(enemy);
+	//enemy = Object::CreateObject<Enemy1>();
+	//enemy->Init(Vector2(900, 500));
+	//vEnemy.push_back(enemy);
 	time = 0;
 	Vector2 a(5, 5);
 	Vector2 b(10, 10);

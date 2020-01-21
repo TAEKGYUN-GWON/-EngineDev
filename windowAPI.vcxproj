@@ -148,6 +148,7 @@
     <ClInclude Include="Astar.h" />
     <ClInclude Include="BoxWorldManager.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Component.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Astar.cpp" />
     <ClCompile Include="BoxWorldManager.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Direct2D.cpp" />

@@ -39,7 +39,7 @@ using namespace std;
 #include "BoxWorldManager.h"
 #include "PhysicsManager.h"
 #include "GraphicsManager.h"
-#include "Camera.h"
+#include "CameraManager.h"
 #include"ObjectManager.h"
 #include"rapidjson/document.h"
 #include"iniDataManager.h"
@@ -66,7 +66,7 @@ using namespace SEVENTEEN_UTIL;
 #define BOXWORLDMANAGER BoxWorldManager::getSingleton()
 #define PHYSICSMANAGER PhysicsManager::GetInstance()
 #define GRAPHICMANAGER GraphicsManager::getSingleton()
-#define CAMERA Camera::getSingleton()
+#define CAMERA CameraManager::getSingleton()
 #define OBJECTMANAGER ObjectManager::getSingleton()
 #define INIDATAMANAGER iniDataManager::getSingleton()
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}

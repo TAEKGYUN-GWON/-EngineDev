@@ -116,7 +116,7 @@ void Graphic::Render(float x, float y, PIVOT pivot)
 		break;
 	}
 
-	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMatrix());
+	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMainCamera()->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha);
 }
 
@@ -148,7 +148,7 @@ void Graphic::Render(Vector2 pos, PIVOT pivot)
 	}
 
 	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
-	_RT->SetTransform(sacle * rotation * trans * CAMERA->GetMatrix());
+	_RT->SetTransform(sacle * rotation * trans * CAMERA->GetMainCamera()->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha);
 }
 
@@ -198,7 +198,7 @@ void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float 
 		break;
 	}
 
-	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
+	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMainCamera()->GetMatrix());
 	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha);
 }
@@ -303,7 +303,7 @@ void Graphic::FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT 
 
 	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
 
-	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMatrix());
+	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMainCamera()->GetMatrix());
 
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, _graphicInfo->alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
 }
@@ -360,7 +360,7 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot
 
 	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
 	_RT->SetTransform(scale * rotation * trans);
-	if (cameraAffect) _RT->SetTransform(scale * rotation * trans * CAMERA->GetMatrix());
+	if (cameraAffect) _RT->SetTransform(scale * rotation * trans * CAMERA->GetMainCamera()->GetMatrix());
 
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, _graphicInfo->alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
 }
@@ -410,6 +410,6 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 sca
 
 	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
 
-	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
+	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMainCamera()->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
 }

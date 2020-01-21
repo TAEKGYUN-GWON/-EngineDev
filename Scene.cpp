@@ -14,6 +14,9 @@ Scene::~Scene()
 
 void Scene::Init()
 {
+	_mainCmera = AddComponent<Camera>();
+	_mainCmera->init();
+	CAMERA->SetMainCamera(_mainCmera);
 	//if (_allowRelease)_allowRelease = false;
 	_b2World = new b2World(b2Vec2(0,0));
 	timeStep = 1.0f / 60.0f;
@@ -42,6 +45,7 @@ void Scene::Release()
 
 void Scene::Update()
 {
+
 	for (int i = 0; i < _children.size(); i++)
 	{
 		if (_children[i]->GetAllowInit()) _children[i]->Init();

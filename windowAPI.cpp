@@ -58,7 +58,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	SCENEMANAGER->init();
 	OBJECTMANAGER->Init();
 	SOUNDMANAGER->init();
-	CAMERA->init();
+	//CAMERA->init();
 	KEYMANAGER->init();
 	TXTDATA->init();
 	TIMEMANAGER->init();
@@ -129,7 +129,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEWHEEL:
 	{
 		int wheel = GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? 1.0f : -1.0f;
-		CAMERA->SetScale(Vector2(wheel * 0.05f, wheel * 0.05f));
+		CAMERA->GetMainCamera()->SetScale(Vector2(wheel * 0.05f, wheel * 0.05f));
 		break;
 	}
 	case WM_KEYDOWN:
