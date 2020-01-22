@@ -58,7 +58,18 @@ void Astar::InitTotalList()
 		t->SetIsOpen(0);
 		t->SetParentNode(nullptr);
 	}
-
+	
+	
+	if (_startTile != nullptr)
+	{
+		_startTile->SetAttribute("");
+		_startTile = nullptr;
+	}
+	if (_endTile != nullptr)
+	{
+		_endTile->SetAttribute("");
+		_endTile = nullptr;
+	}
 	_OpenList.clear();
 	_ClosedList.clear();
 }
@@ -197,12 +208,19 @@ void Astar::Update()
 
 				_vTotalList[i]->SetIsOpen(false);
 				_vTotalList[i]->SetAttribute("wall");
-				_vTotalList[i]->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
+				
 				_vTotalList[i]->GetComponent<Sprite>()->SetStrokeWidth(3.f);
 
 				break;
 			}
 		}
+	}
+	for (Tile* t : _vTotalList)
+	{
+		if (t->GetAttribute() == "wall") t->GetComponent<Sprite>()->SetRectColor(ColorF::Red);
+		else if (t->GetAttribute() == "start") t->GetComponent<Sprite>()->SetRectColor(ColorF::Magenta);
+		else if (t->GetAttribute() == "end") t->GetComponent<Sprite>()->SetRectColor(ColorF::White);
+		else t->GetComponent<Sprite>()->SetRectColor(ColorF::Blue);
 	}
 	
 }
@@ -216,7 +234,10 @@ void Astar::Render()
 	}*/
 
 	for (Tile* t : _vTotalList)
+	{
+		//else t->GetComponent<Sprite>()->SetRectColor(ColorF::Blue);
 		t->Render();
+	}
 	int a;
 }
 

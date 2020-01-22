@@ -24,9 +24,11 @@ void Enemy1::Update()
 		Vector2 a = *path.begin() -  _trans->pos;
 		_trans->pos += a.Nomalized() * 70 * TIMEMANAGER->getElapsedTime();
 
-		if (Vector2::Distance(*path.begin(), _trans->pos) < 15.f)
+		if ((int)Vector2::Distance(*path.begin(), _trans->pos) < (int)5)
 			path.erase(path.begin());
 	}
+
+
 }
 
 void Enemy1::SetPath(list<Vector2> path)
