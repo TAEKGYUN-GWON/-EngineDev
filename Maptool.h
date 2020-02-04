@@ -1,7 +1,6 @@
 #pragma once
 #include "Scene.h"
 #include "Tile.h"
-#include"Player.h"
 #include <commdlg.h> //OPENFILENAME을 위한 헤더
 
 //#define SAMPLE_TILE_X_NUM 8//32
@@ -193,9 +192,6 @@ private:
 
     POINT _prevMouse;
 
-    Player* p;
-
-    //HWND _saveName;
     RECT _rcLoad;
     RECT _rcSave;
 

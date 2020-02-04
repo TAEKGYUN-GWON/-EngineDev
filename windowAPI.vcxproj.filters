@@ -67,50 +67,14 @@
     <Filter Include="2DGameFramework\MapTool">
       <UniqueIdentifier>{4f183df9-7dee-411b-a752-cf66aa8b113f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="playGround\Dungeon">
-      <UniqueIdentifier>{77c2c191-8351-4c00-a599-fdc9d525ada1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="playGround\Town">
       <UniqueIdentifier>{c05d42b8-fe8c-4a5e-aa2e-81c8b800830b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Shop">
-      <UniqueIdentifier>{7286e60a-52d9-4ffb-871d-53ea36caf427}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Entrance">
-      <UniqueIdentifier>{e38e88b7-f833-48ab-9698-a4c2d9bb7edf}</UniqueIdentifier>
     </Filter>
     <Filter Include="playGround\Start">
       <UniqueIdentifier>{46eefbbd-5e0e-4ee3-9b0c-fb0d6bbdb874}</UniqueIdentifier>
     </Filter>
-    <Filter Include="playGround\Inventory">
-      <UniqueIdentifier>{9e52936e-db88-4610-a177-47ed26e541e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Player">
-      <UniqueIdentifier>{bb54c656-9ba4-4370-9828-9b7f5995e818}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Item">
-      <UniqueIdentifier>{77c1421c-a7e0-4770-97b1-e405843461d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Shop\Npc">
-      <UniqueIdentifier>{0a0724a8-d624-45bd-9848-e35ab53c5fe1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\HP">
-      <UniqueIdentifier>{d649f8a6-dd46-4811-9899-cd714899015a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Bullet">
-      <UniqueIdentifier>{606b9db6-d611-446c-afb2-7ae3da391c30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Shop\ShopObject">
-      <UniqueIdentifier>{6bb3f218-2077-4982-9bb3-17c827fe5561}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Shop\ShopObject\ShopStand">
-      <UniqueIdentifier>{a8f5da20-97c4-47a4-b981-fb523187115d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="playGround\Test">
       <UniqueIdentifier>{b2e24c08-1686-43c3-90dd-d5c395430b65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Smithy">
-      <UniqueIdentifier>{a35f991b-c06f-44cd-9291-2de74b101e97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -237,86 +201,14 @@
     <ClInclude Include="JsonManager.h">
       <Filter>2DGameFramework\Manager\header</Filter>
     </ClInclude>
-    <ClInclude Include="DungeonScene.h">
-      <Filter>playGround\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="TownScene.h">
-      <Filter>playGround\Town</Filter>
-    </ClInclude>
-    <ClInclude Include="ShopScene.h">
-      <Filter>playGround\Shop</Filter>
-    </ClInclude>
-    <ClInclude Include="EntranceScene.h">
-      <Filter>playGround\Entrance</Filter>
-    </ClInclude>
     <ClInclude Include="StartScene.h">
       <Filter>playGround\Start</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.h">
-      <Filter>playGround\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>playGround\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>playGround\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Npc.h">
-      <Filter>playGround\Shop\Npc</Filter>
-    </ClInclude>
-    <ClInclude Include="NpcManager.h">
-      <Filter>playGround\Shop\Npc</Filter>
-    </ClInclude>
-    <ClInclude Include="NpcShopState.h">
-      <Filter>playGround\Shop\Npc</Filter>
-    </ClInclude>
-    <ClInclude Include="ShopStand.h">
-      <Filter>playGround\Shop\ShopObject\ShopStand</Filter>
-    </ClInclude>
-    <ClInclude Include="ShopStandManager.h">
-      <Filter>playGround\Shop\ShopObject\ShopStand</Filter>
     </ClInclude>
     <ClInclude Include="loadingScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ETC.h">
-      <Filter>playGround\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Item.hpp">
-      <Filter>playGround\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Item_Bass_Collider.h">
-      <Filter>playGround\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Potions.h">
-      <Filter>playGround\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Potion.h">
-      <Filter>playGround\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Direct2D.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Boss.h">
-      <Filter>playGround\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>playGround\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyManeger.h">
-      <Filter>playGround\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>playGround\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="SlimeEnemy.h">
-      <Filter>playGround\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="ProgressBar.h">
-      <Filter>playGround\Inventory</Filter>
-    </ClInclude>
-    <ClInclude Include="UiManager.h">
-      <Filter>playGround\Inventory</Filter>
     </ClInclude>
     <ClInclude Include="UiObject.h">
       <Filter>2DGameFramework\Object</Filter>
@@ -327,53 +219,23 @@
     <ClInclude Include="Text.h">
       <Filter>2DGameFramework\Object\Component\header</Filter>
     </ClInclude>
-    <ClInclude Include="CheckStand.h">
-      <Filter>playGround\Shop\ShopObject</Filter>
-    </ClInclude>
-    <ClInclude Include="ShopDoor.h">
-      <Filter>playGround\Shop\ShopObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Dungeon.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>playGround\Test</Filter>
     </ClInclude>
     <ClInclude Include="GolemEnemy.h">
-      <Filter>playGround\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="GolemEnemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DungeonMgr.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerMove.h">
-      <Filter>playGround\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerAttack.h">
-      <Filter>playGround\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerRoll.h">
-      <Filter>playGround\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="ETCS.h">
-      <Filter>playGround\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>playGround\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Smithy.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
       <Filter>playGround\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerIdle.h">
-      <Filter>playGround\Player</Filter>
+    <ClInclude Include="Particle.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Ability.h">
-      <Filter>playGround\HP</Filter>
+    <ClInclude Include="Particle.hpp">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -476,83 +338,14 @@
     <ClCompile Include="JsonManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="DungeonScene.cpp">
-      <Filter>playGround\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="TownScene.cpp">
-      <Filter>playGround\Town</Filter>
-    </ClCompile>
-    <ClCompile Include="ShopScene.cpp">
-      <Filter>playGround\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="EntranceScene.cpp">
-      <Filter>playGround\Entrance</Filter>
-    </ClCompile>
     <ClCompile Include="StartScene.cpp">
       <Filter>playGround\Start</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>playGround\Inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>playGround\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>playGround\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Npc.cpp">
-      <Filter>playGround\Shop\Npc</Filter>
-    </ClCompile>
-    <ClCompile Include="NpcManager.cpp">
-      <Filter>playGround\Shop\Npc</Filter>
-    </ClCompile>
-    <ClCompile Include="NpcShopState.cpp">
-      <Filter>playGround\Shop\Npc</Filter>
-    </ClCompile>
-    <ClCompile Include="ShopStand.cpp">
-      <Filter>playGround\Shop\ShopObject\ShopStand</Filter>
-    </ClCompile>
-    <ClCompile Include="ShopStandManager.cpp">
-      <Filter>playGround\Shop\ShopObject\ShopStand</Filter>
     </ClCompile>
     <ClCompile Include="loadingScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ETC.cpp">
-      <Filter>playGround\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Item_Bass_Collider.cpp">
-      <Filter>playGround\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Potion.cpp">
-      <Filter>playGround\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Potions.cpp">
-      <Filter>playGround\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Direct2D.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Boss.cpp">
-      <Filter>playGround\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>playGround\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyManeger.cpp">
-      <Filter>playGround\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>playGround\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="SlimeEnemy.cpp">
-      <Filter>playGround\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="ProgressBar.cpp">
-      <Filter>playGround\Inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="UiManager.cpp">
-      <Filter>playGround\Inventory</Filter>
     </ClCompile>
     <ClCompile Include="UiObject.cpp">
       <Filter>2DGameFramework\Object</Filter>
@@ -560,53 +353,20 @@
     <ClCompile Include="Text.cpp">
       <Filter>2DGameFramework\Object\Component\cpp</Filter>
     </ClCompile>
-    <ClCompile Include="CheckStand.cpp">
-      <Filter>playGround\Shop\ShopObject</Filter>
-    </ClCompile>
-    <ClCompile Include="ShopDoor.cpp">
-      <Filter>playGround\Shop\ShopObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Dungeon.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="TestScene.cpp">
       <Filter>playGround\Test</Filter>
     </ClCompile>
     <ClCompile Include="GolemEnemy.cpp">
-      <Filter>playGround\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="GolemEnemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="DungeonMgr.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerMove.cpp">
-      <Filter>playGround\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerAttack.cpp">
-      <Filter>playGround\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerRoll.cpp">
-      <Filter>playGround\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="ETCS.cpp">
-      <Filter>playGround\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>playGround\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Smithy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="PlayerState.cpp">
       <Filter>playGround\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerIdle.cpp">
-      <Filter>playGround\Player</Filter>
+    <ClCompile Include="Particle.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Ability.cpp">
-      <Filter>playGround\HP</Filter>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
