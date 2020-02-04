@@ -1,0 +1,16 @@
+#pragma once
+#include "PlayerState.h"
+#include "Player.h"
+
+class PlayerIdle : public PlayerState
+{
+private:
+
+public:
+	PlayerIdle(Player* obj) : PlayerState(obj) {}
+
+	virtual void Enter() override;
+	virtual void Update() override;
+	virtual void Exit() override;
+};
+

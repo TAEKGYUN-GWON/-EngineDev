@@ -7,7 +7,7 @@ void ObjectPool::Init(int size, Object obj)
 	ActivePool.reserve(size);
 	for (int i = 0; i < size; i++)
 	{
-		Object* newObj = new T;
+		Object* newObj = Object::CreateObject<T>();
 		newObj->Init();
 		newObj->SetTag(obj.GetTag());
 		newObj->SetName(obj.GetName());

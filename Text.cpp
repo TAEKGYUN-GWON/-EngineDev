@@ -4,24 +4,7 @@
 void Text::SetLayout()
 {
 	if (_layout) _layout->Release();
-	_layout = Direct2D::GetInstance()->CreateTextLayout(_text, _fontName, _fontSize, _maxWidth, _maxHeight);
-}
-
-void Text::SetAnchor(ANCHORS anchor)
-{
-	switch (anchor)
-	{
-	case ANCHORS::LEFT_TOP:
-		break;
-	case ANCHORS::CENTER:
-		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
-		break;
-	case ANCHORS::RIGHT_TOP:
-		break;
-	default:
-		break;
-	}
+	_layout = Direct2D::GetInstance()->CreateTextLayout(_text, _fontName, _fontSize, _maxWidth, _maxHeight, _locale);
 }
 
 void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHeight, ColorF::Enum color, float alpha, wstring fontName, wstring localeName)
@@ -38,7 +21,15 @@ void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHei
 	_trans = _object->GetTrans();
 	_trans->SetScale(Vector2(maxWidth, maxHeight));
 
-	Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color, alpha), &_brush);
+	//Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color, alpha), &_brush);
+	GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(ColorF(color, alpha), &_brush);
+}
+
+void Text::ChangeText(wstring text)
+{
+	if (_text == text) return;
+	_text = text;
+	SetLayout();
 }
 
 void Text::Init()
@@ -48,18 +39,92 @@ void Text::Init()
 
 void Text::Render()
 {
-	auto renderTarger = Direct2D::GetInstance()->GetRenderTarger();
+	//auto renderTarger = Direct2D::GetInstance()->GetRenderTarger();
+	ID2D1HwndRenderTarget* renderTarger = GRAPHICMANAGER->GetRenderTarget();
 
-	//Matrix3x3 trans = _trans->GetLocalToWorldMatrix();
-	//if(_isCameraAffect) 
-	//Matrix3x3 trans = { _object->GetTrans()->GetPos().x, 0, 0,
-	//					0, _object->GetTrans()->GetPos().y, 0,
-	//					0, 0, 1};
-
-	//renderTarger->SetTransform(trans.To_D2D1_Matrix_3x2_F());
-	renderTarger->SetTransform(Matrix3x2F::Identity());
-	//renderTarger->DrawTextLayout(Point2F(_trans->GetPos().x, _trans->GetPos().y), _layout, _brush);
+	Matrix3x2F trans = Matrix3x2F::Translation(_trans->GetPos().x, _trans->GetPos().y);
+	
+	if (_isCameraEffect) renderTarger->SetTransform(Matrix3x2F::Identity() * trans * CAMERA->GetMatrix());
+	else renderTarger->SetTransform(Matrix3x2F::Identity() * trans);
 
 	renderTarger->DrawTextLayout(Point2F(_trans->GetPos().x, _trans->GetPos().y), _layout, _brush);
-	//renderTarger->DrawTextLayout(Point2F(100, 100), _layout, _brush);
+}
+
+void Text::SetFontSize(float fontSize, int startPoint, int length)
+{
+	_layout->SetFontSize(fontSize, { (UINT32)startPoint, (UINT32)length });
+}
+
+void Text::SetSize(Vector2 size)
+{
+	_maxWidth = size.x;
+	_maxHeight = size.y;
+	SetLayout();
+}
+
+void Text::SetColor(ColorF color, int startPoint, int length)
+{
+	ID2D1SolidColorBrush* brush;
+	//Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color.r, color.b, color.g, color.a), &brush);
+	//GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(ColorF(color.r, color.b, color.g, color.a), &brush);
+	GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
+	_layout->SetDrawingEffect((IUnknown*)brush, { (UINT32)startPoint, (UINT32)length });
+	brush->Release();
+}
+
+void Text::SetColor(ColorF::Enum color, int startPoint, int length, float alpha)
+{
+	ID2D1SolidColorBrush* brush;
+	//Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color.r, color.b, color.g, color.a), &brush);
+	GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(ColorF(color, alpha), &brush);
+	_layout->SetDrawingEffect((IUnknown*)brush, { (UINT32)startPoint, (UINT32)length });
+	brush->Release();
+}
+
+void Text::SetUnderline(bool isUnderline, int startPoint, int length)
+{
+	_layout->SetUnderline(isUnderline, { (UINT32)startPoint, (UINT32)length });
+}
+
+void Text::SetAnchor(AnchorPoint anchor)
+{
+	switch (anchor)
+	{
+	case AnchorPoint::LEFT_TOP:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+		break;
+	case AnchorPoint::LEFT_CENTER:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+		break;
+	case AnchorPoint::LEFT_BOTTOM:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+		break;
+	case AnchorPoint::CENTER_TOP:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+		break;
+	case AnchorPoint::CENTER:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+		break;
+	case AnchorPoint::CENTER_BOTTOM:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+		break;
+	case AnchorPoint::RIGHT_TOP:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
+		break;
+	case AnchorPoint::RIGHT_CENTER:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_CENTER);
+		break;
+	case AnchorPoint::RIGHT_BOTTOM:
+		_layout->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+		_layout->SetParagraphAlignment(DWRITE_PARAGRAPH_ALIGNMENT_FAR);
+		break;
+	}
 }

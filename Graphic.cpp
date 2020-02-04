@@ -6,7 +6,7 @@ ID2D1HwndRenderTarget* Graphic::_RT = nullptr;
 void Graphic::SetRendertarget()
 {
 	assert(_RT == nullptr);
-	_RT = GRAPHICMANAGER->GetRenderTarget(); 
+	_RT = GRAPHICMANAGER->GetRenderTarget();
 }
 
 HRESULT Graphic::Init(ID2D1Bitmap* bitmap, string key, wstring path)
@@ -99,7 +99,7 @@ void Graphic::Render(float x, float y, PIVOT pivot)
 	Matrix3x2F trans = Matrix3x2F::Translation(x, y);
 
 	D2D1_RECT_F dxArea;
-	
+
 	switch (pivot)
 	{
 	case LEFT_TOP:
@@ -114,13 +114,19 @@ void Graphic::Render(float x, float y, PIVOT pivot)
 	case BOTTOM:
 		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
 		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+		break;
 	}
 
-	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMainCamera()->GetMatrix());
+	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha);
 }
 
-void Graphic::Render(Vector2 pos, PIVOT pivot)
+void Graphic::Render(Vector2 pos, float alpha, PIVOT pivot, bool cameraAffect)
 {
 	_graphicInfo->size.x *= _graphicInfo->scale.x;
 	_graphicInfo->size.y *= _graphicInfo->scale.y;
@@ -145,14 +151,21 @@ void Graphic::Render(Vector2 pos, PIVOT pivot)
 	case BOTTOM:
 		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
 		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+		break;
 	}
 
-	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
-	_RT->SetTransform(sacle * rotation * trans * CAMERA->GetMainCamera()->GetMatrix());
-	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha);
+	_RT->SetTransform(sacle * rotation * trans);
+	if (cameraAffect) _RT->SetTransform(sacle * rotation * trans * CAMERA->GetMatrix());
+
+	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha);
 }
 
-void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float alpha, PIVOT pivot)
+void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float alpha, PIVOT pivot, bool cameraAffect)
 {
 	// 20200117 이렇게 크기 잡지말고 제대로 잡자..!
 	_graphicInfo->size.x = scale.x;
@@ -196,9 +209,16 @@ void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float 
 	case BOTTOM:
 		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
 		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+		break;
 	}
 
-	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMainCamera()->GetMatrix());
+	_RT->SetTransform(scale_ * rotation * trans);
+	if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
 	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha);
 }
@@ -226,6 +246,12 @@ void Graphic::RenderUI(float x, float y, PIVOT pivot)
 		break;
 	case BOTTOM:
 		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
+		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
 		break;
 	}
 
@@ -256,6 +282,12 @@ void Graphic::RenderUI(Vector2 pos, PIVOT pivot)
 		break;
 	case BOTTOM:
 		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
+		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
 		break;
 	}
 
@@ -298,17 +330,23 @@ void Graphic::FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT 
 	case BOTTOM:
 		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
 		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+		break;
 	}
 
 
 	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
 
-	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMainCamera()->GetMatrix());
+	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMatrix());
 
-	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, _graphicInfo->alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
+	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, _graphicInfo->alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, dxSrc);
 }
 
-void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot, bool cameraAffect)
+void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, float alpha, PIVOT pivot, bool cameraAffect)
 {
 	_graphicInfo->curFrameX = curFrameX;
 	_graphicInfo->curFrameY = curFrameY;
@@ -325,7 +363,7 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot
 
 	Matrix3x2F scale;
 	scale = Matrix3x2F::Scale(1, 1);
-	if(_graphicInfo->isFlipX) scale = Matrix3x2F::Scale(-1, 1);
+	if (_graphicInfo->isFlipX) scale = Matrix3x2F::Scale(-1, 1);
 	Matrix3x2F rotation = Matrix3x2F::Rotation(_graphicInfo->angle, Point2F());
 	Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
 
@@ -345,28 +383,101 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot
 	case BOTTOM:
 		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
 		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+		break;
 	}
 
 	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
-
+	int a = 10;
 	//D2D1_MATRIX_3X2_F cameraMatrix;
 	//cameraMatrix = Matrix3x2F::Scale(D2D1::SizeF(1, 1));
 	//cameraMatrix = cameraMatrix * Matrix3x2F::Rotation(0);
 	//cameraMatrix = cameraMatrix * Matrix3x2F::Translation(100, 100);
-	
+
 	//Matrix3x2F::in // 역행렬
 
 	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * cameraMatrix);
 
 	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
 	_RT->SetTransform(scale * rotation * trans);
-	if (cameraAffect) _RT->SetTransform(scale * rotation * trans * CAMERA->GetMainCamera()->GetMatrix());
+	if (cameraAffect) _RT->SetTransform(scale * rotation * trans * CAMERA->GetMatrix());
 
-	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, _graphicInfo->alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
+	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, dxSrc);
 }
 
-void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 scale, float angle, bool flipX, float alpha, PIVOT pivot)
+void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 scale, float angle, bool flipX, float alpha, PIVOT pivot, bool cameraAffect)
 {
+#pragma region Origin
+	//_graphicInfo->curFrameX = curFrameX;
+	//_graphicInfo->curFrameY = curFrameY;
+	//
+	//if (_graphicInfo->curFrameX > _graphicInfo->maxFrameX - 1) _graphicInfo->curFrameX = _graphicInfo->maxFrameX - 1;
+	//if (_graphicInfo->curFrameY > _graphicInfo->maxFrameY - 1) _graphicInfo->curFrameY = _graphicInfo->maxFrameY - 1;
+	//
+	//int frame = _graphicInfo->curFrameY * _graphicInfo->maxFrameX + _graphicInfo->curFrameX;
+	//
+	//// TODO : 이미지 크기 실험
+	//_graphicInfo->size.x = scale.x;
+	//_graphicInfo->size.y = scale.y;
+	//
+	//_vFrameRect.clear();
+	//
+	//WICRect rc;
+	//for (int i = 0; i < _graphicInfo->maxFrameY; ++i)
+	//{
+	//	for (int j = 0; j < _graphicInfo->maxFrameX; ++j)
+	//	{
+	//		rc.X = _graphicInfo->frameWidth * j;
+	//		rc.Y = _graphicInfo->frameHeight * i;
+	//		rc.Width = _graphicInfo->frameWidth;
+	//		rc.Height = _graphicInfo->frameHeight;
+	//		_vFrameRect.push_back(rc);
+	//	}
+	//}
+	//
+	//_graphicInfo->size = GetFrameSize(frame);
+	//
+	//Matrix3x2F scale_;
+	//scale_ = Matrix3x2F::Scale(1, 1);
+	//if (flipX) scale_ = scale_ * Matrix3x2F::Scale(-1, 1);
+	//Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F());
+	//Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
+	//
+	//D2D1_RECT_F dxArea;
+	//
+	//switch (pivot)
+	//{
+	//case LEFT_TOP:
+	//	dxArea = RectF(0, 0, _graphicInfo->size.x, _graphicInfo->size.y);
+	//	break;
+	//case CENTER:
+	//	dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y / 2, _graphicInfo->size.x / 2, _graphicInfo->size.y / 2);
+	//	break;
+	//case TOP:
+	//	dxArea = RectF(-_graphicInfo->size.x / 2, 0, _graphicInfo->size.x / 2, _graphicInfo->size.y);
+	//	break;
+	//case BOTTOM:
+	//	dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
+	//	break;
+	//case RIGHT_BOTTOM:
+	//	dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+	//	break;
+	//case LEFT_BOTTOM:
+	//	dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+	//	break;
+	//}
+	//
+	//D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
+	//
+	//_RT->SetTransform(scale_ * rotation * trans);
+	//if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
+	//if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
+#pragma endregion
+
 	_graphicInfo->curFrameX = curFrameX;
 	_graphicInfo->curFrameY = curFrameY;
 
@@ -375,17 +486,38 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 sca
 
 	int frame = _graphicInfo->curFrameY * _graphicInfo->maxFrameX + _graphicInfo->curFrameX;
 
+	// TODO : 이미지 크기 실험
+	_graphicInfo->size.x = scale.x;
+	_graphicInfo->size.y = scale.y;
+
+	_vFrameRect.clear();
+
+	WICRect rc;
+	for (int i = 0; i < _graphicInfo->maxFrameY; ++i)
+	{
+		for (int j = 0; j < _graphicInfo->maxFrameX; ++j)
+		{
+			rc.X = _graphicInfo->frameWidth * j;
+			rc.Y = _graphicInfo->frameHeight * i;
+			rc.Width = _graphicInfo->frameWidth;
+			rc.Height = _graphicInfo->frameHeight;
+			_vFrameRect.push_back(rc);
+		}
+	}
+
+	//if (_graphicInfo->imgKey.compare("fatkachu") == 0)
+	//{
+	//	cout << "key : " << _graphicInfo->imgKey << endl;
+	//	cout << "size x : " << _graphicInfo->size.x << endl;
+	//	cout << "size y : " << _graphicInfo->size.y << endl;
+	//	cout << "frame X : " << _graphicInfo->frameWidth << endl;
+	//	cout << "frame Y : " << _graphicInfo->frameHeight << endl;
+	//}
+
 	_graphicInfo->size = GetFrameSize(frame);
 
-
-	// TODO : 이미지 크기 실험
-	//_graphicInfo->size.x = scale.x;
-	//_graphicInfo->size.y = scale.y;
-
-
-
 	Matrix3x2F scale_;
-	scale_ = Matrix3x2F::Scale(1, 1);
+	scale_ = Matrix3x2F::Scale(1,1);
 	if (flipX) scale_ = scale_ * Matrix3x2F::Scale(-1, 1);
 	Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F());
 	Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
@@ -406,10 +538,60 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 sca
 	case BOTTOM:
 		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
 		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+		break;
 	}
 
 	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
 
-	_RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMainCamera()->GetMatrix());
+	_RT->SetTransform(scale_ * rotation * trans);
+	if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
+}
+
+void Graphic::SetSize(Vector2 size)
+{
+	_graphicInfo->size = size;
+
+	//_graphicInfo->frameWidth = size.x / _graphicInfo->maxFrameX;
+	//_graphicInfo->frameHeight = size.y / _graphicInfo->maxFrameY;
+	//
+	//_vFrameRect.clear();
+	//
+	//WICRect rc;
+	//for (int i = 0; i < _graphicInfo->maxFrameY; ++i)
+	//{
+	//	for (int j = 0; j < _graphicInfo->maxFrameX; ++j)
+	//	{
+	//		rc.X = _graphicInfo->frameWidth * j;
+	//		rc.Y = _graphicInfo->frameHeight * i;
+	//		rc.Width = _graphicInfo->frameWidth;
+	//		rc.Height = _graphicInfo->frameHeight;
+	//		_vFrameRect.push_back(rc);
+	//	}
+	//}
+}
+
+void Graphic::SetFrameSize(Vector2 size)
+{
+	_graphicInfo->size *= 2;
+	WICRect rc;
+	//_graphicInfo->scale *= size;
+
+	_graphicInfo->frameWidth = _graphicInfo->size.x / _graphicInfo->maxFrameX;
+	_graphicInfo->frameHeight = _graphicInfo->size.y / _graphicInfo->maxFrameY;
+	for (int i = 0; i < _graphicInfo->maxFrameY*_graphicInfo->maxFrameX; i++)
+	{
+		_vFrameRect[i].X = _graphicInfo->frameWidth * i;
+		_vFrameRect[i].Y = _graphicInfo->frameHeight * i;
+		_vFrameRect[i].Width = _graphicInfo->frameWidth;
+		_vFrameRect[i].Height = _graphicInfo->frameHeight;
+		int a=10;
+	}
+
+
 }

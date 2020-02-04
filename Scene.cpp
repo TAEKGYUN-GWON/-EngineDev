@@ -14,10 +14,6 @@ Scene::~Scene()
 
 void Scene::Init()
 {
-	_mainCmera = AddComponent<Camera>();
-	_mainCmera->init();
-	_mainCmera->SetMainCamera(true);
-	CAMERA->SetMainCamera(_mainCmera);
 	//if (_allowRelease)_allowRelease = false;
 	_b2World = new b2World(b2Vec2(0,0));
 	timeStep = 1.0f / 60.0f;
@@ -38,15 +34,15 @@ void Scene::Release()
 	//	return;
 	//}
 	//Object::Release();
-	for (Object* child : _children)
+	for (int i = _children.size(); i <= 0; i--)
 	{
-		child->Release();
+		_children[i]->Release();
 	}
+
 }
 
 void Scene::Update()
 {
-
 	for (int i = 0; i < _children.size(); i++)
 	{
 		if (_children[i]->GetAllowInit()) _children[i]->Init();
@@ -67,10 +63,12 @@ void Scene::PhysicsUpdate()
 			_b2World->DestroyBody(deletedObject);
 			continue;
 		}
-
-		Transform* now = ((Object*)body->GetUserData())->GetTrans();
-		PhysicsBody* nowP = ((Object*)body->GetUserData())->GetComponent<PhysicsBody>();
-		now->SetPos(nowP->GetBodyPosition());
+		if (((Object*)body->GetUserData())->GetTrans() != nullptr)
+		{
+			Transform* now = ((Object*)body->GetUserData())->GetTrans();
+			PhysicsBody* nowP = ((Object*)body->GetUserData())->GetComponent<PhysicsBody>();
+			now->SetPos(nowP->GetBodyPosition());
+		}
 	}
 }
 
@@ -92,10 +90,17 @@ bool Compare(Object* a, Object* b)
 void Scene::Render()
 {
 	//if (_allowRelease) return;
-
 	sort(_children.begin(), _children.end(), Compare);
 
 	for (Object* child : _children)
+	{
+
+		if (child->GetTrans()->GetPos().x < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x > CAMERA->GetPosition().x + WINSIZEX ||
+			child->GetTrans()->GetPos().y < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y > CAMERA->GetPosition().y + WINSIZEY) child->SetAllowsRender(false);
+		else child->SetAllowsRender(true);
+
 		child->Render();
+
+	}
 }
 

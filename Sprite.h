@@ -29,8 +29,11 @@ private:
 	string _imgKey;
 	Graphic* _graphic;
 
-	ColorF::Enum _color;
+	ColorF _color = NULL;
 	PIVOT _pivot;
+
+	Vector2 _scale;
+	Vector2 _pos;
 
 public:
 	Sprite();
@@ -47,6 +50,8 @@ public:
 	inline void SetFillRect(bool fillRect) { _isFillRect = fillRect; }
 	inline void SetShowRect(bool show) { _isShowRect = show; }
 	inline void SetCameraAffect(bool isAffect) { _isCameraAffect = isAffect; }
+	inline void SetSize(Vector2(scale)) { _scale = scale; }
+	inline void SetPosition(Vector2(pos)) { _pos = pos; }
 
 	inline string GetImgKey() { return _imgKey; }
 	inline float GetAlpha() { return _alpha; }
@@ -54,18 +59,26 @@ public:
 	inline bool GetFillRect() { return _isFillRect; }
 	inline bool GetShowRect() { return _isShowRect; }
 	inline bool GetCameraAffect() { return _isCameraAffect; }
+	inline Vector2 GetSize() { return _scale; }
+	inline Vector2 GetPosition() { return _pos; }
+	inline int GetCurrentFrameX() { return _curFrameX; }
+	inline int GetCurrentFrameY() { return _curFrameY; }
+	inline int GetMaxFrameX() { return _maxFrameX; }
 
 	void Start();
 	void Stop();
 	void Pause();
 	void Resume();
+	void PlayAnimation();
 
 	void SetImgName(string key);
 	void SetMaxFrameX(int maxFrameX) { _maxFrameX = maxFrameX - 1; }
-	inline void SetRectColor(ColorF::Enum color) { _color = color; }
+	inline void SetRectColor(ColorF color) { _color = color; }
 	inline void SetPivot(PIVOT pivot) { _pivot = pivot; }
+	void SetIsFrame(bool isFrame) { _isFrame = isFrame; }
+	void SetIsLoop(bool isLoop) { _isLoop = isLoop; }
+
 
 	bool IsFrameEnd();
 	inline Graphic* GetGraphic() { return _graphic; }
 };
-

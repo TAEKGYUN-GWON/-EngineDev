@@ -39,6 +39,20 @@ inline RECT RectMakeCenter(int centerX, int centerY, int width, int height)
 	return rc;
 }
 
+inline RECT RectMakeBottomCenter(int centerX, int centerY, int width, int height)
+{
+	RECT rc = { centerX - (width / 2), centerY - height, centerX + (width / 2), centerY };
+
+	return rc;
+}
+
+inline RECT RectMakeRightBottom(int x, int y, int width, int height)
+{
+	RECT rc = { x - width, y - height, x, y };
+
+	return rc;
+}
+
 
 //============== 사 각 형 =====================
 //       Left, Top을 기준(그려줄DC, Left, Top, 가로크기, 세로크기)

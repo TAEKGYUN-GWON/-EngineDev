@@ -5,6 +5,8 @@ enum PIVOT
 	LEFT_TOP,
 	CENTER,
 	BOTTOM,
+	RIGHT_BOTTOM,
+	LEFT_BOTTOM,
 	TOP,
 };
 
@@ -69,16 +71,21 @@ public:
 	void Release();
 	//void Render(float x, float y);
 	void Render(float x, float y, PIVOT pivot = PIVOT::CENTER);
-	void Render(Vector2 pos, PIVOT pivot = PIVOT::CENTER);
-	void Render(Vector2 pos, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER);
+	void Render(Vector2 pos, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
+	void Render(Vector2 pos, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
 	void RenderUI(float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void RenderUI(Vector2 pos, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
-	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
-	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER);
-	
+	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
+	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
+
 	void SetFlipX(bool isFlip) { _graphicInfo->isFlipX = isFlip; }
-	void SetSize(Vector2 size) { _graphicInfo->size = size; }
+	void SetSize(Vector2 size);// { _graphicInfo->size = size; }
+	//void SetFrameWidth(float w) { _graphicInfo->frameWidth = w; }
+	//void SetFrameHeight(float h) { _graphicInfo->frameHeight = h; }
+
+	void SetFrameSize(Vector2 size); //{ Vector2(_graphicInfo->frameWidth, _graphicInfo->frameHeight) = size; }
+
 	void SetAngle(float angle) { _graphicInfo->angle = angle; }
 	void SetScale(Vector2 scale) { _graphicInfo->scale = scale; }
 	void SetAlpha(float alpha) { _graphicInfo->alpha = alpha; }
@@ -88,8 +95,8 @@ public:
 	void SetCurrentFrameY(int frame) { _graphicInfo->curFrameY = frame; }
 
 	bool GetFlipX() { return _graphicInfo->isFlipX; }
-	UINT GetWidth() { return _graphicInfo->bitmap->GetPixelSize().width; }
-	UINT GetHeight() { return _graphicInfo->bitmap->GetPixelSize().height; }
+	UINT GetWidth() { return _graphicInfo->size.x; }
+	UINT GetHeight() { return _graphicInfo->size.y; }
 	Vector2 GetFrameSize(int frame) { return Vector2(_vFrameRect[frame].Width, _vFrameRect[frame].Height); }
 
 	int GetMaxFrameX() { return _graphicInfo->maxFrameX - 1; }

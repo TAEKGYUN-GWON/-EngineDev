@@ -13,8 +13,11 @@
 #include <tchar.h>
 #include <iostream>
 #include <functional>
-#include<list>
+#include <list>
 #include <map>
+#include <fstream>
+#include <string>
+#include<iomanip>
 
 using namespace std;
 #include "Box2D/Box2D.h"
@@ -39,11 +42,17 @@ using namespace std;
 #include "BoxWorldManager.h"
 #include "PhysicsManager.h"
 #include "GraphicsManager.h"
-#include "CameraManager.h"
+#include "Camera.h"
 #include"ObjectManager.h"
-#include"rapidjson/document.h"
+//#include"rapidjson/document.h"
+//#include"rapidjson/writer.h"
+//#include"nlohmann/json.hpp"
+//#include"nlohmann/json_fwd.hpp"
+#include"lib/single_include/nlohmann/json.hpp"
+using json = nlohmann::json;
 #include"iniDataManager.h"
-using namespace rapidjson;
+#include"lib/single_include/nlohmann/json.hpp"
+using json = nlohmann::json;
 using namespace SEVENTEEN_UTIL;
 
 //=========================================
@@ -66,7 +75,7 @@ using namespace SEVENTEEN_UTIL;
 #define BOXWORLDMANAGER BoxWorldManager::getSingleton()
 #define PHYSICSMANAGER PhysicsManager::GetInstance()
 #define GRAPHICMANAGER GraphicsManager::getSingleton()
-#define CAMERA CameraManager::getSingleton()
+#define CAMERA Camera::getSingleton()
 #define OBJECTMANAGER ObjectManager::getSingleton()
 #define INIDATAMANAGER iniDataManager::getSingleton()
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
@@ -83,7 +92,6 @@ inline void SafeRelease(T* &p) { if (p) p->Release(); p = NULL; }
 extern HINSTANCE				_hInstance;
 extern HWND						_hWnd;
 extern POINT					_ptMouse;
-extern BOOL						_leftBtnDown;
 
 //==========================================
 // ## 19.22.22 ## 엔진 첫 걸음

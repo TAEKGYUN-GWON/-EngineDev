@@ -24,7 +24,7 @@ public:
 	static Direct2D* GetInstance();
 
 	ID2D1Bitmap* CreateBitmap(wstring imgPath);
-	IDWriteTextLayout* CreateTextLayout(wstring txt, wstring fontName, float fontSize, float maxWidth, float maxHeight);
+	IDWriteTextLayout* CreateTextLayout(wstring txt, wstring fontName, float fontSize, float maxWidth, float maxHeight, wstring locale);
 	ID2D1HwndRenderTarget* GetRenderTarger() { return _renderTarget; }
 };
 

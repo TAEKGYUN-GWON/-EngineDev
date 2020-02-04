@@ -13,6 +13,8 @@ class PhysicsBody : public DrawComponent
 private:
 	b2Body *_body;
 	BodyType _type;
+	Vector2 scale;
+	bool _bodyActive;
 
 public:
 	PhysicsBody() { _name = "PhysicsBody"; }
@@ -27,15 +29,16 @@ public:
 	Vector2 GetBodyScale();
 	//바디의 Rotate 가져오기
 	float GetBodyAngle() { return _body->GetAngle(); }
+	bool GetBodyActive() { return _bodyActive; }
 	//바디 가져오기
 	inline b2Body* GetBody() { return _body; }
 	//바디의 GetWorldCenter 가져오기
 	inline const b2Vec2 GetWorldCenter() { return _body->GetWorldCenter(); }
 	//바디의 Active 껏다 키는 세팅 (잠들건지 말건지)
-	inline void SetBodyActive(bool sleep) { _body->SetActive(sleep); }
+	void SetBodyActive(bool sleep);
 	//바디에 힘 작용 시키기
 	inline void ApplyForce(b2Vec2 force, bool wake = true) { _body->ApplyForce(force, _body->GetWorldCenter(), wake); }
 	//센서 세팅
-	inline void SetSensor(bool sensor) { _body->GetFixtureList()->SetSensor(sensor); }
+	void SetSensor(bool sensor);
 	Vector2 Convert(Vector2 origin);
 };

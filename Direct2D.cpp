@@ -20,13 +20,13 @@ Direct2D::Direct2D()
 	//AddTextFormat(L"¸¼Àº°íµñ", 20);
 }
 
-Direct2D * Direct2D::GetInstance()
+Direct2D* Direct2D::GetInstance()
 {
 	static Direct2D* instance = new Direct2D();
 	return instance;
 }
 
-ID2D1Bitmap * Direct2D::CreateBitmap(wstring imgPath)
+ID2D1Bitmap* Direct2D::CreateBitmap(wstring imgPath)
 {
 	// µðÄÚ´õ »ý¼º
 	IWICBitmapDecoder* decoder = nullptr;
@@ -55,11 +55,11 @@ ID2D1Bitmap * Direct2D::CreateBitmap(wstring imgPath)
 	return bitmap;
 }
 
-IDWriteTextLayout * Direct2D::CreateTextLayout(wstring txt, wstring fontName, float fontSize, float maxWidth, float maxHeight)
+IDWriteTextLayout* Direct2D::CreateTextLayout(wstring txt, wstring fontName, float fontSize, float maxWidth, float maxHeight, wstring locale)
 {
 	IDWriteTextFormat* format = nullptr;
-	_wFactory->CreateTextFormat(fontName.c_str(), 0, DWRITE_FONT_WEIGHT_REGULAR, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, fontSize, L"ko", &format);
-	
+	_wFactory->CreateTextFormat(fontName.c_str(), 0, DWRITE_FONT_WEIGHT_REGULAR, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, fontSize, locale.c_str(), &format);
+
 	IDWriteTextLayout* layout = nullptr;
 	_wFactory->CreateTextLayout(txt.c_str(), txt.length(), format, maxWidth, maxHeight, &layout);
 

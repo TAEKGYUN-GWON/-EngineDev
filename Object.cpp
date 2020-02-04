@@ -23,7 +23,7 @@ void Object::Update()
 {
 	if (!_isActive) return;
 
-	for (int i = 0; i<_components.size();i++)
+	for (int i = 0; i < _components.size(); i++)
 		_components[i]->Update();
 
 	for (Object* child : _children)
@@ -36,13 +36,15 @@ void Object::Update()
 
 void Object::Release()
 {
-	if (_parent)
+	if (_parent != nullptr)
 		_parent->RemoveChild(this);
 	for (Object* child : _children)
 	{
 		child->Release();
 	}
-	for (int i = _components.size()-1; i >= 0; i--)
+
+
+	for (int i = _components.size() - 1; i >= 0; i--)
 	{
 		_components[i]->Release();
 	}
@@ -68,7 +70,7 @@ void Object::Render()
 
 
 
-void Object::AddChild(Object * child)
+void Object::AddChild(Object* child)
 {
 	_children.push_back(child);
 	child->_parent->RemoveChild(child);
@@ -77,7 +79,7 @@ void Object::AddChild(Object * child)
 		child->Init();
 }
 
-void Object::RemoveComponent(Component * component)
+void Object::RemoveComponent(Component* component)
 {
 	for (auto iter = _components.begin(); iter != _components.end(); iter++)
 	{
@@ -89,7 +91,7 @@ void Object::RemoveComponent(Component * component)
 	}
 }
 
-void Object::RemoveChild(Object * child)
+void Object::RemoveChild(Object* child)
 {
 	for (int i = 0; i < _children.size(); i++)
 	{
@@ -102,7 +104,7 @@ void Object::RemoveChild(Object * child)
 
 }
 
-Object * Object::GetChildFromName(string name)
+Object* Object::GetChildFromName(string name)
 {
 	for (Object* child : _children)
 	{
@@ -124,7 +126,7 @@ vector<Object*> Object::GetChildrenFromTag(string tag)
 	return childs;
 }
 
-void Object::SetParent(Object * parent)
+void Object::SetParent(Object* parent)
 {
 	_parent = parent;
 	parent->_children.push_back(this);

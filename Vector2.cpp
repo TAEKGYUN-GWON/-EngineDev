@@ -18,30 +18,30 @@ b2Vec2 Vector2::b2One = b2Vec2(1, -1);
 Vector2 Vector2::operator-(Vector2 to)
 {
 	
-	return Vector2(x - to.x, y - to.y);
+	return Vector2(x-to.x,y-to.y);
 }
 
 bool Vector2::operator<(const Vector2& to) const
 {
 
-	return (int)x < (int)to.x && (int)y < (int)to.y;
+	return x < to.x&& y < to.y;
 
 }
 
 bool Vector2::operator>(const Vector2& to)const
 {
 
-	return (int)x > (int)to.x && (int)y > (int)to.y;
+	return x > to.x && y > to.y;
 }
 
 bool Vector2::operator<=(const Vector2 & to) const
 {
-	return (int)x <= (int)to.x && (int)y <= (int)to.y;
+	return x <= to.x && y <= to.y;
 }
 
 bool Vector2::operator>=(const Vector2 & to) const
 {
-	return (int)x >= (int)to.x && (int)y >= (int)to.y;
+	return x >= to.x && y >= to.y;
 }
 
 float Vector2::operator|(const Vector2 & to) const
@@ -59,14 +59,51 @@ Vector2 Vector2::operator+(Vector2 to)
 	return Vector2(x + to.x, y + to.y);
 }
 
-Vector2 Vector2::operator*(float to)
+Vector2 Vector2::operator*(Vector2 to)
 {
-	return Vector2(x *to, y*to);
+	return Vector2(x * to.x, y * to.y);
 }
 
-Vector2 Vector2::operator/(int to)
+Vector2 Vector2::operator/(Vector2 to)
 {
-	return Vector2(x/to,y/to);
+	return Vector2(x / to.x, y / to.y);
+}
+
+Vector2 Vector2::operator*(float to)
+{
+	return Vector2(x * to, y * to);
+}
+
+Vector2 Vector2::operator/(float to)
+{
+	const float RScale = 1.f / to;
+	return Vector2(x * RScale, y * RScale);
+}
+
+Vector2 Vector2::operator*=(Vector2 to)
+{
+	x *= to.x; y *= to.y;
+	return *this;
+}
+
+Vector2 Vector2::operator/=(Vector2 to)
+{
+	x /= to.x; y /= to.y;
+	return *this;
+}
+
+Vector2 Vector2::operator*=(float to)
+{
+	x *= to; y *= to;
+	return *this;
+}
+
+Vector2 Vector2::operator/=(float to)
+{
+	const float RV = 1.f / to;
+	x *= RV; y *= RV;
+
+	return *this;
 }
 
 void Vector2::operator+=(Vector2 to)
@@ -83,11 +120,11 @@ void Vector2::operator-=(Vector2 to)
 
 bool Vector2::operator==(Vector2 to) const
 {
-	return (int)x == (int)to.x && (int)y == (int)to.y;
+	return x == to.x && y == to.y;
 }
 bool Vector2::operator!=(Vector2 to) const
 {
-	return (int)x != (int)to.x && (int)y != (int)to.y;
+	return x != to.x || y != to.y;
 }
 
 float Vector2::Magnitude()
@@ -165,4 +202,34 @@ Vector2 Vector2::Lerp(Vector2 a, Vector2 b, float i)
 	float y = (1 - i)*a.y + i * b.y;
 
 	return Vector2(x, y);
+}
+
+float Vector2::GetAngle(Vector2 a, Vector2 b)
+{
+
+	float x = b.x - a.x;
+	float y = b.y - a.y;
+
+	//저는 아크코싸인을 원해요 하면 이 주석을 풀고 쓰세요
+	/*
+	float distance = sqrtf(x * x + y * y);
+
+	float angle = acosf(x / distance);
+
+	if (y2 > y1)
+	{
+		angle = PI2 - angle;
+
+		if (angle >= PI2) angle -= PI2;
+	}
+	*/
+
+
+	//아크탄젠트를 원하는 그대여 이걸 쓰세여
+	float angle = -atan2f(y, x);
+
+
+	return angle;
+
+
 }

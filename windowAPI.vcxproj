@@ -23,19 +23,19 @@
     <ProjectGuid>{28B4DAE8-5578-4957-B006-3CD8EAE245FC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>windowAPI</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -48,7 +48,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -102,6 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -146,24 +147,77 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Astar.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="BossAttack.h" />
+    <ClInclude Include="BossDead.h" />
+    <ClInclude Include="BossHand.h" />
+    <ClInclude Include="BossHandAtk.h" />
+    <ClInclude Include="BossIdle.h" />
+    <ClInclude Include="BossRockAtk.h" />
+    <ClInclude Include="BossRoom.h" />
+    <ClInclude Include="BossSlimeAtk.h" />
+    <ClInclude Include="BossState.h" />
+    <ClInclude Include="BowAttack.h" />
     <ClInclude Include="BoxWorldManager.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletScript.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="CheckStand.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Direct2D.h" />
     <ClInclude Include="DrawComponent.h" />
-    <ClInclude Include="Enemy1.h" />
+    <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="DungeonMgr.h" />
+    <ClInclude Include="DungeonScene.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManeger.h" />
+    <ClInclude Include="EnemyScript.h" />
+    <ClInclude Include="EntranceScene.h" />
+    <ClInclude Include="ETC.h" />
+    <ClInclude Include="ETCS.h" />
+    <ClInclude Include="GolemEnemy.h" />
+    <ClInclude Include="Ability.h" />
+    <ClInclude Include="GolemScript.h" />
     <ClInclude Include="iniDataManager.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="Item.hpp" />
+    <ClInclude Include="ItemScript.h" />
+    <ClInclude Include="Item_Bass_Collider.h" />
     <ClInclude Include="JsonManager.h" />
     <ClInclude Include="loadingScene.h" />
     <ClInclude Include="Maptool.h" />
-    <ClInclude Include="ObjSound.h" />
+    <ClInclude Include="MintPotEnemy.h" />
+    <ClInclude Include="Npc.h" />
+    <ClInclude Include="NpcManager.h" />
+    <ClInclude Include="NpcShopState.h" />
     <ClInclude Include="omega.h" />
+    <ClInclude Include="Particle.h" />
+    <ClInclude Include="Particle.hpp" />
+    <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerAttack.h" />
+    <ClInclude Include="PlayerAttackScript.h" />
+    <ClInclude Include="PlayerDead.h" />
+    <ClInclude Include="PlayerIdle.h" />
+    <ClInclude Include="PlayerMove.h" />
+    <ClInclude Include="PlayerRoll.h" />
+    <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="Potion.h" />
+    <ClInclude Include="Potions.h" />
+    <ClInclude Include="ProgressBar.h" />
+    <ClInclude Include="RockCollider.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="ShopDoor.h" />
+    <ClInclude Include="ShopScene.h" />
+    <ClInclude Include="ShopStand.h" />
+    <ClInclude Include="ShopStandManager.h" />
+    <ClInclude Include="SlimeEnemy.h" />
+    <ClInclude Include="Smithy.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="keyManager.h" />
@@ -175,7 +229,6 @@
     <ClInclude Include="ObjectPool.hpp" />
     <ClInclude Include="PhysicsBody.h" />
     <ClInclude Include="PhysicsManager.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sceneManager.h" />
@@ -183,13 +236,19 @@
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SwordAttack.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TestScene.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="TownScene.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="txtData.h" />
+    <ClInclude Include="UiManager.h" />
+    <ClInclude Include="UiObject.h" />
+    <ClInclude Include="UiObject.hpp" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
@@ -197,22 +256,73 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Astar.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="BossAttack.cpp" />
+    <ClCompile Include="BossDead.cpp" />
+    <ClCompile Include="BossHand.cpp" />
+    <ClCompile Include="BossHandAtk.cpp" />
+    <ClCompile Include="BossIdle.cpp" />
+    <ClCompile Include="BossRockAtk.cpp" />
+    <ClCompile Include="BossRoom.cpp" />
+    <ClCompile Include="BossSlimeAtk.cpp" />
+    <ClCompile Include="BossState.cpp" />
+    <ClCompile Include="BowAttack.cpp" />
     <ClCompile Include="BoxWorldManager.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletScript.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="CheckStand.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Direct2D.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
-    <ClCompile Include="Enemy1.cpp" />
+    <ClCompile Include="Dungeon.cpp" />
+    <ClCompile Include="DungeonMgr.cpp" />
+    <ClCompile Include="DungeonScene.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManeger.cpp" />
+    <ClCompile Include="EnemyScript.cpp" />
+    <ClCompile Include="EntranceScene.cpp" />
+    <ClCompile Include="ETC.cpp" />
+    <ClCompile Include="ETCS.cpp" />
+    <ClCompile Include="GolemEnemy.cpp" />
+    <ClCompile Include="Ability.cpp" />
+    <ClCompile Include="GolemScript.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemScript.cpp" />
+    <ClCompile Include="Item_Bass_Collider.cpp" />
     <ClCompile Include="JsonManager.cpp" />
     <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="Maptool.cpp" />
-    <ClCompile Include="ObjSound.cpp" />
+    <ClCompile Include="MintPotEnemy.cpp" />
+    <ClCompile Include="Npc.cpp" />
+    <ClCompile Include="NpcManager.cpp" />
+    <ClCompile Include="NpcShopState.cpp" />
+    <ClCompile Include="Particle.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerAttack.cpp" />
+    <ClCompile Include="PlayerAttackScript.cpp" />
+    <ClCompile Include="PlayerDead.cpp" />
+    <ClCompile Include="PlayerIdle.cpp" />
+    <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="PlayerRoll.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="Potion.cpp" />
+    <ClCompile Include="Potions.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
+    <ClCompile Include="RockCollider.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="ShopDoor.cpp" />
+    <ClCompile Include="ShopScene.cpp" />
+    <ClCompile Include="ShopStand.cpp" />
+    <ClCompile Include="ShopStandManager.cpp" />
+    <ClCompile Include="SlimeEnemy.cpp" />
+    <ClCompile Include="Smithy.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
@@ -222,7 +332,6 @@
     <ClCompile Include="ObjectPool.cpp" />
     <ClCompile Include="PhysicsBody.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="StartScene.cpp" />
@@ -232,12 +341,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SwordAttack.cpp" />
+    <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
+    <ClCompile Include="TownScene.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="UiManager.cpp" />
+    <ClCompile Include="UiObject.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />

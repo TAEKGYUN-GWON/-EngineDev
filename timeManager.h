@@ -18,7 +18,7 @@ public:
 
 	//Delta타임
 	inline float getElapsedTime() const { return _timer->getElapsedTime(); }
-
+	inline float GetFps() const { return _timer->getFrameRate(); }
 	//World타임
 	inline float getWorldTime() const { return _timer->getWorldTime(); }
 

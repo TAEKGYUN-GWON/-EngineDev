@@ -7,9 +7,7 @@
 HINSTANCE	_hInstance;
 HWND		_hWnd;
 
-POINT		_ptMouse;		//마우스 용 POINT
-BOOL		_leftBtnDown;
-
+POINT		_ptMouse;
 
 //함수의 프로토타입 선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -39,7 +37,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	_hWnd = CreateWindow(
 		WINNAME,
 		WINNAME,
-		WS_OVERLAPPEDWINDOW,
+		WS_OVERLAPPEDWINDOW | WS_THICKFRAME,
 		WINSTARTX,
 		WINSTARTY,
 		WINSIZEX,
@@ -58,7 +56,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	SCENEMANAGER->init();
 	OBJECTMANAGER->Init();
 	SOUNDMANAGER->init();
-	//CAMERA->init();
+	CAMERA->init();
 	KEYMANAGER->init();
 	TXTDATA->init();
 	TIMEMANAGER->init();
@@ -99,7 +97,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 
 	//루프문이 다돌면 씬 해제
 	//sceneManager::getSingleton()->GetNowScene()->Release();
-	INIDATAMANAGER->release();
 
 	return message.wParam;
 }
@@ -111,16 +108,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	PAINTSTRUCT ps;
 	HDC			hdc;
 
+	char str[128];
+	int len;
+
 	switch (iMessage)
 	{
 	case WM_CREATE:
 
-		break;
-	case WM_LBUTTONDOWN:
-		_leftBtnDown = true;
-		break;
-	case WM_LBUTTONUP:
-		_leftBtnDown = false;
 		break;
 	case WM_MOUSEMOVE:
 		_ptMouse.x = static_cast<float>(LOWORD(lParam));
@@ -129,7 +123,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEWHEEL:
 	{
 		int wheel = GET_WHEEL_DELTA_WPARAM(wParam) > 0 ? 1.0f : -1.0f;
-		CAMERA->GetMainCamera()->SetScale(Vector2(wheel * 0.05f, wheel * 0.05f));
+		CAMERA->SetScale(Vector2(wheel * 0.05f, wheel * 0.05f));
 		break;
 	}
 	case WM_KEYDOWN:
@@ -143,8 +137,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
-
-
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
