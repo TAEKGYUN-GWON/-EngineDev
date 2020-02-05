@@ -15,7 +15,7 @@ Sprite::Sprite()
 	_isCameraAffect = true;
 
 	_alpha = 1.0f;
-	_scale = Vector2().one;
+	_scale = Vector2(1, 1);
 }
 
 void Sprite::Init(BOOL isFrame, BOOL isLoop)
@@ -115,7 +115,6 @@ void Sprite::SetImgName(string key)
 	_curFrameX = 0;
 
 	_pos = _object->GetTrans()->GetPos();
-	_scale = Vector2(_graphic->GetFrameWidth(), _graphic->GetFrameHeight());
 
 	if (_isFrame) _isPlay = true;
 }
