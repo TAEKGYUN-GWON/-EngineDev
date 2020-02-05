@@ -33,18 +33,6 @@ using namespace std;
 #include "utils.h"
 #include "timeManager.h"
 #include "txtData.h"
-#include "soundManager.h"
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Matrix2x2.h"
-#include "Matrix3x3.h"
-#include "sceneManager.h"
-#include "BoxWorldManager.h"
-#include "PhysicsManager.h"
-#include "GraphicsManager.h"
-#include "Camera.h"
-#include"ObjectManager.h"
-#include "MousePointer.h"
 //#include"rapidjson/document.h"
 //#include"rapidjson/writer.h"
 //#include"nlohmann/json.hpp"
@@ -65,7 +53,22 @@ using namespace SEVENTEEN_UTIL;
 #define WINSTARTY 50
 #define WINSIZEX 1280
 #define WINSIZEY 720
+#define WINSIZE Vector2(WINSIZEX, WINSIZEY)
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
+
+
+#include "soundManager.h"
+#include "Vector2.h"
+#include "Vector3.h"
+#include "Matrix2x2.h"
+#include "Matrix3x3.h"
+#include "sceneManager.h"
+#include "BoxWorldManager.h"
+#include "PhysicsManager.h"
+#include "GraphicsManager.h"
+#include "Camera.h"
+#include"ObjectManager.h"
+#include "MousePointer.h"
 
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()

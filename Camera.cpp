@@ -4,8 +4,8 @@
 
 HRESULT Camera::init()
 {
-	UpdateMatrix();
 
+	UpdateMatrix();
 	return S_OK;
 }
 
@@ -29,6 +29,7 @@ void Camera::Update()
 	}
 
 	UpdateMatrix(); 
+
 }
 
 void Camera::UpdateMatrix()
@@ -37,6 +38,8 @@ void Camera::UpdateMatrix()
 	_matrix = Matrix3x3::identity;
 
 	//_matrix = _matrix * _scaleMatrix * Matrix3x2F::Translation(-_pos.x, -_pos.y);
+
+
 
 	_translationMatrix = Matrix3x3( 1, 0, 0,
 									0, 1, 0,
@@ -68,6 +71,11 @@ void Camera::SetPosition(Vector2 pos, string key)
 	if (_pos.x + WINSIZEX >= GRAPHICMANAGER->FindImage(key)->GetWidth()) _pos.x = GRAPHICMANAGER->FindImage(key)->GetWidth() - WINSIZEX;
 	if (_pos.y + WINSIZEY >= GRAPHICMANAGER->FindImage(key)->GetHeight()) _pos.y = GRAPHICMANAGER->FindImage(key)->GetHeight() - WINSIZEY;
 	UpdateMatrix();
+}
+
+void Camera::SetPos(Vector2 pos)
+{
+	_pos += pos;
 }
 
 void Camera::Control()
@@ -148,9 +156,10 @@ void Camera::ShakingSetting(Vector2 prevPos, float time, float amount)
 
 void Camera::SetScale(Vector2 scale)
 {
-	_scale += scale;
-	float a = Clamp(_scale.x, ZOOM_MIN, ZOOM_MAX);
 
+	_scale += scale;
+
+	float a = Clamp(_scale.x, ZOOM_MIN, ZOOM_MAX);
 	_scale = Vector2(a, a);
 	
 	_scaleMatrix = Matrix3x3(_scale.x,  0,		0,
@@ -158,6 +167,8 @@ void Camera::SetScale(Vector2 scale)
 								0,		0,		1);
 
 	//_scaleMatrix = Matrix3x2F::Scale(_scale.x, _scale.y, Point2F(_pos.x + WINSIZEX / 2, _pos.y + WINSIZEY / 2));
+
+	//_pos *= _scale;
 
 	UpdateMatrix();
 }
@@ -169,6 +180,11 @@ void Camera::MoveTo(Vector2 endPos, float time, bool isCenter)
 	else _endPos = endPos;
 	_moveTime = time;
 	_isMoving = true;
+}
+
+Vector2 Camera::GetPosition()
+{
+	return _pos / _scale;
 }
 
 bool Camera::IsMoving()
