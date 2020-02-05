@@ -74,6 +74,8 @@ public:
 
 	void SetParent(Object* parent);
 
+	void DelParent();
+
 	template<typename T>
 	T* AddComponent();
 

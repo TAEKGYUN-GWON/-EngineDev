@@ -1,11 +1,22 @@
 #include "stdafx.h"
 #include "StartScene.h"
-
-
+#include "TestScene.h"
+#include "ProceduralTest.h"
 void StartScene::Init()
 {
-	Scene::Init();}
+	Scene::Init();
+	
+	GRAPHICMANAGER->AddFrameImage("num", L"blueNumber.png", 4, 1);
 
+	Object* obj = Object::CreateObject<Object>();
+	obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
+	auto s = obj->AddComponent<Sprite>();
+	s->Init(true, true);
+	s->SetImgName("num");
+
+	SCENEMANAGER->addScene("test", new ProceduralTest);
+	SCENEMANAGER->changeScene("test");
+}
 void StartScene::Update()
 {
 	Scene::Update();
@@ -25,7 +36,7 @@ void StartScene::Render()
 	swprintf(buffer, 128, L"Camera X : %f\nCamera Y : %f", CAMERA->GetPosition().x, CAMERA->GetPosition().y);
 	GRAPHICMANAGER->Text(Vector2(WINSIZEX/2, 100), buffer, 20, 300, 50, ColorF::Azure);
 
-
+	
 	
 }
 

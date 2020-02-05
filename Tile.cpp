@@ -10,7 +10,6 @@ void Tile::Init(int idX, int idY)
 
 	//_sprite->Init();
 	//_sprite->Stop();
-	_color = ColorF::Enum::Gray;
 
 	_trans->pos = Vector2(idX * TILEWIDTH + (TILEWIDTH / 2),
 		idY * TILEHEIGHT + (TILEHEIGHT / 2));
@@ -22,9 +21,20 @@ void Tile::Init(int idX, int idY)
 	_f = -1;
 	_g = _h = _isOpen = _isClose = 0;
 	_parent = nullptr;
-
+	_isActive = false;
+	_sprite = AddComponent<Sprite>();
+	_sprite->Init();
 }
 
-void Tile::SetFrameXY(int x, int y)
+void Tile::SetPhysics()
 {
+	_physics = AddComponent<PhysicsBody>();
+
+	_physics->Init(BodyType::STATIC, 1, 1);
+}
+
+void Tile::SetImgName(string imgKey)
+{
+	_imgName = imgKey;
+	_sprite->SetImgName(imgKey);
 }

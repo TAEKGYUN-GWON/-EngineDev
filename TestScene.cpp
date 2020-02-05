@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "TestScene.h"
 
+
 void TestScene::Init()
 {
 	Scene::Init();
@@ -15,10 +16,9 @@ void TestScene::Init()
 	//GRAPHICMANAGER->AddFrameImage("fatkachu", L"resource/img/Object/maple.png", 4, 1);
 	//GRAPHICMANAGER->AddImage("fatkachu", L"resource/img/Object/popcorn.png");
 	//GRAPHICMANAGER->AddFrameImage("fatkachu", L"fatkachu.png",4,1);
-	GRAPHICMANAGER->AddImage("pop", L"resource/img/Object/pop.png");
 //	GRAPHICMANAGER->FindImage("fatkachu")->SetFrameSize(Vector2(2, 2));
 	mgr = new ParticleManager;
-	mgr->Init(50,ParticleType::POSITION, Vector2(WINSIZEX / 2, WINSIZEY / 2), Vector2(10, 10));
+	mgr->Init(500,ParticleType::POSITION, Vector2(WINSIZEX / 2, WINSIZEY / 2), Vector2(10, 10));
 	Object* floor = Object::CreateObject<Object>();
 	floor->GetTrans()->SetScale(1280, 30);
 	floor->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY);
@@ -31,7 +31,7 @@ void TestScene::Init()
 void TestScene::Update()
 {
 	Scene::Update();
-	mgr->Update();
+	mgr->Update(); 
 	//if (KEYMANAGER->isOnceKeyDown('4')) SCENEMANAGER->changeScene("Shop");
 	//if (KEYMANAGER->isOnceKeyDown('S'))
 	//{

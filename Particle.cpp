@@ -42,6 +42,7 @@ void Particle::Init(float angle, float speed, Vector2 pos, Vector2 scale, string
 	_sprite->SetRectColor(ColorF(ColorF::AntiqueWhite,_alpha));
 	_sprite->SetPosition(_trans->GetPos());
 	_rotate = 0;
+	DelParent();
 }
 
 void Particle::Update()
@@ -49,7 +50,6 @@ void Particle::Update()
 	if (!_isActive) return;
 
 	Object::Update();
-	Setdepth();
 
 	_alpha -= 0.4*TIMEMANAGER->getElapsedTime();
 
@@ -71,11 +71,6 @@ void Particle::Render()
 
 void Particle::SetIsPhysics()
 {
-}
-
-void Particle::Setdepth()
-{
-	_trans->bottomPos = Vector2(_trans->bottomPos.x, 99999);
 }
 
 void Particle::move()

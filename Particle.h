@@ -34,8 +34,6 @@ public:
 
 	void SetSpeed(float speed) { _speed = speed; }
 
-	void Setdepth();
-
 	void move();
 
 	void Fire();

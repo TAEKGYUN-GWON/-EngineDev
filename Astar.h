@@ -49,8 +49,6 @@ public:
 	list<Vector2> pathFinder(Vector2 start, Vector2 end);
 	list<Vector2> pathFinderForIndex(Vector2 start, Vector2 end);
 
-	void Render();
-
 	bool CanOpenLeft(Vector2 idx);
 	bool CanOpenRight(Vector2 idx);
 	bool CanOpenUp(Vector2 idx);

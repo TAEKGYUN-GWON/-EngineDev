@@ -56,6 +56,7 @@ void Scene::PhysicsUpdate()
 	_b2World->Step(timeStep, velocityIterations, positionIterations);
 	for (b2Body* body = _b2World->GetBodyList(); body; body = body->GetNext())
 	{
+
 		if (!body->GetUserData())
 		{
 			b2Body* deletedObject = body;

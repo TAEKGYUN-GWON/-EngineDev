@@ -132,3 +132,9 @@ void Object::SetParent(Object* parent)
 	parent->_children.push_back(this);
 }
 
+void Object::DelParent()
+{
+	_parent->RemoveChild(this);
+	_parent = nullptr; 
+}
+

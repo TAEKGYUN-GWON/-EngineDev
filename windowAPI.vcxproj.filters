@@ -76,6 +76,9 @@
     <Filter Include="playGround\Test">
       <UniqueIdentifier>{b2e24c08-1686-43c3-90dd-d5c395430b65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\procedural">
+      <UniqueIdentifier>{aadf05ca-1eca-4688-a279-5fcdb4f17fc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -222,12 +225,6 @@
     <ClInclude Include="TestScene.h">
       <Filter>playGround\Test</Filter>
     </ClInclude>
-    <ClInclude Include="GolemEnemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>playGround\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -236,6 +233,12 @@
     </ClInclude>
     <ClInclude Include="ParticleManager.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProceduralTest.h">
+      <Filter>playGround\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>playGround\procedural</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -356,17 +359,17 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>playGround\Test</Filter>
     </ClCompile>
-    <ClCompile Include="GolemEnemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>playGround\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ParticleManager.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProceduralTest.cpp">
+      <Filter>playGround\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>playGround\procedural</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

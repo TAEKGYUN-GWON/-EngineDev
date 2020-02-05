@@ -33,6 +33,7 @@ private:
     float _h;      //현재 노드로부터 도착점까지 경로비용
 
     bool _isOpen;
+
     bool _isClose;
 
     bool _isFrame;
@@ -42,10 +43,12 @@ private:
     string _attribute;   //타일속성
 
     string _imgName;   //타일속성
-    PIVOT _pivot;
-    ColorF::Enum _color;
-    RECT _rc;
 
+    PIVOT _pivot;
+
+    PhysicsBody* _physics;
+
+    Sprite* _sprite;
 public:
     Tile() :_f(0), _g(0),
         _h(0), _idX(0), _idY(0)
@@ -54,7 +57,7 @@ public:
     }
 
     ~Tile() {};
-
+    virtual void Update() { return; }
     //virtual void Render() { return; }
 
 
@@ -89,16 +92,13 @@ public:
     void SetIsClose(bool isClose) { _isClose = isClose; }
     bool GetIsClose() { return _isClose; }
 
-    void SetColor(ColorF::Enum color) { _color = color; }
-    void SetFrameXY(int x, int y);
+    void SetPhysics();
 
-    void SetRect(RECT rc) { _rc = rc; }
-    RECT GetRect() { return _rc; }
 
     void SetId(int id) { _id = id; }
     int GetId() { return _id; }
 
-    void SetImgName(string name) { _imgName = name; }
+    void SetImgName(string name);
     string GetImgName() { return _imgName; }
 
     void SetIsFrame(bool active) { _isFrame = active; }
@@ -106,4 +106,6 @@ public:
 
     void SetPivot(PIVOT pivot) { _pivot = pivot; }
     PIVOT GetPivot() { return _pivot; }
+
+    Sprite* GetSprite() { return _sprite; }
 };

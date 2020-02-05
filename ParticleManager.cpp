@@ -73,6 +73,8 @@ void ParticleManager::Init(int size, ParticleType type, Vector2 pos, Vector2 sca
 
 void ParticleManager::Update()
 {
+	for (Particle* p : _pool.GetActivePool())
+		p->Update();
 	switch (_type)
 	{
 	case TRIANGLE:
@@ -102,7 +104,8 @@ void ParticleManager::Render()
 		if (KEYMANAGER->isToggleKey(VK_F6))
 			GRAPHICMANAGER->DrawRect(_pool.GetActivePool()[i]->GetTrans()->GetPos(), _pool.GetActivePool()[i]->GetTrans()->GetScale(), _pool.GetActivePool()[i]->GetTrans()->GetRotateDegree(), ColorF::Red);
 	}
-	
+	for (Particle* p : _pool.GetActivePool())
+		p->Render();
 	switch (_type)
 	{
 	case TRIANGLE:
