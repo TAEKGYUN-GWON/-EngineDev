@@ -95,8 +95,10 @@ public:
 	void SetCurrentFrameY(int frame) { _graphicInfo->curFrameY = frame; }
 
 	bool GetFlipX() { return _graphicInfo->isFlipX; }
-	UINT GetWidth() { return _graphicInfo->size.x; }
-	UINT GetHeight() { return _graphicInfo->size.y; }
+	/*UINT GetWidth() { return _graphicInfo->size.x; }
+	UINT GetHeight() { return _graphicInfo->size.y; }*/
+	float GetWidth() { return _graphicInfo->size.x; }
+	float GetHeight() { return _graphicInfo->size.y; }
 	Vector2 GetFrameSize(int frame) { return Vector2(_vFrameRect[frame].Width, _vFrameRect[frame].Height); }
 
 	int GetMaxFrameX() { return _graphicInfo->maxFrameX - 1; }

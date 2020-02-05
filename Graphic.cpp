@@ -168,27 +168,14 @@ void Graphic::Render(Vector2 pos, float alpha, PIVOT pivot, bool cameraAffect)
 void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float alpha, PIVOT pivot, bool cameraAffect)
 {
 	// 20200117 이렇게 크기 잡지말고 제대로 잡자..!
-	_graphicInfo->size.x = scale.x;
-	_graphicInfo->size.y = scale.y;
+	//_graphicInfo->size.x = scale.x;
+	//_graphicInfo->size.y = scale.y;
 
-	Matrix3x2F scale_ = Matrix3x2F::Scale(1, 1);
+	//Matrix3x2F scale_ = Matrix3x2F::Scale(1, 1);
+	Matrix3x2F scale_ = Matrix3x2F::Scale(scale.x, scale.y);
 
 	// 20200117 TODO : Flip부터 잡아보자
 	if (flipX) scale_ = scale_ * Matrix3x2F::Scale(-1, 1);
-
-	//Matrix3x2F scale_ = Matrix3x2F::Identity();
-	//scale_ = Matrix3x2F::Scale(scale.x, scale.y);
-	//if (_isFlip) scale_ = Matrix3x2F::Scale(-1, 1);
-
-	// 20200106 MUST TODO : scale 잡자..
-	//D2D1_MATRIX_3X2_F scale_ = Matrix3x2F::Identity();
-	//Matrix3x3* size = new Matrix3x3(scale.x, 0,		0,
-	//								   0, scale.y,	0,
-	//								   0,	 0,		1);
-	//
-	//scale_ = scale_ * size->To_D2D1_Matrix_3x2_F() * Matrix3x2F::Scale(0.01f, 0.01f);
-	//scale_ = scale_ * size->To_D2D1_Matrix_3x2_F();// *Matrix3x2F::Scale(1 / scale.x, 1 / scale.y);
-	//if (_isFlip) scale_ = Matrix3x2F::Scale(-scale.x, scale.y);
 
 	Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F());
 	Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
@@ -219,7 +206,6 @@ void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float 
 
 	_RT->SetTransform(scale_ * rotation * trans);
 	if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
-	//_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans * CAMERA->GetMatrix());
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha);
 }
 
@@ -484,40 +470,7 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 sca
 	if (_graphicInfo->curFrameX > _graphicInfo->maxFrameX - 1) _graphicInfo->curFrameX = _graphicInfo->maxFrameX - 1;
 	if (_graphicInfo->curFrameY > _graphicInfo->maxFrameY - 1) _graphicInfo->curFrameY = _graphicInfo->maxFrameY - 1;
 
-	int frame = _graphicInfo->curFrameY * _graphicInfo->maxFrameX + _graphicInfo->curFrameX;
-
-	// TODO : 이미지 크기 실험
-	_graphicInfo->size.x = scale.x;
-	_graphicInfo->size.y = scale.y;
-
-	_vFrameRect.clear();
-
-	WICRect rc;
-	for (int i = 0; i < _graphicInfo->maxFrameY; ++i)
-	{
-		for (int j = 0; j < _graphicInfo->maxFrameX; ++j)
-		{
-			rc.X = _graphicInfo->frameWidth * j;
-			rc.Y = _graphicInfo->frameHeight * i;
-			rc.Width = _graphicInfo->frameWidth;
-			rc.Height = _graphicInfo->frameHeight;
-			_vFrameRect.push_back(rc);
-		}
-	}
-
-	//if (_graphicInfo->imgKey.compare("fatkachu") == 0)
-	//{
-	//	cout << "key : " << _graphicInfo->imgKey << endl;
-	//	cout << "size x : " << _graphicInfo->size.x << endl;
-	//	cout << "size y : " << _graphicInfo->size.y << endl;
-	//	cout << "frame X : " << _graphicInfo->frameWidth << endl;
-	//	cout << "frame Y : " << _graphicInfo->frameHeight << endl;
-	//}
-
-	_graphicInfo->size = GetFrameSize(frame);
-
-	Matrix3x2F scale_;
-	scale_ = Matrix3x2F::Scale(1,1);
+	Matrix3x2F scale_ = Matrix3x2F::Scale(scale.x, scale.y);
 	if (flipX) scale_ = scale_ * Matrix3x2F::Scale(-1, 1);
 	Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F());
 	Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
@@ -527,53 +480,41 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 sca
 	switch (pivot)
 	{
 	case LEFT_TOP:
-		dxArea = RectF(0, 0, _graphicInfo->size.x, _graphicInfo->size.y);
+		dxArea = RectF(0, 0, _graphicInfo->frameWidth, _graphicInfo->frameHeight);
 		break;
 	case CENTER:
-		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y / 2, _graphicInfo->size.x / 2, _graphicInfo->size.y / 2);
+		dxArea = RectF(-_graphicInfo->frameWidth / 2, -_graphicInfo->frameHeight / 2, _graphicInfo->frameWidth / 2, _graphicInfo->frameHeight / 2);
 		break;
 	case TOP:
-		dxArea = RectF(-_graphicInfo->size.x / 2, 0, _graphicInfo->size.x / 2, _graphicInfo->size.y);
+		dxArea = RectF(-_graphicInfo->frameWidth / 2, 0, _graphicInfo->frameWidth / 2, _graphicInfo->frameHeight);
 		break;
 	case BOTTOM:
-		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
+		dxArea = RectF(-_graphicInfo->frameWidth / 2, -_graphicInfo->frameHeight, _graphicInfo->frameWidth / 2, 0);
 		break;
 	case RIGHT_BOTTOM:
-		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		dxArea = RectF(-_graphicInfo->frameWidth, -_graphicInfo->frameHeight, 0, 0);
 		break;
 	case LEFT_BOTTOM:
-		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+		dxArea = RectF(0, -_graphicInfo->frameHeight, _graphicInfo->frameWidth, 0);
 		break;
 	}
 
-	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
+	D2D1_RECT_F dxSrc = RectF(_graphicInfo->curFrameX * _graphicInfo->frameWidth, _graphicInfo->curFrameY * _graphicInfo->frameHeight,
+		_graphicInfo->curFrameX * _graphicInfo->frameWidth + _graphicInfo->frameWidth, 
+		_graphicInfo->curFrameY * _graphicInfo->frameHeight + _graphicInfo->frameHeight);
+
 
 	_RT->SetTransform(scale_ * rotation * trans);
 	if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
-	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
+	_RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
 }
 
 void Graphic::SetSize(Vector2 size)
 {
-	_graphicInfo->size = size;
+	_graphicInfo->size *= size;
 
-	//_graphicInfo->frameWidth = size.x / _graphicInfo->maxFrameX;
-	//_graphicInfo->frameHeight = size.y / _graphicInfo->maxFrameY;
-	//
-	//_vFrameRect.clear();
-	//
-	//WICRect rc;
-	//for (int i = 0; i < _graphicInfo->maxFrameY; ++i)
-	//{
-	//	for (int j = 0; j < _graphicInfo->maxFrameX; ++j)
-	//	{
-	//		rc.X = _graphicInfo->frameWidth * j;
-	//		rc.Y = _graphicInfo->frameHeight * i;
-	//		rc.Width = _graphicInfo->frameWidth;
-	//		rc.Height = _graphicInfo->frameHeight;
-	//		_vFrameRect.push_back(rc);
-	//	}
-	//}
+	_graphicInfo->frameWidth = _graphicInfo->size.x / _graphicInfo->maxFrameX;
+	_graphicInfo->frameHeight = _graphicInfo->size.y / _graphicInfo->maxFrameY;
 }
 
 void Graphic::SetFrameSize(Vector2 size)
