@@ -44,6 +44,7 @@ using namespace std;
 #include "GraphicsManager.h"
 #include "Camera.h"
 #include"ObjectManager.h"
+#include "MousePointer.h"
 //#include"rapidjson/document.h"
 //#include"rapidjson/writer.h"
 //#include"nlohmann/json.hpp"
@@ -78,6 +79,9 @@ using namespace SEVENTEEN_UTIL;
 #define CAMERA Camera::getSingleton()
 #define OBJECTMANAGER ObjectManager::getSingleton()
 #define INIDATAMANAGER iniDataManager::getSingleton()
+#define MOUSEPOINTER MousePointer::getSingleton()
+
+
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}
 #define SAFE_OBJECT_RELEASE(p) {if(p) {(p)->Release(); (p) = NULL;}}
@@ -91,7 +95,7 @@ inline void SafeRelease(T* &p) { if (p) p->Release(); p = NULL; }
 //==========================================
 extern HINSTANCE				_hInstance;
 extern HWND						_hWnd;
-extern POINT					_ptMouse;
+extern Vector2					_ptMouse;
 
 //==========================================
 // ## 19.22.22 ## 엔진 첫 걸음

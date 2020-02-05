@@ -19,16 +19,15 @@ private:
 	bool				_isShaking;
 
 private:
-	D2D1_MATRIX_3X2_F	_matrix;
-	//Matrix3x3			_matrix;
+	//D2D1_MATRIX_3X2_F	_matrix;
+	Matrix3x3			_matrix;
 
-	Matrix3x2F			_scaleMatrix;
-	//Matrix3x3			_scaleMatrix;
-	//Matrix3x3			_rotationMatrix;
-	//Matrix3x3			_translationMatrix;
+	//Matrix3x2F			_scaleMatrix;
+	Matrix3x3			_scaleMatrix;
+	Matrix3x3			_rotationMatrix;
+	Matrix3x3			_translationMatrix;
 	//Matrix3x3			_originTransMatrix;
 	//Matrix3x3			_inverseMatrix;
-
 	Vector2				_scale;
 	Vector2				_pos;
 	Vector2				_origin;
@@ -49,10 +48,10 @@ private:
 public:
 	Camera()
 	{
-		_scaleMatrix = Matrix3x2F::Identity();
-		//_scaleMatrix = Matrix3x3::identity;
-		//_rotationMatrix = Matrix3x3::identity;
-		//_translationMatrix = Matrix3x3::identity;
+		//_scaleMatrix = Matrix3x2F::Identity();
+		_scaleMatrix = Matrix3x3::identity;
+		_rotationMatrix = Matrix3x3::identity;
+		_translationMatrix = Matrix3x3::identity;
 		//_originTransMatrix = Matrix3x3::identity;
 		//_inverseMatrix = Matrix3x3::identity;
 
@@ -91,10 +90,13 @@ public:
 	Vector2 GetScale() { return _scale; }
 	bool IsMoving();
 
-	D2D1_MATRIX_3X2_F GetMatrix() { return _matrix; }
+	//D2D1_MATRIX_3X2_F GetMatrix() { return _matrix; }
 	//D2D1_MATRIX_3X2_F GetMatrix() { return _matrix.To_D2D1_Matrix_3x2_F(); }
-	Matrix3x2F GetScaleMatrix() { return _scaleMatrix; }
-	//Matrix3x3 GetScaleMatrix() { return _scaleMatrix; }
+	Matrix3x3 GetMatrix() { return _matrix; }
+	Matrix3x3 GetTransMatrix() { return _translationMatrix; }
+
+	//Matrix3x2F GetScaleMatrix() { return _scaleMatrix; }
+	Matrix3x3 GetScaleMatrix() { return _scaleMatrix; }
 
 	Vector2 GetWorldToCamera(Vector2 pos);
 	Vector2 GetCameraToWorld(Vector2 pos);

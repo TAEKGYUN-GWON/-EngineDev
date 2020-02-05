@@ -7,7 +7,7 @@
 HINSTANCE	_hInstance;
 HWND		_hWnd;
 
-POINT		_ptMouse;
+Vector2		_ptMouse;
 
 //함수의 프로토타입 선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);

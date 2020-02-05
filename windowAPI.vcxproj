@@ -158,6 +158,7 @@
     <ClInclude Include="JsonManager.h" />
     <ClInclude Include="loadingScene.h" />
     <ClInclude Include="Maptool.h" />
+    <ClInclude Include="MousePointer.h" />
     <ClInclude Include="omega.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Particle.hpp" />
@@ -212,6 +213,7 @@
     <ClCompile Include="JsonManager.cpp" />
     <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="Maptool.cpp" />
+    <ClCompile Include="MousePointer.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="ProceduralTest.cpp" />

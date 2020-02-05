@@ -240,6 +240,9 @@
     <ClInclude Include="Room.h">
       <Filter>playGround\procedural</Filter>
     </ClInclude>
+    <ClInclude Include="MousePointer.h">
+      <Filter>2DGameFramework\Manager\header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -276,9 +279,6 @@
       <Filter>2DGameFramework\image</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsManager.cpp">
-      <Filter>2DGameFramework\Manager\cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxWorldManager.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsManager.cpp">
@@ -370,6 +370,12 @@
     </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>playGround\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxWorldManager.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MousePointer.cpp">
+      <Filter>2DGameFramework\Manager\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

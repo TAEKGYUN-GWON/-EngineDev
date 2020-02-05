@@ -33,17 +33,26 @@ void Camera::Update()
 
 void Camera::UpdateMatrix()
 {
-	_matrix = Matrix3x2F::Identity();
-	//_matrix = Matrix3x3::identity;
+	//_matrix = Matrix3x2F::Identity();
+	_matrix = Matrix3x3::identity;
 
-	_matrix = _matrix * _scaleMatrix * Matrix3x2F::Translation(-_pos.x, -_pos.y);
+	//_matrix = _matrix * _scaleMatrix * Matrix3x2F::Translation(-_pos.x, -_pos.y);
 
-	//_translationMatrix = Matrix3x3(-_pos.x, 0, 0, 0, -_pos.y, 0, 0, 0, 1);
-	//_rotationMatrix = Matrix3x3(cosf(0.0f), -sinf(0.0f), 0, sinf(0.0f), cosf(0.0f), 0, 0, 0, 1);
-	//_scaleMatrix = Matrix3x3(_scale.x, 0, 0, 0, _scale.y, 0, 0, 0, 1);
+	_translationMatrix = Matrix3x3( 1, 0, 0,
+									0, 1, 0,
+									-_pos.x, -_pos.y, 1);
+
+	_rotationMatrix = Matrix3x3(cosf(0.0f), -sinf(0.0f), 0, 
+								sinf(0.0f), cosf(0.0f), 0, 
+								0, 0, 1);
+
+	_scaleMatrix = Matrix3x3(	_scale.x, 0, 0,
+								0, _scale.y, 0,
+								0, 0, 1);
+
 	//_originTransMatrix = Matrix3x3(_origin.x, 0, 0, 0, _origin.y, 0, 0, 0, 1);
-	//
-	//_matrix = _translationMatrix * _rotationMatrix * _scaleMatrix * _originTransMatrix;
+	
+	_matrix = _scaleMatrix *_rotationMatrix * _translationMatrix;
 	//
 	//_inverseMatrix = _matrix.GetInverseMatrix();
 }

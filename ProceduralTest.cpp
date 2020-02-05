@@ -22,7 +22,7 @@ void ProceduralTest::Update()
 		for (Room* r : Rooms)
 			r->GetPhysics()->SetSensor(false);
 
-	CAMERA->Control();
+//	CAMERA->Control();
 	
 }
 
