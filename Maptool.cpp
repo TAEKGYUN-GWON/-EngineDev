@@ -79,7 +79,7 @@ void Maptool::Update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (PtInRect(&_rcLoad, _ptMouse))
+		if (PtInRect(&_rcLoad, MOUSEPOINTER->GetMousePosition().Vector2ToPOINT()))
 		{
 #pragma region FileLoadTest
 			//OPENFILENAME ofn;
@@ -116,7 +116,7 @@ void Maptool::Update()
 
 			Load();
 		}
-		if (PtInRect(&_rcSave, _ptMouse))
+		if (PtInRect(&_rcSave, MOUSEPOINTER->GetMousePosition().Vector2ToPOINT()))
 		{
 #pragma region FileSaveTest
 			//OPENFILENAME ofn;
@@ -150,7 +150,7 @@ void Maptool::Update()
 
 			Save();
 		}
-		if (PtInRect(&_rcEraserType, _ptMouse))
+		if (PtInRect(&_rcEraserType, MOUSEPOINTER->GetMousePosition().Vector2ToPOINT()))
 		{
 			_eraser = (EraserType)(((int)_eraser + 1) % (int)EraserType::End);
 		}
@@ -500,7 +500,7 @@ void Maptool::RemoveObject()
 		{
 			if (_tiles[i]->GetChildren().size())
 			{
-				if ((_ptMouse.x <= WINSIZEX - 300) && PtInRect(&RectMakeRightBottom(_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().x - CAMERA->GetPosition().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetPos().y - CAMERA->GetPosition().y, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().y), _ptMouse))
+				if ((_ptMouse.x <= WINSIZEX - 300) && PtInRect(&RectMakeRightBottom(_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().x - CAMERA->GetPosition().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetPos().y - CAMERA->GetPosition().y, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().y), MOUSEPOINTER->GetMousePosition().Vector2ToPOINT()))
 				{
 					string s = _tiles[i]->GetChildren()[0]->GetComponent<Sprite>()->GetImgKey();
 

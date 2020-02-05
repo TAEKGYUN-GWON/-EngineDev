@@ -42,7 +42,7 @@ private:
 	bool				_isMoving;
 
 private:
-	void Control();
+
 	void ShakingCamera();
 
 public:
@@ -76,7 +76,7 @@ public:
 
 	HRESULT init();
 	void Update();
-
+	void Control();
 	void UpdateMatrix();
 	
 	void ShakingSetting(Vector2 prevPos, float time, float amount);
@@ -91,8 +91,9 @@ public:
 	bool IsMoving();
 
 	//D2D1_MATRIX_3X2_F GetMatrix() { return _matrix; }
-	//D2D1_MATRIX_3X2_F GetMatrix() { return _matrix.To_D2D1_Matrix_3x2_F(); }
-	Matrix3x3 GetMatrix() { return _matrix; }
+	D2D1_MATRIX_3X2_F GetMatrix() { return _matrix.To_D2D1_Matrix_3x2_F(); }
+	Matrix3x3 GetMatrix3x3() { return _matrix; }
+
 	Matrix3x3 GetTransMatrix() { return _translationMatrix; }
 
 	//Matrix3x2F GetScaleMatrix() { return _scaleMatrix; }

@@ -64,5 +64,7 @@ public:
 	void operator-=(Vector2 to);
 	bool operator==(Vector2 to)const;
 	bool operator!=(Vector2 to) const;
+
+	POINT Vector2ToPOINT() { return POINT{ (LONG)this->x,(LONG)this->y }; }
 };
 

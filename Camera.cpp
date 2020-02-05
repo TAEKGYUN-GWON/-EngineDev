@@ -153,11 +153,11 @@ void Camera::SetScale(Vector2 scale)
 
 	_scale = Vector2(a, a);
 	
-	//_scaleMatrix = Matrix3x3(_scale.x,  0,		0,
-	//							0,	_scale.y,	0,
-	//							0,		0,		1);
+	_scaleMatrix = Matrix3x3(_scale.x,  0,		0,
+								0,	_scale.y,	0,
+								0,		0,		1);
 
-	_scaleMatrix = Matrix3x2F::Scale(_scale.x, _scale.y, Point2F(_pos.x + WINSIZEX / 2, _pos.y + WINSIZEY / 2));
+	//_scaleMatrix = Matrix3x2F::Scale(_scale.x, _scale.y, Point2F(_pos.x + WINSIZEX / 2, _pos.y + WINSIZEY / 2));
 
 	UpdateMatrix();
 }
