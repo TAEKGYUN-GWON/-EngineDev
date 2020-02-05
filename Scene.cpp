@@ -34,6 +34,7 @@ void Scene::Release()
 	//	return;
 	//}
 	//Object::Release();
+	if (!_children.size()) return;
 	for (int i = _children.size(); i <= 0; i--)
 	{
 		_children[i]->Release();

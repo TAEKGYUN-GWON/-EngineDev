@@ -6,59 +6,58 @@ void Maptool::Init()
 	Scene::Init();
 
 #pragma region SetTilePage1
-	GRAPHICMANAGER->AddImage("build_fountain", L"resource/img/Object/build_fountain.png");
-	GRAPHICMANAGER->AddImage("build_Retaile", L"resource/img/Object/build_Retaile.png");
-	GRAPHICMANAGER->AddImage("build_Shop", L"resource/img/Object/build_Shop.png");
-	GRAPHICMANAGER->AddImage("build_Top1", L"resource/img/Object/build_Top1.png");
-	GRAPHICMANAGER->AddImage("build_Well", L"resource/img/Object/build_Well.png");
+	GRAPHICMANAGER->AddImage("build_fountain", L"Resource/img/Object/build_fountain.png");
+	GRAPHICMANAGER->AddImage("build_Retaile", L"Resource/img/Object/build_Retaile.png");
+	GRAPHICMANAGER->AddImage("build_Shop", L"Resource/img/Object/build_Shop.png");
+	GRAPHICMANAGER->AddImage("build_Top1", L"Resource/img/Object/build_Top1.png");
+	GRAPHICMANAGER->AddImage("build_Well", L"Resource/img/Object/build_Well.png");
 
-	GRAPHICMANAGER->AddFrameImage("door", L"resource/img/Object/door.png", 5, 1);
-	GRAPHICMANAGER->AddFrameImage("doordown", L"resource/img/Object/doordown.png", 5, 1);
+	GRAPHICMANAGER->AddFrameImage("door", L"Resource/img/Object/door.png", 5, 1);
+	GRAPHICMANAGER->AddFrameImage("doordown", L"Resource/img/Object/doordown.png", 5, 1);
 
-	GRAPHICMANAGER->AddImage("dgLobbyEntry", L"resource/img/Object/dgLobbyEntry.png");
-	GRAPHICMANAGER->AddImage("dgLobbyLeft", L"resource/img/Object/dgLobbyLeft.png");
-	GRAPHICMANAGER->AddImage("dgLobbyRight", L"resource/img/Object/dgLobbyRight.png");
-	GRAPHICMANAGER->AddImage("build_Bottom3", L"resource/img/Object/build_Bottom3.png");
-	GRAPHICMANAGER->AddImage("bench", L"resource/img/Object/bench.png");
-	GRAPHICMANAGER->AddImage("buildBoard", L"resource/img/Object/buildBoard.png");
-	GRAPHICMANAGER->AddImage("build_Bottom1", L"resource/img/Object/build_Bottom1.png");
-	GRAPHICMANAGER->AddImage("build_Bottom2", L"resource/img/Object/build_Bottom2.png");
-	GRAPHICMANAGER->AddImage("VillageLamps1", L"resource/img/Object/VillageLamps1.png");
-	GRAPHICMANAGER->AddImage("build_Enchant", L"resource/img/Object/build_Enchant.png");
-	GRAPHICMANAGER->AddImage("VillageLamps2", L"resource/img/Object/VillageLamps2.png");
+	GRAPHICMANAGER->AddImage("dgLobbyEntry", L"Resource/img/Object/dgLobbyEntry.png");
+	GRAPHICMANAGER->AddImage("dgLobbyLeft", L"Resource/img/Object/dgLobbyLeft.png");
+	GRAPHICMANAGER->AddImage("dgLobbyRight", L"Resource/img/Object/dgLobbyRight.png");
+	GRAPHICMANAGER->AddImage("build_Bottom3", L"Resource/img/Object/build_Bottom3.png");
+	GRAPHICMANAGER->AddImage("bench", L"Resource/img/Object/bench.png");
+	GRAPHICMANAGER->AddImage("buildBoard", L"Resource/img/Object/buildBoard.png");
+	GRAPHICMANAGER->AddImage("build_Bottom1", L"Resource/img/Object/build_Bottom1.png");
+	GRAPHICMANAGER->AddImage("build_Bottom2", L"Resource/img/Object/build_Bottom2.png");
+	GRAPHICMANAGER->AddImage("VillageLamps1", L"Resource/img/Object/VillageLamps1.png");
+	GRAPHICMANAGER->AddImage("build_Enchant", L"Resource/img/Object/build_Enchant.png");
+	GRAPHICMANAGER->AddImage("VillageLamps2", L"Resource/img/Object/VillageLamps2.png");
 
-	GRAPHICMANAGER->AddFrameImage("tree", L"resource/img/Object/tree.png", 4, 1);
+	GRAPHICMANAGER->AddFrameImage("tree", L"Resource/img/Object/tree.png", 4, 1);
 
-	GRAPHICMANAGER->AddImage("build_Forge", L"resource/img/Object/build_Forge.png");
-	GRAPHICMANAGER->AddImage("dungeonRock", L"resource/img/Object/dungeonRock.png");
-	GRAPHICMANAGER->AddImage("forgeBoard", L"resource/img/Object/forgeBoard.png");
-	GRAPHICMANAGER->AddImage("potionBoard", L"resource/img/Object/potionBoard.png");
-	GRAPHICMANAGER->AddImage("empty", L"resource/img/empty.png");
+	GRAPHICMANAGER->AddImage("build_Forge", L"Resource/img/Object/build_Forge.png");
+	GRAPHICMANAGER->AddImage("dungeonRock", L"Resource/img/Object/dungeonRock.png");
+	GRAPHICMANAGER->AddImage("forgeBoard", L"Resource/img/Object/forgeBoard.png");
+	GRAPHICMANAGER->AddImage("potionBoard", L"Resource/img/Object/potionBoard.png");
+	GRAPHICMANAGER->AddImage("empty", L"Resource/img/empty.png");
 #pragma endregion
 
 #pragma region SetTilePage2
-	GRAPHICMANAGER->AddImage("smallRock", L"resource/img/Object/smallRock.png");
-	GRAPHICMANAGER->AddImage("smallRock_slime", L"resource/img/Object/smallRock_slime.png");
-	GRAPHICMANAGER->AddImage("bigRock", L"resource/img/Object/bigRock.png");
-	GRAPHICMANAGER->AddImage("book", L"resource/img/Object/book.png");
-	GRAPHICMANAGER->AddImage("pot", L"resource/img/Object/pot.png");
-	GRAPHICMANAGER->AddImage("pot_slime", L"resource/img/Object/pot_slime.png");
-	GRAPHICMANAGER->AddImage("lathe", L"resource/img/Object/lathe.png");
-	GRAPHICMANAGER->AddImage("fountain", L"resource/img/Object/fountain.png");
-	GRAPHICMANAGER->AddImage("pillar", L"resource/img/Object/pillar.png");
-	GRAPHICMANAGER->AddImage("skull1", L"resource/img/Object/skull1.png");
-	GRAPHICMANAGER->AddImage("skull2", L"resource/img/Object/skull2.png");
-	GRAPHICMANAGER->AddImage("skull3", L"resource/img/Object/skull3.png");
-	GRAPHICMANAGER->AddImage("brokenPillar", L"resource/img/Object/brokenPillar.png");
-	GRAPHICMANAGER->AddImage("npcNone", L"resource/img/npcNone.png");
+	GRAPHICMANAGER->AddImage("smallRock", L"Resource/img/Object/smallRock.png");
+	GRAPHICMANAGER->AddImage("smallRock_slime", L"Resource/img/Object/smallRock_slime.png");
+	GRAPHICMANAGER->AddImage("bigRock", L"Resource/img/Object/bigRock.png");
+	GRAPHICMANAGER->AddImage("book", L"Resource/img/Object/book.png");
+	GRAPHICMANAGER->AddImage("pot", L"Resource/img/Object/pot.png");
+	GRAPHICMANAGER->AddImage("pot_slime", L"Resource/img/Object/pot_slime.png");
+	GRAPHICMANAGER->AddImage("lathe", L"Resource/img/Object/lathe.png");
+	GRAPHICMANAGER->AddImage("fountain", L"Resource/img/Object/fountain.png");
+	GRAPHICMANAGER->AddImage("pillar", L"Resource/img/Object/pillar.png");
+	GRAPHICMANAGER->AddImage("skull1", L"Resource/img/Object/skull1.png");
+	GRAPHICMANAGER->AddImage("skull2", L"Resource/img/Object/skull2.png");
+	GRAPHICMANAGER->AddImage("skull3", L"Resource/img/Object/skull3.png");
+	GRAPHICMANAGER->AddImage("brokenPillar", L"Resource/img/Object/brokenPillar.png");
+	GRAPHICMANAGER->AddImage("npcNone", L"Resource/img/npcNone.png");
 #pragma endregion
 
-	GRAPHICMANAGER->AddImage("town_map", L"resource/img/Map/map.png");
-	GRAPHICMANAGER->AddImage("loby", L"resource/img/Map/Dungeon_Lobby.png");
-	GRAPHICMANAGER->AddImage("Shop_map", L"resource/img/Shop/shop_background.png");
-	GRAPHICMANAGER->AddFrameImage("set_tile", L"set_tile3.png", 4, 6);
-	GRAPHICMANAGER->AddFrameImage("set_tile_dungeon", L"set_tile_dungeon.png", 4, 6);
-
+	GRAPHICMANAGER->AddImage("town_map", L"Resource/img/Map/map.png");
+	GRAPHICMANAGER->AddImage("loby", L"Resource/img/Map/Dungeon_Lobby.png");
+	GRAPHICMANAGER->AddImage("Shop_map", L"Resource/img/Shop/shop_background.png");
+	GRAPHICMANAGER->AddFrameImage("set_tile", L"Resource/img/SampleTile/set_tile3.png", 4, 6);
+	GRAPHICMANAGER->AddFrameImage("set_tile_dungeon", L"Resource/img/SampleTile/set_tile_dungeon.png", 4, 6);
 	_page = SamplePage::TOWN;
 	_eraser = EraserType::Single;
 
@@ -76,10 +75,10 @@ void Maptool::Init()
 void Maptool::Update()
 {
 	Scene::Update();
-
+	CAMERA->Control();
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (PtInRect(&_rcLoad, MOUSEPOINTER->GetMousePosition().Vector2ToPOINT()))
+		if (PtInRect(&_rcLoad,_ptMouse.Vector2ToPOINT()))
 		{
 #pragma region FileLoadTest
 			//OPENFILENAME ofn;
@@ -116,7 +115,7 @@ void Maptool::Update()
 
 			Load();
 		}
-		if (PtInRect(&_rcSave, MOUSEPOINTER->GetMousePosition().Vector2ToPOINT()))
+		if (PtInRect(&_rcSave, _ptMouse.Vector2ToPOINT()))
 		{
 #pragma region FileSaveTest
 			//OPENFILENAME ofn;
@@ -150,7 +149,7 @@ void Maptool::Update()
 
 			Save();
 		}
-		if (PtInRect(&_rcEraserType, MOUSEPOINTER->GetMousePosition().Vector2ToPOINT()))
+		if (PtInRect(&_rcEraserType, _ptMouse.Vector2ToPOINT()))
 		{
 			_eraser = (EraserType)(((int)_eraser + 1) % (int)EraserType::End);
 		}
@@ -375,7 +374,7 @@ void Maptool::Load()
 				_tiles[i]->GetChildren()[0]->GetTrans()->SetPos(_tiles[i]->GetTrans()->GetPos() + Vector2(0, TILEHEIGHT / 2));
 				if (_tiles[i]->GetPivot() == RIGHT_BOTTOM) _tiles[i]->GetChildren()[0]->GetTrans()->SetPos(_tiles[i]->GetTrans()->GetPos() + Vector2(TILEWIDTH / 2, TILEHEIGHT / 2));
 
-				_tiles[i]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_tiles[i]->GetImgName())->GetFrameWidth(), GRAPHICMANAGER->FindImage(_tiles[i]->GetImgName())->GetFrameHeight());
+				//_tiles[i]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_tiles[i]->GetImgName())->GetFrameWidth(), GRAPHICMANAGER->FindImage(_tiles[i]->GetImgName())->GetFrameHeight());
 				_tiles[i]->GetChildren()[0]->GetTrans()->SetRect();
 
 				if (_tiles[i]->GetIsFrame())
@@ -437,9 +436,9 @@ void Maptool::SetUp()
 
 void Maptool::SetMap()
 {
-	if (_ptMouse.x > WINSIZEX - 300) return;
+	if (MOUSEPOINTER->GetMouseWorldPosition().x > WINSIZEX - 300) return;
 	
-	int index = ((_ptMouse.x + (int)CAMERA->GetPosition().x) / TILEWIDTH) + TILENUMX * ((_ptMouse.y + (int)CAMERA->GetPosition().y) / TILEHEIGHT);
+	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILEWIDTH) + TILENUMX * ((int)MOUSEPOINTER->GetMouseWorldPosition().y  / TILEHEIGHT);
 
 	if (_tiles[index]->GetChildren().size() > 0) return;
 
@@ -450,7 +449,7 @@ void Maptool::SetMap()
 	_tiles[index]->GetChildren()[0]->GetTrans()->SetPos(_tiles[index]->GetTrans()->GetPos() + Vector2(0, TILEHEIGHT / 2));
 	if (_currentTile.pivot == RIGHT_BOTTOM) _tiles[index]->GetChildren()[0]->GetTrans()->SetPos(_tiles[index]->GetTrans()->GetPos() + Vector2(TILEWIDTH / 2, TILEHEIGHT / 2));
 
-	_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameWidth(), GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameHeight());
+	//_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameWidth(), GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameHeight());
 	_tiles[index]->GetChildren()[0]->GetTrans()->SetRect();
 
 	_tagTiles[index] = *FindTile(_currentTile.imgKey);
@@ -464,7 +463,7 @@ void Maptool::SetMap()
 	else _tiles[index]->GetChildren()[0]->AddComponent<Sprite>()->SetImgName(_currentTile.imgKey);
 
 	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPosition(_tiles[index]->GetChildren()[0]->GetTrans()->GetPos());
-	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetScale(_tiles[index]->GetChildren()[0]->GetTrans()->GetScale());
+	//_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetScale(_tiles[index]->GetChildren()[0]->GetTrans()->GetScale());
 	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPivot(_currentTile.pivot);
 }
 
@@ -500,7 +499,7 @@ void Maptool::RemoveObject()
 		{
 			if (_tiles[i]->GetChildren().size())
 			{
-				if ((_ptMouse.x <= WINSIZEX - 300) && PtInRect(&RectMakeRightBottom(_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().x - CAMERA->GetPosition().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetPos().y - CAMERA->GetPosition().y, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().y), MOUSEPOINTER->GetMousePosition().Vector2ToPOINT()))
+				if ((_ptMouse.x <= WINSIZEX - 300) && PtInRect(&RectMakeRightBottom(_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().x - CAMERA->GetPosition().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetPos().y - CAMERA->GetPosition().y, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().y), MOUSEPOINTER->GetMouseWorldPosition().Vector2ToPOINT()))
 				{
 					string s = _tiles[i]->GetChildren()[0]->GetComponent<Sprite>()->GetImgKey();
 

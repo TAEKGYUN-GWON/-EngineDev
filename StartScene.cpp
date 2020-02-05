@@ -1,25 +1,24 @@
 #include "stdafx.h"
 #include "StartScene.h"
-#include "TestScene.h"
-#include "ProceduralTest.h"
+#include "Maptool.h"
+
 void StartScene::Init()
 {
 	Scene::Init();
-	
-	GRAPHICMANAGER->AddFrameImage("num", L"blueNumber.png", 4, 1);
 
-	Object* obj = Object::CreateObject<Object>();
-	obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
-	auto s = obj->AddComponent<Sprite>();
-	s->Init(true, true);
-	s->SetImgName("num");
+	//GRAPHICMANAGER->AddFrameImage("will", L"will_dungeon.png", 10, 13);
+	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
-	SCENEMANAGER->addScene("test", new ProceduralTest);
-	SCENEMANAGER->changeScene("test");
+	SCENEMANAGER->addScene("tt", new Maptool);
+
 }
+
 void StartScene::Update()
 {
 	Scene::Update();
+	
+	if(KEYMANAGER->isOnceKeyDown('Y')) SCENEMANAGER->changeScene("tt");
+	CAMERA->Control();
 }
 
 void StartScene::Render()
@@ -32,16 +31,32 @@ void StartScene::Render()
 	GRAPHICMANAGER->Text(Vector2(100, 250), L"4) Shop Scene", 20, 300, 50, ColorF::Aquamarine);
 	GRAPHICMANAGER->Text(Vector2(100, 300), L"5) Maptool Scene", 20, 300, 50, ColorF::Azure);
 
-	wchar_t buffer[1024];
-	swprintf(buffer, 128, L"Camera X : %f\nCamera Y : %f", CAMERA->GetPosition().x, CAMERA->GetPosition().y);
-	GRAPHICMANAGER->Text(Vector2(WINSIZEX/2, 100), buffer, 20, 300, 50, ColorF::Azure);
 
-	
-	
+	wchar_t buffer[128];
+	swprintf(buffer, 128, L"Camera X : %f\nCamera Y : %f", CAMERA->GetPosition().x, CAMERA->GetPosition().y);
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 100), buffer, 20, 300, 50, ColorF::Azure);
+
+
+	swprintf(buffer, 128, L"Maoue X : %f\Mouse Y : %f", MOUSEPOINTER->GetMouseWorldPosition().x, MOUSEPOINTER->GetMouseWorldPosition().y);
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 300, 50, ColorF::Azure);
+
+	Vector2 pos = CAMERA->GetPosition() + _ptMouse;
+
+	swprintf(buffer, 128, L"WorldMaoue X : %f\WorldMaoue Y : %f", pos.x, pos.y);
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 300), buffer, 20, 300, 50, ColorF::Azure);
+
+
+	//swprintf(buffer, 128, L"%d %d", GRAPHICMANAGER->FindImage("will")->GetFrameWidth(), GRAPHICMANAGER->FindImage("will")->GetFrameHeight());
+	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 300, 30, ColorF::AntiqueWhite);
+
+
+	//GRAPHICMANAGER->DrawFrameImage("will", Vector2(WINSIZEX / 2, WINSIZEY / 2), 0, 0, Vector2(0.7f, 0.5f));
+	GRAPHICMANAGER->DrawImage("eagle", Vector2(400, 500), Vector2(1, 1), 0.0f);
 }
 
 void StartScene::Release()
 {
 	Scene::Release();
+
 }
 
