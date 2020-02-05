@@ -97,8 +97,9 @@ void Scene::Render()
 	for (Object* child : _children)
 	{
 
-		if (child->GetTrans()->GetPos().x < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x > CAMERA->GetPosition().x + WINSIZEX ||
-			child->GetTrans()->GetPos().y < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y > CAMERA->GetPosition().y + WINSIZEY) child->SetAllowsRender(false);
+		if (child->GetTrans()->GetPos().x < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
+			child->GetTrans()->GetPos().y < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
+
 		else child->SetAllowsRender(true);
 
 		child->Render();

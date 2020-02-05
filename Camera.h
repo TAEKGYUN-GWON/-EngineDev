@@ -86,7 +86,7 @@ public:
 	void SetPos(Vector2 pos) { _pos = pos; }
 	void MoveTo(Vector2 endPos, float time, bool isCenter = true);
 
-	Vector2 GetPosition() { return _pos; }
+	Vector2 GetPosition();
 	Vector2 GetScale() { return _scale; }
 	bool IsMoving();
 

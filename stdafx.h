@@ -65,6 +65,7 @@ using namespace SEVENTEEN_UTIL;
 #define WINSTARTY 50
 #define WINSIZEX 1280
 #define WINSIZEY 720
+#define WINSIZE Vector2(WINSIZEX, WINSIZEY)
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
 
 #define RND randomFunction::getSingleton()

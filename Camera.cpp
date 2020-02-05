@@ -148,7 +148,9 @@ void Camera::ShakingSetting(Vector2 prevPos, float time, float amount)
 
 void Camera::SetScale(Vector2 scale)
 {
+
 	_scale += scale;
+
 	float a = Clamp(_scale.x, ZOOM_MIN, ZOOM_MAX);
 
 	_scale = Vector2(a, a);
@@ -158,6 +160,8 @@ void Camera::SetScale(Vector2 scale)
 								0,		0,		1);
 
 	//_scaleMatrix = Matrix3x2F::Scale(_scale.x, _scale.y, Point2F(_pos.x + WINSIZEX / 2, _pos.y + WINSIZEY / 2));
+
+	//_pos *= _scale;
 
 	UpdateMatrix();
 }
@@ -169,6 +173,17 @@ void Camera::MoveTo(Vector2 endPos, float time, bool isCenter)
 	else _endPos = endPos;
 	_moveTime = time;
 	_isMoving = true;
+}
+
+Vector2 Camera::GetPosition()
+{
+	Vector3 position_V3(_pos.x, _pos.y, 1);
+
+	Vector3 position = Matrix3x3::Mul(position_V3, CAMERA->GetMatrix3x3().GetInverseMatrix());
+
+	Vector2 pos(position.GetX(), position.GetY());
+
+	return _pos/_scale;
 }
 
 bool Camera::IsMoving()
