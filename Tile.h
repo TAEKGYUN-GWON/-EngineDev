@@ -58,6 +58,7 @@ public:
 
     ~Tile() {};
     virtual void Update() { return; }
+    
     //virtual void Render() { return; }
 
 

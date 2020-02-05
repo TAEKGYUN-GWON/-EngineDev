@@ -7,7 +7,6 @@ private:
 public:
 
 	Vector2 GetMouseWorldPosition();
-	Vector2 GetResolution();
 	Vector2 GetMouseLocalPosition();
 };
 

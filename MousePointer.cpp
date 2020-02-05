@@ -28,16 +28,9 @@ Vector2 MousePointer::GetMouseWorldPosition()
 
 	Vector2 _pos(mouseWorldPosition.GetX(), mouseWorldPosition.GetY());
 
-	return _pos * (DesignResolution/GetResolution());
+	return _pos * (DesignResolution/ WINSIZE);
 }
 
-Vector2 MousePointer::GetResolution()
-{
-
-
-
-	return Vector2(WINSIZEX, WINSIZEY);
-}
 
 Vector2 MousePointer::GetMouseLocalPosition()
 {

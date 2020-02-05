@@ -436,7 +436,7 @@ void Maptool::SetUp()
 
 void Maptool::SetMap()
 {
-	if (MOUSEPOINTER->GetMouseWorldPosition().x > WINSIZEX - 300) return;
+	if (_ptMouse.x > WINSIZEX - 300) return;
 	
 	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILEWIDTH) + TILENUMX * ((int)MOUSEPOINTER->GetMouseWorldPosition().y  / TILEHEIGHT);
 
@@ -469,10 +469,10 @@ void Maptool::SetMap()
 
 void Maptool::ClickSetTile()
 {
-	if (_ptMouse.x < WINSIZEX - 270 || _ptMouse.x >(WINSIZEX - 270) + (SET_TILEWIDTH * SAMPLE_TILE_X_NUM) ||
-		_ptMouse.y < 30 || _ptMouse.y > 30 + (SET_TILEHEIGHT * SAMPLE_TILE_Y_NUM)) return;
+	if ((int)_ptMouse.x < WINSIZEX - 270 || (int)_ptMouse.x >(WINSIZEX - 270) + (SET_TILEWIDTH * SAMPLE_TILE_X_NUM) ||
+		(int)_ptMouse.y < 30 || (int)_ptMouse.y > 30 + (SET_TILEHEIGHT * SAMPLE_TILE_Y_NUM)) return;
 
-	int index = ((_ptMouse.x - (WINSIZEX - 270)) / SET_TILEWIDTH) + SAMPLE_TILE_X_NUM * ((_ptMouse.y - 30) / SET_TILEHEIGHT);
+	int index = (((int)_ptMouse.x - (WINSIZEX - 270)) / SET_TILEWIDTH) + SAMPLE_TILE_X_NUM * (((int)_ptMouse.y - 30) / SET_TILEHEIGHT);
 
 	_currentTile.imgKey = FindTile(_sampleTile[index].imgKey)->imgKey;
 	_currentTile.isFrame = FindTile(_sampleTile[index].imgKey)->isFrame;

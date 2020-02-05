@@ -118,3 +118,12 @@ Vector2 Transform::GetWorldPosition()
 		parent = parent->GetParent();
 	}
 }
+
+ Vector2 Transform::GetScale()
+{
+
+	// Vector2(scale.x * CAMERA->GetScale().x, scale.y * CAMERA->GetScale().y); 
+
+
+	return scale;
+}
