@@ -2,10 +2,12 @@
 #include "Tile.h"
 Vector2 Tile::tileSize = Vector2(TILEWIDTH, TILEHEIGHT);
 
+
+
 void Tile::Init(int idX, int idY)
 {
 	Object::Init();
-
+	
 	_tag = "Tile";
 
 	//_sprite->Init();
@@ -23,10 +25,19 @@ void Tile::Init(int idX, int idY)
 	_parent = nullptr;
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init();
-}
+	_imgName = "None";
 
+}
+void Tile::Render()
+{
+	if (_imgName == "None")return;
+	
+	Object::Render();
+}
 void Tile::SetPhysics()
 {
+	if (_physics) return;
+
 	_physics = AddComponent<PhysicsBody>();
 
 	_physics->Init(BodyType::STATIC, 1, 1);

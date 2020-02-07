@@ -7,6 +7,8 @@ private:
 	Sprite* _sprite;
 	PhysicsBody* _physics;
 
+	float _alphaSpeed;
+
 	float _speed;
 	float _alpha;
 	float _angle;
@@ -34,12 +36,15 @@ public:
 
 	void SetSpeed(float speed) { _speed = speed; }
 
+	// 1 ~ 100 까지 (초기 값 : 40)
+	void SetAlphaSpeed(float speed);
 	void move();
 
 	void Fire();
 	void SetActive(bool active) { _active = active; }
 	Sprite* GetSprite() { return _sprite; }
 	PhysicsBody* GetPhysics() { return _physics; }
+	void SetPhysicsOn(bool active);
 
 	//Vector2 GetPos() { _trans->GetPos(); }
 	void SetPos(Vector2 pos) { _trans->SetPos(pos); }

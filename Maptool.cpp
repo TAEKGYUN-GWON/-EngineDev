@@ -466,6 +466,7 @@ void Maptool::SetMap()
 	}
 	else _tiles[index]->GetChildren()[0]->AddComponent<Sprite>()->SetImgName(_currentTile.imgKey);
 
+	_tiles[index]->SetImgName(_currentTile.imgKey);
 	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPosition(_tiles[index]->GetChildren()[0]->GetTrans()->GetPos());
 	_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameWidth(),
 		_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameHeight());
