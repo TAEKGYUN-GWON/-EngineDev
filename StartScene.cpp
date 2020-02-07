@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "StartScene.h"
+#include "ProceduralTest.h"
 #include "Maptool.h"
-
+#include "TestScene.h"
 void StartScene::Init()
 {
 	Scene::Init();
@@ -9,7 +10,9 @@ void StartScene::Init()
 	//GRAPHICMANAGER->AddFrameImage("will", L"will_dungeon.png", 10, 13);
 	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
+	SCENEMANAGER->addScene("t", new TestScene);
 	SCENEMANAGER->addScene("tt", new Maptool);
+	SCENEMANAGER->addScene("t1", new ProceduralTest);
 
 }
 
@@ -18,6 +21,8 @@ void StartScene::Update()
 	Scene::Update();
 	
 	if(KEYMANAGER->isOnceKeyDown('Y')) SCENEMANAGER->changeScene("tt");
+	if(KEYMANAGER->isOnceKeyDown('T')) SCENEMANAGER->changeScene("t");
+	if(KEYMANAGER->isOnceKeyDown('P')) SCENEMANAGER->changeScene("t1");
 	CAMERA->Control();
 }
 

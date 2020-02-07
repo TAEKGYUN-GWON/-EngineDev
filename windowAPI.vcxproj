@@ -148,6 +148,8 @@
   <ItemGroup>
     <ClInclude Include="Astar.h" />
     <ClInclude Include="BoxWorldManager.h" />
+    <ClInclude Include="BspNode.h" />
+    <ClInclude Include="BSP_TestScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="commonMacroFunction.h" />
@@ -204,6 +206,8 @@
   <ItemGroup>
     <ClCompile Include="Astar.cpp" />
     <ClCompile Include="BoxWorldManager.cpp" />
+    <ClCompile Include="BspNode.cpp" />
+    <ClCompile Include="BSP_TestScene.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />

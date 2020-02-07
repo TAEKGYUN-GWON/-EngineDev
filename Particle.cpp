@@ -10,6 +10,7 @@ Particle::Particle()
 void Particle::Init(float angle, float speed, Vector2 pos, Vector2 scale, string imgKey, bool isFrame, float FPS, bool isPhysics)
 {
 	Object::Init();
+	_alphaSpeed = 0.4f;
 	_angle = angle;
 	_speed = speed;
 	_trans->SetPos(pos);
@@ -24,7 +25,7 @@ void Particle::Init(float angle, float speed, Vector2 pos, Vector2 scale, string
 	_physics->SetBodyActive(false);
 	_physics->GetBody()->SetFixedRotation(true);
 	}
-	if (imgKey != "None")
+	if (imgKey != "None") 
 	{
 		if (isFrame)
 		{
@@ -51,7 +52,7 @@ void Particle::Update()
 
 	Object::Update();
 
-	_alpha -= 0.4*TIMEMANAGER->getElapsedTime();
+	_alpha -= _alphaSpeed * TIMEMANAGER->getElapsedTime();
 
 	if (_alpha <= 0.f) _isActive = false;
 
@@ -71,6 +72,21 @@ void Particle::Render()
 
 void Particle::SetIsPhysics()
 {
+	if (_physics) return;
+
+	_isPhysics = true;
+	_physics = AddComponent<PhysicsBody>();
+	_physics->Init(BodyType::DYNAMIC, 0, 0, 0.6, true, true);
+	_physics->SetBodyActive(false);
+	_physics->GetBody()->SetFixedRotation(true);
+
+}
+
+void Particle::SetAlphaSpeed(float speed)
+{
+	_alphaSpeed = speed / 100;
+	if (_alphaSpeed < 0) _alphaSpeed = 0.f;
+	if (_alphaSpeed > 1)_alphaSpeed = 1.f;
 }
 
 void Particle::move()
@@ -95,4 +111,20 @@ void Particle::move()
 void Particle::Fire()
 {
 	_physics->ApplyForce(b2Vec2(cosf(_angle), -sinf(_angle)) * _speed);
+}
+
+void Particle::SetPhysicsOn(bool active)
+{
+
+	_isPhysics = active;
+
+	if (_isPhysics)
+	{
+		_physics->SetBodyActive(false);
+	}
+	else
+	{
+		_physics->SetBodyActive(true);
+	}
+
 }

@@ -59,13 +59,13 @@ ParticleManager::ParticleManager()
 
 }
 
-void ParticleManager::Init(int size, ParticleType type, Vector2 pos, Vector2 scale, string imgKey, bool isFrame, float FPS, bool Physics)
+void ParticleManager::Init(int size, ParticleType type, Vector2 pos, Vector2 scale, string imgKey, bool isFrame, float FPS, bool isPhysics)
 {
 	_type = type;
 	_pos = pos;
 	_scale = scale;
 	_pool.SetLink(this);
-	_pool.Init(size, imgKey, isFrame, FPS);
+	_pool.Init(size, imgKey, isFrame, FPS, isPhysics);
 
 	//pop = GRAPHICMANAGER->FindImage("pop");
 
@@ -73,6 +73,7 @@ void ParticleManager::Init(int size, ParticleType type, Vector2 pos, Vector2 sca
 
 void ParticleManager::Update()
 {
+	if (!_isActive)return;
 	for (Particle* p : _pool.GetActivePool())
 		p->Update();
 	switch (_type)
