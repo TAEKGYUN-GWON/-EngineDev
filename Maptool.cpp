@@ -1,9 +1,13 @@
 #include "stdafx.h"
 #include "Maptool.h"
 
+//void setWindowsSize(int x, int y, int width, int height);
+
 void Maptool::Init()
 {
 	Scene::Init();
+	
+	//setWindowsSize(WINSTARTX, WINSTARTY, 720, 500);
 
 #pragma region SetTilePage1
 	GRAPHICMANAGER->AddImage("build_fountain", L"Resource/img/Object/build_fountain.png");
@@ -463,6 +467,8 @@ void Maptool::SetMap()
 	else _tiles[index]->GetChildren()[0]->AddComponent<Sprite>()->SetImgName(_currentTile.imgKey);
 
 	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPosition(_tiles[index]->GetChildren()[0]->GetTrans()->GetPos());
+	_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameWidth(),
+		_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameHeight());
 	//_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetScale(_tiles[index]->GetChildren()[0]->GetTrans()->GetScale());
 	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPivot(_currentTile.pivot);
 }
@@ -491,7 +497,7 @@ void Maptool::RemoveObject()
 {
 	if (_ptMouse.x > WINSIZEX - 300) return;
 
-	int index = ((_ptMouse.x + (int)CAMERA->GetPosition().x) / TILEWIDTH) + TILENUMX * ((_ptMouse.y + (int)CAMERA->GetPosition().y) / TILEHEIGHT);
+	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILEWIDTH) + TILENUMX * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILEHEIGHT);
 
 	if (_eraser == EraserType::Group)
 	{
@@ -499,7 +505,12 @@ void Maptool::RemoveObject()
 		{
 			if (_tiles[i]->GetChildren().size())
 			{
-				if ((_ptMouse.x <= WINSIZEX - 300) && PtInRect(&RectMakeRightBottom(_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().x - CAMERA->GetPosition().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetPos().y - CAMERA->GetPosition().y, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().x, _tiles[i]->GetChildren()[0]->GetTrans()->GetScale().y), MOUSEPOINTER->GetMouseWorldPosition().Vector2ToPOINT()))
+				if ((_ptMouse.x <= WINSIZEX - 300) && PtInRect(&RectMakeRightBottom(
+					_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().x, 
+					_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().y, 
+					_tiles[i]->GetChildren()[0]->GetTrans()->GetScale().x, 
+					_tiles[i]->GetChildren()[0]->GetTrans()->GetScale().y), 
+					MOUSEPOINTER->GetMouseWorldPosition().Vector2ToPOINT()))
 				{
 					string s = _tiles[i]->GetChildren()[0]->GetComponent<Sprite>()->GetImgKey();
 
