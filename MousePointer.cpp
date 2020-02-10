@@ -9,7 +9,7 @@
 //			Vector2 InputManager::GetMouseWorldPosition()
 //			{
 //			    return mousePosition * (DesignResolution / ApplicationManager::GetInstance()->GetResolution());
-//			}
+//			}..
 
 Vector2 MousePointer::GetMouseWorldPosition()
 {
