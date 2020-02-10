@@ -68,6 +68,55 @@ Vector2 Transform::GetTopPos()
 	return topPos;
 }
 
+Vector2 Transform::GetPosToPivot(TransFormPIVOT pivot)
+{
+	switch (pivot)
+	{
+	case TransFormPIVOT::LEFT_TOP:
+	{
+		if (!_object->GetCameraAffect()) return Vector2(pos - scale / 2) + CAMERA->GetPosition();
+		return Vector2(pos - scale / 2);
+	}
+		break;
+	case TransFormPIVOT::LEFT_BOTTOM:
+	{
+		if (!_object->GetCameraAffect()) return  Vector2(pos.x - scale.x / 2, pos.y + scale.y / 2) + CAMERA->GetPosition();
+
+		return Vector2(pos.x - scale.x / 2, pos.y + scale.y / 2);
+	}
+		break;
+	case TransFormPIVOT::RIGHT_TOP:
+	{
+		if (!_object->GetCameraAffect()) return  Vector2(pos.x + scale.x / 2, pos.y - scale.y / 2) + CAMERA->GetPosition();
+
+		return Vector2(pos.x + scale.x / 2, pos.y - scale.y / 2);
+		
+	}
+		break;
+	case TransFormPIVOT::RIGHT_BOTTOM:
+	{
+		if (!_object->GetCameraAffect()) return  Vector2(pos + scale / 2) + CAMERA->GetPosition();
+
+		return Vector2(pos + scale / 2);
+	}
+		break;
+	case TransFormPIVOT::LEFT:
+	{
+		if (!_object->GetCameraAffect()) return  Vector2(pos.x - scale.x / 2, pos.y) + CAMERA->GetPosition();
+
+		return Vector2(pos.x - scale.x / 2, pos.y);
+	}
+		break;
+	case TransFormPIVOT::RIGHT:
+	{
+		if (!_object->GetCameraAffect()) return  Vector2(pos.x + scale.x / 2, pos.y) + CAMERA->GetPosition();
+
+		return Vector2(pos.x + scale.x / 2, pos.y);
+	}
+		break;
+	}
+}
+
 void Transform::SetPos(Vector2 pos)
 {
 	this->pos = pos;

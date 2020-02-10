@@ -255,6 +255,12 @@
     <ClInclude Include="BspNode.h">
       <Filter>playGround\BSP</Filter>
     </ClInclude>
+    <ClInclude Include="RoomScript.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Probe.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -394,6 +400,12 @@
     </ClCompile>
     <ClCompile Include="BspNode.cpp">
       <Filter>playGround\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Probe.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

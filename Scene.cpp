@@ -77,7 +77,22 @@ void Scene::PhysicsUpdate()
 }
 
 
-bool Compare(Object* a, Object* b)
+bool CompareToDepth(Object* a, Object* b)
+{
+
+	Sprite* aS = a->GetComponent<Sprite>();
+	Sprite* bS = b->GetComponent<Sprite>();
+
+	if (!aS)
+		return false;
+	else if (!bS)
+		return true;
+
+	return aS->GetDepth() < bS->GetDepth();
+
+}
+
+bool CompareToBottomPos(Object* a, Object* b)
 {
 
 	Transform* aT = a->GetComponent<Transform>();
@@ -94,7 +109,7 @@ bool Compare(Object* a, Object* b)
 void Scene::Render()
 {
 	//if (_allowRelease) return;
-	sort(_children.begin(), _children.end(), Compare);
+	sort(_children.begin(), _children.end(), CompareToBottomPos);
 
 	for (Object* child : _children)
 	{

@@ -45,9 +45,12 @@ public:
 	void InitTotalList();
 
 	vector <Tile*> GetDirList(Vector2 idx);
+	vector <Tile*> GetDirListFor4Way(Vector2 idx);
 
-	list<Vector2> pathFinder(Vector2 start, Vector2 end);
-	list<Vector2> pathFinderForIndex(Vector2 start, Vector2 end);
+	list<Vector2> PathFinder(Vector2 start, Vector2 end);
+	list<Vector2> PathFinderFor4Way(Vector2 start, Vector2 end);
+	list<Vector2> PathFinderForIndex(Vector2 start, Vector2 end);
+	list<Vector2> PathFinderForIndexFor4Way(Vector2 start, Vector2 end);
 
 	bool CanOpenLeft(Vector2 idx);
 	bool CanOpenRight(Vector2 idx);

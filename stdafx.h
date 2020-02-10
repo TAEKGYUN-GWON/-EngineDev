@@ -54,6 +54,8 @@ using namespace SEVENTEEN_UTIL;
 #define WINSIZEX 1280
 #define WINSIZEY 720
 #define WINSIZE Vector2(WINSIZEX, WINSIZEY)
+#define DesignResolution Vector2(1280,720)
+
 #define WINSTYLE WS_CAPTION | WS_SYSMENU
 
 
@@ -107,6 +109,7 @@ extern Vector2					_ptMouse;
 #define pWorld2world 800.f/10
 #define RadToDeg (float)180/PI
 #define DegToRad (float)PI/180
-#define DesignResolution Vector2(1280,720)
+
+
 
 #include"omega.h"

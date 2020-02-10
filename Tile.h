@@ -1,8 +1,8 @@
 #pragma once
 #include"Object.h"
 
-#define TILEWIDTH 30
-#define TILEHEIGHT 30
+#define TILEWIDTH 32
+#define TILEHEIGHT 32
 
 #define SET_TILEWIDTH 60
 #define SET_TILEHEIGHT 60

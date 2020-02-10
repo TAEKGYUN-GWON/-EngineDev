@@ -3,6 +3,16 @@
 #include"Matrix3x3.h"
 class Matrix3x3;
 
+typedef enum class TransFormPIVOT
+{
+	LEFT_TOP,
+	LEFT_BOTTOM,
+	RIGHT_TOP,
+	RIGHT_BOTTOM,
+	LEFT,
+	RIGHT
+}TF_PIVOT;
+
 class Transform : public Component
 {
 private:
@@ -34,6 +44,7 @@ public:
 	Vector2 GetPos();
 	Vector2 GetBottomPos();
 	Vector2 GetTopPos();
+	Vector2 GetPosToPivot(TransFormPIVOT pivot);
 
 	//월드좌표 가져오기
 	Vector2 GetWorldPosition();
