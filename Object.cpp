@@ -52,6 +52,7 @@ void Object::Release()
 }
 
 
+
 void Object::Render()
 {
 

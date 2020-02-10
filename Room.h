@@ -1,20 +1,24 @@
 #pragma once
 #include "Object.h"
-
+#include "Probe.h"
+#define MAP_MAX_WIDTH 5000
+#define MAP_MAX_HEIGHT 3000
 class Room : public Object
 {
 private:
 	PhysicsBody* _physics;
-	Room* _leftNode;
-	Room* _rightNode;
-	
+	bool _isMainRoom;
+	bool _isSubRoom;
 public:
-
 	virtual void Init();
-	virtual void Update() { return; }
+	virtual void Update();
 
 	PhysicsBody* GetPhysics() { return _physics; }
-	void SetLeftNode(Room* node) { _leftNode = node; }
-	void SetRightNode(Room* node) { _rightNode = node; }
+
+	bool GetIsMainRoom() { return _isMainRoom; }
+	bool GetIsSubRoom() { return _isSubRoom; }
+	void SetIsMainRoom(bool active) { _isMainRoom = active; }
+	void SetIsSubRoom(bool active) { _isSubRoom = active; }
+
 };
 

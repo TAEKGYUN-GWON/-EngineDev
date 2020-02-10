@@ -168,8 +168,10 @@
     <ClInclude Include="Particle.hpp" />
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Probe.h" />
     <ClInclude Include="ProceduralTest.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="RoomScript.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="ObjectManager.h" />
@@ -227,8 +229,10 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Probe.cpp" />
     <ClCompile Include="ProceduralTest.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomScript.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="ObjectManager.cpp" />

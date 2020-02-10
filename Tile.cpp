@@ -25,11 +25,14 @@ void Tile::Init(int idX, int idY)
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init();
 	_imgName = "None";
+	_attribute = "None";
+
+
 
 }
 void Tile::Render()
 {
-	if (_imgName == "None")return;
+//	if (_attribute == "None")return;
 	
 	Object::Render();
 }
