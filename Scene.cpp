@@ -34,7 +34,9 @@ void Scene::Release()
 	//	return;
 	//}
 	//Object::Release();
+	
 	if (!_children.size()) return;
+
 	for (int i = _children.size(); i <= 0; i--)
 	{
 		_children[i]->Release();
@@ -77,14 +79,11 @@ void Scene::PhysicsUpdate()
 
 bool Compare(Object* a, Object* b)
 {
-
 	Transform* aT = a->GetComponent<Transform>();
 	Transform* bT = b->GetComponent<Transform>();
 
-	if (!aT)
-		return false;
-	else if (!bT)
-		return true;
+	if (!aT) return false;
+	else if (!bT) return true;
 
 	return aT->bottomPos.y < bT->bottomPos.y;
 }
@@ -96,14 +95,12 @@ void Scene::Render()
 
 	for (Object* child : _children)
 	{
-
 		if (child->GetTrans()->GetPos().x < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
 			child->GetTrans()->GetPos().y < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
 
 		else child->SetAllowsRender(true);
 
 		child->Render();
-
 	}
 }
 

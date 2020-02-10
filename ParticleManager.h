@@ -53,7 +53,7 @@ private:
 	float _maxX;
 	float _minX;
 	float _angle;
-
+	bool _isActive;
 public:
 	ParticleManager();
 	~ParticleManager() {};
@@ -70,13 +70,18 @@ public:
 
 	void SetRange(float range) { _range = range; }
 
+	void SetIsActive(bool active) { _isActive = active; }
+	bool GetIsActive() { return _isActive; }
+
 	void KeyCon();
 	//제발 라디안으로.... 주세요 
 	void SetMaxAngle(float radian) { _maxAngle = radian; }
+
 	//제발 라디안으로.... 주세요
 	void SetMinAngle(float radian) { _minAngle = radian; }
 
 	void SetMaxSpeed(float speed) { _maxSpeed = speed; }
+
 	void SetMinSpeed(float speed) { _minSpeed = speed; }
 	//POSITION타입 전용
 	void SetAngle(float radian) { _angle = radian; }
@@ -93,6 +98,9 @@ public:
 	void SetScale(Vector2 scale) { _scale = scale; }
 
 	Vector2 GetScale() { return _scale; }
+
+	void SetAlphaSpeed(float speed);
+	void SetPhysicsOn(bool active);
 
 	float GetMaxAngle() { return _maxAngle; }
 	float GetMinAngle() { return _minAngle; }

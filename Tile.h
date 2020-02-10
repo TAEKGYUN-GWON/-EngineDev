@@ -1,23 +1,11 @@
 #pragma once
 #include"Object.h"
 
-#define TILEWIDTH 30
-#define TILEHEIGHT 30
+#define TILE_WIDTH 30
+#define TILE_HEIGHT 30
 
-#define SET_TILEWIDTH 60
-#define SET_TILEHEIGHT 60
-
-//#define TILENUMX (1335 / TILEWIDTH)
-//#define TILENUMY (1100 / TILEHEIGHT)
-
-#define TILENUMX 100
-#define TILENUMY 100
-
-
-enum type {
-
-
-};
+#define TILE_NUM_X 100
+#define TILE_NUM_Y 100
 
 class Tile : public Object
 {
@@ -38,7 +26,7 @@ private:
 
     bool _isFrame;
 
-    Tile* _parent;
+    Tile* _node;
 
     string _attribute;   //타일속성
 
@@ -57,23 +45,23 @@ public:
     }
 
     ~Tile() {};
+    virtual void Init(int idX, int idY);
     virtual void Update() { return; }
     
-    //virtual void Render() { return; }
+    virtual void Render();
 
 
     static Vector2 tileSize;
 
 
-    virtual void Init(int idX, int idY);
-    void SetParentNode(Tile* p) { _parent = p; }
-    Tile* GetParentNode() { return _parent; }
+    void SetParentNode(Tile* p) { _node = p; }
+    Tile* GetParentNode() { return _node; }
 
     int GetIdX() { return _idX; }
     int GetIdY() { return _idY; }
 
-    void SetCenter(Vector2 center) { _trans->pos = center; }
-    Vector2 GetCenter() { return _trans->pos; }
+    void SetCenter(Vector2 center) { _trans->SetPos(center); }
+    Vector2 GetCenter() { return _trans->GetPos(); }
 
     void SetAttribute(string str) { _attribute = str; }
     string GetAttribute() { return _attribute; }

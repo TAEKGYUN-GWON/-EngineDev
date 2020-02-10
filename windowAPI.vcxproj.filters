@@ -79,6 +79,21 @@
     <Filter Include="playGround\procedural">
       <UniqueIdentifier>{aadf05ca-1eca-4688-a279-5fcdb4f17fc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\Particle">
+      <UniqueIdentifier>{c303fe34-0735-4582-ae60-5e5ee49a0d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\BSP">
+      <UniqueIdentifier>{f8ebb173-cd59-4a61-89f2-b73c3d804fda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\Manager\Button">
+      <UniqueIdentifier>{ae7f7a84-2230-4243-8bc7-aa6c518f485d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Player">
+      <UniqueIdentifier>{0ac5374f-04f5-4c46-a144-1c6a98519636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\TrainScene">
+      <UniqueIdentifier>{4d5cb9d2-8fff-40db-a740-6221a97e4a49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -225,15 +240,6 @@
     <ClInclude Include="TestScene.h">
       <Filter>playGround\Test</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Particle.hpp">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="ProceduralTest.h">
       <Filter>playGround\procedural</Filter>
     </ClInclude>
@@ -242,6 +248,33 @@
     </ClInclude>
     <ClInclude Include="MousePointer.h">
       <Filter>2DGameFramework\Manager\header</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>2DGameFramework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.hpp">
+      <Filter>2DGameFramework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>2DGameFramework\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="BSP_TestScene.h">
+      <Filter>playGround\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="BspNode.h">
+      <Filter>playGround\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>2DGameFramework\Manager\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>playGround\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Train.h">
+      <Filter>playGround\TrainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TrainScene.h">
+      <Filter>playGround\TrainScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -359,12 +392,6 @@
     <ClCompile Include="TestScene.cpp">
       <Filter>playGround\Test</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="ProceduralTest.cpp">
       <Filter>playGround\procedural</Filter>
     </ClCompile>
@@ -376,6 +403,30 @@
     </ClCompile>
     <ClCompile Include="MousePointer.cpp">
       <Filter>2DGameFramework\Manager\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>2DGameFramework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>2DGameFramework\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="BSP_TestScene.cpp">
+      <Filter>playGround\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="BspNode.cpp">
+      <Filter>playGround\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>2DGameFramework\Manager\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>playGround\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Train.cpp">
+      <Filter>playGround\TrainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TrainScene.cpp">
+      <Filter>playGround\TrainScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

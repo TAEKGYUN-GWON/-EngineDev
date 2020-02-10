@@ -1,19 +1,20 @@
 #include "stdafx.h"
 #include "Tile.h"
-Vector2 Tile::tileSize = Vector2(TILEWIDTH, TILEHEIGHT);
+
+Vector2 Tile::tileSize = Vector2(TILE_WIDTH, TILE_HEIGHT);
 
 void Tile::Init(int idX, int idY)
 {
 	Object::Init();
-
+	
 	_tag = "Tile";
 
 	//_sprite->Init();
 	//_sprite->Stop();
 
-	_trans->pos = Vector2(idX * TILEWIDTH + (TILEWIDTH / 2),
-		idY * TILEHEIGHT + (TILEHEIGHT / 2));
-	_trans->SetScale(TILEWIDTH, TILEHEIGHT);
+	_trans->pos = Vector2(idX * TILE_WIDTH + (TILE_WIDTH / 2),
+		idY * TILE_HEIGHT + (TILE_HEIGHT / 2));
+	_trans->SetScale(TILE_WIDTH, TILE_HEIGHT);
 
 	_idX = idX;
 	_idY = idY;
@@ -23,10 +24,19 @@ void Tile::Init(int idX, int idY)
 	_parent = nullptr;
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init();
-}
+	_imgName = "None";
 
+}
+void Tile::Render()
+{
+	if (_imgName == "None")return;
+	
+	Object::Render();
+}
 void Tile::SetPhysics()
 {
+	if (_physics) return;
+
 	_physics = AddComponent<PhysicsBody>();
 
 	_physics->Init(BodyType::STATIC, 1, 1);

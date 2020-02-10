@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "StartScene.h"
+#include "ProceduralTest.h"
 #include "Maptool.h"
+#include "TestScene.h"
+#include "TrainScene.h"
 
 void StartScene::Init()
 {
@@ -9,15 +12,26 @@ void StartScene::Init()
 	//GRAPHICMANAGER->AddFrameImage("will", L"will_dungeon.png", 10, 13);
 	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
+	SCENEMANAGER->addScene("t", new TestScene);
 	SCENEMANAGER->addScene("tt", new Maptool);
+	SCENEMANAGER->addScene("t1", new ProceduralTest);
+	SCENEMANAGER->addScene("train", new TrainScene);
 
+	SCENEMANAGER->changeScene("train");
+
+	//_obj = Object::CreateObject<Object>();
+	//_obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
+	//_obj->GetTrans()->SetScale(100, 100);
+	//_obj->AddComponent<Sprite>();
 }
 
 void StartScene::Update()
 {
 	Scene::Update();
-	
+
 	if(KEYMANAGER->isOnceKeyDown('Y')) SCENEMANAGER->changeScene("tt");
+	if(KEYMANAGER->isOnceKeyDown('T')) SCENEMANAGER->changeScene("t");
+	if(KEYMANAGER->isOnceKeyDown('P')) SCENEMANAGER->changeScene("t1");
 	CAMERA->Control();
 }
 
@@ -59,4 +73,3 @@ void StartScene::Release()
 	Scene::Release();
 
 }
-
