@@ -32,6 +32,7 @@ void Sprite::Init(BOOL isFrame, BOOL isLoop)
 
 void Sprite::Render()
 {
+	PlayAnimation();
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{
 		if (_isFillRect) GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _alpha, _pivot, _isCameraAffect);
@@ -54,7 +55,7 @@ void Sprite::Render()
 
 void Sprite::Update()
 {
-	PlayAnimation();
+
 }
 
 void Sprite::Start()

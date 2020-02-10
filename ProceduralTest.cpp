@@ -70,6 +70,9 @@ void ProceduralTest::Update()
 	if (KEYMANAGER->isOnceKeyDown('6'))
 		startDel = true;
 
+	if (KEYMANAGER->isOnceKeyDown('Y'))
+		SetTileProperty();
+
 	if (endPush && count < SELECT_ROOM)
 		SelRoom();
 
@@ -192,8 +195,30 @@ void ProceduralTest::SetTileProperty()
 	{
 		for (Room* r : subRooms)
 		{
-			if(r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) > t->GetTrans()->GetPos() &&
-				)
+			if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < t->GetTrans()->GetPos() &&
+				r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > t->GetTrans()->GetPos())
+			{
+				t->SetAttribute("None");
+				auto s = t->GetSprite();
+				s->SetFillRect(true);
+				s->SetRectColor(ColorF::Brown);
+			}
+
 		}
+		for (Room* r : selRooms)
+		{
+
+			if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < t->GetTrans()->GetPos() &&
+				r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > t->GetTrans()->GetPos())
+			{
+				t->SetAttribute("None");
+				auto s = t->GetSprite();
+				s->SetFillRect(true);
+				s->SetRectColor(ColorF::Aqua);
+
+			}
+
+		}
+
 	}
 }

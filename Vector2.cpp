@@ -78,6 +78,8 @@ Vector2 Vector2::operator/(float to)
 {
 	const float RScale = 1.f / to;
 	return Vector2(x * RScale, y * RScale);
+
+	//return Vector2(x / to, y / to);
 }
 
 Vector2 Vector2::operator*=(Vector2 to)
