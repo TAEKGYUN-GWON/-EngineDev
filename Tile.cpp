@@ -25,7 +25,7 @@ void Tile::Init(int idX, int idY)
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init();
 	_imgName = "None";
-	_attribute = "None";
+	_attribute = NONE;
 
 
 
@@ -48,5 +48,4 @@ void Tile::SetPhysics()
 void Tile::SetImgName(string imgKey)
 {
 	_imgName = imgKey;
-	_sprite->SetImgName(imgKey);
 }

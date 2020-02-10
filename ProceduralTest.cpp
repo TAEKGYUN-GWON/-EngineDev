@@ -147,7 +147,7 @@ void ProceduralTest::SetTile()
 			Tile* tile = Object::CreateObject<Tile>();
 			tile->Init(j, i);
 			tile->AddComponent<Sprite>();
-			tile->SetAttribute("Void");
+			tile->SetAttribute(Attribute::NONE_MOVE);
 			tiles.push_back(tile);
 		}
 	}
@@ -188,12 +188,12 @@ void ProceduralTest::SetSubRoom()
 
 void ProceduralTest::SetTileProperty()
 {
-	for (Tile* t : tiles)
-	{
-		for (Room* r : subRooms)
-		{
-			if(r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) > t->GetTrans()->GetPos() &&
-				)
-		}
-	}
+	//for (Tile* t : tiles)
+	//{
+	//	for (Room* r : subRooms)
+	//	{
+	//		if(r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) > t->GetTrans()->GetPos() &&
+	//			)
+	//	}
+	//}
 }

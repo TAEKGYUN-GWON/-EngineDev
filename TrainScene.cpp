@@ -9,8 +9,9 @@ void TrainScene::Init()
 
 	GRAPHICMANAGER->AddFrameImage("btnSelect", L"btnSelect.png", 1, 2);
 
-	//_train = Object::CreateObject<Train>();
-	//_train->Init();
+	_train = Object::CreateObject<Train>();
+	_train->Init();
+	//_train->GetSprite()->SetDepth()
 
 	_btn = Object::CreateObject<Button>();
 	_btn->Init();

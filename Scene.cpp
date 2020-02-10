@@ -106,7 +106,8 @@ bool CompareToBottomPos(Object* a, Object* b)
 void Scene::Render()
 {
 	//if (_allowRelease) return;
-	sort(_children.begin(), _children.end(), CompareToBottomPos);
+	//sort(_children.begin(), _children.end(), CompareToBottomPos);
+	sort(_children.begin(), _children.end(), CompareToDepth);
 
 	for (Object* child : _children)
 	{

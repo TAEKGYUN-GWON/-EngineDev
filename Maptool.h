@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "Tile.h"
 #include <commdlg.h> //OPENFILENAME을 위한 헤더
 
 #define SET_TILE_WIDTH 60
@@ -45,15 +44,6 @@ enum class SamplePage
     TOWN,
     DUNGEON,
     PAGE_END,
-};
-
-enum Attribute
-{
-    NONE_MOVE,
-    DESTRUCTION,
-    CLIFF,
-    TERRAIN_DESTRUCTION,
-    NONE,
 };
 
 enum class EraserType
@@ -108,6 +98,8 @@ struct tagTile
     }
 };
 
+class Tile;
+
 class Maptool : public Scene
 {
 private:
@@ -149,7 +141,7 @@ public:
     void ClickSetTile();
     void RemoveObject();
     //void FindIndex(int curIdx, Vector2 size);
-    void SetAttribute(int curIdx, Vector2 StartPos, Vector2 size, Vector2 StartPos2, Vector2 size2, string attribute);
+    void SetAttribute(int curIdx, Vector2 StartPos, Vector2 size, Attribute attribute);
 
     tagTile* FindTile(string imgKey);
 

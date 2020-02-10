@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Maptool.h"
-
+#include "Tile.h"
 #include <filesystem>
 using namespace filesystem;
 
@@ -181,8 +181,8 @@ void Maptool::Render()
 	
 			if (index < 0 || index >= TILE_NUM_X * TILE_NUM_Y) continue;
 	
-			if (_vTiles[index]->GetAttribute() == "Wall") _vTiles[index]->GetComponent<Sprite>()->SetFillRect(true);
-			else if (_vTiles[index]->GetAttribute() == "NpcNone")
+			if (_vTiles[index]->GetAttribute() == NONE_MOVE) _vTiles[index]->GetComponent<Sprite>()->SetFillRect(true);
+			else if (_vTiles[index]->GetAttribute() == DESTRUCTION)
 			{
 				_vTiles[index]->GetComponent<Sprite>()->SetRectColor(ColorF::YellowGreen);
 				_vTiles[index]->GetComponent<Sprite>()->SetFillRect(true);
@@ -406,38 +406,38 @@ void Maptool::SetUp()
 
 void Maptool::SetMap()
 {
-	//if (_ptMouse.x > WINSIZEX - 300) return;
-	//
-	//int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y  / TILE_HEIGHT);
-	//
-	//if (_tiles[index]->GetChildren().size() > 0) return;
-	//
-	//SetAttribute(index, _currentTile.startPos, _currentTile.size, _currentTile.startPos2, _currentTile.size2, FindTile(_currentTile.imgKey)->attribute);
-	//
-	//_tiles[index]->AddChild(Object::CreateObject<Object>());
-	//
-	//_tiles[index]->GetChildren()[0]->GetTrans()->SetPos(_tiles[index]->GetTrans()->GetPos() + Vector2(0, TILEHEIGHT / 2));
-	//if (_currentTile.pivot == RIGHT_BOTTOM) _tiles[index]->GetChildren()[0]->GetTrans()->SetPos(_tiles[index]->GetTrans()->GetPos() + Vector2(TILEWIDTH / 2, TILEHEIGHT / 2));
-	//
-	////_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameWidth(), GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameHeight());
-	//_tiles[index]->GetChildren()[0]->GetTrans()->SetRect();
-	//
-	//_tagTiles[index] = *FindTile(_currentTile.imgKey);
-	//
-	//if (_currentTile.isFrame)
-	//{
-	//	_tiles[index]->GetChildren()[0]->AddComponent<Sprite>()->Init(true, true);
-	//	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetImgName(_currentTile.imgKey);
-	//	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetFPS(0.5f);
-	//}
-	//else _tiles[index]->GetChildren()[0]->AddComponent<Sprite>()->SetImgName(_currentTile.imgKey);
-	//
-	//_tiles[index]->SetImgName(_currentTile.imgKey);
-	//_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPosition(_tiles[index]->GetChildren()[0]->GetTrans()->GetPos());
-	//_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameWidth(),
-	//	_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameHeight());
-	////_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetScale(_tiles[index]->GetChildren()[0]->GetTrans()->GetScale());
-	//_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPivot(_currentTile.pivot);
+	if (_ptMouse.x > WINSIZEX - 300) return;
+	
+	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y  / TILE_HEIGHT);
+	
+	if (_vTiles[index]->GetChildren().size() > 0) return;
+	
+	SetAttribute(index, _currentTile.startPos, _currentTile.size, FindTile(_currentTile.imgKey)->attribute);
+	
+	_vTiles[index]->AddChild(Object::CreateObject<Object>());
+	
+	_vTiles[index]->GetChildren()[0]->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos() + Vector2(0, TILE_HEIGHT / 2));
+	if (_currentTile.pivot == RIGHT_BOTTOM) _vTiles[index]->GetChildren()[0]->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos() + Vector2(TILE_WIDTH / 2, TILE_HEIGHT / 2));
+	
+	//_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameWidth(), GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameHeight());
+	_vTiles[index]->GetChildren()[0]->GetTrans()->SetRect();
+	
+	_vTagTiles[index] = *FindTile(_currentTile.imgKey);
+	
+	if (_currentTile.isFrame)
+	{
+		_vTiles[index]->GetChildren()[0]->AddComponent<Sprite>()->Init(true, true);
+		_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetImgName(_currentTile.imgKey);
+		_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetFPS(0.5f);
+	}
+	else _vTiles[index]->GetChildren()[0]->AddComponent<Sprite>()->SetImgName(_currentTile.imgKey);
+	
+	_vTiles[index]->SetImgName(_currentTile.imgKey);
+	_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPosition(_vTiles[index]->GetChildren()[0]->GetTrans()->GetPos());
+	_vTiles[index]->GetChildren()[0]->GetTrans()->SetScale(_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameWidth(),
+		_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameHeight());
+	//_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetScale(_tiles[index]->GetChildren()[0]->GetTrans()->GetScale());
+	_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPivot(_currentTile.pivot);
 }
 
 void Maptool::ClickSetTile()
@@ -512,21 +512,21 @@ void Maptool::RemoveObject()
 	//}
 }
 
-void Maptool::SetAttribute(int curIdx, Vector2 StartPos, Vector2 size, Vector2 StartPos2, Vector2 size2, string attribute)
+void Maptool::SetAttribute(int curIdx, Vector2 StartPos, Vector2 size, Attribute attribute)
 {
-	//int start = ( curIdx- (TILENUMX * (StartPos.y - 1))) - (StartPos.x - 1);
-	//
-	//for (int i = 0; i < size.y; ++i)
-	//{
-	//	for (int j = 0; j < size.x; ++j)
-	//	{
-	//		if (start + j + (TILENUMX * i) < 0)continue;
-	//
-	//		_tiles[start + j + (TILENUMX * i)]->SetAttribute(attribute);
-	//		_tagTiles[start + j + (TILENUMX * i)].attribute = attribute;
-	//	}
-	//}
-	//
+	int start = ( curIdx- (TILE_NUM_X * (StartPos.y - 1))) - (StartPos.x - 1);
+	
+	for (int i = 0; i < size.y; ++i)
+	{
+		for (int j = 0; j < size.x; ++j)
+		{
+			if (start + j + (TILE_NUM_X * i) < 0)continue;
+	
+			_vTiles[start + j + (TILE_NUM_X * i)]->SetAttribute(attribute);
+			_vTagTiles[start + j + (TILE_NUM_X * i)].attribute = attribute;
+		}
+	}
+	
 	//start = (curIdx - (TILENUMX * (StartPos2.y - 1))) - (StartPos2.x - 1);
 	//
 	//for (int i = 0; i < size2.y; ++i)

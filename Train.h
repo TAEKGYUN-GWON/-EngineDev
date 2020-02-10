@@ -11,5 +11,7 @@ public:
 	virtual void Init();
 	virtual void Update();
 	virtual void Render();
+
+	Sprite* GetSprite() { return _sprite; }
 };
 
