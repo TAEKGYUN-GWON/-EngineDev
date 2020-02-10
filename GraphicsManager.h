@@ -102,7 +102,7 @@ public:
 
 	void DrawEllipse(float x, float y, float radiusX, float radiusY, ColorF::Enum color = ColorF::Black, float strokeWidth = 3.0f);
 
-	void DrawFillRect(Vector2 pos, Vector2 size, float angle = 0.0f, ColorF color = ColorF::Black, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool isCameraAffect = true);
+	void DrawFillRect(Vector2 pos, Vector2 size, float angle = 0.0f, ColorF color = ColorF::Black, PIVOT pivot = PIVOT::CENTER, bool isCameraAffect = true);
 	void DrawFillEllipse(Vector2 pos, Vector2 radius, float angle = 0.0f, ColorF color = ColorF::Black);
 	void DrawFillRoundRect(Vector2 pos, Vector2 size, Vector2 radius, ColorF color = ColorF::Black);
 

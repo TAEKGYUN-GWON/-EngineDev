@@ -1,15 +1,15 @@
 #pragma once
-#include "Scene.h"
+#include "Object.h"
 
-class StartScene : public Scene
+class Train : public Object
 {
 private:
-	//Object* _obj;
+	vector<Vector2> _vChair;
+	Sprite* _sprite;
 
 public:
 	virtual void Init();
 	virtual void Update();
 	virtual void Render();
-	virtual void Release();
 };
 

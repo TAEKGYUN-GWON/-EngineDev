@@ -144,8 +144,8 @@ list<Vector2> Astar::pathFinder(Vector2 start, Vector2 end)
 {
 	InitTotalList();
 
-	Vector2 startId((int)(start.x / TILEWIDTH), (int)(start.y / TILEHEIGHT));
-	Vector2 endId((int)(end.x / TILEWIDTH), (int)(end.y / TILEHEIGHT));
+	Vector2 startId((int)(start.x / TILE_WIDTH), (int)(start.y / TILE_HEIGHT));
+	Vector2 endId((int)(end.x / TILE_WIDTH), (int)(end.y / TILE_HEIGHT));
 
 	//_miTotalList = _mTotalList.find(startId);
 	//_startTile = _miTotalList->second;
@@ -193,8 +193,8 @@ list<Vector2> Astar::pathFinderForIndex(Vector2 start, Vector2 end)
 
 	InitTotalList();
 
-	Vector2 startId((int)(start.x / TILEWIDTH), (int)(start.y / TILEHEIGHT));
-	Vector2 endId((int)(end.x / TILEWIDTH), (int)(end.y / TILEHEIGHT));
+	Vector2 startId((int)(start.x / TILE_WIDTH), (int)(start.y / TILE_HEIGHT));
+	Vector2 endId((int)(end.x / TILE_WIDTH), (int)(end.y / TILE_HEIGHT));
 
 	//_miTotalList = _mTotalList.find(startId);
 	//_startTile = _miTotalList->second;

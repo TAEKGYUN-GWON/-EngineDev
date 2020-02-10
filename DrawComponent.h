@@ -8,6 +8,7 @@ class DrawComponent : public Component
 protected:
 	Transform* _trans;
 	bool _isCameraEffect = true;
+	int _depth;
 
 public:
 	DrawComponent();

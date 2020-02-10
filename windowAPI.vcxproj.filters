@@ -85,6 +85,15 @@
     <Filter Include="playGround\BSP">
       <UniqueIdentifier>{f8ebb173-cd59-4a61-89f2-b73c3d804fda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2DGameFramework\Manager\Button">
+      <UniqueIdentifier>{ae7f7a84-2230-4243-8bc7-aa6c518f485d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Player">
+      <UniqueIdentifier>{0ac5374f-04f5-4c46-a144-1c6a98519636}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\TrainScene">
+      <UniqueIdentifier>{4d5cb9d2-8fff-40db-a740-6221a97e4a49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -255,6 +264,18 @@
     <ClInclude Include="BspNode.h">
       <Filter>playGround\BSP</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>2DGameFramework\Manager\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>playGround\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Train.h">
+      <Filter>playGround\TrainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TrainScene.h">
+      <Filter>playGround\TrainScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -394,6 +415,18 @@
     </ClCompile>
     <ClCompile Include="BspNode.cpp">
       <Filter>playGround\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>2DGameFramework\Manager\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>playGround\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Train.cpp">
+      <Filter>playGround\TrainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TrainScene.cpp">
+      <Filter>playGround\TrainScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

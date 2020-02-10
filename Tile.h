@@ -1,23 +1,11 @@
 #pragma once
 #include"Object.h"
 
-#define TILEWIDTH 30
-#define TILEHEIGHT 30
+#define TILE_WIDTH 30
+#define TILE_HEIGHT 30
 
-#define SET_TILEWIDTH 60
-#define SET_TILEHEIGHT 60
-
-//#define TILENUMX (1335 / TILEWIDTH)
-//#define TILENUMY (1100 / TILEHEIGHT)
-
-#define TILENUMX 100
-#define TILENUMY 100
-
-
-enum type {
-
-
-};
+#define TILE_NUM_X 100
+#define TILE_NUM_Y 100
 
 class Tile : public Object
 {

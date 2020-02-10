@@ -412,27 +412,29 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 sca
 	switch (pivot)
 	{
 	case LEFT_TOP:
-		dxArea = RectF(0, 0, _graphicInfo->frameWidth, _graphicInfo->frameHeight);
+		dxArea = RectF(0, 0, _graphicInfo->frameWidth * scale.x, _graphicInfo->frameHeight * scale.y);
 		break;
 	case CENTER:
-		dxArea = RectF(-_graphicInfo->frameWidth / 2, -_graphicInfo->frameHeight / 2, _graphicInfo->frameWidth / 2, _graphicInfo->frameHeight / 2);
+		dxArea = RectF(-_graphicInfo->frameWidth / 2 * scale.x, -_graphicInfo->frameHeight / 2 * scale.y, _graphicInfo->frameWidth / 2 * scale.x, _graphicInfo->frameHeight / 2 * scale.y);
 		break;
 	case TOP:
-		dxArea = RectF(-_graphicInfo->frameWidth / 2, 0, _graphicInfo->frameWidth / 2, _graphicInfo->frameHeight);
+		dxArea = RectF(-_graphicInfo->frameWidth / 2 * scale.x, 0, _graphicInfo->frameWidth / 2 * scale.x, _graphicInfo->frameHeight * scale.y);
 		break;
 	case BOTTOM:
-		dxArea = RectF(-_graphicInfo->frameWidth / 2, -_graphicInfo->frameHeight, _graphicInfo->frameWidth / 2, 0);
+		dxArea = RectF(-_graphicInfo->frameWidth / 2 * scale.x, -_graphicInfo->frameHeight * scale.y, _graphicInfo->frameWidth / 2 * scale.x, 0);
 		break;
 	case RIGHT_BOTTOM:
-		dxArea = RectF(-_graphicInfo->frameWidth, -_graphicInfo->frameHeight, 0, 0);
+		dxArea = RectF(-_graphicInfo->frameWidth * scale.x, -_graphicInfo->frameHeight * scale.y, 0, 0);
 		break;
 	case LEFT_BOTTOM:
-		dxArea = RectF(0, -_graphicInfo->frameHeight, _graphicInfo->frameWidth, 0);
+		dxArea = RectF(0, -_graphicInfo->frameHeight * scale.y, _graphicInfo->frameWidth * scale.x, 0);
 		break;
 	}
 
 	D2D1_RECT_F dxSrc = RectF(_graphicInfo->curFrameX * _graphicInfo->frameWidth, _graphicInfo->curFrameY * _graphicInfo->frameHeight,
-		_graphicInfo->curFrameX * _graphicInfo->frameWidth + _graphicInfo->frameWidth, 
+		/*(_graphicInfo->curFrameX * _graphicInfo->frameWidth + _graphicInfo->frameWidth) * scale.x, 
+		(_graphicInfo->curFrameY * _graphicInfo->frameHeight + _graphicInfo->frameHeight ) * scale.y);*/
+		_graphicInfo->curFrameX * _graphicInfo->frameWidth + _graphicInfo->frameWidth,
 		_graphicInfo->curFrameY * _graphicInfo->frameHeight + _graphicInfo->frameHeight);
 
 
