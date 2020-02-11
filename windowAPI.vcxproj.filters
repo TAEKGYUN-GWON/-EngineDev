@@ -67,9 +67,6 @@
     <Filter Include="2DGameFramework\MapTool">
       <UniqueIdentifier>{4f183df9-7dee-411b-a752-cf66aa8b113f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="playGround\Town">
-      <UniqueIdentifier>{c05d42b8-fe8c-4a5e-aa2e-81c8b800830b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="playGround\Start">
       <UniqueIdentifier>{46eefbbd-5e0e-4ee3-9b0c-fb0d6bbdb874}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,9 @@
     </Filter>
     <Filter Include="playGround\BSP">
       <UniqueIdentifier>{f8ebb173-cd59-4a61-89f2-b73c3d804fda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\Manager\Button">
+      <UniqueIdentifier>{ae7f7a84-2230-4243-8bc7-aa6c518f485d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,6 +255,9 @@
     <ClInclude Include="BspNode.h">
       <Filter>playGround\BSP</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>2DGameFramework\Manager\Button</Filter>
+    </ClInclude>
     <ClInclude Include="RoomScript.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -400,6 +403,9 @@
     </ClCompile>
     <ClCompile Include="BspNode.cpp">
       <Filter>playGround\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>2DGameFramework\Manager\Button</Filter>
     </ClCompile>
     <ClCompile Include="RoomScript.cpp">
       <Filter>소스 파일</Filter>

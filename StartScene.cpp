@@ -3,6 +3,7 @@
 #include "ProceduralTest.h"
 #include "Maptool.h"
 #include "TestScene.h"
+
 void StartScene::Init()
 {
 	Scene::Init();
@@ -14,12 +15,16 @@ void StartScene::Init()
 	SCENEMANAGER->addScene("tt", new Maptool);
 	SCENEMANAGER->addScene("t1", new ProceduralTest);
 
+	//_obj = Object::CreateObject<Object>();
+	//_obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
+	//_obj->GetTrans()->SetScale(100, 100);
+	//_obj->AddComponent<Sprite>();
 }
 
 void StartScene::Update()
 {
 	Scene::Update();
-	
+
 	if(KEYMANAGER->isOnceKeyDown('Y')) SCENEMANAGER->changeScene("tt");
 	if(KEYMANAGER->isOnceKeyDown('T')) SCENEMANAGER->changeScene("t");
 	if(KEYMANAGER->isOnceKeyDown('P')) SCENEMANAGER->changeScene("t1");
@@ -64,4 +69,3 @@ void StartScene::Release()
 	Scene::Release();
 
 }
-

@@ -70,9 +70,6 @@ void ProceduralTest::Update()
 	if (KEYMANAGER->isOnceKeyDown('6'))
 		startDel = true;
 
-	if (KEYMANAGER->isOnceKeyDown('Y'))
-		SetTileProperty();
-
 	if (endPush && count < SELECT_ROOM)
 		SelRoom();
 
@@ -150,7 +147,7 @@ void ProceduralTest::SetTile()
 			Tile* tile = Object::CreateObject<Tile>();
 			tile->Init(j, i);
 			tile->AddComponent<Sprite>();
-			tile->SetAttribute("Void");
+			tile->SetAttribute(Attribute::NONE_MOVE);
 			tiles.push_back(tile);
 		}
 	}
@@ -191,34 +188,12 @@ void ProceduralTest::SetSubRoom()
 
 void ProceduralTest::SetTileProperty()
 {
-	for (Tile* t : tiles)
-	{
-		for (Room* r : subRooms)
-		{
-			if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < t->GetTrans()->GetPos() &&
-				r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > t->GetTrans()->GetPos())
-			{
-				t->SetAttribute("None");
-				auto s = t->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Brown);
-			}
-
-		}
-		for (Room* r : selRooms)
-		{
-
-			if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < t->GetTrans()->GetPos() &&
-				r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > t->GetTrans()->GetPos())
-			{
-				t->SetAttribute("None");
-				auto s = t->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Aqua);
-
-			}
-
-		}
-
-	}
+	//for (Tile* t : tiles)
+	//{
+	//	for (Room* r : subRooms)
+	//	{
+	//		if(r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) > t->GetTrans()->GetPos() &&
+	//			)
+	//	}
+	//}
 }
