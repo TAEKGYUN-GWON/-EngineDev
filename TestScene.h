@@ -8,10 +8,15 @@ class TestScene :	public Scene
 	//Object* bullet;
 	//int _count=0;
 	//float _timer=0;
+	Object* test;
 	ParticleManager* mgr;
 public:
 	virtual void Init();			//초기화 전용 함수
 	virtual void Update();			//연산 전용 함수
 	virtual void Render();
+
+	void ActiveTest();
+	void UnActiveTest();
+	void RemoveTest();
 };
 

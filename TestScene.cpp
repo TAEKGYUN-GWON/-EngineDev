@@ -18,21 +18,45 @@ void TestScene::Init()
 	//GRAPHICMANAGER->AddFrameImage("fatkachu", L"fatkachu.png",4,1);
 	//GRAPHICMANAGER->FindImage("fatkachu")->SetFrameSize(Vector2(2, 2));
 	
-	mgr = new ParticleManager;
-	mgr->Init(500,ParticleType::CIRCLE, Vector2(WINSIZEX / 2, WINSIZEY / 2), Vector2(10, 10),"None",false,0.f,true);
-	Object* floor = Object::CreateObject<Object>();
-	floor->GetTrans()->SetScale(1280, 30);
-	floor->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY);
-	auto a = floor->AddComponent<PhysicsBody>();
-	a->Init(BodyType::STATIC, 1, 1);
-	GetWorld()->SetGravity(b2Vec2(0, 10));
+	//mgr = new ParticleManager;
+	//mgr->Init(500,ParticleType::CIRCLE, Vector2(WINSIZEX / 2, WINSIZEY / 2), Vector2(10, 10),"None",false,0.f,true);
+	//Object* floor = Object::CreateObject<Object>();
+	//floor->GetTrans()->SetScale(1280, 30);
+	//floor->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY);
+	//auto a = floor->AddComponent<PhysicsBody>();
+	//a->Init(BodyType::STATIC, 1, 1);
+	//GetWorld()->SetGravity(b2Vec2(0, 10));
+	test = Object::CreateObject<Object>();
+	for (int i = 0; i < 9000; i++)
+	{
+		Object* obj = Object::CreateObject<Object>();
+		auto s = obj->AddComponent<Sprite>();
+	}
+
 }
 
 
 void TestScene::Update()
 {
 	Scene::Update();
-	mgr->Update(); 
+
+	
+	//cout << "DT : " << TIMEMANAGER->getElapsedTime() << endl;
+
+	CAMERA->Control();
+	if (KEYMANAGER->isStayKeyDown('1'))
+		ActiveTest();
+
+	if (KEYMANAGER->isStayKeyDown('2'))
+		UnActiveTest();
+
+	if (KEYMANAGER->isStayKeyDown('3'))
+		RemoveTest();
+
+	if (KEYMANAGER->isOnceKeyDown('4'))
+		test->Release();
+
+	//mgr->Update(); 
 	//if (KEYMANAGER->isOnceKeyDown('4')) SCENEMANAGER->changeScene("Shop");
 	//if (KEYMANAGER->isOnceKeyDown('S'))
 	//{
@@ -80,11 +104,50 @@ void TestScene::Update()
 
 void TestScene::Render()
 {
-	mgr->Render();
-	for (Object* child : _children)
-	{
-		child->Render();
+	Scene::Render();
+	//mgr->Render();
+	//for (Object* child : _children)
+	//{
+	//	child->Render();
 
+
+	//}
+	wchar_t buffer[128];
+	swprintf(buffer, 128, L"Children : %d", _activeList.size());
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 100), buffer, 20, 300, 50, ColorF::Azure);
+
+
+	swprintf(buffer, 128, L"UnActive : %d", _unActiveList.size());
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 300, 50, ColorF::Azure);
+
+
+	swprintf(buffer, 128, L"DT : %f", TIMEMANAGER->GetFps());
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 300), buffer, 20, 300, 50, ColorF::Azure);
+
+}
+
+
+void TestScene::ActiveTest()
+{
+	for (int i = 0; i < 100; i++)
+	{
+		_activeList[i]->SetIsActive(false);
+	}
+}
+
+void TestScene::UnActiveTest()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		_unActiveList[i]->SetIsActive(true);
+	}
+}
+
+void TestScene::RemoveTest()
+{
+	for (int i = 0; i < 100; i++)
+	{
+		_children[i]->SetIsRelese();
 	}
 
 }
