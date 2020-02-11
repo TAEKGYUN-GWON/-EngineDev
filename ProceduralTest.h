@@ -7,8 +7,8 @@ class Probe;
 #define CREATE_ROOM_MAX 150
 #define SELECT_ROOM 20
 
-#define MAP_TILE_MAX_X MAP_MAX_WIDTH / TILEWIDTH
-#define MAP_TILE_MAX_Y MAP_MAX_HEIGHT / TILEHEIGHT
+#define MAP_TILE_MAX_X MAP_MAX_WIDTH / TILE_WIDTH
+#define MAP_TILE_MAX_Y MAP_MAX_HEIGHT / TILE_HEIGHT
 
 class ProceduralTest : public Scene
 {
