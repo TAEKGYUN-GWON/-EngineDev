@@ -2,7 +2,7 @@
 #include "Maptool.h"
 #include "Tile.h"
 #include <filesystem>
-using namespace filesystem;
+//using namespace filesystem;
 
 //void setWindowsSize(int x, int y, int width, int height);
 
@@ -12,14 +12,14 @@ void Maptool::Init()
 	
 	//setWindowsSize(WINSTARTX, WINSTARTY, 720, 500);
 
-	for (auto d : directory_iterator("Resource/img/Object/"))
-	{
-		string a = d.path().string();
-		wstring path;
-		path.assign(a.begin(), a.end());
+	//for (auto d : directory_iterator("Resource/img/Object/"))
+	//{
+	//	string a = d.path().string();
+	//	wstring path;
+	//	path.assign(a.begin(), a.end());
 
-		GRAPHICMANAGER->AddImage(d.path().string().substr(strlen("Resource/img/Object/"), d.path().string().size() - (strlen("Resource/img/Object/") + 4)), path);
-	}
+	//	GRAPHICMANAGER->AddImage(d.path().string().substr(strlen("Resource/img/Object/"), d.path().string().size() - (strlen("Resource/img/Object/") + 4)), path);
+	//}
 
 	GRAPHICMANAGER->AddFrameImage("door", L"Resource/img/ObjectFrame/door.png", 5, 1);
 	GRAPHICMANAGER->AddFrameImage("doordown", L"Resource/img/ObjectFrame/doordown.png", 5, 1);

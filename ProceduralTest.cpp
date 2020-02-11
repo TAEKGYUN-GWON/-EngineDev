@@ -51,10 +51,11 @@ void ProceduralTest::Init()
 void ProceduralTest::Update()
 {
 	Scene::Update();
-	
 	for (Object* c : GetChildrenFromTag("Prove"))
 		if (!c->GetIsActive())
 			c->Release();
+	if (KEYMANAGER->isOnceKeyDown('F'))
+		cout << "FPS : " << TIMEMANAGER->GetFps() << endl;
 
 	if (KEYMANAGER->isOnceKeyDown('1'))
 		PushRoom();

@@ -23,7 +23,8 @@ void Probe::Update()
 
 	if(_startMove)
 		SetTileAttribute();
-	if (!path.size()) _isActive = false;
+
+	if (!path.size()) SetIsRelese();
 }
 
 void Probe::Release()
