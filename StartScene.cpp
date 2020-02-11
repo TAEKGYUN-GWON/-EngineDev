@@ -19,6 +19,7 @@ void StartScene::Init()
 	//_obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
 	//_obj->GetTrans()->SetScale(100, 100);
 	//_obj->AddComponent<Sprite>();
+
 }
 
 void StartScene::Update()
