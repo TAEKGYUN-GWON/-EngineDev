@@ -167,7 +167,6 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Particle.hpp" />
     <ClInclude Include="ParticleManager.h" />
-    <ClInclude Include="Player.h" />
     <ClInclude Include="Probe.h" />
     <ClInclude Include="ProceduralTest.h" />
     <ClInclude Include="Room.h" />
@@ -199,8 +198,6 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="timer.h" />
-    <ClInclude Include="Train.h" />
-    <ClInclude Include="TrainScene.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="UiObject.h" />
@@ -228,7 +225,6 @@
     <ClCompile Include="MousePointer.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
-    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Probe.cpp" />
     <ClCompile Include="ProceduralTest.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -259,8 +255,6 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="timer.cpp" />
-    <ClCompile Include="Train.cpp" />
-    <ClCompile Include="TrainScene.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="UiObject.cpp" />
