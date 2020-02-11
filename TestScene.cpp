@@ -30,7 +30,7 @@ void TestScene::Init()
 	for (int i = 0; i < 9000; i++)
 	{
 		Object* obj = Object::CreateObject<Object>();
-		//obj->AddComponent<PhysicsBody>()->Init(BodyType::DYNAMIC, 1);
+		auto s = obj->AddComponent<Sprite>();
 	}
 
 }
@@ -43,11 +43,11 @@ void TestScene::Update()
 	
 	//cout << "DT : " << TIMEMANAGER->getElapsedTime() << endl;
 
-
-	if (KEYMANAGER->isOnceKeyDown('1'))
+	CAMERA->Control();
+	if (KEYMANAGER->isStayKeyDown('1'))
 		ActiveTest();
 
-	if (KEYMANAGER->isOnceKeyDown('2'))
+	if (KEYMANAGER->isStayKeyDown('2'))
 		UnActiveTest();
 
 	if (KEYMANAGER->isStayKeyDown('3'))
@@ -129,7 +129,7 @@ void TestScene::Render()
 
 void TestScene::ActiveTest()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		_activeList[i]->SetIsActive(false);
 	}
