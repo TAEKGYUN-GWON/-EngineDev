@@ -46,11 +46,22 @@ void Scene::Release()
 
 void Scene::Update()
 {
-	for (int i = 0; i < _children.size(); i++)
+	Object::Update();
+	/*for (Object* c : _removeList)
 	{
-		if (_children[i]->GetAllowInit()) _children[i]->Init();
-		_children[i]->Update();
+		if (c->GetComponent<PhysicsBody>())
+		{
+			c->GetComponent<PhysicsBody>()->GetBody()->GetWorld()->DestroyBody(GetComponent<PhysicsBody>()->GetBody());
+		}
+		c->Release();
 	}
+	_removeList.clear();
+
+	for (Object* child : _ActiveList)
+	{
+		if (child->GetAllowInit()) child->Init();
+		child->Update();
+	}*/
 
 }
 
@@ -109,7 +120,7 @@ void Scene::Render()
 	//sort(_children.begin(), _children.end(), CompareToBottomPos);
 	sort(_children.begin(), _children.end(), CompareToDepth);
 
-	for (Object* child : _children)
+	for (Object* child : _activeList)
 	{
 		if (child->GetTrans()->GetPos().x < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
 			child->GetTrans()->GetPos().y < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);

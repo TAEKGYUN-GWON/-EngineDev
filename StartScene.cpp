@@ -8,8 +8,10 @@ void StartScene::Init()
 {
 	Scene::Init();
 
-	//GRAPHICMANAGER->AddFrameImage("will", L"will_dungeon.png", 10, 13);
-	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
+	//GRAPHICMANAGER->AddFrameImage("will", L"blueNumber.png", 4, 1);
+	//GRAPHICMANAGER->AddImage("will", L"blueNumber.png");
+	//GRAPHICMANAGER->AddFrameImage("eagle", L"BossUp.png",32,1);
+	//GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
 	SCENEMANAGER->addScene("t", new TestScene);
 	SCENEMANAGER->addScene("tt", new Maptool);
@@ -19,6 +21,7 @@ void StartScene::Init()
 	//_obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
 	//_obj->GetTrans()->SetScale(100, 100);
 	//_obj->AddComponent<Sprite>();
+
 }
 
 void StartScene::Update()
