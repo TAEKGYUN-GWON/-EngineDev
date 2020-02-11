@@ -65,6 +65,8 @@ public:
 	inline int GetCurrentFrameY() { return _curFrameY; }
 	inline int GetMaxFrameX() { return _maxFrameX; }
 
+	inline int GetFrameWidth() { return _graphic->GetFrameWidth() * _scale.x; }
+	inline int GetFrameHeight() { return _graphic->GetFrameHeight() * _scale.y; }
 	void Start();
 	void Stop();
 	void Pause();

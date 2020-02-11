@@ -66,9 +66,9 @@ void Probe::SetTileAttribute()
 {
 	for (int i = 0; i < 9; i++)
 	{
-		Vector2 tileIdx((_trans->GetPos().x / TILEWIDTH) + i % 3, (_trans->GetPos().y / TILEHEIGHT) + i / 3);
+		Vector2 tileIdx((_trans->GetPos().x / TILE_WIDTH) + i % 3, (_trans->GetPos().y / TILE_HEIGHT) + i / 3);
 		auto t = tiles[(int)tileIdx.x + (MAP_TILE_MAX_X + 1) * (int)tileIdx.y];
-		t->SetAttribute("None");
+		t->SetAttribute(Attribute::NONE);
 		auto s = t->GetSprite();
 		s->SetFillRect(true);
 		s->SetRectColor(ColorF::Coral);

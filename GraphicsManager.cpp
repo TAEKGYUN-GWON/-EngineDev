@@ -329,12 +329,12 @@ void GraphicsManager::DrawEllipse(float x, float y, float radiusX, float radiusY
 	brush->Release();
 }
 
-void GraphicsManager::DrawFillRect(Vector2 pos, Vector2 size, float angle, ColorF color, float alpha, PIVOT pivot, bool isCameraAffect)
+void GraphicsManager::DrawFillRect(Vector2 pos, Vector2 size, float angle, ColorF color, PIVOT pivot, bool isCameraAffect)
 {
 	D2D1_MATRIX_3X2_F rotation = Matrix3x2F::Rotation(angle, Point2F(pos.x, pos.y));
 
 	ID2D1SolidColorBrush* brush;
-	_renderTarget->CreateSolidColorBrush(ColorF(color.r, color.g, color.b, alpha) , &brush);
+	_renderTarget->CreateSolidColorBrush(color, &brush);
 
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * rotation);
 	if (isCameraAffect) _renderTarget->SetTransform(Matrix3x2F::Identity() * rotation * CAMERA->GetMatrix());

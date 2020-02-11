@@ -2,7 +2,7 @@
 
 #include "targetver.h"
 
-#define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
+//#define WIN32_LEAN_AND_MEAN             // 거의 사용되지 않는 내용을 Windows 헤더에서 제외합니다.
 // Windows 헤더 파일
 #include <windows.h>
 
@@ -101,6 +101,7 @@ inline void SafeRelease(T* &p) { if (p) p->Release(); p = NULL; }
 extern HINSTANCE				_hInstance;
 extern HWND						_hWnd;
 extern Vector2					_ptMouse;
+extern bool						_leftBtnDown;
 
 //==========================================
 // ## 19.22.22 ## 엔진 첫 걸음

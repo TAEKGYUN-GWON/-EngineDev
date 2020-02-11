@@ -2,14 +2,14 @@
 class BspNode
 {
 public:
-
 	Vector2 _startPos;
 	Vector2 _endPos;
 
-	BspNode* _front;
-	BspNode* _back;
+	BspNode* _left;
+	BspNode* _right;
 
 public:
-
+	BspNode* GetLeftNode() { return _left; }
+	BspNode* GetRightNode() { return _right; }
 };
 

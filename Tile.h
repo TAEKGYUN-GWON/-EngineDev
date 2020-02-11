@@ -1,23 +1,26 @@
 #pragma once
 #include"Object.h"
 
-#define TILEWIDTH 32
-#define TILEHEIGHT 32
+#define TILE_WIDTH 30
+#define TILE_HEIGHT 30
 
-#define SET_TILEWIDTH 60
-#define SET_TILEHEIGHT 60
+#define TILE_NUM_X 100
+#define TILE_NUM_Y 100
 
-//#define TILENUMX (1335 / TILEWIDTH)
-//#define TILENUMY (1100 / TILEHEIGHT)
-
-#define TILENUMX 100
-#define TILENUMY 100
-
-
-enum type {
-
-
+enum Attribute
+{
+    START,
+    END,
+    NONE_MOVE,
+    WALL,
+    NPC_NONE,
+    DESTRUCTION,
+    CLIFF,
+    TERRAIN_DESTRUCTION,
+    NONE,
 };
+
+
 
 class Tile : public Object
 {
@@ -40,7 +43,7 @@ private:
 
     Tile* _node;
 
-    string _attribute;   //鸥老加己
+    Attribute _attribute;   //鸥老加己
 
     string _imgName;   //鸥老加己
 
@@ -51,10 +54,7 @@ private:
     Sprite* _sprite;
 public:
     Tile() :_f(0), _g(0),
-        _h(0), _idX(0), _idY(0)
-    {
-        _attribute.clear();
-    }
+        _h(0), _idX(0), _idY(0) { }
 
     ~Tile() {};
     virtual void Init(int idX, int idY);
@@ -75,8 +75,8 @@ public:
     void SetCenter(Vector2 center) { _trans->SetPos(center); }
     Vector2 GetCenter() { return _trans->GetPos(); }
 
-    void SetAttribute(string str) { _attribute = str; }
-    string GetAttribute() { return _attribute; }
+    void SetAttribute(Attribute str) { _attribute = str; }
+    Attribute GetAttribute() { return _attribute; }
 
     void SetCostF(float totalCost) { _f = totalCost; }
     float GetCostF() { return _f; }

@@ -8,6 +8,7 @@ HINSTANCE	_hInstance;
 HWND		_hWnd;
 
 Vector2		_ptMouse;
+bool		_leftBtnDown = false;
 
 //함수의 프로토타입 선언
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -115,6 +116,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 
+		break;
+	case WM_LBUTTONDOWN:
+		_leftBtnDown = true;
+		break;
+	case WM_LBUTTONUP:
+		_leftBtnDown = false;
 		break;
 	case WM_MOUSEMOVE:
 		_ptMouse.x = static_cast<float>(LOWORD(lParam));
