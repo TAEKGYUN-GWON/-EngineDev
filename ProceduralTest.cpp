@@ -10,6 +10,7 @@ void ProceduralTest::Init()
 	startDel = endCreate = count = timer = endPush = maxY = 0;
 
 
+
 	Object* obj = Object::CreateObject<Object>();
 	obj->GetTrans()->SetPos(MAP_MAX_WIDTH / 2, -5);
 	obj->GetTrans()->SetScale(MAP_MAX_WIDTH, 10);
@@ -38,19 +39,22 @@ void ProceduralTest::Init()
 		p->Init(BodyType::STATIC, 1);
 	}
 	//SetTile();
-
+	for (int i = 0; i < CREATE_ROOM_MAX; i++)
+	{
+		Room* room = Object::CreateObject<Room>();
+		room->Init();
+		rooms.push_back(room);
+	}
+	SetTile();
 }
 
 void ProceduralTest::Update()
 {
 	Scene::Update();
 	
-	for (Object* c : _children)
+	for (Object* c : GetChildrenFromTag("Prove"))
 		if (!c->GetIsActive())
 			c->Release();
-
-	if (count < CREATE_ROOM_MAX &&!endCreate)
-		CreateRoom();
 
 	if (KEYMANAGER->isOnceKeyDown('1'))
 		PushRoom();
@@ -59,26 +63,25 @@ void ProceduralTest::Update()
 		endPush = true;
 
 	if (KEYMANAGER->isOnceKeyDown('3'))
-		SetTile();
-
-	if (KEYMANAGER->isOnceKeyDown('4'))
 		Exploration();
 
-	if (KEYMANAGER->isOnceKeyDown('5'))
+	if (KEYMANAGER->isOnceKeyDown('4'))
 		SetSubRoom();
 
-	if (KEYMANAGER->isOnceKeyDown('6'))
+	if (KEYMANAGER->isOnceKeyDown('5'))
 		startDel = true;
 
-	if (KEYMANAGER->isOnceKeyDown('Y'))
+	if (KEYMANAGER->isOnceKeyDown('6'))
 		SetTileProperty();
+
+	if (KEYMANAGER->isOnceKeyDown('7'))
+		DelTile();
 
 	if (endPush && count < SELECT_ROOM)
 		SelRoom();
 
 	if (startDel && rooms.size())
 		DelRoom();
-
 
 	CAMERA->Control();
 	
@@ -91,24 +94,12 @@ void ProceduralTest::Release()
 
 void ProceduralTest::Render()
 {
-	for (Object* child : _children)
-	{
-		child->Render();
-
-	}
+	Scene::Render();
 }
 
 void ProceduralTest::CreateRoom()
 {
-	Room* room = Object::CreateObject<Room>();
-	room->Init();
-	rooms.push_back(room);
-	count++;
-	if (count == CREATE_ROOM_MAX)
-	{
-		count = 0;
-		endCreate = true;
-	}
+
 }
 
 void ProceduralTest::PushRoom()
@@ -201,24 +192,44 @@ void ProceduralTest::SetTileProperty()
 				t->SetAttribute("None");
 				auto s = t->GetSprite();
 				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Brown);
+				s->SetRectColor(ColorF::Coral);
+
 			}
 
 		}
+
 		for (Room* r : selRooms)
 		{
-
 			if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < t->GetTrans()->GetPos() &&
 				r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > t->GetTrans()->GetPos())
 			{
 				t->SetAttribute("None");
 				auto s = t->GetSprite();
 				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Aqua);
+				s->SetRectColor(ColorF::Coral);
 
 			}
 
 		}
 
 	}
+}
+
+void ProceduralTest::SetTileImg()
+{
+
+}
+
+void ProceduralTest::DelTile()
+{
+
+	for (int i = tiles.size()-1; i >= 0; i--)
+	{
+		if (tiles[i]->GetAttribute() == "Void")
+		{
+			tiles[i]->Release();
+			tiles.erase(tiles.begin() + i);
+		}
+	}
+
 }

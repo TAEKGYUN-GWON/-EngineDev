@@ -5,23 +5,24 @@
 void Probe::Init(Vector2 pos)
 {
 	Object::Init();
-	_name = "Probe";
+	_tag = "Probe";
 	_trans->SetPos(pos);
 	_trans->SetScale(10, 10);
 	_physics = AddComponent<PhysicsBody>();
-	_physics->Init(BodyType::DYNAMIC, 1);
+	_physics->Init(BodyType::DYNAMIC, 1, 1, 0, 0, 1);
 	_physics->GetBody()->SetFixedRotation(true);
-	_physics->SetSensor(true);
-	speed = 300;
+	speed = 400;
+	_startMove = false;
 }
 
 void Probe::Update()
 {
 	Object::Update();
 
-	SetTileAttribute();
 	Move();
 
+	if(_startMove)
+		SetTileAttribute();
 	if (!path.size()) _isActive = false;
 }
 
@@ -42,14 +43,20 @@ void Probe::Move()
 {
 	if (path.size())
 	{
+		_physics->SetBodyPosition();
+		if (!_startMove) _startMove = true;
 		Vector2 normalize = Vector2(*path.begin() - _trans->GetPos()).Nomalized();
 		_trans->SetPos(_trans->GetPos() + normalize * speed * TIMEMANAGER->getElapsedTime());
+
+		//float angle = Vector2::GetAngle(_trans->GetPos(), *path.begin());
+		//_trans->SetPos(_trans->GetPos() + Vector2(cosf(angle),-sinf(angle))* speed * TIMEMANAGER->getElapsedTime());
+
 		_physics->SetBodyPosition();
 		
 		
 		int a;
 
-		if (Vector2::Distance(*path.begin(), _trans->GetPos()) < 20)
+		if ((int)Vector2::Distance(*path.begin(), _trans->GetPos()) < 30)
 			path.pop_front();
 	}
 

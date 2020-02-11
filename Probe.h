@@ -9,6 +9,7 @@ private:
 	list <Vector2> path;
 	float speed;
 	vector<Tile*> tiles;
+	bool _startMove;
 public:
 	virtual void Init(Vector2 pos);
 	virtual void Update();

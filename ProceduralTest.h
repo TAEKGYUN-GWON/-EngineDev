@@ -4,8 +4,8 @@
 #include "Room.h"
 #include "Astar.h"
 class Probe;
-#define CREATE_ROOM_MAX 150
-#define SELECT_ROOM 20
+#define CREATE_ROOM_MAX 50
+#define SELECT_ROOM 10
 
 #define MAP_TILE_MAX_X MAP_MAX_WIDTH / TILEWIDTH
 #define MAP_TILE_MAX_Y MAP_MAX_HEIGHT / TILEHEIGHT
@@ -27,7 +27,6 @@ private:
 	int count;
 
 	vector<Object*> _vFloors;
-	
 public:
 	virtual void Init();
 	virtual void Update();
@@ -41,5 +40,8 @@ public:
 	void Exploration();
 	void SetSubRoom();
 	void SetTileProperty();
-};
+	void SetTileImg();
+	void DelTile();
+
+}; 
 

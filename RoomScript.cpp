@@ -6,7 +6,7 @@ void RoomScript::CollisionBegin(void* obj)
 {
 	Object* to = (Object*)obj;
 
-	if (to->GetName() == "Probe")
+	if (to->GetTag() == "Probe")
 	{
 		Room* me = (Room*)_object;
 		if (not me->GetIsMainRoom())
