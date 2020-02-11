@@ -141,7 +141,7 @@ void ProceduralTest::SetTile()
 			Tile* tile = Object::CreateObject<Tile>();
 			tile->Init(j, i);
 			tile->AddComponent<Sprite>();
-			tile->SetAttribute("Void");
+			tile->SetAttribute(Attribute::NONE_MOVE);
 			tiles.push_back(tile);
 		}
 	}
@@ -189,7 +189,7 @@ void ProceduralTest::SetTileProperty()
 			if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < t->GetTrans()->GetPos() &&
 				r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > t->GetTrans()->GetPos())
 			{
-				t->SetAttribute("None");
+				t->SetAttribute(Attribute::NONE);
 				auto s = t->GetSprite();
 				s->SetFillRect(true);
 				s->SetRectColor(ColorF::Coral);
@@ -203,7 +203,7 @@ void ProceduralTest::SetTileProperty()
 			if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < t->GetTrans()->GetPos() &&
 				r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > t->GetTrans()->GetPos())
 			{
-				t->SetAttribute("None");
+				t->SetAttribute(Attribute::NONE);
 				auto s = t->GetSprite();
 				s->SetFillRect(true);
 				s->SetRectColor(ColorF::Coral);
@@ -225,7 +225,7 @@ void ProceduralTest::DelTile()
 
 	for (int i = tiles.size()-1; i >= 0; i--)
 	{
-		if (tiles[i]->GetAttribute() == "Void")
+		if (tiles[i]->GetAttribute() == Attribute::NONE_MOVE)
 		{
 			tiles[i]->Release();
 			tiles.erase(tiles.begin() + i);

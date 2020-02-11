@@ -3,7 +3,6 @@
 #include "ProceduralTest.h"
 #include "Maptool.h"
 #include "TestScene.h"
-#include "TrainScene.h"
 
 void StartScene::Init()
 {
@@ -15,9 +14,6 @@ void StartScene::Init()
 	SCENEMANAGER->addScene("t", new TestScene);
 	SCENEMANAGER->addScene("tt", new Maptool);
 	SCENEMANAGER->addScene("t1", new ProceduralTest);
-	SCENEMANAGER->addScene("train", new TrainScene);
-
-	SCENEMANAGER->changeScene("train");
 
 	//_obj = Object::CreateObject<Object>();
 	//_obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
