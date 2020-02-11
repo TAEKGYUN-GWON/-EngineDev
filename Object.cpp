@@ -63,11 +63,11 @@ void Object::Release()
 		child->Release();
 	}
 
-
-	for (int i = _components.size() - 1; i >= 0; i--)
-	{
-		_components[i]->Release();
-	}
+	if(_components.size())
+		for (int i = _components.size() - 1; i >= 0; i--)
+		{
+			_components[i]->Release();
+		}
 	delete this;
 }
 
