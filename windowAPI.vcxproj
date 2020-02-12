@@ -164,6 +164,8 @@
     <ClInclude Include="Maptool.h" />
     <ClInclude Include="MousePointer.h" />
     <ClInclude Include="omega.h" />
+    <ClInclude Include="PaletteBtn.h" />
+    <ClInclude Include="PaletteBtnScript.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Particle.hpp" />
     <ClInclude Include="ParticleManager.h" />
@@ -226,6 +228,8 @@
     <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="Maptool.cpp" />
     <ClCompile Include="MousePointer.cpp" />
+    <ClCompile Include="PaletteBtn.cpp" />
+    <ClCompile Include="PaletteBtnScript.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />

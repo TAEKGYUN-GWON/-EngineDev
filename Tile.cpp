@@ -9,9 +9,6 @@ void Tile::Init(int idX, int idY)
 	
 	_tag = "Tile";
 
-	//_sprite->Init();
-	//_sprite->Stop();
-
 	_trans->pos = Vector2(idX * TILE_WIDTH + (TILE_WIDTH / 2),
 		idY * TILE_HEIGHT + (TILE_HEIGHT / 2));
 	_trans->SetScale(TILE_WIDTH, TILE_HEIGHT);
@@ -24,18 +21,16 @@ void Tile::Init(int idX, int idY)
 	_parent = nullptr;
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init();
+	_sprite->SetShowRect(false);
 	_imgName = "None";
-	_attribute = NONE;
-
-
-
+	_attribute = TAttribute::NONE;
 }
+
 void Tile::Render()
 {
-//	if (_attribute == "None")return;
-	
 	Object::Render();
 }
+
 void Tile::SetPhysics()
 {
 	if (_physics) return;

@@ -1,26 +1,22 @@
 #pragma once
 #include"Object.h"
 
-#define TILE_WIDTH 30
-#define TILE_HEIGHT 30
+#define TILE_WIDTH 32
+#define TILE_HEIGHT 32
 
 #define TILE_NUM_X 100
 #define TILE_NUM_Y 100
 
-enum Attribute
+typedef enum class TileAttribute : byte
 {
     START,
     END,
-    NONE_MOVE,
     WALL,
-    NPC_NONE,
-    DESTRUCTION,
-    CLIFF,
-    TERRAIN_DESTRUCTION,
+    INTERACTION,
+    NPC_NONE_MOVE,
+    LADDER,
     NONE,
-};
-
-
+}TAttribute;
 
 class Tile : public Object
 {
@@ -36,14 +32,12 @@ private:
     float _h;      //현재 노드로부터 도착점까지 경로비용
 
     bool _isOpen;
-
     bool _isClose;
-
     bool _isFrame;
 
     Tile* _node;
 
-    Attribute _attribute;   //타일속성
+    TAttribute _attribute;   //타일속성
 
     string _imgName;   //타일속성
 
@@ -52,6 +46,7 @@ private:
     PhysicsBody* _physics;
 
     Sprite* _sprite;
+
 public:
     Tile() :_f(0), _g(0),
         _h(0), _idX(0), _idY(0) { }
@@ -62,9 +57,7 @@ public:
     
     virtual void Render();
 
-
     static Vector2 tileSize;
-
 
     void SetParentNode(Tile* p) { _node = p; }
     Tile* GetParentNode() { return _node; }
@@ -75,8 +68,8 @@ public:
     void SetCenter(Vector2 center) { _trans->SetPos(center); }
     Vector2 GetCenter() { return _trans->GetPos(); }
 
-    void SetAttribute(Attribute str) { _attribute = str; }
-    Attribute GetAttribute() { return _attribute; }
+    void SetAttribute(TAttribute str) { _attribute = str; }
+    TAttribute GetAttribute() { return _attribute; }
 
     void SetCostF(float totalCost) { _f = totalCost; }
     float GetCostF() { return _f; }

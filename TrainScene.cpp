@@ -11,15 +11,17 @@ void TrainScene::Init()
 
 	_train = Object::CreateObject<Train>();
 	_train->Init();
-	//_train->GetSprite()->SetDepth()
+	//_train->GetSprite()->SetDepth(1);
+
+	
+	_player = Object::CreateObject<Player>();
+	_player->Init();
+
 
 	_btn = Object::CreateObject<Button>();
 	_btn->Init();
 	_btn->Setting("btnSelect", Vector2(WINSIZEX / 2, 100), PointMake(0, 0), PointMake(0, 1), cbTest, _player);
 	_btn->SetScale(Vector2(0.5, 1.0f));
-
-	_player = Object::CreateObject<Player>();
-	_player->Init();
 }
 
 void TrainScene::Release()

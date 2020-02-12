@@ -84,7 +84,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			ID2D1RenderTarget* renderTarget = GRAPHICMANAGER->GetRenderTarget();
 			renderTarget->BeginDraw();
 			renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());
-			renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+			//renderTarget->Clear(D2D1::ColorF(D2D1::ColorF::Black));
+			renderTarget->Clear(D2D1::ColorF(GRAPHICMANAGER->GetRenderTargetColor()));
 			//==================================================
 
 			sceneManager::getSingleton()->GetNowScene()->Render();

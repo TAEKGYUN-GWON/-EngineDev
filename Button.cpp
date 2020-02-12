@@ -35,7 +35,7 @@ void Button::Update()
 
 void Button::Render()
 {
-	Object::Render();
+	//Object::Render();
 
 	switch (_dir)
 	{

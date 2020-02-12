@@ -147,7 +147,7 @@ void ProceduralTest::SetTile()
 			Tile* tile = Object::CreateObject<Tile>();
 			tile->Init(j, i);
 			tile->AddComponent<Sprite>();
-			tile->SetAttribute(Attribute::NONE_MOVE);
+			tile->SetAttribute(TAttribute::WALL);
 			tiles.push_back(tile);
 		}
 	}

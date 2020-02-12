@@ -11,7 +11,7 @@ Sprite::Sprite()
 
 	_isFlipX = false;
 	_isFillRect = false;
-	_isShowRect = false;
+	_isShowRect = true;
 	_isCameraAffect = true;
 
 	_alpha = 1.0f;
@@ -32,7 +32,7 @@ void Sprite::Init(BOOL isFrame, BOOL isLoop)
 
 void Sprite::Render()
 {
-	if (KEYMANAGER->isToggleKey(VK_F1))
+	if (_isShowRect)
 	{
 		if (_isFillRect) GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _pivot, _isCameraAffect);
 		else GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _pivot, _strokeWidth, _isCameraAffect);

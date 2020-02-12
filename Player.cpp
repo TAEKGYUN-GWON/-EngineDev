@@ -57,13 +57,30 @@ void Player::Update()
 {
 	Object::Update();
 
-	_legs->GetComponent<Sprite>()->SetPosition(_trans->GetPos() + Vector2(0, 5.0f));
+	_body->GetTrans()->SetPos(_trans->GetPos() + Vector2(0, 2.0f));
 	_body->GetComponent<Sprite>()->SetPosition(_trans->GetPos() + Vector2(0, 2.0f));
+
+	_legs->GetTrans()->SetPos(_trans->GetPos() + Vector2(0, 5.0f));
+	_legs->GetComponent<Sprite>()->SetPosition(_trans->GetPos() + Vector2(0, 5.0f));
+
+	_arms->GetTrans()->SetPos(_trans->GetPos());
 	_arms->GetComponent<Sprite>()->SetPosition(_trans->GetPos() + Vector2(0, 2.0f));
 
-	// 2020.02.10 TODO: 마우스 좌표 따라 팔의 각도도 달라져야하는데 그거 잡아야함
-	// 맵툴도 빨리 봐야하는데..
-	_arms->GetTrans()->SetRotateToRadian(_arms->GetTrans()->GetRotateRadian() + 0.01f);
+
+	if (MOUSEPOINTER->GetMouseWorldPosition().x < _trans->GetPos().x)
+	{
+		_body->GetComponent<Sprite>()->SetFlipX(true);
+		_legs->GetComponent<Sprite>()->SetFlipX(true);
+		_arms->GetComponent<Sprite>()->SetFlipX(true);
+		_arms->GetTrans()->SetRotateToRadian(-Vector2::GetAngle(MOUSEPOINTER->GetMouseWorldPosition(), _trans->GetPos()));
+	}
+	else
+	{
+		_body->GetComponent<Sprite>()->SetFlipX(false);
+		_legs->GetComponent<Sprite>()->SetFlipX(false);
+		_arms->GetComponent<Sprite>()->SetFlipX(false);
+		_arms->GetTrans()->SetRotateToRadian(-Vector2::GetAngle(_trans->GetPos(), MOUSEPOINTER->GetMouseWorldPosition()));
+	}
 
 	//_sprite->SetPosition(_trans->GetPos());
 }

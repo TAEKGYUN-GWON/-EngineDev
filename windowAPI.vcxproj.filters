@@ -276,6 +276,18 @@
     <ClInclude Include="TrainScene.h">
       <Filter>playGround\TrainScene</Filter>
     </ClInclude>
+    <ClInclude Include="Probe.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomScript.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PaletteBtn.h">
+      <Filter>2DGameFramework\MapTool</Filter>
+    </ClInclude>
+    <ClInclude Include="PaletteBtnScript.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -427,6 +439,18 @@
     </ClCompile>
     <ClCompile Include="TrainScene.cpp">
       <Filter>playGround\TrainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Probe.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PaletteBtn.cpp">
+      <Filter>2DGameFramework\MapTool</Filter>
+    </ClCompile>
+    <ClCompile Include="PaletteBtnScript.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -56,6 +56,7 @@ private:
 	IDWriteFactory*								_wFactory;
 	mapTxtFormatList							_txtFormatList;
 	IDWriteTextLayout*							_txtLayout;
+	ColorF										_rtColor = ColorF::Black;
 
 private:
 	ID2D1Bitmap* CreateD2DBitmap(wstring file);
@@ -119,6 +120,8 @@ public:
 
 	void DrawTextField(Vector2 pos, wstring txt, int txtSize, int width, int height, float alpha, ColorF::Enum color = ColorF::Black, DWRITE_TEXT_ALIGNMENT alig = DWRITE_TEXT_ALIGNMENT_LEADING, wstring font = L"¸¼Àº°íµñ");
 
+	void SetRenderTargetColor(ColorF color) { _rtColor = color; }
+	ColorF GetRenderTargetColor() { return _rtColor; }
 	ID2D1HwndRenderTarget* GetRenderTarget() { return _renderTarget; }
 };
 

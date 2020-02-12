@@ -17,7 +17,7 @@ void StartScene::Init()
 	SCENEMANAGER->addScene("t1", new ProceduralTest);
 	SCENEMANAGER->addScene("train", new TrainScene);
 
-	SCENEMANAGER->changeScene("train");
+	//SCENEMANAGER->changeScene("train");
 
 	//_obj = Object::CreateObject<Object>();
 	//_obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
@@ -32,6 +32,7 @@ void StartScene::Update()
 	if(KEYMANAGER->isOnceKeyDown('Y')) SCENEMANAGER->changeScene("tt");
 	if(KEYMANAGER->isOnceKeyDown('T')) SCENEMANAGER->changeScene("t");
 	if(KEYMANAGER->isOnceKeyDown('P')) SCENEMANAGER->changeScene("t1");
+	if(KEYMANAGER->isOnceKeyDown('1')) SCENEMANAGER->changeScene("train");
 	CAMERA->Control();
 }
 
