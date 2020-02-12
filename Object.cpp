@@ -48,6 +48,11 @@ void Object::Release()
 	//cout << "萵葬鍔天天天天" << endl;
 	if (_parent != nullptr)
 	{
+		if (GetComponent<PhysicsBody>())
+		{
+			SetIsRelese();
+			return;
+		}
 		if (_isActive)
 			_parent->RemoveToActiveList(this);
 		else
