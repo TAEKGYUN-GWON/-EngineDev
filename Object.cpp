@@ -21,16 +21,16 @@ void Object::Init()
 
 void Object::Update()
 {
-
 	for (Object* c : _removeList)
 	{
-	if (c->GetComponent<PhysicsBody>())
-		{
-			SCENEMANAGER->GetNowScene()->GetWorld()->DestroyBody(c->GetComponent<PhysicsBody>()->GetBody());
-		}
+		if (c->GetComponent<PhysicsBody>())
+			{
+				SCENEMANAGER->GetNowScene()->GetWorld()->DestroyBody(c->GetComponent<PhysicsBody>()->GetBody());
+			}
 		c->Release();
 	}
-	_removeList.clear();
+	if(_removeList.size())
+		_removeList.clear();
 
 	for (int i = 0; i < _components.size(); i++)
 		_components[i]->Update();
@@ -45,7 +45,7 @@ void Object::Update()
 
 void Object::Release()
 {
-	//cout << "副府令ぱぱぱぱ" << endl;
+	cout << "副府令ぱぱぱぱ" << endl;
 	if (_parent != nullptr)
 	{
 		if (_isActive)

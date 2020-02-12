@@ -2,12 +2,13 @@
 #include "Probe.h"
 #include "ProceduralTest.h"
 
-void Probe::Init(Vector2 pos)
+void Probe::Init(Vector2 pos, list<Vector2> path)
 {
 	Object::Init();
 	_tag = "Probe";
 	_trans->SetPos(pos);
 	_trans->SetScale(10, 10);
+	SetPath(path);
 	_physics = AddComponent<PhysicsBody>();
 	_physics->Init(BodyType::DYNAMIC, 1, 1, 0, 0, 1);
 	_physics->GetBody()->SetFixedRotation(true);
@@ -23,13 +24,11 @@ void Probe::Update()
 
 	if(_startMove)
 		SetTileAttribute();
-
-	if (!path.size()) SetIsRelese();
 }
 
 void Probe::Release()
 {
-	SCENEMANAGER->GetNowScene()->GetWorld()->DestroyBody(_physics->GetBody());
+	//SCENEMANAGER->GetNowScene()->GetWorld()->DestroyBody(_physics->GetBody());
 	Object::Release();
 }
 
@@ -68,7 +67,7 @@ void Probe::SetTileAttribute()
 	for (int i = 0; i < 9; i++)
 	{
 		Vector2 tileIdx((_trans->GetPos().x / TILE_WIDTH) + i % 3, (_trans->GetPos().y / TILE_HEIGHT) + i / 3);
-		auto t = tiles[(int)tileIdx.x + (MAP_TILE_MAX_X + 1) * (int)tileIdx.y];
+		auto t = tiles[(int)tileIdx.x + (MAP_TILE_MAX_X) * (int)tileIdx.y];
 		t->SetAttribute(Attribute::NONE);
 		auto s = t->GetSprite();
 		s->SetFillRect(true);

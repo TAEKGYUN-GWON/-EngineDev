@@ -26,11 +26,20 @@ void TestScene::Init()
 	//auto a = floor->AddComponent<PhysicsBody>();
 	//a->Init(BodyType::STATIC, 1, 1);
 	//GetWorld()->SetGravity(b2Vec2(0, 10));
+	//for (int i = 0; i < 2000; i++)
+	//{
+	//	Object* obj = Object::CreateObject<Object>();
+	//	obj->GetTrans()->SetPos(WINSIZE.x / 2, WINSIZE.y / 2);
+	//	obj->GetTrans()->SetScale(100,100);
+	//	obj->AddComponent<PhysicsBody>()->Init(BodyType::STATIC, 1, 0, 0, 0, 1);
+	//}
+
 	test = Object::CreateObject<Object>();
-	for (int i = 0; i < 9000; i++)
+	for (int i = 0; i < 50000; i++)
 	{
 		Object* obj = Object::CreateObject<Object>();
-		auto s = obj->AddComponent<Sprite>();
+		obj->GetTrans()->SetPos(WINSIZE.x / 2, WINSIZE.y / 2);
+		obj->GetTrans()->SetScale(100, 100);
 	}
 
 }
@@ -113,16 +122,27 @@ void TestScene::Render()
 
 	//}
 	wchar_t buffer[128];
-	swprintf(buffer, 128, L"Children : %d", _activeList.size());
+
+	swprintf(buffer, 128, L"Children : %d", _children.size());
 	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 100), buffer, 20, 300, 50, ColorF::Azure);
 
 
-	swprintf(buffer, 128, L"UnActive : %d", _unActiveList.size());
+	swprintf(buffer, 128, L"Children : %d", (int)SCENEMANAGER->GetNowScene()->GetWorld()->GetBodyCount());
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2-500, 100), buffer, 20, 300, 50, ColorF::Azure);
+	//_b2World->GetBodyList()
+
+	swprintf(buffer, 128, L"ActiveList : %d", _activeList.size());
 	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 300, 50, ColorF::Azure);
 
-
-	swprintf(buffer, 128, L"DT : %f", TIMEMANAGER->GetFps());
+	swprintf(buffer, 128, L"UnActive : %d", _unActiveList.size());
 	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 300), buffer, 20, 300, 50, ColorF::Azure);
+
+	swprintf(buffer, 128, L"RemoveList : %d", _removeList.size());
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 400), buffer, 20, 300, 50, ColorF::Azure);
+
+
+	swprintf(buffer, 128, L"FPS : %f", TIMEMANAGER->GetFps());
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 500), buffer, 20, 300, 50, ColorF::Azure);
 
 }
 
@@ -137,7 +157,7 @@ void TestScene::ActiveTest()
 
 void TestScene::UnActiveTest()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		_unActiveList[i]->SetIsActive(true);
 	}
@@ -149,5 +169,5 @@ void TestScene::RemoveTest()
 	{
 		_children[i]->SetIsRelese();
 	}
-
+	//test->Release();
 }

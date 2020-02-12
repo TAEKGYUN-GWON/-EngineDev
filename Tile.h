@@ -20,6 +20,15 @@ enum Attribute
     NONE,
 };
 
+enum WallType
+{
+    None,
+    WALL_UP_1,
+    WALL_UP_2,
+    WALL_DOWN,
+    WALL_LEFT,
+    WALL_RIGHT,
+};
 
 
 class Tile : public Object
@@ -44,6 +53,8 @@ private:
     Tile* _node;
 
     Attribute _attribute;   //鸥老加己
+
+    WallType _wallType;
 
     string _imgName;   //鸥老加己
 
@@ -77,6 +88,9 @@ public:
 
     void SetAttribute(Attribute str) { _attribute = str; }
     Attribute GetAttribute() { return _attribute; }
+
+    void SetWallType(WallType str) { _wallType = str; }
+    WallType GetWallType() { return _wallType; }
 
     void SetCostF(float totalCost) { _f = totalCost; }
     float GetCostF() { return _f; }

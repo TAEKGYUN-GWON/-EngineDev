@@ -76,8 +76,6 @@ Vector2 Transform::GetPosToPivot(TransFormPIVOT pivot)
 	{
 		if (!_object->GetCameraAffect()) return Vector2(pos - scale / 2) + CAMERA->GetPosition();
 		return Vector2(pos - (scale / 2));
-		//if (!_object->GetCameraAffect()) return Vector2(pos.x - scale.x / 2, pos.y - scale.y / 2) + CAMERA->GetPosition();
-		//return Vector2(pos.x - scale.x / 2, pos.y - scale.y / 2);
 	}
 		break;
 	case TransFormPIVOT::LEFT_BOTTOM:
@@ -100,10 +98,6 @@ Vector2 Transform::GetPosToPivot(TransFormPIVOT pivot)
 		if (!_object->GetCameraAffect()) return  Vector2(pos + scale / 2) + CAMERA->GetPosition();
 
 		return Vector2(pos + scale / 2);
-
-		//if (!_object->GetCameraAffect()) return  Vector2(pos.x + scale.x / 2, pos.y + scale.y / 2) + CAMERA->GetPosition();
-		//
-		//return Vector2(pos.x + scale.x / 2, pos.y + scale.y/2);
 	}
 		break;
 	case TransFormPIVOT::LEFT:

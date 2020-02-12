@@ -380,7 +380,7 @@ bool Astar::CanOpenLeft(Vector2 idx)
 	//_miTotalList = _mTotalList.find(Vector2(idx.x - (int)1, idx.y));
 	if (idx.x - (int)1 <= -1) return false;
 
-	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute ::NONE_MOVE||
+	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute ::WALL ||
 		_vTotalList[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute ::NPC_NONE  ) return false;
 
 	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) - 1]->GetIsClose()) return false;
@@ -396,7 +396,7 @@ bool Astar::CanOpenRight(Vector2 idx)
 
 	if (idx.x + (int)1 >= maxX) return false;
 
-	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) + 1]->GetAttribute() == Attribute::NONE_MOVE||
+	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) + 1]->GetAttribute() == Attribute::WALL ||
 		_vTotalList[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute::NPC_NONE) return false;
 
 	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) + 1]->GetIsClose()) return false;
@@ -412,7 +412,7 @@ bool Astar::CanOpenUp(Vector2 idx)
 
 	if (idx.y - (int)1 <= -1) return false;
 
-	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) - maxX]->GetAttribute() == Attribute::NONE_MOVE||
+	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) - maxX]->GetAttribute() == Attribute::WALL ||
 		_vTotalList[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute::NPC_NONE) return false;
 
 	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) - maxX]->GetIsClose()) return false;
@@ -428,7 +428,7 @@ bool Astar::CanOpenDown(Vector2 idx)
 
 	if (idx.y + (int)1 >= maxY) return false;
 
-	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) + maxX]->GetAttribute() == Attribute::NONE_MOVE||
+	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) + maxX]->GetAttribute() == Attribute::WALL ||
 		_vTotalList[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute::NPC_NONE) return false;
 
 	if (_vTotalList[((int)idx.x + maxX * (int)idx.y) + maxX]->GetIsClose()) return false;
@@ -440,7 +440,7 @@ bool Astar::CanOpenDown(Vector2 idx)
 
 bool Astar::SetCost(Tile* node, float cost, Tile* parent)
 {
-	if (node == nullptr || node->GetAttribute() == Attribute::NONE_MOVE || node->GetAttribute() == Attribute::NPC_NONE || node->GetIsClose() || node->GetIsOpen()) return false;
+	if (node == nullptr || node->GetAttribute() == Attribute::WALL || node->GetAttribute() == Attribute::NPC_NONE || node->GetIsClose() || node->GetIsOpen()) return false;
 
 	float valH = 0;
 	cost += node->GetCostG();

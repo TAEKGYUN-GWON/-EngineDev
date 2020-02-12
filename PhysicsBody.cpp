@@ -109,7 +109,7 @@ void PhysicsBody::SetBodyPosition()
 void PhysicsBody::Render()
 {
 	if (KEYMANAGER->isToggleKey(VK_F2) && _bodyActive)
-		GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), scale, _body->GetAngle() * RadToDeg, ColorF::Enum::Green, PIVOT::CENTER, 3.f);
+		GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), scale, _body->GetAngle() * RadToDeg, ColorF(0x008000,0.7f), PIVOT::CENTER, 3.f);
 }
 
 

@@ -7,7 +7,7 @@ class Probe;
 #define CREATE_ROOM_MAX 50
 #define SELECT_ROOM 10
 
-#define MAP_TILE_MAX_X MAP_MAX_WIDTH / TILE_WIDTH
+#define MAP_TILE_MAX_X ((MAP_MAX_WIDTH / TILE_WIDTH) + 1)
 #define MAP_TILE_MAX_Y MAP_MAX_HEIGHT / TILE_HEIGHT
 
 class ProceduralTest : public Scene
@@ -21,7 +21,7 @@ private:
 	Room* currentRoom;
 	float maxY;
 	float timer;
-	bool endPush;
+	bool endPush; 
 	bool endCreate;
 	bool startDel;
 	int count;
@@ -40,6 +40,7 @@ public:
 	void Exploration();
 	void SetSubRoom();
 	void SetTileProperty();
+	void SetWall();
 	void SetTileImg();
 	void DelTile();
 
