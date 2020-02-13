@@ -18,6 +18,7 @@ void Tile::Init(int idX, int idY)
 	_node = nullptr;
 	_f = -1;
 	_g = _h = _isOpen = _isClose = 0;
+	_parent = nullptr;
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init();
 	_sprite->SetShowRect(false);
