@@ -67,9 +67,6 @@
     <Filter Include="2DGameFramework\MapTool">
       <UniqueIdentifier>{4f183df9-7dee-411b-a752-cf66aa8b113f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="playGround\Town">
-      <UniqueIdentifier>{c05d42b8-fe8c-4a5e-aa2e-81c8b800830b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="playGround\Start">
       <UniqueIdentifier>{46eefbbd-5e0e-4ee3-9b0c-fb0d6bbdb874}</UniqueIdentifier>
     </Filter>
@@ -87,12 +84,6 @@
     </Filter>
     <Filter Include="2DGameFramework\Manager\Button">
       <UniqueIdentifier>{ae7f7a84-2230-4243-8bc7-aa6c518f485d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\Player">
-      <UniqueIdentifier>{0ac5374f-04f5-4c46-a144-1c6a98519636}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="playGround\TrainScene">
-      <UniqueIdentifier>{4d5cb9d2-8fff-40db-a740-6221a97e4a49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -267,14 +258,11 @@
     <ClInclude Include="Button.h">
       <Filter>2DGameFramework\Manager\Button</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>playGround\Player</Filter>
+    <ClInclude Include="RoomScript.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Train.h">
-      <Filter>playGround\TrainScene</Filter>
-    </ClInclude>
-    <ClInclude Include="TrainScene.h">
-      <Filter>playGround\TrainScene</Filter>
+    <ClInclude Include="Probe.h">
+      <Filter>playGround\procedural</Filter>
     </ClInclude>
     <ClInclude Include="Probe.h">
       <Filter>헤더 파일</Filter>
@@ -431,14 +419,11 @@
     <ClCompile Include="Button.cpp">
       <Filter>2DGameFramework\Manager\Button</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>playGround\Player</Filter>
+    <ClCompile Include="RoomScript.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Train.cpp">
-      <Filter>playGround\TrainScene</Filter>
-    </ClCompile>
-    <ClCompile Include="TrainScene.cpp">
-      <Filter>playGround\TrainScene</Filter>
+    <ClCompile Include="Probe.cpp">
+      <Filter>playGround\procedural</Filter>
     </ClCompile>
     <ClCompile Include="Probe.cpp">
       <Filter>소스 파일</Filter>
