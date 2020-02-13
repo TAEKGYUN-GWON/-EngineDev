@@ -12,92 +12,12 @@ using namespace filesystem;
 void Maptool::Init()
 {
 	Scene::Init();
-	
+
 	//setWindowsSize(WINSTARTX, WINSTARTY, 720, 500);
 
 	GRAPHICMANAGER->AddImage("blank", L"Resource/Blank.png");
 
-	string imgKey;
-	wstring path;
-
-	for (auto d : directory_iterator("Resource/Object/None/"))
-	{
-		string a = d.path().string();
-		path.assign(a.begin(), a.end());
-
-		imgKey = d.path().string().substr(strlen("Resource/Object/None/"), d.path().string().size() - (strlen("Resource/Object/None/") + 4));
-		GRAPHICMANAGER->AddImage(imgKey, path);
-
-		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
-		palette->SetName(imgKey);
-		palette->Init();
-		palette->SetAttribute(TAttribute::NONE);
-		palette->SetCameraAffect(false);
-		palette->GetSprite()->SetDepth(5);
-		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
-
-		_vSetObj.push_back(palette);
-	}
-	for (auto d : directory_iterator("Resource/Object/Interaction/"))
-	{
-		string a = d.path().string();
-		path.assign(a.begin(), a.end());
-
-		imgKey = d.path().string().substr(strlen("Resource/Object/Interaction/"), d.path().string().size() - (strlen("Resource/Object/Interaction/") + 4));
-		GRAPHICMANAGER->AddImage(imgKey, path);
-
-		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
-		palette->SetName(imgKey);
-		palette->Init();
-		palette->SetAttribute(TAttribute::INTERACTION);
-		palette->SetCameraAffect(false);
-		palette->GetSprite()->SetDepth(5);
-		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
-
-		_vSetObj.push_back(palette);
-	}
-	for (auto d : directory_iterator("Resource/Terrain/Wall/"))
-	{
-		string a = d.path().string();
-		path.assign(a.begin(), a.end());
-
-		imgKey = d.path().string().substr(strlen("Resource/Terrain/Wall/"), d.path().string().size() - (strlen("Resource/Terrain/Wall/") + 4));
-		GRAPHICMANAGER->AddImage(imgKey, path);
-
-		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
-		palette->SetName(imgKey);
-		palette->Init();
-		palette->SetAttribute(TAttribute::WALL);
-		palette->SetCameraAffect(false);
-		palette->GetSprite()->SetDepth(5);
-		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
-
-		_vSetTer_1.push_back(palette);
-	}
-	for (auto d : directory_iterator("Resource/Terrain/None/"))
-	{
-		string a = d.path().string();
-		path.assign(a.begin(), a.end());
-
-		imgKey = d.path().string().substr(strlen("Resource/Terrain/None/"), d.path().string().size() - (strlen("Resource/Terrain/None/") + 4));
-		GRAPHICMANAGER->AddImage(imgKey, path);
-
-		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
-		palette->SetName(imgKey);
-		palette->Init();
-		palette->SetAttribute(TAttribute::NONE);
-		palette->SetCameraAffect(false);
-		palette->GetSprite()->SetDepth(5);
-		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
-
-		if (palette->GetName().compare("Ladder") == 0)
-		{
-			palette->GetSprite()->SetScale(Vector2(1.0f, 0.7f));
-			palette->SetAttribute(TAttribute::LADDER);
-		}
-
-		_vSetTer_1.push_back(palette);
-	}
+	ClassificationAttribute();
 
 	_page = SamplePage::Terrain_1;
 	_eraser = EraserType::Single;
@@ -120,7 +40,7 @@ void Maptool::Update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_LBUTTON))
 	{
-		if (PtInRect(&_rcLoad,_ptMouse.Vector2ToPOINT()))
+		if (PtInRect(&_rcLoad, _ptMouse.Vector2ToPOINT()))
 		{
 #pragma region FileLoadTest
 			//OPENFILENAME ofn;
@@ -253,15 +173,22 @@ void Maptool::Update()
 		}
 	}
 
-	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT);
-	if (index >= 0 and index <= TILE_NUM_X * TILE_NUM_Y)
+	if (MOUSEPOINTER->GetMouseWorldPosition().x < (CAMERA->GetPosition().x + WINSIZEX) - 300)
 	{
-		if (_currentTile->GetImageSize().y <= TILE_HEIGHT)
-			_currentTile->GetComponent<Sprite>()->SetPosition(_vTiles[index]->GetTrans()->GetPos());
-		else if (_currentTile->GetImageSize().y <= TILE_HEIGHT * 2)
-			_currentTile->GetComponent<Sprite>()->SetPosition(_vTiles[index]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
-		else _currentTile->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos());
+		index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT);
+		if (index >= 0 and index <= TILE_NUM_X * TILE_NUM_Y)
+		{
+			if (_currentTile->GetImageSize().y <= TILE_HEIGHT) _currentTile->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos());
+			else if (_currentTile->GetImageSize().y <= TILE_HEIGHT * 2)
+			{
+				_currentTile->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos());
+				_currentTile->GetComponent<Sprite>()->SetPosition(_vTiles[index]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+			}
+			else _currentTile->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos());
+		}
+		else _currentTile->GetTrans()->SetPos(MOUSEPOINTER->GetMouseWorldPosition());
 	}
+	else _currentTile->GetTrans()->SetPos(MOUSEPOINTER->GetMouseWorldPosition());
 }
 
 void Maptool::Render()
@@ -272,9 +199,9 @@ void Maptool::Render()
 		for (int j = 0; j < 33; ++j)
 		{
 			int index = (i + (int)CAMERA->GetPosition().y / TILE_HEIGHT) * TILE_NUM_X + (j + (int)CAMERA->GetPosition().x / TILE_WIDTH);
-	
+
 			if (index < 0 || index >= TILE_NUM_X * TILE_NUM_Y) continue;
-	
+
 			if (_vTiles[index]->GetAttribute() == TAttribute::WALL) _vTiles[index]->GetComponent<Sprite>()->SetFillRect(true);
 			else if (_vTiles[index]->GetAttribute() == TAttribute::INTERACTION)
 			{
@@ -286,7 +213,7 @@ void Maptool::Render()
 				_vTiles[index]->GetComponent<Sprite>()->SetFillRect(false);
 				_vTiles[index]->GetComponent<Sprite>()->SetRectColor(ColorF::Blue);
 			}
-	
+
 			//swprintf(buffer, 128, L"%d", index);
 			//GRAPHICMANAGER->DrawTextD2D(_vTiles[index]->GetTrans()->GetPos() + Vector2(-(TILE_WIDTH / 2) + 2, TILE_HEIGHT / 7), buffer, 10, ColorF::Yellow, TextPivot::LEFT_TOP, L"¸¼Àº°íµñ", true);
 		}
@@ -315,7 +242,7 @@ void Maptool::Render()
 	else if (_eraser == EraserType::OnlyDeleteImage) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : OnlyDeleteImage", 14);
 
 #pragma region CoordinatesTest
-	
+
 	//char str[128];
 	//sprintf_s(buffer, "%d, %d", _ptMouse.x, _ptMouse.y);
 
@@ -337,7 +264,7 @@ void Maptool::Render()
 	// È­¸é Áß¾ÓÀÌ ÁßÁ¡ÀÎ ¼ö½Ä
 	//sprintf_s(buffer, "%f, %f", CAMERA->GetPosition().x - (WINSIZEX / CAMERA->GetScale().x / 2) + (_ptMouse.x / CAMERA->GetScale().x), 
 	//	CAMERA->GetPosition().y - (WINSIZEY / CAMERA->GetScale().y / 2) + (_ptMouse.y / CAMERA->GetScale().y));
-	
+
 	//swprintf(buffer, 128, L"%1.f %1.f", CAMERA->GetPosition().x - (WINSIZEX / CAMERA->GetScale().x / 2) + (_ptMouse.x / CAMERA->GetScale().x),
 	//	CAMERA->GetPosition().y - (WINSIZEY / CAMERA->GetScale().y / 2) + (_ptMouse.y / CAMERA->GetScale().y));
 
@@ -354,97 +281,77 @@ void Maptool::Save()
 	HANDLE file;
 	DWORD write;
 
-	//string str = "shop.map";
-	//string str = "Town.map";
-	string str = "shop.map";
-	//string str = "test.map";
+	string str = "test.map";
 
-	//GetWindowText(_saveName, titleSave, 256);
+	//MessageBox(_hWnd, "Save Ok!", str.c_str(), MB_OK);
+	ofstream outFile;
+	//outFile.open("test.map",ios::binary);
+	outFile.open("test.map");
 
-	//string str = titleSave;
-	//str += ".map";
+	for (Tile* t : _vTiles)
+	{
+		outFile << (int)t->GetAttribute() << endl;
+		//outFile << t->GetImgName() << endl;
+		outFile << t->GetName() << endl;
+		outFile << t->GetSprite()->GetPosition().x << endl;
+		outFile << t->GetSprite()->GetPosition().y << endl;
+		outFile << t->GetSprite()->GetDepth() << endl;
+	}
+	outFile.close();
 
-	file = CreateFile(str.c_str(), GENERIC_WRITE, 0, NULL,
-		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-
-	//WriteFile(file, _tagTile, sizeof(tagTile) * TILENUMX * TILENUMY, &write, NULL);
-	WriteFile(file, &_vTagTiles, sizeof(tagTile) * TILE_NUM_X * TILE_NUM_Y, &write, NULL);
-	CloseHandle(file);
-
-	MessageBox(_hWnd, "Save Ok!", str.c_str(), MB_OK);
 }
 
 void Maptool::Load()
 {
-	HANDLE file;
-	DWORD read;
+	ifstream inFile("test.map");
 
-	//string str = titleLoad;
-	//str += ".map";
-	string str = "shop.map";
-	//string str = "Town.map";
-	//string str = "test.map";
+	_vTiles.clear();
 
-	//file = CreateFile(titleLoad, GENERIC_READ, 0, NULL,
-	file = CreateFile(str.c_str(), GENERIC_READ, 0, NULL,
-		OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	for (int i = 0; i < TILE_NUM_Y; ++i)
+	{
+		for (int j = 0; j < TILE_NUM_X; ++j)
+		{
+			Tile* tile = Object::CreateObject<Tile>();
+			tile->Init(j, i);
+			tile->GetSprite()->SetDepth(0);
+			tile->SetAttribute(TAttribute::NONE);
+			_vTiles.push_back(tile);
+		}
+	}
 
-	//if (file != INVALID_HANDLE_VALUE)
-	//{
-	//	//MessageBox(_hWnd, "load ÇÑ´Ù", str.c_str(), MB_OK);
-	//
-	//	//ReadFile(file, _tagTiles, sizeof(tagTile) * TILENUMX * TILENUMY, &read, NULL);
-	//	ReadFile(file, &_vTagTiles, sizeof(tagTile) * TILE_NUM_X * TILE_NUM_Y, &read, NULL);
-	//	CloseHandle(file);
-	//
-	//	for (int i = 0; i < TILE_NUM_X * TILE_NUM_Y; i++)
-	//	{
-	//		// _tiles[] initialization
-	//		_vTiles[i]->SetImgName("None");
-	//		_vTiles[i]->SetAttribute("None");
-	//		_vTiles[i]->SetIsFrame(false);
-	//		_vTiles[i]->SetPivot(PIVOT::CENTER);
-	//
-	//		if (_vTiles[i]->GetChildren().size() > 0) _vTiles[i]->RemoveChild(_vTiles[i]->GetChildren()[0]);
-	//
-	//
-	//		// value setting
-	//		_vTiles[i]->SetAttribute(_vTagTiles[i].attribute);
-	//		_vTiles[i]->SetImgName(_vTagTiles[i].imgKey);
-	//		_vTiles[i]->SetIsFrame(_vTagTiles[i].isFrame);
-	//		_vTiles[i]->SetPivot(_vTagTiles[i].pivot);
-	//
-	//
-	//		if (_vTiles[i]->GetImgName() != "None")
-	//		{
-	//			_vTiles[i]->AddChild(Object::CreateObject<Object>());
-	//
-	//			_vTiles[i]->GetChildren()[0]->GetTrans()->SetPos(_vTiles[i]->GetTrans()->GetPos() + Vector2(0, TILEHEIGHT / 2));
-	//			if (_vTiles[i]->GetPivot() == RIGHT_BOTTOM) _vTiles[i]->GetChildren()[0]->GetTrans()->SetPos(_vTiles[i]->GetTrans()->GetPos() + Vector2(TILEWIDTH / 2, TILEHEIGHT / 2));
-	//
-	//			//_tiles[i]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_tiles[i]->GetImgName())->GetFrameWidth(), GRAPHICMANAGER->FindImage(_tiles[i]->GetImgName())->GetFrameHeight());
-	//			_vTiles[i]->GetChildren()[0]->GetTrans()->SetRect();
-	//
-	//			if (_vTiles[i]->GetIsFrame())
-	//			{
-	//				_vTiles[i]->GetChildren()[0]->AddComponent<Sprite>()->Init(true, true);
-	//				_vTiles[i]->GetChildren()[0]->GetComponent<Sprite>()->SetImgName(_vTiles[i]->GetImgName());
-	//				_vTiles[i]->GetChildren()[0]->GetComponent<Sprite>()->SetFPS(0.5f);
-	//				_vTiles[i]->GetChildren()[0]->GetComponent<Sprite>()->SetPivot(_vTiles[i]->GetPivot());
-	//			}
-	//			else
-	//			{
-	//				_vTiles[i]->GetChildren()[0]->AddComponent<Sprite>()->SetImgName(_vTiles[i]->GetImgName());
-	//				_vTiles[i]->GetChildren()[0]->GetComponent<Sprite>()->SetPivot(_vTiles[i]->GetPivot());
-	//			}
-	//			_vTiles[i]->GetChildren()[0]->GetComponent<Sprite>()->SetPosition(_vTiles[i]->GetChildren()[0]->GetTrans()->GetPos());
-	//			//_tiles[i]->GetChildren()[0]->GetComponent<Sprite>()->SetScale(_tiles[i]->GetChildren()[0]->GetTrans()->GetScale());
-	//		}
-	//	}
-	//}
-	//else MessageBox(_hWnd, "can not found the file.", str.c_str(), MB_OK);
+	//PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
+	//obj->SetName(_currentTile->GetName());
+	//obj->Init();
+	//obj->GetSprite()->SetImgName(obj->GetName());
+	//obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+	//obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+	//_vTiles[curIdx]->GetSprite()->SetDepth(1);
+	//_vTiles[curIdx]->AddChild(obj);
 
-	MessageBox(_hWnd, "File load!", str.c_str(), MB_OK);
+	Vector2 pos;
+	for (Tile* t : _vTiles)
+	{
+		char buffer[256];
+		inFile.getline(buffer, 256);
+		t->SetAttribute((TAttribute)atoi(buffer));
+
+		inFile.getline(buffer, 256);
+		//t->SetImgName(buffer);
+		t->SetName(buffer);
+		t->GetSprite()->SetImgName(t->GetName());
+
+		inFile.getline(buffer, 256);
+		pos.x = atof(buffer);
+		inFile.getline(buffer, 256);
+		pos.y = atof(buffer);
+		t->GetSprite()->SetPosition(pos);
+
+		inFile.getline(buffer, 256);
+		t->GetSprite()->SetDepth(atoi(buffer));
+	}
+	//outFile.close();
+
+	MessageBox(_hWnd, "File load!", "test.map", MB_OK);
 }
 
 void Maptool::SetUp()
@@ -469,7 +376,7 @@ void Maptool::SetUp()
 	_currentTile->Init();
 	_currentTile->GetSprite()->SetAlpha(0.7f);
 	_currentTile->GetSprite()->SetDepth(6);
-	
+
 	for (int i = 0; i < TILE_NUM_Y; ++i)
 	{
 		for (int j = 0; j < TILE_NUM_X; ++j)
@@ -479,24 +386,12 @@ void Maptool::SetUp()
 			tile->GetSprite()->SetDepth(0);
 			tile->SetAttribute(TAttribute::NONE);
 			_vTiles.push_back(tile);
-
-			//tile->Init(j, i);
-			//tile->GetSprite()->SetDepth(1);
-			//tile->SetAttribute(TAttribute::NONE);
-			//_vObjects.push_back(tile);
-	
-			tagTile tag;
-			tag.attribute = TAttribute::NONE;
-			tag.imgKey = "None";
-			tag.isFrame = false;
-			tag.pivot = PIVOT::CENTER;
-			_vTagTiles.push_back(tag);
 		}
 	}
 
 	for (int i = 0; i < _vSetTer_1.size(); ++i)
 	{
-		_vSetTer_1[i]->GetTrans()->SetPos(Vector2((i % SET_TILE_NUM_X) * SET_TILE_WIDTH + WINSIZEX - 245, 
+		_vSetTer_1[i]->GetTrans()->SetPos(Vector2((i % SET_TILE_NUM_X) * SET_TILE_WIDTH + WINSIZEX - 245,
 			(i / SET_TILE_NUM_X) * SET_TILE_HEIGHT + 60));
 		_vSetTer_1[i]->GetSprite()->SetPosition(_vSetTer_1[i]->GetTrans()->GetPos());
 		_vSetTer_1[i]->SetIsActive(true);
@@ -520,26 +415,49 @@ void Maptool::SetUp()
 void Maptool::SetMap()
 {
 	if (_ptMouse.x > WINSIZEX - 300) return;
-	
-	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y  / TILE_HEIGHT);
-	if (index < 0 or index > TILE_NUM_X * TILE_NUM_Y) return;
-	
+
+	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT);
+	if (index < 0 or index > TILE_NUM_X* TILE_NUM_Y) return;
+
 	SetAttribute(index, *_currentTile);
 }
 
 void Maptool::ClickSetTile()
 {
-	if ((int)_ptMouse.x < WINSIZEX - 278 || (int)_ptMouse.x > (WINSIZEX - 278) + (SET_TILE_WIDTH * SET_TILE_NUM_X) ||
+	if ((int)_ptMouse.x < WINSIZEX - 278 || (int)_ptMouse.x >(WINSIZEX - 278) + (SET_TILE_WIDTH * SET_TILE_NUM_X) ||
 		(int)_ptMouse.y < 30 || (int)_ptMouse.y > 30 + (SET_TILE_HEIGHT * SET_TILE_NUM_Y)) return;
-	
-	int index = (((int)_ptMouse.x - (WINSIZEX - 278)) / SET_TILE_WIDTH) + SET_TILE_NUM_X * (((int)_ptMouse.y - 30) / SET_TILE_HEIGHT);
-	
-	if (index >= _vSetTer_1.size()) return;
 
-	_currentTile->SetName(_vSetTer_1[index]->GetName());
+	int index = (((int)_ptMouse.x - (WINSIZEX - 278)) / SET_TILE_WIDTH) + SET_TILE_NUM_X * (((int)_ptMouse.y - 30) / SET_TILE_HEIGHT);
+
+	switch (_page)
+	{
+	case SamplePage::Terrain_1:
+		if (index >= _vSetTer_1.size()) return;
+
+		_currentTile->SetName(_vSetTer_1[index]->GetName());
+		_currentTile->SetIsObject(false);
+		_currentTile->SetAttribute(_vSetTer_1[index]->GetAttribute());
+		_currentTile->SetImageSize(_vSetTer_1[index]->GetImageSize());
+		break;
+	case SamplePage::Terrain_2:
+		if (index >= _vSetTer_2.size()) return;
+
+		_currentTile->SetName(_vSetTer_2[index]->GetName());
+		_currentTile->SetIsObject(false);
+		_currentTile->SetAttribute(_vSetTer_2[index]->GetAttribute());
+		_currentTile->SetImageSize(_vSetTer_2[index]->GetImageSize());
+		break;
+	case SamplePage::Object:
+		if (index >= _vSetObj.size()) return;
+
+		_currentTile->SetName(_vSetObj[index]->GetName());
+		_currentTile->SetIsObject(true);
+		_currentTile->SetAttribute(_vSetObj[index]->GetAttribute());
+		_currentTile->SetImageSize(_vSetObj[index]->GetImageSize());
+		break;
+	}
+
 	_currentTile->GetSprite()->SetImgName(_currentTile->GetName());
-	_currentTile->SetAttribute(_vSetTer_1[index]->GetAttribute());
-	_currentTile->SetImageSize(_vSetTer_1[index]->GetImageSize());
 }
 
 void Maptool::RemoveObject()
@@ -599,18 +517,45 @@ void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
 	if (palett.GetImageSize().y <= TILE_HEIGHT)
 	{
 		_vTiles[curIdx]->SetAttribute(palett.GetAttribute());
-		_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
-		//_vObjects[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
+
+		if (_currentTile->GetIsObject())
+		{
+			PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
+			obj->SetName(_currentTile->GetName());
+			obj->Init();
+			obj->GetSprite()->SetImgName(obj->GetName());
+			obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+			obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+			_vTiles[curIdx]->GetSprite()->SetDepth(1);
+			_vTiles[curIdx]->AddChild(obj);
+		}
+		else
+		{
+			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
+			_vTiles[curIdx]->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+		}
 	}
 	else if (palett.GetImageSize().y <= TILE_HEIGHT * 2)
 	{
 		_vTiles[curIdx - TILE_NUM_X]->SetAttribute(palett.GetAttribute());
 		_vTiles[curIdx]->SetAttribute(palett.GetAttribute());
 
-		_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
-		_vTiles[curIdx]->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
-		//_vObjects[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
-		//_vObjects[curIdx]->GetSprite()->SetPosition(_vObjects[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+		if (_currentTile->GetIsObject())
+		{
+			PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
+			obj->SetName(_currentTile->GetName());
+			obj->Init();
+			obj->GetSprite()->SetImgName(_currentTile->GetName());
+			obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+			_vTiles[curIdx]->GetSprite()->SetDepth(1);
+
+			_vTiles[curIdx]->AddChild(obj);
+		}
+		else
+		{
+			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
+			_vTiles[curIdx]->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+		}
 	}
 	else if (palett.GetImageSize().y <= TILE_HEIGHT * 3)
 	{
@@ -618,8 +563,22 @@ void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
 		_vTiles[curIdx]->SetAttribute(palett.GetAttribute());
 		_vTiles[curIdx + TILE_NUM_X]->SetAttribute(palett.GetAttribute());
 
-		_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
-		//_vObjects[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
+		if (_currentTile->GetIsObject())
+		{
+			PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
+			obj->SetName(_currentTile->GetName());
+			obj->Init();
+			obj->GetSprite()->SetImgName(_currentTile->GetName());
+			obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+			obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+			_vTiles[curIdx]->GetSprite()->SetDepth(1);
+			_vTiles[curIdx]->AddChild(obj);
+		}
+		else
+		{
+			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
+			_vTiles[curIdx]->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+		}
 	}
 }
 
@@ -640,7 +599,7 @@ void Maptool::SetPage()
 	break;
 	case SamplePage::Terrain_2:
 	{
-		for (int i = 0; i < _vSetTer_1.size(); ++i) 
+		for (int i = 0; i < _vSetTer_1.size(); ++i)
 			_vSetTer_1[i]->SetIsActive(false);
 		for (int i = 0; i < _vSetObj.size(); ++i)
 			_vSetObj[i]->SetIsActive(false);
@@ -661,5 +620,98 @@ void Maptool::SetPage()
 	}
 	break;
 	case SamplePage::PAGE_END: break;
+	}
+}
+
+void Maptool::ClassificationAttribute()
+{
+	string imgKey;
+	wstring path;
+
+	for (auto d : directory_iterator("Resource/Object/None/"))
+	{
+		string a = d.path().string();
+		path.assign(a.begin(), a.end());
+
+		imgKey = d.path().string().substr(strlen("Resource/Object/None/"), d.path().string().size() - (strlen("Resource/Object/None/") + 4));
+		GRAPHICMANAGER->AddImage(imgKey, path);
+
+		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
+		palette->SetName(imgKey);
+		palette->SetTag("Object");
+		palette->Init();
+		palette->SetAttribute(TAttribute::NONE);
+		palette->SetCameraAffect(false);
+		palette->SetIsObject(true);
+		palette->GetSprite()->SetDepth(5);
+		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
+
+		_vSetObj.push_back(palette);
+	}
+	for (auto d : directory_iterator("Resource/Object/Interaction/"))
+	{
+		string a = d.path().string();
+		path.assign(a.begin(), a.end());
+
+		imgKey = d.path().string().substr(strlen("Resource/Object/Interaction/"), d.path().string().size() - (strlen("Resource/Object/Interaction/") + 4));
+		GRAPHICMANAGER->AddImage(imgKey, path);
+
+		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
+		palette->SetName(imgKey);
+		palette->SetTag("Object");
+		palette->Init();
+		palette->SetAttribute(TAttribute::INTERACTION);
+		palette->SetCameraAffect(false);
+		palette->SetIsObject(true);
+		palette->GetSprite()->SetDepth(5);
+		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
+
+		if (palette->GetName().compare("Ladder") == 0)
+		{
+			palette->GetSprite()->SetScale(Vector2(1.0f, 0.7f));
+			palette->SetAttribute(TAttribute::LADDER);
+		}
+
+		_vSetObj.push_back(palette);
+	}
+	for (auto d : directory_iterator("Resource/Terrain/Wall/"))
+	{
+		string a = d.path().string();
+		path.assign(a.begin(), a.end());
+
+		imgKey = d.path().string().substr(strlen("Resource/Terrain/Wall/"), d.path().string().size() - (strlen("Resource/Terrain/Wall/") + 4));
+		GRAPHICMANAGER->AddImage(imgKey, path);
+
+		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
+		palette->SetName(imgKey);
+		palette->SetTag("Terrain");
+		palette->Init();
+		palette->SetAttribute(TAttribute::WALL);
+		palette->SetCameraAffect(false);
+		palette->SetIsObject(false);
+		palette->GetSprite()->SetDepth(5);
+		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
+
+		_vSetTer_1.push_back(palette);
+	}
+	for (auto d : directory_iterator("Resource/Terrain/None/"))
+	{
+		string a = d.path().string();
+		path.assign(a.begin(), a.end());
+
+		imgKey = d.path().string().substr(strlen("Resource/Terrain/None/"), d.path().string().size() - (strlen("Resource/Terrain/None/") + 4));
+		GRAPHICMANAGER->AddImage(imgKey, path);
+
+		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
+		palette->SetName(imgKey);
+		palette->SetTag("Terrain");
+		palette->Init();
+		palette->SetAttribute(TAttribute::NONE);
+		palette->SetCameraAffect(false);
+		palette->SetIsObject(false);
+		palette->GetSprite()->SetDepth(5);
+		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
+
+		_vSetTer_1.push_back(palette);
 	}
 }
