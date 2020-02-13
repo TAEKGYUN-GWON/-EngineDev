@@ -19,6 +19,7 @@ void PaletteBtn::Init()
 
 	_attribute = TAttribute::NONE;
 
+	_isObject = false;
 	_imgSize = { _sprite->GetFrameWidth(), _sprite->GetFrameHeight() };
 
 	//AddComponent<PaletteBtnScript>();

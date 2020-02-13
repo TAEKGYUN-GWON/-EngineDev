@@ -33,42 +33,6 @@ struct tagTile
     string imgKey;
     TAttribute attribute;
 
-    Vector2 startPos;
-    Vector2 size;
-
-    bool isFrame;
-    int frameX;
-    int frameY;
-    PIVOT pivot;
-
-    tagTile()
-    {
-        imgKey = "empty";
-        attribute = TAttribute::NONE;
-        isFrame = false;
-        frameX = 1;
-        frameY = 1;
-        pivot = PIVOT::CENTER;
-
-        startPos = Vector2(1, 1);
-        size = Vector2(1, 1);
-    }
-
-    tagTile* Clone(string imgKey, TAttribute attribute, bool isFrame, int frameX, int frameY, PIVOT pivot, Vector2 startPos, Vector2 size)
-    {
-        tagTile* tile = new tagTile;
-        tile->imgKey = imgKey;
-        tile->attribute = attribute;
-        tile->isFrame = isFrame;
-        tile->frameX = frameX;
-        tile->frameY = frameY;
-        tile->pivot = pivot;
-
-        tile->startPos = startPos;
-        tile->size = size;
-
-        return tile;
-    }
 };
 
 class Tile;
@@ -82,13 +46,19 @@ private:
     vector<PaletteBtn*> _vSetTer_1;
     vector<PaletteBtn*> _vSetTer_2;
     vector<PaletteBtn*> _vSetObj;
+
     vector<Tile*> _vTiles;
     vector<tagTile> _vTagTiles;
+
+    Vector2 _startPos;
+    Vector2 _endPos;
 
     SamplePage _page;
     EraserType _eraser;
 
     int _ctrSelect;
+
+    int index;
 
     POINT _prevMouse;
 
@@ -96,6 +66,9 @@ private:
     RECT _rcSave;
 
     RECT _rcEraserType;
+
+private:
+    void ClassificationAttribute();
 
 public:
     virtual void Init();
