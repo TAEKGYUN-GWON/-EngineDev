@@ -29,6 +29,7 @@ void Tile::Init(int idX, int idY)
 
 
 }
+
 void Tile::Render()
 {
 //	if (_attribute == "None")return;

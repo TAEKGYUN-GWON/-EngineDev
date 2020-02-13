@@ -53,10 +53,11 @@ Scene * sceneManager::addScene(string sceneName, Scene * scene)
 {
 	if(!scene) return nullptr;
 
-	for (auto i : _mSceneList)
-	{
-		if (i.first == sceneName) return i.second;
-	}
+	auto iter = _mSceneList.find(sceneName);
+	if (iter != _mSceneList.end())
+		_mSceneList.erase(iter);
+	
+
 	cout << scene << endl;
 	_mSceneList.insert(make_pair(sceneName, scene));
 

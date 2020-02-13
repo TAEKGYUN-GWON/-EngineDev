@@ -39,6 +39,7 @@ public:
 	Sprite();
 	virtual void Init(BOOL isFrame = false, BOOL isLoop = false);
 	virtual void Render();
+	virtual void Release();
 	virtual void Update() override;
 
 	inline void SetFlipX(bool value) { _isFlipX = value; }

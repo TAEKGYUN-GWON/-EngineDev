@@ -20,10 +20,13 @@ void Probe::Update()
 {
 	Object::Update();
 
-	Move();
+	while (path.size())
+	{
+		Move();
 
-	if(_startMove)
-		SetTileAttribute();
+		if (_startMove)
+			SetTileAttribute();
+	}
 }
 
 void Probe::Release()

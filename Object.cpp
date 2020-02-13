@@ -24,9 +24,10 @@ void Object::Update()
 	for (Object* c : _removeList)
 	{
 		if (c->GetComponent<PhysicsBody>())
-			{
-				SCENEMANAGER->GetNowScene()->GetWorld()->DestroyBody(c->GetComponent<PhysicsBody>()->GetBody());
-			}
+		{
+			SCENEMANAGER->GetNowScene()->GetWorld()->DestroyBody(c->GetComponent<PhysicsBody>()->GetBody());
+			c->RemoveComponent(c->GetComponent<PhysicsBody>());
+		}
 		c->Release();
 	}
 	if(_removeList.size())
@@ -45,14 +46,9 @@ void Object::Update()
 
 void Object::Release()
 {
-	cout << "副府令ぱぱぱぱ" << endl;
+	//cout << "副府令ぱぱぱぱ" << endl;
 	if (_parent != nullptr)
 	{
-		if (GetComponent<PhysicsBody>())
-		{
-			SetIsRelese();
-			return;
-		}
 		if (_isActive)
 			_parent->RemoveToActiveList(this);
 		else
@@ -68,11 +64,13 @@ void Object::Release()
 		child->Release();
 	}
 
-	if(_components.size())
+	if (_components.size())
+	{
 		for (int i = _components.size() - 1; i >= 0; i--)
 		{
 			_components[i]->Release();
 		}
+	}
 	delete this;
 }
 
@@ -119,8 +117,8 @@ void Object::SetIsRelese()
 	{
 		if (GetComponent<PhysicsBody>())
 		{
-			auto p = GetComponent<PhysicsBody>();
-			p->SetBodyActive(false);
+		//	auto p = GetComponent<PhysicsBody>();
+		//	p->SetBodyActive(false);
 
 		}
 		_parent->RemoveToActiveList(this);
@@ -130,8 +128,8 @@ void Object::SetIsRelese()
 	{
 		if (GetComponent<PhysicsBody>())
 		{
-			auto p = GetComponent<PhysicsBody>();
-			p->SetBodyActive(false);
+		//	auto p = GetComponent<PhysicsBody>();
+		//	p->SetBodyActive(false);
 		}
 		_parent->RemoveToUnActiveList(this);
 		_parent->RemoveChild(this);

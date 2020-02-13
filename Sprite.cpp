@@ -53,6 +53,12 @@ void Sprite::Render()
 	}
 }
 
+void Sprite::Release()
+{
+	delete _graphic;
+	DrawComponent::Release();
+}
+
 void Sprite::Update()
 {
 

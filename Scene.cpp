@@ -35,13 +35,38 @@ void Scene::Release()
 	//}
 	//Object::Release();
 	
-	if (!_children.size()) return;
+	//shared_ptr<int> a;
 
-	for (int i = _children.size(); i <= 0; i--)
+	for (b2Body* body = _b2World->GetBodyList(); body; body = body->GetNext())
 	{
-		_children[i]->Release();
+		b2Body* deletedObject = body;
+		body = body->GetNext();
+		_b2World->DestroyBody(deletedObject);
 	}
 
+
+	if (!_children.size()) return;
+
+	auto _children = this->_children;
+
+	for (Object* c :_children)
+	{
+		c->Release();
+	}
+	_children.clear();
+	_activeList.clear();
+	_unActiveList.clear();
+
+	for (Object* c : _removeList)
+	{
+		c->Release();
+	}
+
+	_removeList.clear();
+
+
+	delete _b2World;
+	Object::Release();
 }
 
 void Scene::Update()
@@ -122,8 +147,8 @@ void Scene::Render()
 
 	for (Object* child : _activeList)
 	{
-		if (child->GetTrans()->GetPos().x < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
-			child->GetTrans()->GetPos().y < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
+		if (child->GetTrans()->GetPos().x+100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x-100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
+			child->GetTrans()->GetPos().y+100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y-100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
 
 		else child->SetAllowsRender(true);
 

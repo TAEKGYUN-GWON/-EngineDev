@@ -12,6 +12,14 @@ void StartScene::Init()
 	//GRAPHICMANAGER->AddImage("will", L"blueNumber.png");
 	//GRAPHICMANAGER->AddFrameImage("eagle", L"BossUp.png",32,1);
 	//GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
+	wstring dir = L"Resource/Wizard/Tile/";
+	for (int i = 1; i <= 4; i++)
+	{
+		string str = "Tile";
+		wstring item = to_wstring(i) + L".png";
+		GRAPHICMANAGER->AddImage(str + to_string(i), dir + item);
+	}
+
 
 	SCENEMANAGER->addScene("t", new TestScene);
 	SCENEMANAGER->addScene("tt", new Maptool);
@@ -70,5 +78,4 @@ void StartScene::Render()
 void StartScene::Release()
 {
 	Scene::Release();
-
 }

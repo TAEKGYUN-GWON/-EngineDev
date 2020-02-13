@@ -24,6 +24,7 @@ private:
 	bool endPush; 
 	bool endCreate;
 	bool startDel;
+	bool startExploration;
 	int count;
 
 	vector<Object*> _vFloors;
@@ -32,7 +33,6 @@ public:
 	virtual void Update();
 	virtual void Release();
 	virtual void Render();
-	void CreateRoom();
 	void PushRoom();
 	void SelRoom();
 	void DelRoom();
