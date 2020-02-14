@@ -145,7 +145,12 @@ void ProceduralTest::SetTile()
 			int index = j + MAP_TILE_MAX_Y * i;
 
 			Tile* tile = Object::CreateObject<Tile>();
-			tile->Init(j, i);
+			//tile->Init(j, i);
+			tile->Init();
+			tile->GetTrans()->SetPos(j * TILE_WIDTH + (TILE_WIDTH / 2),
+				i * TILE_HEIGHT + (TILE_HEIGHT / 2));
+			tile->SetIdX(j);
+			tile->SetIdY(i);
 			tile->AddComponent<Sprite>();
 			tile->SetAttribute(TAttribute::WALL);
 			tiles.push_back(tile);

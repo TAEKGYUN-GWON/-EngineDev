@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "PaletteBtn.h"
-//#include "PaletteBtnScript.h"
 
 void PaletteBtn::Init()
 {
@@ -8,7 +7,7 @@ void PaletteBtn::Init()
 
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init();
-	_sprite->SetImgName(_name);
+	_sprite->SetImgName(_imgKey);
 	_sprite->SetShowRect(false);
 
 	_trans->SetScale(_sprite->GetFrameWidth(), _sprite->GetFrameHeight());
@@ -21,8 +20,6 @@ void PaletteBtn::Init()
 
 	_isObject = false;
 	_imgSize = { _sprite->GetFrameWidth(), _sprite->GetFrameHeight() };
-
-	//AddComponent<PaletteBtnScript>();
 }
 
 void PaletteBtn::Release()

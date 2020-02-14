@@ -23,7 +23,6 @@ class Tile : public Object
 private:
     int _idX;
     int _idY;
-
     int _id;
 
     //F = G + H
@@ -36,23 +35,27 @@ private:
     bool _isFrame;
 
     Tile* _node;
+    
+    Tile* _tileParent;
+    vector<Tile*> _vTileChild;
 
     TAttribute _attribute;   //鸥老加己
-
     string _imgName;   //鸥老加己
-
     PIVOT _pivot;
-
     PhysicsBody* _physics;
-
     Sprite* _sprite;
 
 public:
     Tile() :_f(0), _g(0),
-        _h(0), _idX(0), _idY(0) { }
+        _h(0), _idX(0), _idY(0) 
+    {
+        _sprite = AddComponent<Sprite>();
+        //_parent = nullptr;
+    }
 
     ~Tile() {};
-    virtual void Init(int idX, int idY);
+    //virtual void Init(int idX, int idY);
+    virtual void Init();
     virtual void Update() { return; }
     
     virtual void Render();
@@ -63,7 +66,9 @@ public:
     Tile* GetParentNode() { return _node; }
 
     int GetIdX() { return _idX; }
+    void SetIdX(int idx) { _idX = idx; }
     int GetIdY() { return _idY; }
+    void SetIdY(int idy) { _idY = idy; }
 
     void SetCenter(Vector2 center) { _trans->SetPos(center); }
     Vector2 GetCenter() { return _trans->GetPos(); }
@@ -102,4 +107,11 @@ public:
     PIVOT GetPivot() { return _pivot; }
 
     Sprite* GetSprite() { return _sprite; }
+
+    void SetTileParent(Tile* parent) { _tileParent = parent; }
+    Tile* GetTileParent() { return _tileParent; }
+
+    vector<Tile*> GetTileChildren() { return _vTileChild; }
+    void AddTileChildren(Tile* child);
+    void ClearNodeChildren() { _vTileChild.clear(); };
 };

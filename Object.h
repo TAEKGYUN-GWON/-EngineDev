@@ -9,81 +9,87 @@ class DrawComponent;
 class Object
 {
 protected:
-	Object();
+    Object();
 
-	Transform* _trans;
-	vector<DrawComponent*> _draw;
-	vector <Component*> _components;
-	string _name;
-	string _tag;
-	bool _isActive = true;
-	bool _allowsUpdate = true;
-	bool _allowInit = true;
-	bool _allowRender = true;
-	bool _cameraAffect = true;
-	Object* _parent;
-	vector<Object*> _children;
+    Transform* _trans;
+    vector<DrawComponent*> _draw;
+    vector <Component*> _components;
+    string _name;
+    string _tag;
+    bool _isActive = true;
+    bool _isRelease = true;
+    bool _allowsUpdate = true;
+    bool _allowInit = true;
+    bool _allowRender = true;
+    bool _cameraAffect = true;
+    Object* _parent;
+    vector<Object*> _children;
+    vector<Object*> _removeList;
+    vector<Object*> _activeList;
+    vector<Object*> _unActiveList;
 
 public:
-	~Object() {};
-	virtual void Init();
-	virtual void Update();
-	virtual void Release();
-	virtual void Render();
+    ~Object() {};
+    virtual void Init();
+    virtual void Update();
+    virtual void Release();
+    virtual void Render();
 
-	template<typename T>
-	static T* CreateObject(Object* parant = nullptr);
-
-
-	virtual inline Transform* GetTrans() { return _trans; }
-	inline vector<DrawComponent*> GetDraw() { return _draw; }
-
-	inline string GetName() { return _name; }
-	inline void SetName(string name) { _name = name; }
-
-	inline string GetTag() { return _tag; }
-	inline void SetTag(string tag) { _tag = tag; }
-
-	inline void SetIsActive() { _isActive = !_isActive; }
-	inline void SetIsActive(bool active) { _isActive = active; }
-
-	inline bool GetIsActive() { return _isActive; }
-
-	inline bool GetAllowsUpdate() { return _allowsUpdate; }
-	inline void SetAllowsUpdate() { _allowsUpdate = !_allowsUpdate; }
-	inline void SetAllowsUpdate(bool active) { _allowsUpdate = active; }
-
-	inline bool GetAllowsRender() { return _allowRender; }
-	inline void SetAllowsRender() { _allowRender = !_allowRender; }
-	inline void SetAllowsRender(bool active) { _allowRender = active; }
+    template<typename T>
+    static T* CreateObject(Object* parant = nullptr);
 
 
-	inline bool GetAllowInit() { return _allowInit; }
-	
-	inline void SetCameraAffect(bool active) { _cameraAffect = active; }
-	inline bool GetCameraAffect() { return _cameraAffect; }
+    virtual inline Transform* GetTrans() { return _trans; }
+    inline vector<DrawComponent*> GetDraw() { return _draw; }
 
-	void AddChild(Object* child);
-	void RemoveComponent(Component* component);
-	void RemoveChild(Object* child);
+    inline string GetName() { return _name; }
+    inline void SetName(string name) { _name = name; }
 
-	Object* GetChildFromName(string name);
-	vector<Object*>GetChildrenFromTag(string tag);
-	inline vector<Object*>GetChildren() { return _children; }
-	inline Object* GetParent() { return _parent; }
+    inline string GetTag() { return _tag; }
+    inline void SetTag(string tag) { _tag = tag; }
 
-	void SetParent(Object* parent);
+    void SetIsActive(bool active);
 
-	void DelParent();
+    inline bool GetIsActive() { return _isActive; }
 
-	template<typename T>
-	T* AddComponent();
+    inline bool GetAllowsUpdate() { return _allowsUpdate; }
+    inline void SetAllowsUpdate() { _allowsUpdate = !_allowsUpdate; }
+    inline void SetAllowsUpdate(bool active) { _allowsUpdate = active; }
 
-	template<typename T>
-	T* GetComponent();
+    inline bool GetAllowsRender() { return _allowRender; }
+    inline void SetAllowsRender() { _allowRender = !_allowRender; }
+    inline void SetAllowsRender(bool active) { _allowRender = active; }
 
-	template<typename T>
-	vector<T*> GetComponents();
+    void SetIsRelese();
+
+    inline bool GetAllowInit() { return _allowInit; }
+
+    inline void SetCameraAffect(bool active) { _cameraAffect = active; }
+    inline bool GetCameraAffect() { return _cameraAffect; }
+
+    void AddChild(Object* child);
+    void RemoveComponent(Component* component);
+    void RemoveChild(Object* child);
+    void RemoveToActiveList(Object* child);
+    void RemoveToUnActiveList(Object* child);
+
+    Object* GetChildFromName(string name);
+    vector<Object*>GetChildrenFromTag(string tag);
+    inline vector<Object*>GetChildren() { return _children; }
+    inline Object* GetParent() { return _parent; }
+
+    void SetParent(Object* parent);
+
+    void DelParent();
+
+    template<typename T>
+    T* AddComponent();
+
+    template<typename T>
+    T* GetComponent();
+
+    template<typename T>
+    vector<T*> GetComponents();
 };
 
 #include "Object.hpp"

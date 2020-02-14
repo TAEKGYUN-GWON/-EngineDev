@@ -46,12 +46,12 @@ void Scene::Release()
 
 void Scene::Update()
 {
-	for (int i = 0; i < _children.size(); i++)
-	{
-		if (_children[i]->GetAllowInit()) _children[i]->Init();
-		_children[i]->Update();
-	}
-
+	//for (int i = 0; i < _children.size(); i++)
+	//{
+	//	if (_children[i]->GetAllowInit()) _children[i]->Init();
+	//	_children[i]->Update();
+	//}
+	Object::Update();
 }
 
 void Scene::PhysicsUpdate()
@@ -105,11 +105,15 @@ bool CompareToBottomPos(Object* a, Object* b)
 
 void Scene::Render()
 {
-	//if (_allowRelease) return;
-	//sort(_children.begin(), _children.end(), CompareToBottomPos);
-	sort(_children.begin(), _children.end(), CompareToDepth);
 
-	for (Object* child : _children)
+	//if (_allowRelease) return;
+   //sort(_children.begin(), _children.end(), CompareToBottomPos);
+	int a;
+
+	sort(_activeList.begin(), _activeList.end(), CompareToDepth);
+
+	a = 10;
+	for (Object* child : _activeList)
 	{
 		if (child->GetTrans()->GetPos().x + 100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x - 100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
 			child->GetTrans()->GetPos().y + 100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y - 100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
@@ -118,5 +122,7 @@ void Scene::Render()
 
 		child->Render();
 	}
+
+
 }
 

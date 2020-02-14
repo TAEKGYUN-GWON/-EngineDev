@@ -11,7 +11,7 @@ class Player;
 #define SET_TILE_NUM_X 4
 #define SET_TILE_NUM_Y 6
 
-enum class SamplePage
+enum class SamplePage : byte
 {
     Terrain_1,
     Terrain_2,
@@ -19,20 +19,15 @@ enum class SamplePage
     PAGE_END,
 };
 
-enum class EraserType
+enum class EraserType : byte
 {
-    Single,
-    Group,
-    NoDeleteImage,
-    OnlyDeleteImage,
+    //Single,
+    //Group,
+    //NoDeleteImage,
+    //OnlyDeleteImage,
+    Terrain,
+    Object,
     End,
-};
-
-struct tagTile
-{
-    string imgKey;
-    TAttribute attribute;
-
 };
 
 class Tile;
@@ -48,7 +43,6 @@ private:
     vector<PaletteBtn*> _vSetObj;
 
     vector<Tile*> _vTiles;
-    vector<tagTile> _vTagTiles;
 
     Vector2 _startPos;
     Vector2 _endPos;
@@ -56,22 +50,19 @@ private:
     SamplePage _page;
     EraserType _eraser;
 
-    int _ctrSelect;
-
-    int index;
-
     POINT _prevMouse;
 
     RECT _rcLoad;
     RECT _rcSave;
-
     RECT _rcEraserType;
 
 private:
     void ClassificationAttribute();
+    void SetAttribute(int curIdx, PaletteBtn& palett);
 
 public:
     virtual void Init();
+    virtual void Release();
     virtual void Update();
     virtual void Render();
 
@@ -82,7 +73,6 @@ public:
     void SetMap();
     void ClickSetTile();
     void RemoveObject();
-    void SetAttribute(int curIdx, PaletteBtn& palett);
 
     void SetPage();
 };

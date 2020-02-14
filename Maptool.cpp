@@ -5,7 +5,7 @@
 #include "PaletteBtn.h"
 #include "Player.h"
 
-using namespace filesystem;
+//using namespace filesystem;
 
 //void setWindowsSize(int x, int y, int width, int height);
 
@@ -19,10 +19,12 @@ void Maptool::Init()
 	
 	ClassificationAttribute();
 
-	_page = SamplePage::Terrain_1;
-	_eraser = EraserType::Single;
-
 	SetUp();
+	
+	_page = SamplePage::Terrain_1;
+	SetPage();
+
+	_eraser = EraserType::Terrain;
 
 	_rcLoad = RectMakeCenter(WINSIZEX - 100, WINSIZEY - 100, 130, 34);
 	_rcSave = RectMakeCenter(WINSIZEX - 100, WINSIZEY - 150, 130, 34);
@@ -30,6 +32,11 @@ void Maptool::Init()
 
 	_player = Object::CreateObject<Player>();
 	_player->Init();
+}
+
+void Maptool::Release()
+{
+	Object::Release();
 }
 
 void Maptool::Update()
@@ -117,12 +124,13 @@ void Maptool::Update()
 		}
 
 		ClickSetTile();
-	}
-
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-	{
 		SetMap();
 	}
+
+	//if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
+	//{
+	//	SetMap();
+	//}
 
 	//// 렉트 충돌부분 색 변하게 해주는 거
 	//RECT temp;
@@ -164,6 +172,11 @@ void Maptool::Update()
 		SetPage();
 	}
 
+	if (KEYMANAGER->isOnceKeyUp('V'))
+	{
+		SCENEMANAGER->changeScene("train");
+	}
+
 	// tile draw rect
 	if (KEYMANAGER->isOnceKeyUp(VK_F1))
 	{
@@ -175,7 +188,7 @@ void Maptool::Update()
 
 	if (MOUSEPOINTER->GetMouseWorldPosition().x < (CAMERA->GetPosition().x + WINSIZEX) - 300)
 	{
-		index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT);
+		int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT);
 		if (index >= 0 and index <= TILE_NUM_X * TILE_NUM_Y)
 		{
 			if (_currentTile->GetImageSize().y <= TILE_HEIGHT) _currentTile->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos());
@@ -236,10 +249,8 @@ void Maptool::Render()
 
 	// draw eraser button
 	GRAPHICMANAGER->DrawRect(Vector2(_rcEraserType.left, _rcEraserType.top), Vector2((_rcEraserType.right - _rcEraserType.left), (_rcEraserType.bottom - _rcEraserType.top)), 0.0f, ColorF::Green, PIVOT::LEFT_TOP, 1.0f, false);
-	if (_eraser == EraserType::Single) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : Single", 14);
-	else if (_eraser == EraserType::Group) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : Group", 14);
-	else if (_eraser == EraserType::NoDeleteImage) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : NoDeleteImage", 14);
-	else if (_eraser == EraserType::OnlyDeleteImage) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : OnlyDeleteImage", 14);
+	if (_eraser == EraserType::Terrain) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : Terrain", 14);
+	else if (_eraser == EraserType::Object) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : Object", 14);
 
 #pragma region CoordinatesTest
 	
@@ -278,12 +289,6 @@ void Maptool::Render()
 
 void Maptool::Save()
 {
-	HANDLE file;
-	DWORD write;
-
-	string str = "test.map";
-
-	//MessageBox(_hWnd, "Save Ok!", str.c_str(), MB_OK);
 	ofstream outFile;
 	//outFile.open("test.map",ios::binary);
 	outFile.open("test.map");
@@ -291,43 +296,47 @@ void Maptool::Save()
 	for (Tile* t : _vTiles)
 	{
 		outFile << (int)t->GetAttribute() << endl;
-		//outFile << t->GetImgName() << endl;
-		outFile << t->GetName() << endl;
+		outFile << t->GetImgName() << endl;
 		outFile << t->GetSprite()->GetPosition().x << endl;
 		outFile << t->GetSprite()->GetPosition().y << endl;
 		outFile << t->GetSprite()->GetDepth() << endl;
+		outFile << t->GetChildren().size() << endl;
+
+		if (t->GetChildren().size())
+		{
+			PaletteBtn* c = (PaletteBtn*)t->GetChildren()[0];
+			outFile << (int)c->GetAttribute() << endl;
+			outFile << c->GetImageKey() << endl;
+			outFile << c->GetSprite()->GetPosition().x << endl;
+			outFile << c->GetSprite()->GetPosition().y << endl;
+			outFile << c->GetSprite()->GetDepth() << endl;
+		}
 	}
+
 	outFile.close();
 
+	MessageBox(_hWnd, "File Save!", "test.map", MB_OK);
 }
 
 void Maptool::Load()
 {
-	ifstream inFile("test.map");
-	
-	_vTiles.clear();
-
 	for (int i = 0; i < TILE_NUM_Y; ++i)
 	{
 		for (int j = 0; j < TILE_NUM_X; ++j)
 		{
-			Tile* tile = Object::CreateObject<Tile>();
-			tile->Init(j, i);
-			tile->GetSprite()->SetDepth(0);
-			tile->SetAttribute(TAttribute::NONE);
-			_vTiles.push_back(tile);
+			_vTiles[j + TILE_NUM_X * i]->GetSprite()->SetDepth(0);
+			_vTiles[j + TILE_NUM_X * i]->SetAttribute(TAttribute::NONE);
+			if (_vTiles[j + TILE_NUM_X * i]->GetChildren().size())
+			{
+				for (Object* c : _vTiles[j + TILE_NUM_X * i]->GetChildren())
+				{
+					c->SetIsRelese();
+				}
+			}
 		}
 	}
 
-	//PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
-	//obj->SetName(_currentTile->GetName());
-	//obj->Init();
-	//obj->GetSprite()->SetImgName(obj->GetName());
-	//obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
-	//obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
-	//_vTiles[curIdx]->GetSprite()->SetDepth(1);
-	//_vTiles[curIdx]->AddChild(obj);
-
+	ifstream inFile("test.map");
 	Vector2 pos;
 	for (Tile* t : _vTiles)
 	{
@@ -336,9 +345,8 @@ void Maptool::Load()
 		t->SetAttribute((TAttribute)atoi(buffer));
 
 		inFile.getline(buffer, 256);
-		//t->SetImgName(buffer);
-		t->SetName(buffer);
-		t->GetSprite()->SetImgName(t->GetName());
+		t->SetImgName(buffer);
+		t->GetSprite()->SetImgName(t->GetImgName());
 
 		inFile.getline(buffer, 256);
 		pos.x = atof(buffer);
@@ -348,8 +356,36 @@ void Maptool::Load()
 
 		inFile.getline(buffer, 256);
 		t->GetSprite()->SetDepth(atoi(buffer));
+
+		inFile.getline(buffer, 256);
+		int child = atoi(buffer);
+
+		if (child >= 1)
+		{
+			Vector2 pos;
+
+			PaletteBtn* c = Object::CreateObject<PaletteBtn>();
+			inFile.getline(buffer, 256);
+			c->SetAttribute((TAttribute)atoi(buffer));
+
+			inFile.getline(buffer, 256);
+			c->SetImageKey(buffer);
+
+			inFile.getline(buffer, 256);
+			pos.x = atof(buffer);
+			inFile.getline(buffer, 256);
+			pos.y = atof(buffer);
+
+			c->GetSprite()->SetPosition(pos);
+
+			inFile.getline(buffer, 256);
+			c->GetSprite()->SetDepth(atoi(buffer));
+
+			t->AddChild(c);
+
+		}
 	}
-	//outFile.close();
+	inFile.close();
 
 	MessageBox(_hWnd, "File load!", "test.map", MB_OK);
 }
@@ -369,10 +405,8 @@ void Maptool::SetUp()
 	ps->SetShowRect(true);
 
 
-	_ctrSelect = (int)TAttribute::NONE;
 	_currentTile = Object::CreateObject<PaletteBtn>();
 	_currentTile->SetTag("CurrentTile");
-	_currentTile->SetName("blank");
 	_currentTile->Init();
 	_currentTile->GetSprite()->SetAlpha(0.7f);
 	_currentTile->GetSprite()->SetDepth(6);
@@ -382,9 +416,14 @@ void Maptool::SetUp()
 		for (int j = 0; j < TILE_NUM_X; ++j)
 		{
 			Tile* tile = Object::CreateObject<Tile>();
-			tile->Init(j, i);
-			tile->GetSprite()->SetDepth(0);
+			tile->Init();
+			tile->GetTrans()->SetPos(j * TILE_WIDTH + (TILE_WIDTH / 2),
+				i * TILE_HEIGHT + (TILE_HEIGHT / 2));
+			tile->SetIdX(j);
+			tile->SetIdY(i);
+			tile->GetSprite()->SetDepth(1);
 			tile->SetAttribute(TAttribute::NONE);
+
 			_vTiles.push_back(tile);
 		}
 	}
@@ -434,7 +473,7 @@ void Maptool::ClickSetTile()
 	case SamplePage::Terrain_1:
 		if (index >= _vSetTer_1.size()) return;
 
-		_currentTile->SetName(_vSetTer_1[index]->GetName());
+		_currentTile->SetImageKey(_vSetTer_1[index]->GetImageKey());
 		_currentTile->SetIsObject(false);
 		_currentTile->SetAttribute(_vSetTer_1[index]->GetAttribute());
 		_currentTile->SetImageSize(_vSetTer_1[index]->GetImageSize());
@@ -442,7 +481,7 @@ void Maptool::ClickSetTile()
 	case SamplePage::Terrain_2:
 		if (index >= _vSetTer_2.size()) return;
 
-		_currentTile->SetName(_vSetTer_2[index]->GetName());
+		_currentTile->SetImageKey(_vSetTer_2[index]->GetImageKey());
 		_currentTile->SetIsObject(false);
 		_currentTile->SetAttribute(_vSetTer_2[index]->GetAttribute());
 		_currentTile->SetImageSize(_vSetTer_2[index]->GetImageSize());
@@ -450,66 +489,103 @@ void Maptool::ClickSetTile()
 	case SamplePage::Object:
 		if (index >= _vSetObj.size()) return;
 
-		_currentTile->SetName(_vSetObj[index]->GetName());
+		_currentTile->SetImageKey(_vSetObj[index]->GetImageKey());
 		_currentTile->SetIsObject(true);
 		_currentTile->SetAttribute(_vSetObj[index]->GetAttribute());
 		_currentTile->SetImageSize(_vSetObj[index]->GetImageSize());
 		break;
 	}
 	
-	_currentTile->GetSprite()->SetImgName(_currentTile->GetName());
+	_currentTile->GetSprite()->SetImgName(_currentTile->GetImageKey());
 }
 
 void Maptool::RemoveObject()
 {
-	//if (_ptMouse.x > WINSIZEX - 300) return;
-	//
-	//int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILEWIDTH) + TILENUMX * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILEHEIGHT);
-	//
-	//if (_eraser == EraserType::Group)
+	if (_ptMouse.x > WINSIZEX - 300) return;
+	
+	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT);
+	
+	if (index < 0 or index > TILE_NUM_X* TILE_NUM_Y) return;
+
+	//// 20200214 TODO : terrain 지우는 거 / 오브젝트 지우는 거 따로 빼기
 	//{
-	//	for (int i = 0; i < TILENUMX * TILENUMY; ++i)
+	//	_vTiles[index]->SetAttribute(TAttribute::NONE);
+	//	_vTiles[index]->SetImgName("None");
+	//	_vTiles[index]->GetSprite()->SetImgName("None");
+	//}
+	//
+	//if (_vTiles[index]->GetTileParent())
+	//{
+	//	auto parent = _vTiles[index]->GetTileParent();
+	//
+	//	for (auto c : parent->GetTileChildren())
 	//	{
-	//		if (_tiles[i]->GetChildren().size())
+	//		if (c->GetImgName().compare("None") == 0)
 	//		{
-	//			if ((_ptMouse.x <= WINSIZEX - 300) && PtInRect(&RectMakeRightBottom(
-	//				_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().x, 
-	//				_tiles[i]->GetChildren()[0]->GetTrans()->GetPos().y, 
-	//				_tiles[i]->GetChildren()[0]->GetTrans()->GetScale().x, 
-	//				_tiles[i]->GetChildren()[0]->GetTrans()->GetScale().y), 
-	//				MOUSEPOINTER->GetMouseWorldPosition().Vector2ToPOINT()))
-	//			{
-	//				string s = _tiles[i]->GetChildren()[0]->GetComponent<Sprite>()->GetImgKey();
-	//
-	//				SetAttribute(i, FindTile(s)->startPos, FindTile(s)->size, FindTile(s)->startPos2, FindTile(s)->size2, "None");
-	//				_tagTiles[i].imgKey = "empty";
-	//
-	//				if (_tiles[i]->GetChildren().size() <= 0) return;
-	//				_tiles[i]->RemoveChild(_tiles[i]->GetChildren()[0]);
-	//
-	//				break;
-	//			}
+	//			c->SetAttribute(TAttribute::NONE);
 	//		}
 	//	}
-	//}
-	//else if (_eraser == EraserType::Single)
-	//{
-	//	_tiles[index]->SetAttribute("None");
-	//	_tagTiles[index].attribute = "None";
 	//
-	//	if (_tiles[index]->GetChildren().size() <= 0) return;
-	//	_tiles[index]->RemoveChild(_tiles[index]->GetChildren()[0]);
+	//	if(parent->GetChildren().size()) 
+	//		parent->GetChildren()[0]->SetIsRelese();
 	//}
-	//else if (_eraser == EraserType::NoDeleteImage)
-	//{
-	//	_tiles[index]->SetAttribute("None");
-	//	_tagTiles[index].attribute = "None";
-	//}
-	//else if (_eraser == EraserType::OnlyDeleteImage)
-	//{
-	//	if (_tiles[index]->GetChildren().size() <= 0) return;
-	//	_tiles[index]->RemoveChild(_tiles[index]->GetChildren()[0]);
-	//}
+
+	switch (_eraser)
+	{
+	case EraserType::Terrain:
+		if (_vTiles[index]->GetImgName().compare("None") != 0)
+		{
+			_vTiles[index]->SetImgName("None");
+			_vTiles[index]->GetSprite()->SetImgName("None");
+
+			if(_vTiles[index]->GetChildren()[0]->GetIsActive() == false)
+				_vTiles[index]->SetAttribute(TAttribute::NONE);
+		}
+		break;
+	case EraserType::Object:
+		// 클릭한 것은 자식이라는 의미
+		if (_vTiles[index]->GetTileParent())
+		{
+			auto p = _vTiles[index]->GetTileParent();
+			p->SetImgName("None");
+			p->GetChildren()[0]->GetComponent<Sprite>()->SetImgName("None");
+			p->GetChildren()[0]->SetIsActive(false);
+
+			for (auto c : _vTiles[index]->GetTileParent()->GetTileChildren())
+			{
+				auto cp = c->GetTileParent();
+				if (cp->GetImgName().compare("None") == 0) c->SetAttribute(TAttribute::NONE);
+				else
+				{
+					c->SetImgName("None");
+					c->GetSprite()->SetImgName("None");
+					c->SetIsActive(false);
+					c->SetTileParent(nullptr);
+				}
+			}
+			p->ClearNodeChildren();
+
+		}
+		// 클릭한게 부모라는 의미
+		else
+		{
+			if (_vTiles[index]->GetTileChildren().size())
+			{
+				for (auto c : _vTiles[index]->GetTileParent()->GetTileChildren())
+				{
+					Tile* cp = (Tile*)c->GetTileParent();
+					if (cp->GetImgName().compare("None") == 0) c->SetAttribute(TAttribute::NONE);
+					else
+					{
+						//c->SetImgName("None");
+						//c->GetSprite()->SetImgName("None");
+						c->SetIsActive(false);
+					}
+				}
+			}
+		}
+		break;
+	}
 }
 
 void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
@@ -520,40 +596,110 @@ void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
 
 		if (_currentTile->GetIsObject())
 		{
-			PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
-			obj->SetName(_currentTile->GetName());
-			obj->Init();
-			obj->GetSprite()->SetImgName(obj->GetName());
-			obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
-			obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
-			_vTiles[curIdx]->GetSprite()->SetDepth(1);
-			_vTiles[curIdx]->AddChild(obj);
+			//if (_vTiles[curIdx]->GetChildren().size())
+			//{
+			//	PaletteBtn* c = (PaletteBtn*)_vTiles[curIdx]->GetChildren()[0];
+			//	c->SetImageKey(_currentTile->GetImageKey());
+			//	c->SetAttribute(_currentTile->GetAttribute());
+			//	c->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+			//	c->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+			//	c->GetSprite()->SetImgName(c->GetImageKey());
+			//}
+			//else
+			//{
+				//PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
+				//obj->SetImageKey(_currentTile->GetImageKey());
+				//obj->Init();
+				//obj->SetAttribute(_currentTile->GetAttribute());
+				//obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+				//obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+				//_vTiles[curIdx]->GetSprite()->SetDepth(1);
+				//_vTiles[curIdx]->AddChild(obj);
+
+				PaletteBtn* c = (PaletteBtn*)_vTiles[curIdx]->GetChildren()[0];
+				c->SetImageKey(_currentTile->GetImageKey());
+				c->Init();
+				c->SetAttribute(_currentTile->GetAttribute());
+				c->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+				c->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+				c->GetSprite()->SetImgName(c->GetImageKey());
+				c->SetIsActive(true);
+
+				_vTiles[curIdx]->GetSprite()->SetDepth(1);
+			//}
 		}
 		else
 		{
-			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
+			_vTiles[curIdx]->SetImgName(_currentTile->GetImageKey());
+			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetImageKey());
 			_vTiles[curIdx]->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
 		}
 	}
 	else if (palett.GetImageSize().y <= TILE_HEIGHT * 2)
 	{
-		_vTiles[curIdx - TILE_NUM_X]->SetAttribute(palett.GetAttribute());
-		_vTiles[curIdx]->SetAttribute(palett.GetAttribute());
-
 		if (_currentTile->GetIsObject())
 		{
-			PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
-			obj->SetName(_currentTile->GetName());
-			obj->Init();
-			obj->GetSprite()->SetImgName(_currentTile->GetName());
-			obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
-			_vTiles[curIdx]->GetSprite()->SetDepth(1);
+			//if (_vTiles[curIdx]->GetChildren().size())
+			//{
+			//	PaletteBtn* c = (PaletteBtn*)_vTiles[curIdx]->GetChildren()[0];
+			//	c->SetImageKey(_currentTile->GetImageKey());
+			//	c->Init();
+			//	c->SetAttribute(_currentTile->GetAttribute());
+			//	c->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+			//	c->GetSprite()->SetImgName(c->GetImageKey());
+			//	c->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+			//}
+			//else
+			//{
+				//PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
+				//obj->SetImageKey(_currentTile->GetImageKey());
+				//obj->Init();
+				//obj->SetAttribute(_currentTile->GetAttribute());
+				//obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+				//obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+				//_vTiles[curIdx]->GetSprite()->SetDepth(1);
+				//_vTiles[curIdx]->AddChild(obj);
 
-			_vTiles[curIdx]->AddChild(obj);
+				//PaletteBtn* c = (PaletteBtn*)_vTiles[curIdx]->GetChildren()[0];
+				//c->SetImageKey(_currentTile->GetImageKey());
+				//c->Init();
+				//c->SetAttribute(_currentTile->GetAttribute());
+				//c->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+				//c->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+				//c->GetSprite()->SetImgName(c->GetImageKey());
+				//c->SetIsActive(true);
+
+
+			if (_vTiles[curIdx]->GetChildren().size()) return;
+
+				_vTiles[curIdx]->GetSprite()->SetDepth(1);
+
+				// 부모에겐 자식을 알려주고 자식에겐 부모를 알려주는 작업
+				_vTiles[curIdx]->AddTileChildren(_vTiles[curIdx - TILE_NUM_X]);
+				
+				Tile* c = _vTiles[curIdx]->GetTileChildren()[0];
+				c->Init();
+				c->SetImgName(_currentTile->GetImageKey());
+				c->SetAttribute(_currentTile->GetAttribute());
+				c->GetTrans()->SetPos(_vTiles[curIdx - TILE_NUM_X]->GetTrans()->GetPos());
+
+				_vTiles[curIdx]->SetTileParent(_vTiles[curIdx]);
+				Tile* p = _vTiles[curIdx]->GetTileParent();
+				p->Init();
+				p->SetImgName(_currentTile->GetImageKey());
+				p->SetAttribute(_currentTile->GetAttribute());
+				p->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
+				p->GetSprite()->SetImgName(_currentTile->GetImageKey());
+				p->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+			//}
 		}
 		else
 		{
-			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
+			_vTiles[curIdx - TILE_NUM_X]->SetAttribute(palett.GetAttribute());
+			_vTiles[curIdx]->SetAttribute(palett.GetAttribute());
+
+			_vTiles[curIdx]->SetImgName(_currentTile->GetImageKey());
+			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetImageKey());
 			_vTiles[curIdx]->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos() - Vector2(0, TILE_HEIGHT / 2));
 		}
 	}
@@ -565,18 +711,46 @@ void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
 
 		if (_currentTile->GetIsObject())
 		{
-			PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
-			obj->SetName(_currentTile->GetName());
-			obj->Init();
-			obj->GetSprite()->SetImgName(_currentTile->GetName());
-			obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
-			obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
-			_vTiles[curIdx]->GetSprite()->SetDepth(1);
-			_vTiles[curIdx]->AddChild(obj);
+			//if (_vTiles[curIdx]->GetChildren().size())
+			//{
+			//	PaletteBtn* c = (PaletteBtn*)_vTiles[curIdx]->GetChildren()[0];
+			//	c->SetImageKey(_currentTile->GetImageKey());
+			//	c->SetAttribute(_currentTile->GetAttribute());
+			//	c->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+			//	c->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+			//	c->GetSprite()->SetImgName(c->GetImageKey());
+			//}
+			//else
+			//{
+				//PaletteBtn* obj = Object::CreateObject<PaletteBtn>();
+				//obj->SetImageKey(_currentTile->GetImageKey());
+				//obj->Init();
+				//obj->SetAttribute(_currentTile->GetAttribute());
+				//obj->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+				//obj->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+				//_vTiles[curIdx]->GetSprite()->SetDepth(1);
+				//_vTiles[curIdx]->AddChild(obj);
+
+				PaletteBtn* c = (PaletteBtn*)_vTiles[curIdx]->GetChildren()[0];
+				c->SetImageKey(_currentTile->GetImageKey());
+				c->Init();
+				c->SetAttribute(_currentTile->GetAttribute());
+				c->GetTrans()->SetPos(_vTiles[curIdx]->GetTrans()->GetPos());
+				c->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
+				c->GetSprite()->SetImgName(c->GetImageKey());
+				c->SetIsActive(true);
+
+				_vTiles[curIdx]->AddTileChildren(_vTiles[curIdx - TILE_NUM_X]);
+				_vTiles[curIdx]->AddTileChildren(_vTiles[curIdx + TILE_NUM_X]);
+
+				_vTiles[curIdx - TILE_NUM_X]->GetChildren()[0]->SetIsActive(true);
+				_vTiles[curIdx + TILE_NUM_X]->GetChildren()[0]->SetIsActive(true);
+			//}
 		}
 		else
 		{
-			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetName());
+			_vTiles[curIdx]->SetImgName(_currentTile->GetImageKey());
+			_vTiles[curIdx]->GetSprite()->SetImgName(_currentTile->GetImageKey());
 			_vTiles[curIdx]->GetSprite()->SetPosition(_vTiles[curIdx]->GetTrans()->GetPos());
 		}
 	}
@@ -610,8 +784,8 @@ void Maptool::SetPage()
 	break;
 	case SamplePage::Object:
 	{
-		for (int i = 0; i < _vSetTer_1.size(); ++i)
-			_vSetTer_1[i]->SetIsActive(false);
+		for (auto a : _vSetTer_1)
+			a->SetIsActive(false);
 		for (int i = 0; i < _vSetTer_2.size(); ++i)
 			_vSetTer_2[i]->SetIsActive(false);
 
@@ -621,6 +795,7 @@ void Maptool::SetPage()
 	break;
 	case SamplePage::PAGE_END: break;
 	}
+	int a;
 }
 
 void Maptool::ClassificationAttribute()
@@ -628,73 +803,7 @@ void Maptool::ClassificationAttribute()
 	string imgKey;
 	wstring path;
 
-	for (auto d : directory_iterator("Resource/Object/None/"))
-	{
-		string a = d.path().string();
-		path.assign(a.begin(), a.end());
-
-		imgKey = d.path().string().substr(strlen("Resource/Object/None/"), d.path().string().size() - (strlen("Resource/Object/None/") + 4));
-		GRAPHICMANAGER->AddImage(imgKey, path);
-
-		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
-		palette->SetName(imgKey);
-		palette->SetTag("Object");
-		palette->Init();
-		palette->SetAttribute(TAttribute::NONE);
-		palette->SetCameraAffect(false);
-		palette->SetIsObject(true);
-		palette->GetSprite()->SetDepth(5);
-		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
-
-		_vSetObj.push_back(palette);
-	}
-	for (auto d : directory_iterator("Resource/Object/Interaction/"))
-	{
-		string a = d.path().string();
-		path.assign(a.begin(), a.end());
-
-		imgKey = d.path().string().substr(strlen("Resource/Object/Interaction/"), d.path().string().size() - (strlen("Resource/Object/Interaction/") + 4));
-		GRAPHICMANAGER->AddImage(imgKey, path);
-
-		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
-		palette->SetName(imgKey);
-		palette->SetTag("Object");
-		palette->Init();
-		palette->SetAttribute(TAttribute::INTERACTION);
-		palette->SetCameraAffect(false);
-		palette->SetIsObject(true);
-		palette->GetSprite()->SetDepth(5);
-		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
-
-		if (palette->GetName().compare("Ladder") == 0)
-		{
-			palette->GetSprite()->SetScale(Vector2(1.0f, 0.7f));
-			palette->SetAttribute(TAttribute::LADDER);
-		}
-
-		_vSetObj.push_back(palette);
-	}
-	for (auto d : directory_iterator("Resource/Terrain/Wall/"))
-	{
-		string a = d.path().string();
-		path.assign(a.begin(), a.end());
-
-		imgKey = d.path().string().substr(strlen("Resource/Terrain/Wall/"), d.path().string().size() - (strlen("Resource/Terrain/Wall/") + 4));
-		GRAPHICMANAGER->AddImage(imgKey, path);
-
-		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
-		palette->SetName(imgKey);
-		palette->SetTag("Terrain");
-		palette->Init();
-		palette->SetAttribute(TAttribute::WALL);
-		palette->SetCameraAffect(false);
-		palette->SetIsObject(false);
-		palette->GetSprite()->SetDepth(5);
-		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
-
-		_vSetTer_1.push_back(palette);
-	}
-	for (auto d : directory_iterator("Resource/Terrain/None/"))
+	for (auto d : filesystem::directory_iterator("Resource/Terrain/None/"))
 	{
 		string a = d.path().string();
 		path.assign(a.begin(), a.end());
@@ -703,9 +812,9 @@ void Maptool::ClassificationAttribute()
 		GRAPHICMANAGER->AddImage(imgKey, path);
 
 		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
-		palette->SetName(imgKey);
-		palette->SetTag("Terrain");
+		palette->SetImageKey(imgKey);
 		palette->Init();
+		palette->SetTag("Terrain");
 		palette->SetAttribute(TAttribute::NONE);
 		palette->SetCameraAffect(false);
 		palette->SetIsObject(false);
@@ -713,5 +822,71 @@ void Maptool::ClassificationAttribute()
 		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
 
 		_vSetTer_1.push_back(palette);
+	}
+	for (auto d : filesystem::directory_iterator("Resource/Terrain/Wall/"))
+	{
+		string a = d.path().string();
+		path.assign(a.begin(), a.end());
+
+		imgKey = d.path().string().substr(strlen("Resource/Terrain/Wall/"), d.path().string().size() - (strlen("Resource/Terrain/Wall/") + 4));
+		GRAPHICMANAGER->AddImage(imgKey, path);
+
+		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
+		palette->SetImageKey(imgKey);
+		palette->Init();
+		palette->SetTag("Terrain");
+		palette->SetAttribute(TAttribute::WALL);
+		palette->SetCameraAffect(false);
+		palette->SetIsObject(false);
+		palette->GetSprite()->SetDepth(5);
+		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
+
+		_vSetTer_1.push_back(palette);
+	}
+	for (auto d : filesystem::directory_iterator("Resource/Object/None/"))
+	{
+		string a = d.path().string();
+		path.assign(a.begin(), a.end());
+
+		imgKey = d.path().string().substr(strlen("Resource/Object/None/"), d.path().string().size() - (strlen("Resource/Object/None/") + 4));
+		GRAPHICMANAGER->AddImage(imgKey, path);
+
+		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
+		palette->SetImageKey(imgKey);
+		palette->Init();
+		palette->SetTag("Object");
+		palette->SetAttribute(TAttribute::NONE);
+		palette->SetCameraAffect(false);
+		palette->SetIsObject(true);
+		palette->GetSprite()->SetDepth(5);
+		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
+
+		_vSetObj.push_back(palette);
+	}
+	for (auto d : filesystem::directory_iterator("Resource/Object/Interaction/"))
+	{
+		string a = d.path().string();
+		path.assign(a.begin(), a.end());
+
+		imgKey = d.path().string().substr(strlen("Resource/Object/Interaction/"), d.path().string().size() - (strlen("Resource/Object/Interaction/") + 4));
+		GRAPHICMANAGER->AddImage(imgKey, path);
+
+		PaletteBtn* palette = Object::CreateObject<PaletteBtn>();
+		palette->SetImageKey(imgKey);
+		palette->Init();
+		palette->SetTag("Object");
+		palette->SetAttribute(TAttribute::INTERACTION);
+		palette->SetCameraAffect(false);
+		palette->SetIsObject(true);
+		palette->GetSprite()->SetDepth(5);
+		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth() , GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
+
+		if (palette->GetImageKey().compare("Ladder") == 0)
+		{
+			palette->GetSprite()->SetScale(Vector2(1.0f, 0.7f));
+			palette->SetAttribute(TAttribute::LADDER);
+		}
+
+		_vSetObj.push_back(palette);
 	}
 }
