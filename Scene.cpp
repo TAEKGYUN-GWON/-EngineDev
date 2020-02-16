@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "Scene.h"
-float32 timeStep;
-int32 velocityIterations;
-int32 positionIterations;
+
 
 Scene::Scene()
 {
@@ -37,13 +35,14 @@ void Scene::Release()
 	
 	//shared_ptr<int> a;
 
-	for (b2Body* body = _b2World->GetBodyList(); body; body = body->GetNext())
+	for (b2Body* body = _b2World->GetBodyList(); body!=nullptr;)
 	{
+		if (body == nullptr)break;
 		b2Body* deletedObject = body;
 		body = body->GetNext();
 		_b2World->DestroyBody(deletedObject);
+		if (body->GetNext() == nullptr) break;
 	}
-
 
 	if (!_children.size()) return;
 
@@ -92,6 +91,7 @@ void Scene::Update()
 
 void Scene::PhysicsUpdate()
 {
+
 	_b2World->Step(timeStep, velocityIterations, positionIterations);
 	for (b2Body* body = _b2World->GetBodyList(); body; body = body->GetNext())
 	{
@@ -143,7 +143,7 @@ void Scene::Render()
 {
 	//if (_allowRelease) return;
 	//sort(_children.begin(), _children.end(), CompareToBottomPos);
-	sort(_children.begin(), _children.end(), CompareToDepth);
+	sort(_activeList.begin(), _activeList.end(), CompareToBottomPos);
 
 	for (Object* child : _activeList)
 	{

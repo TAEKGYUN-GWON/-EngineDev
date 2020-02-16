@@ -235,3 +235,9 @@ float Vector2::GetAngle(Vector2 a, Vector2 b)
 
 
 }
+
+Vector2 Vector2::RandPosition(Vector2 a, Vector2 b)
+{
+
+	return Vector2(RND->getFromFloatTo(a.x, b.x), RND->getFromFloatTo(a.y, b.y));
+}

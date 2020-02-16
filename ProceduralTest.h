@@ -17,6 +17,7 @@ private:
 	vector<Tile*> tiles;
 	vector<Room*> rooms;
 	vector<Room*> selRooms;
+	vector<Room*> mainRooms;
 	vector<Room*> subRooms;
 	Room* currentRoom;
 	float maxY;
@@ -33,6 +34,7 @@ public:
 	virtual void Update();
 	virtual void Release();
 	virtual void Render();
+	virtual void PhysicsUpdate(); 
 	void PushRoom();
 	void SelRoom();
 	void DelRoom();
@@ -40,9 +42,12 @@ public:
 	void Exploration();
 	void SetSubRoom();
 	void SetTileProperty();
+	void SetTileObjet();
 	void SetWall();
 	void SetTileImg();
 	void DelTile();
 
+
+	void SetScene();
 }; 
 

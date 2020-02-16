@@ -55,7 +55,7 @@ void Sprite::Render()
 
 void Sprite::Release()
 {
-	delete _graphic;
+	//delete _graphic;
 	DrawComponent::Release();
 }
 

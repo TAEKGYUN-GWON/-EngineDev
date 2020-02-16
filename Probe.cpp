@@ -20,6 +20,13 @@ void Probe::Update()
 {
 	Object::Update();
 
+#ifdef _DEBUG
+	Move();
+
+	if (_startMove)
+		SetTileAttribute();
+#else
+
 	while (path.size())
 	{
 		Move();
@@ -27,6 +34,8 @@ void Probe::Update()
 		if (_startMove)
 			SetTileAttribute();
 	}
+#endif
+
 }
 
 void Probe::Release()
@@ -72,6 +81,7 @@ void Probe::SetTileAttribute()
 		Vector2 tileIdx((_trans->GetPos().x / TILE_WIDTH) + i % 3, (_trans->GetPos().y / TILE_HEIGHT) + i / 3);
 		auto t = tiles[(int)tileIdx.x + (MAP_TILE_MAX_X) * (int)tileIdx.y];
 		t->SetAttribute(Attribute::NONE);
+		t->SetName("Road");
 		auto s = t->GetSprite();
 		s->SetFillRect(true);
 		s->SetRectColor(ColorF::Coral);

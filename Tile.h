@@ -23,6 +23,7 @@ enum Attribute
 enum WallType
 {
     None,
+    WALL_UP,
     WALL_UP_1,
     WALL_UP_2,
     WALL_DOWN,
@@ -32,7 +33,8 @@ enum WallType
     WALL_LEFT_DOWN_EDGE,
     WALL_RIGHT_EDGE,
     WALL_RIGHT_DOWN_EDGE,
-    WALL_SURROUND
+    WALL_SURROUND,
+    BOSS_HUB
 };
 
 

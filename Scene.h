@@ -2,9 +2,12 @@
 #include "Object.h"
 class Scene : public Object
 {
-private:
+protected:
 	b2World* _b2World;
 	bool  _allowRelease = false;
+	float32 timeStep;
+	int32 velocityIterations;
+	int32 positionIterations;
 public:
 	Scene();
 	virtual ~Scene();
