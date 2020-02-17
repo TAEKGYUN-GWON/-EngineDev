@@ -76,7 +76,7 @@ public:
 
     ~Tile() {};
     virtual void Init(int idX, int idY);
-    virtual void Update() { return; }
+    virtual void Update();
     
     virtual void Render();
 

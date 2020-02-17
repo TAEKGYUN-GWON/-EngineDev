@@ -85,6 +85,9 @@
     <Filter Include="2DGameFramework\Manager\Button">
       <UniqueIdentifier>{ae7f7a84-2230-4243-8bc7-aa6c518f485d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Enemy">
+      <UniqueIdentifier>{e5261a87-3d26-4b7d-b7f2-ab76d4ffa30a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -264,6 +267,15 @@
     <ClInclude Include="Probe.h">
       <Filter>playGround\procedural</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.h">
+      <Filter>playGround</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -412,6 +424,15 @@
     </ClCompile>
     <ClCompile Include="Probe.cpp">
       <Filter>playGround\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ability.cpp">
+      <Filter>playGround</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>playGround\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -37,6 +37,7 @@ void ProceduralTest::Init()
 	GRAPHICMANAGER->AddImage("Grate", Tiledir + L"Grate.png");
 
 	GRAPHICMANAGER->AddImage("SmallProps", Objectdir + L"SmallProps.png");
+	GRAPHICMANAGER->AddImage("None", Objectdir + L"empty.png");
 	GRAPHICMANAGER->AddImage("PillarIce", Objectdir + L"PillarIce.png");
 	GRAPHICMANAGER->AddImage("ArchwayBodyIce", Objectdir + L"ArchwayBodyIce.png");
 	GRAPHICMANAGER->AddImage("IceBanner", Objectdir + L"IceBanner.png");
@@ -82,6 +83,7 @@ void ProceduralTest::Init()
 	for (int i = 0; i < SELECT_ROOM; i++)
 		SelRoom();
 	SetTile();
+
 }
 
 void ProceduralTest::Update()
@@ -670,12 +672,12 @@ void ProceduralTest::SetTileObjet()
 	{
 		if (t->GetWallType() != WallType::WALL_UP_2) continue;
 
-		int rand = RND->getInt(20);
+		int rand = RND->getInt(50);
 
 		if (rand != 7)continue;
 
 		int bannerType = RND->getInt(2);
-		Object* banner = Object::CreateObject<Object>();
+		Object* banner = Object::CreateObject<Object>(t);
 		banner->GetTrans()->SetPos(t->GetTrans()->GetPos());
 		auto s = banner->AddComponent<Sprite>();
 
@@ -685,19 +687,34 @@ void ProceduralTest::SetTileObjet()
 			s->SetImgName("ChaosBanner");
 		s->SetPosition(banner->GetTrans()->GetPos() + Vector2::down * 10);
 	}
+
 	int hubSelect = RND->getInt(mainRooms.size());
 	mainRooms[hubSelect]->SetHubForBossRoom(true);
 
 	//"ArchwayBodyIce"
 
 	{
-		Vector2 vec2Idx((int)mainRooms[hubSelect]->GetTrans()->GetTopPos().x / TILE_WIDTH, ((int)mainRooms[hubSelect]->GetTrans()->GetTopPos().y / TILE_HEIGHT)+2);
+		Vector2 vec2BossIdx((int)mainRooms[hubSelect]->GetTrans()->GetPosToPivot(TF_PIVOT::TOP).x / TILE_WIDTH, ((int)mainRooms[hubSelect]->GetTrans()->GetPosToPivot(TF_PIVOT::TOP).y / TILE_HEIGHT)+1);
 
-		int idx = vec2Idx.x + vec2Idx.y * MAP_TILE_MAX_X;
+		int bossIdx = vec2BossIdx.x + vec2BossIdx.y * MAP_TILE_MAX_X;
 		//tiles[idx - MAP_TILE_MAX_X]->
-		tiles[idx - 1]->SetWallType(WallType::BOSS_HUB);
-		tiles[idx]->SetWallType(WallType::BOSS_HUB);
-		tiles[idx + 1]->SetWallType(WallType::BOSS_HUB);
+		tiles[bossIdx]->SetWallType(WallType::BOSS_HUB);
+		tiles[bossIdx]->GetSprite()->SetRectColor(ColorF::DarkBlue);
+		tiles[bossIdx - 1]->SetWallType(WallType::BOSS_HUB);
+		tiles[bossIdx - 1]->GetSprite()->SetRectColor(ColorF::DarkBlue);
+		tiles[bossIdx + 1]->SetWallType(WallType::BOSS_HUB);
+		tiles[bossIdx + 1]->GetSprite()->SetRectColor(ColorF::DarkBlue);
+
+		tiles[bossIdx]->GetSprite()->SetImgName("ArchwayBodyIce");
+		tiles[bossIdx - 1]->GetSprite()->SetImgName("None");
+
+		tiles[bossIdx + 1]->GetSprite()->SetImgName("None");
+
+		tiles[bossIdx - 1 - MAP_TILE_MAX_X]->GetSprite()->SetImgName("None");
+		tiles[bossIdx + 1 - MAP_TILE_MAX_X*2]->GetSprite()->SetImgName("None");
+
+		tiles[bossIdx - MAP_TILE_MAX_X]->GetSprite()->SetImgName("None");
+		tiles[bossIdx - MAP_TILE_MAX_X * 2]->GetSprite()->SetImgName("None");
 
 	}
 
@@ -1020,8 +1037,25 @@ void ProceduralTest::SetScene()
 		cout << "FPS : " << TIMEMANAGER->GetFps() << endl;
 
 
+#ifdef _DEBUG
+	if (KEYMANAGER->isOnceKeyDown('1'))
+		Exploration();
 
-	//if (KEYMANAGER->isOnceKeyDown('1'))
+	if (!GetChildrenFromTag("Probe").size() && startExploration)
+		SetSubRoom();
+
+	if (KEYMANAGER->isOnceKeyDown('2'))
+		startDel = true;
+
+	if (KEYMANAGER->isOnceKeyDown('3'))
+		SetTileProperty();
+
+	//if (KEYMANAGER->isOnceKeyDown('5'))
+	//	SetWall();
+
+	if (KEYMANAGER->isOnceKeyDown('4'))
+		SetTileImg();
+#else
 	if (timer >= 1.0f &&
 		timer <= 1.1f)
 		Exploration();
@@ -1029,12 +1063,10 @@ void ProceduralTest::SetScene()
 	if (!GetChildrenFromTag("Probe").size() && startExploration)
 		SetSubRoom();
 
-	//if (KEYMANAGER->isOnceKeyDown('2'))
 	if (timer >= 1.5f &&
 		timer <= 1.6f)
 		startDel = true;
 
-	//if (KEYMANAGER->isOnceKeyDown('3'))
 	if (timer >= 2.0f &&
 		timer <= 2.1f)
 		SetTileProperty();
@@ -1042,10 +1074,11 @@ void ProceduralTest::SetScene()
 	//if (KEYMANAGER->isOnceKeyDown('5'))
 	//	SetWall();
 
-	//if (KEYMANAGER->isOnceKeyDown('4'))
 	if (timer >= 2.5f &&
 		timer <= 2.6f)
 		SetTileImg();
+#endif
+
 	if (startDel && rooms.size())
 		DelRoom();
 }

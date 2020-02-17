@@ -10,7 +10,9 @@ typedef enum class TransFormPIVOT
 	RIGHT_TOP,
 	RIGHT_BOTTOM,
 	LEFT,
-	RIGHT
+	RIGHT,
+	TOP,
+	BOTTOM
 }TF_PIVOT;
 
 class Transform : public Component
@@ -61,6 +63,8 @@ public:
 
 	//Vector2 타입으로 좌표 설정하기
 	void SetPos(Vector2 pos);
+
+	void Move(Vector2 pos);
 
 	//float 타입으로 좌표 설정하기
 	void SetPos(float x, float y);

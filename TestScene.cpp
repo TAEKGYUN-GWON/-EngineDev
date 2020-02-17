@@ -33,13 +33,23 @@ void TestScene::Init()
 	//	obj->GetTrans()->SetScale(100,100);
 	//	obj->AddComponent<PhysicsBody>()->Init(BodyType::STATIC, 1, 0, 0, 0, 1);
 	//}
-
+	GRAPHICMANAGER->AddFrameImage("r", L"Resource/Wizard/Enemy/Sprite/RogueAttack0_2x1.png", 2, 1);
+	GRAPHICMANAGER->AddFrameImage("s", L"Resource/Wizard/Enemy/Sprite/KnightAttack0_5x1.png", 5, 1);
 	test = Object::CreateObject<Object>();
-	for (int i = 0; i < 50000; i++)
+	test->GetTrans()->SetPos(WINSIZE / 2);
+	auto s = test->AddComponent<Sprite>();
+	s->Init(true, true);
+	s->SetImgName("r");
+	for (int i = 0; i < 1; i++)
 	{
-		Object* obj = Object::CreateObject<Object>();
-		obj->GetTrans()->SetPos(WINSIZE.x / 2, WINSIZE.y / 2);
-		obj->GetTrans()->SetScale(100, 100);
+		Object* obj = Object::CreateObject<Object>(test);
+		//obj->GetTrans()->SetPos(WINSIZE.x / 2, WINSIZE.y / 2);
+		//obj->GetTrans()->SetScale(100, 100);
+		obj->GetTrans()->SetPos(WINSIZE / 2);
+		//obj = Object::CreateObject<Object>();
+		auto s = obj->AddComponent<Sprite>();
+		s->Init(true, true);
+		s->SetImgName("s");
 	}
 
 }

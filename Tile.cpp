@@ -30,6 +30,12 @@ void Tile::Init(int idX, int idY)
 
 }
 
+void Tile::Update()
+{
+	_trans->Update();
+
+	return;
+}
 void Tile::Render()
 {
 //	if (_attribute == "None")return;

@@ -12,6 +12,7 @@ void StartScene::Init()
 	//GRAPHICMANAGER->AddImage("will", L"blueNumber.png");
 	//GRAPHICMANAGER->AddFrameImage("eagle", L"BossUp.png",32,1);
 	//GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
+
 	wstring dir = L"Resource/Wizard/Tile/";
 	for (int i = 1; i <= 4; i++)
 	{
