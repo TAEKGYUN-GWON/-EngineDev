@@ -21,16 +21,17 @@ void Object::Init()
 
 void Object::Update()
 {
-
 	for (Object* c : _removeList)
 	{
-	if (c->GetComponent<PhysicsBody>())
+		if (c->GetComponent<PhysicsBody>())
 		{
 			SCENEMANAGER->GetNowScene()->GetWorld()->DestroyBody(c->GetComponent<PhysicsBody>()->GetBody());
+			c->RemoveComponent(c->GetComponent<PhysicsBody>());
 		}
 		c->Release();
 	}
-	_removeList.clear();
+	if (_removeList.size())
+		_removeList.clear();
 
 	for (int i = 0; i < _components.size(); i++)
 		_components[i]->Update();
@@ -63,10 +64,12 @@ void Object::Release()
 		child->Release();
 	}
 
-
-	for (int i = _components.size() - 1; i >= 0; i--)
+	if (_components.size())
 	{
-		_components[i]->Release();
+		for (int i = _components.size() - 1; i >= 0; i--)
+		{
+			_components[i]->Release();
+		}
 	}
 	delete this;
 }
@@ -114,8 +117,8 @@ void Object::SetIsRelese()
 	{
 		if (GetComponent<PhysicsBody>())
 		{
-			auto p = GetComponent<PhysicsBody>();
-			p->SetBodyActive(false);
+			//	auto p = GetComponent<PhysicsBody>();
+			//	p->SetBodyActive(false);
 
 		}
 		_parent->RemoveToActiveList(this);
@@ -125,13 +128,13 @@ void Object::SetIsRelese()
 	{
 		if (GetComponent<PhysicsBody>())
 		{
-			auto p = GetComponent<PhysicsBody>();
-			p->SetBodyActive(false);
+			//	auto p = GetComponent<PhysicsBody>();
+			//	p->SetBodyActive(false);
 		}
 		_parent->RemoveToUnActiveList(this);
 		_parent->RemoveChild(this);
 	}
-		_parent->_removeList.push_back(this);
+	_parent->_removeList.push_back(this);
 
 }
 
@@ -178,7 +181,7 @@ void Object::RemoveChild(Object* child)
 			break;
 		}
 	}
-	
+
 
 }
 
@@ -250,7 +253,7 @@ void Object::DelParent()
 		_parent->RemoveToUnActiveList(this);
 
 	_parent->RemoveChild(this);
-	
-	_parent = nullptr; 
+
+	_parent = nullptr;
 }
 

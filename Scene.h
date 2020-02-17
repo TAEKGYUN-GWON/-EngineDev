@@ -3,6 +3,10 @@
 class Scene : public Object
 {
 private:
+	float32 timeStep;
+	int32 velocityIterations;
+	int32 positionIterations;
+
 	b2World* _b2World;
 	bool  _allowRelease = false;
 public:
