@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include "TestScene.h"
-
+#include "StartScene.h"
 
 void TestScene::Init()
 {
 	Scene::Init();
+	SCENEMANAGER->addScene("PG", new StartScene);
 	//bullet = Object::CreateObject<Object>();
 	//bullet->GetTrans()->SetPos(WINSIZEX * 4, WINSIZEY / 2);
 	//bullet->GetTrans()->SetScale(50,30);
@@ -55,6 +56,8 @@ void TestScene::Update()
 
 	if (KEYMANAGER->isOnceKeyDown('4'))
 		test->Release();
+	if (KEYMANAGER->isOnceKeyDown('T'))
+		SCENEMANAGER->changeScene("PG");
 
 	//mgr->Update(); 
 	//if (KEYMANAGER->isOnceKeyDown('4')) SCENEMANAGER->changeScene("Shop");
