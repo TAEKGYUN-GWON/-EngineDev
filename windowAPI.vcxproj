@@ -162,6 +162,7 @@
     <ClInclude Include="EnemyState.h" />
     <ClInclude Include="iniDataManager.h" />
     <ClInclude Include="JsonManager.h" />
+    <ClInclude Include="Knight.h" />
     <ClInclude Include="loadingScene.h" />
     <ClInclude Include="Maptool.h" />
     <ClInclude Include="MousePointer.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
     <ClCompile Include="JsonManager.cpp" />
+    <ClCompile Include="Knight.cpp" />
     <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="Maptool.cpp" />
     <ClCompile Include="MousePointer.cpp" />

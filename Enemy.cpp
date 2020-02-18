@@ -6,33 +6,42 @@ void Enemy::Init()
 	Object::Init();
 
 	_tag = "Enemy";
-	_state = new EnemyIdle(this);
-	_distance = _atkDistance = _speed = _angle = _isAtkFrame = 0;
-	AddComponent<Sprite>();
+	_state = make_shared<EnemyIdle>(this);
+	_distance = _atkDistance = _speed = _angle = _isAtkFrame = _FPS = 0;
+	_sprite = AddComponent<Sprite>();
+	_sprite->Init(true, true);
 }
 
 void Enemy::Update()
 {
 	Object::Update();
-
+	BasicUpdate();
+	AngleDetection();
 	_state->Stay();
 
 }
 
 void Enemy::Release()
 {
-	if (_state) delete _state;
 	Object::Release();
 }
 
-void Enemy::ChangeState(EnemyState* state)
+
+
+void Enemy::AngleDetection()
 {
-	if (_state)
-	{
-		_state->Exit();
-		delete _state;
-	}
-	_state = state;
+	if ((_angle > PI / 2 && _angle <= PI) || (_angle >= -PI && _angle < -PI / 2)) _dir = E_Dir::LEFT;
+	else _dir = E_Dir::RIGHT;
+
+	if (_dir == E_Dir::LEFT) _sprite->SetFlipX(true);
+	else _sprite->SetFlipX(false);
+}
+
+void Enemy::ChangeState(shared_ptr<EnemyState> state)
+{
+
+	_state->Exit();
+	_state.swap(state);
 	_state->Enter();
 }
 
@@ -49,6 +58,7 @@ void Enemy::SetPath(list<Vector2> path)
 
 void Enemy::SetImg(string stateName)
 {
-	auto s = GetComponent<Sprite>();
-	s->SetImgName(_name + stateName);
+
+	_sprite->SetImgName(_name + stateName);
+	
 }

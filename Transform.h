@@ -26,16 +26,14 @@ private:
 	Matrix3x3 rotateMatrix;
 	Matrix3x3 translateMatrix;
 	Matrix3x3 localToWorldMatrix;
+	Vector2 pos;
 
+	Vector2 scale;
 	//매트릭스 업데이트
 	void UpdateMatrix();
 
 public:
 	typedef Component super;
-	Vector2 pos;
-	Vector2 bottomPos;
-	Vector2 topPos;
-	Vector2 scale;
 	Transform();
 
 	virtual void Init() override;
@@ -44,8 +42,6 @@ public:
 
 	//Vector2 타입 좌표 가져오기
 	Vector2 GetPos();
-	Vector2 GetBottomPos();
-	Vector2 GetTopPos();
 	Vector2 GetPosToPivot(TransFormPIVOT pivot);
 
 	//월드좌표 가져오기

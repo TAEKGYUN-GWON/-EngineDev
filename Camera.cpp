@@ -75,7 +75,8 @@ void Camera::SetPosition(Vector2 pos, string key)
 
 void Camera::SetPos(Vector2 pos)
 {
-	_pos += pos;
+	_pos += pos * _scale;
+	//_pos += pos ;
 }
 
 void Camera::Control()

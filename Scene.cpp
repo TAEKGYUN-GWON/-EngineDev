@@ -136,7 +136,7 @@ bool CompareToBottomPos(Object* a, Object* b)
 	if (!aT) return false;
 	else if (!bT) return true;
 
-	return aT->bottomPos.y < bT->bottomPos.y;
+	return aT->GetPosToPivot(TF_PIVOT::BOTTOM).y< bT->GetPosToPivot(TF_PIVOT::BOTTOM).y;
 }
 
 void Scene::Render()

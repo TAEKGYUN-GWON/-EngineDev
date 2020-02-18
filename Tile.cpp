@@ -12,8 +12,8 @@ void Tile::Init(int idX, int idY)
 	//_sprite->Init();
 	//_sprite->Stop();
 
-	_trans->pos = Vector2(idX * TILE_WIDTH + (TILE_WIDTH / 2),
-		idY * TILE_HEIGHT + (TILE_HEIGHT / 2));
+	_trans->SetPos(Vector2(idX * TILE_WIDTH + (TILE_WIDTH / 2),
+		idY * TILE_HEIGHT + (TILE_HEIGHT / 2)));
 	_trans->SetScale(TILE_WIDTH, TILE_HEIGHT);
 
 	_idX = idX;

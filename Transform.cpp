@@ -55,15 +55,6 @@ Vector2 Transform::GetPos()
     return pos;
 }
 
-Vector2 Transform::GetBottomPos()
-{
-    return bottomPos;
-}
-
-Vector2 Transform::GetTopPos()
-{
-    return topPos;
-}
 
 Vector2 Transform::GetPosToPivot(TransFormPIVOT pivot)
 {
@@ -159,8 +150,6 @@ RECT Transform::GetRect()
 void Transform::SetRect()
 {
     _rc = RectMakeCenter(pos.x, pos.y, scale.x, scale.y);
-    bottomPos = Vector2(pos.x, pos.y + scale.y / 2);
-    topPos = Vector2(pos.x, pos.y - scale.y / 2);
 }
 
 

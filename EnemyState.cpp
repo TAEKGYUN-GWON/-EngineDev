@@ -7,6 +7,8 @@ void EnemyIdle::Enter()
 	_name = "Idle";
 	_timer = 0;
 	_maxTimer = RND->getFromFloatTo(2, 4);
+	_enemy->SetImg(_name);
+
 }
 
 void EnemyIdle::Stay()
@@ -14,10 +16,16 @@ void EnemyIdle::Stay()
 	_timer += TIMEMANAGER->getElapsedTime();
 
 	if (_enemy->GetDistance() <= _enemy->GetAtkDistance())
-		_enemy->ChangeState(new EnemyAttack(_enemy));
+	{
+		_enemy->ChangeState(make_shared <EnemyAttack>(_enemy));
+		return;
+	}
 
 	if (_timer >= _maxTimer)
-		_enemy->ChangeState(new EnemyMove(_enemy));
+	{
+		_enemy->ChangeState(make_shared <EnemyMove>(_enemy));
+		return;
+	}
 }
 
 void EnemyIdle::Exit()
@@ -32,6 +40,7 @@ void EnemyMove::Enter()
 	_path = _enemy->GetPath();
 	_timer = 0;
 	_maxTimer = RND->getFromFloatTo(2, 4);
+	_enemy->SetImg(_name);
 }
 
 void EnemyMove::Stay()
@@ -39,10 +48,16 @@ void EnemyMove::Stay()
 	_timer += TIMEMANAGER->getElapsedTime();
 
 	if (_timer >= _maxTimer)
-		_enemy->ChangeState(new EnemyIdle(_enemy));
+	{
+		_enemy->ChangeState(make_shared <EnemyIdle>(_enemy));
+		return;
+	}
 
 	if (_enemy->GetDistance() <= _enemy->GetAtkDistance())
-		_enemy->ChangeState(new EnemyAttack(_enemy));
+	{
+		_enemy->ChangeState(make_shared <EnemyAttack>(_enemy));
+		return;
+	}
 
 	if (_path->size())
 	{
@@ -68,6 +83,7 @@ void EnemyAttack::Enter()
 {
 	_name = "Attack";
 	_type = _enemy->GetAtkType();
+	_enemy->SetImg(_name);
 }
 
 void EnemyAttack::Stay()
@@ -76,7 +92,11 @@ void EnemyAttack::Stay()
 	{
 		_enemy->Attack();
 
-		_enemy->ChangeState(new EnemyIdle(_enemy));
+		if (_enemy->GetSprite()->GetCurrentFrameX() >= _enemy->GetSprite()->GetMaxFrameX())
+		{
+			_enemy->ChangeState(make_shared <EnemyIdle>(_enemy));
+			return;
+		}
 	}
 }
 
@@ -104,12 +124,20 @@ void EnemyHurt::Exit()
 //death
 void EnemyDeath::Enter()
 {
+	_timer = 0;
+	_maxTimer = 1.5f;
 	_name = "Death";
+	_enemy->SetImg(_name);
 }
 
 void EnemyDeath::Stay()
 {
+
 	if (_enemy->GetComponent<Sprite>()->GetCurrentFrameX() >= _enemy->GetComponent<Sprite>()->GetMaxFrameX())
+		_timer += TIMEMANAGER->getElapsedTime();
+	
+
+	if(_timer>=_maxTimer)
 		_enemy->SetIsActive(false);
 }
 
