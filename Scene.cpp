@@ -41,7 +41,6 @@ void Scene::Release()
 		b2Body* deletedObject = body;
 		body = body->GetNext();
 		_b2World->DestroyBody(deletedObject);
-		if (body->GetNext() == nullptr) break;
 	}
 
 	if (!_children.size()) return;
