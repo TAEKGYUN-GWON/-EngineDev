@@ -4,7 +4,7 @@
 void Text::SetLayout()
 {
     if (_layout) _layout->Release();
-    _layout = Direct2D::GetInstance()->CreateTextLayout(_text, _fontName, _fontSize, _maxWidth, _maxHeight, _locale);
+    _layout = make_shared<IDWriteTextLayout>(Direct2D::GetInstance()->CreateTextLayout(_text, _fontName, _fontSize, _maxWidth, _maxHeight, _locale));
 }
 
 void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHeight, ColorF color, float alpha, wstring fontName, wstring localeName)
@@ -22,7 +22,8 @@ void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHei
     _trans->SetScale(Vector2(maxWidth, maxHeight));
 
     //Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color, alpha), &_brush);
-    GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(color, &_brush);
+    ID2D1SolidColorBrush* brush = _brush.get();
+    GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
 }
 
 void Text::ChangeText(wstring text)
@@ -45,7 +46,10 @@ void Text::Render()
     if (_object->GetCameraAffect()) renderTarger->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
     else renderTarger->SetTransform(Matrix3x2F::Identity());
 
-    renderTarger->DrawTextLayout(Point2F(_trans->GetPos().x, _trans->GetPos().y), _layout, _brush);
+    IDWriteTextLayout* layout = _layout.get();
+    ID2D1SolidColorBrush* brush = _brush.get();
+
+    renderTarger->DrawTextLayout(Point2F(_trans->GetPos().x, _trans->GetPos().y), layout, brush);
 }
 
 void Text::SetFontSize(float fontSize, int startPoint, int length)

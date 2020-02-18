@@ -3,50 +3,50 @@
 template<typename T>
 T* Object::AddComponent()
 {
-	Component* component = new T();
+    shared_ptr <Component> component = make_shared<T>();
 
-	component->setGameObject(this);
-	component->Init();
-	if (dynamic_cast<DrawComponent*>(component))
-		_draw.push_back((DrawComponent*)component);
-	_components.push_back(component);
+    component->setGameObject(this);
+    component->Init();
+    if (dynamic_cast<DrawComponent*>(component.get()))
+        _draw.push_back((DrawComponent*)component.get());
+    _components.push_back(component);
 
-	return (T*)component;
+    return (T*)component.get();
 }
 template<typename T>
 vector<T*> Object::GetComponents()
 {
-	vector<T*> componentsList;
-	for (auto c : _components)
-	{
-		if (dynamic_cast<T*>(c))
-			componentsList.push_back((T*)c);
-	}
-	return componentsList;
+    vector<T*> componentsList;
+    for (auto c : _components)
+    {
+        if (dynamic_cast<T*>(c.get()))
+            componentsList.push_back((T*)c.get());
+    }
+    return componentsList;
 }
 
 
 template<typename T>
-inline T * Object::GetComponent()
+T* Object::GetComponent()
 {
-	for (Component* c : _components)
-	{
-		if (dynamic_cast<T*>(c))
-			return (T*)c;
-	}
-	return nullptr;
+    for (auto c : _components)
+    {
+        if (dynamic_cast<T*>(c.get()))
+            return (T*)c.get();
+    }
+    return nullptr;
 }
 
 template<typename T>
 T* Object::CreateObject(Object* parent)
 {
-	Object* Obj = new T();
+    Object* Obj = new T();
 
-	if (parent == nullptr)
-		//Obj->SetParent(SCENEMANAGER->GetNowScene());
-		Obj->SetParent(sceneManager::getSingleton()->GetNowScene());
-	else
-		Obj->SetParent(parent);
+    if (parent == nullptr)
+        //Obj->SetParent(SCENEMANAGER->GetNowScene());
+        Obj->SetParent(sceneManager::getSingleton()->GetNowScene());
+    else
+        Obj->SetParent(parent);
 
-	return (T*)Obj;
+    return (T*)Obj;
 }

@@ -112,4 +112,5 @@ extern bool						_leftBtnDown;
 #define DegToRad (float)PI/180
 
 
+
 #include"omega.h"

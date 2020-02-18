@@ -1,3 +1,4 @@
+
 #include "stdafx.h"
 #include "Object.h"
 
@@ -14,7 +15,7 @@ void Object::Init()
 
 	if (!_allowInit) return;
 
-	for (Component* c : _components) c->Init();
+	for (auto c : _components) c->Init();
 
 	_allowInit = false;
 }
@@ -30,7 +31,7 @@ void Object::Update()
 		}
 		c->Release();
 	}
-	if(_removeList.size())
+	if (_removeList.size())
 		_removeList.clear();
 
 	for (int i = 0; i < _components.size(); i++)
@@ -71,6 +72,7 @@ void Object::Release()
 			_components[i]->Release();
 		}
 	}
+	_draw.clear();
 	delete this;
 }
 
@@ -117,8 +119,8 @@ void Object::SetIsRelese()
 	{
 		if (GetComponent<PhysicsBody>())
 		{
-		//	auto p = GetComponent<PhysicsBody>();
-		//	p->SetBodyActive(false);
+			//	auto p = GetComponent<PhysicsBody>();
+			//	p->SetBodyActive(false);
 
 		}
 		_parent->RemoveToActiveList(this);
@@ -128,13 +130,13 @@ void Object::SetIsRelese()
 	{
 		if (GetComponent<PhysicsBody>())
 		{
-		//	auto p = GetComponent<PhysicsBody>();
-		//	p->SetBodyActive(false);
+			//	auto p = GetComponent<PhysicsBody>();
+			//	p->SetBodyActive(false);
 		}
 		_parent->RemoveToUnActiveList(this);
 		_parent->RemoveChild(this);
 	}
-		_parent->_removeList.push_back(this);
+	_parent->_removeList.push_back(this);
 
 }
 
@@ -163,10 +165,10 @@ void Object::RemoveComponent(Component* component)
 {
 	for (auto iter = _components.begin(); iter != _components.end(); iter++)
 	{
-		if (component != *iter)
+		if (component != (*iter).get())
 			continue;
+		(*iter).reset();
 		_components.erase(iter);
-		delete(component);
 		return;
 	}
 }
@@ -181,7 +183,7 @@ void Object::RemoveChild(Object* child)
 			break;
 		}
 	}
-	
+
 
 }
 
@@ -253,7 +255,6 @@ void Object::DelParent()
 		_parent->RemoveToUnActiveList(this);
 
 	_parent->RemoveChild(this);
-	
-	_parent = nullptr; 
-}
 
+	_parent = nullptr;
+}
