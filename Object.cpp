@@ -71,6 +71,7 @@ void Object::Release()
 			_components[i]->Release();
 		}
 	}
+	_draw.clear();
 	delete this;
 }
 
