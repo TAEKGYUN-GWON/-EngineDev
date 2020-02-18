@@ -17,8 +17,8 @@ void PaletteBtn::Init()
 	//_physics->SetSensor(true);
 
 	_attribute = TAttribute::NONE;
+	_pAType = PAT::None;
 
-	_isObject = false;
 	_imgSize = { _sprite->GetFrameWidth(), _sprite->GetFrameHeight() };
 }
 

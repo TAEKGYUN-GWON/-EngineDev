@@ -41,7 +41,7 @@ void Tile::Init()
 	_f = -1;
 	_g = _h = _isOpen = _isClose = 0;
 
-	_sprite->Init();
+	_sprite->Init(true);
 	_sprite->SetShowRect(false);
 	_imgName = "None";
 	_attribute = TAttribute::NONE;
@@ -66,8 +66,14 @@ void Tile::SetImgName(string imgKey)
 	_imgName = imgKey;
 }
 
+//void Tile::AddTileChildren(Tile* child)
+//{
+//	child->SetTileParent(this);
+//	_vTileChild.push_back(child);
+//}
+
 void Tile::AddTileChildren(Tile* child)
 {
-	child->SetTileParent(this);
-	_vTileChild.push_back(child);
+	child->SetTileParent(this->_index);
+	_vTileChildIdx.push_back(child->GetIndex());
 }

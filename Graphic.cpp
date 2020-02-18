@@ -9,33 +9,6 @@ void Graphic::SetRendertarget()
 	_RT = GRAPHICMANAGER->GetRenderTarget();
 }
 
-HRESULT Graphic::Init(ID2D1Bitmap* bitmap, string key, wstring path)
-{
-	_graphicInfo = new GRAPHIC_INFO;
-	_graphicInfo->bitmap = bitmap;
-
-	_graphicInfo->imgKey = key;
-	_graphicInfo->imgPath = path;
-
-	_graphicInfo->size.x = (int)_graphicInfo->bitmap->GetPixelSize().width;
-	_graphicInfo->size.y = (int)_graphicInfo->bitmap->GetPixelSize().height;
-
-	_graphicInfo->scale = Vector2(1.0f, 1.0f);
-	_graphicInfo->alpha = 1.0f;
-	_graphicInfo->angle = 0.0f;
-
-	_graphicInfo->frameWidth = _graphicInfo->size.x;
-	_graphicInfo->frameHeight = _graphicInfo->size.y;
-
-	if (_graphicInfo->bitmap == nullptr)
-	{
-		Release();
-		return E_FAIL;
-	}
-
-	return S_OK;
-}
-
 HRESULT Graphic::Init(ID2D1Bitmap * bitmap, string key, wstring path, int maxFrameX, int maxFrameY)
 {
 	if (_graphicInfo != nullptr) Release();
@@ -63,19 +36,6 @@ HRESULT Graphic::Init(ID2D1Bitmap * bitmap, string key, wstring path, int maxFra
 	{
 		Release();
 		return E_FAIL;
-	}
-
-	WICRect rc;
-	for (int i = 0; i < _graphicInfo->maxFrameY; ++i)
-	{
-		for (int j = 0; j < _graphicInfo->maxFrameX; ++j)
-		{
-			rc.X = _graphicInfo->frameWidth * j;
-			rc.Y = _graphicInfo->frameHeight * i;
-			rc.Width = _graphicInfo->frameWidth;
-			rc.Height = _graphicInfo->frameHeight;
-			_vFrameRect.push_back(rc);
-		}
 	}
 
 	return S_OK;
@@ -325,7 +285,9 @@ void Graphic::FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT 
 	}
 
 
-	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
+	D2D1_RECT_F dxSrc = RectF(_graphicInfo->curFrameX * _graphicInfo->frameWidth, _graphicInfo->curFrameY * _graphicInfo->frameHeight,
+		_graphicInfo->curFrameX * _graphicInfo->frameWidth + _graphicInfo->frameWidth,
+		_graphicInfo->curFrameY * _graphicInfo->frameHeight + _graphicInfo->frameHeight);
 
 	_RT->SetTransform(Matrix3x2F::Identity() * rotation * trans* CAMERA->GetMatrix());
 
@@ -377,8 +339,10 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, float alpha
 		break;
 	}
 
-	D2D1_RECT_F dxSrc = RectF(_vFrameRect[frame].X, _vFrameRect[frame].Y, _vFrameRect[frame].X + _vFrameRect[frame].Width, _vFrameRect[frame].Y + _vFrameRect[frame].Height);
-	int a = 10;
+	D2D1_RECT_F dxSrc = RectF(_graphicInfo->curFrameX * _graphicInfo->frameWidth, _graphicInfo->curFrameY * _graphicInfo->frameHeight,
+		_graphicInfo->curFrameX * _graphicInfo->frameWidth + _graphicInfo->frameWidth,
+		_graphicInfo->curFrameY * _graphicInfo->frameHeight + _graphicInfo->frameHeight);
+
 	//D2D1_MATRIX_3X2_F cameraMatrix;
 	//cameraMatrix = Matrix3x2F::Scale(D2D1::SizeF(1, 1));
 	//cameraMatrix = cameraMatrix * Matrix3x2F::Rotation(0);
@@ -432,11 +396,8 @@ void Graphic::FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 sca
 	}
 
 	D2D1_RECT_F dxSrc = RectF(_graphicInfo->curFrameX * _graphicInfo->frameWidth, _graphicInfo->curFrameY * _graphicInfo->frameHeight,
-		/*(_graphicInfo->curFrameX * _graphicInfo->frameWidth + _graphicInfo->frameWidth) * scale.x, 
-		(_graphicInfo->curFrameY * _graphicInfo->frameHeight + _graphicInfo->frameHeight ) * scale.y);*/
 		_graphicInfo->curFrameX * _graphicInfo->frameWidth + _graphicInfo->frameWidth,
 		_graphicInfo->curFrameY * _graphicInfo->frameHeight + _graphicInfo->frameHeight);
-
 
 	_RT->SetTransform(scale_ * rotation * trans);
 	if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
@@ -449,24 +410,4 @@ void Graphic::SetSize(Vector2 size)
 
 	_graphicInfo->frameWidth = _graphicInfo->size.x / _graphicInfo->maxFrameX;
 	_graphicInfo->frameHeight = _graphicInfo->size.y / _graphicInfo->maxFrameY;
-}
-
-void Graphic::SetFrameSize(Vector2 size)
-{
-	_graphicInfo->size *= 2;
-	WICRect rc;
-	//_graphicInfo->scale *= size;
-
-	_graphicInfo->frameWidth = _graphicInfo->size.x / _graphicInfo->maxFrameX;
-	_graphicInfo->frameHeight = _graphicInfo->size.y / _graphicInfo->maxFrameY;
-	for (int i = 0; i < _graphicInfo->maxFrameY*_graphicInfo->maxFrameX; i++)
-	{
-		_vFrameRect[i].X = _graphicInfo->frameWidth * i;
-		_vFrameRect[i].Y = _graphicInfo->frameHeight * i;
-		_vFrameRect[i].Width = _graphicInfo->frameWidth;
-		_vFrameRect[i].Height = _graphicInfo->frameHeight;
-		int a=10;
-	}
-
-
 }

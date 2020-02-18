@@ -171,6 +171,9 @@
     <ClInclude Include="Particle.hpp" />
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerIdle.h" />
+    <ClInclude Include="PlayerMove.h" />
+    <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Probe.h" />
     <ClInclude Include="ProceduralTest.h" />
     <ClInclude Include="Room.h" />
@@ -208,6 +211,7 @@
     <ClInclude Include="txtData.h" />
     <ClInclude Include="UiObject.h" />
     <ClInclude Include="UiObject.hpp" />
+    <ClInclude Include="UndergroundScene.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
@@ -234,6 +238,9 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerIdle.cpp" />
+    <ClCompile Include="PlayerMove.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="Probe.cpp" />
     <ClCompile Include="ProceduralTest.cpp" />
     <ClCompile Include="Room.cpp" />
@@ -269,6 +276,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="UiObject.cpp" />
+    <ClCompile Include="UndergroundScene.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="Vector3.cpp" />

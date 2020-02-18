@@ -52,19 +52,16 @@ void Transform::Update()
 
 Vector2 Transform::GetPos()
 {
-	if (!_object->GetCameraAffect()) return pos + CAMERA->GetPosition();
 	return pos;
 }
 
 Vector2 Transform::GetBottomPos()
 {
-	if (!_object->GetCameraAffect()) return bottomPos + CAMERA->GetPosition();
 	return bottomPos;
 }
 
 Vector2 Transform::GetTopPos()
 {
-	if (!_object->GetCameraAffect()) return topPos + CAMERA->GetPosition();
 	return topPos;
 }
 
@@ -74,20 +71,17 @@ Vector2 Transform::GetPosToPivot(TransFormPIVOT pivot)
 	{
 	case TransFormPIVOT::LEFT_TOP:
 	{
-		if (!_object->GetCameraAffect()) return Vector2(pos - scale / 2) + CAMERA->GetPosition();
 		return Vector2(pos - scale / 2);
 	}
 		break;
 	case TransFormPIVOT::LEFT_BOTTOM:
 	{
-		if (!_object->GetCameraAffect()) return  Vector2(pos.x - scale.x / 2, pos.y + scale.y / 2) + CAMERA->GetPosition();
 
 		return Vector2(pos.x - scale.x / 2, pos.y + scale.y / 2);
 	}
 		break;
 	case TransFormPIVOT::RIGHT_TOP:
 	{
-		if (!_object->GetCameraAffect()) return  Vector2(pos.x + scale.x / 2, pos.y - scale.y / 2) + CAMERA->GetPosition();
 
 		return Vector2(pos.x + scale.x / 2, pos.y - scale.y / 2);
 		
@@ -95,25 +89,34 @@ Vector2 Transform::GetPosToPivot(TransFormPIVOT pivot)
 		break;
 	case TransFormPIVOT::RIGHT_BOTTOM:
 	{
-		if (!_object->GetCameraAffect()) return  Vector2(pos + scale / 2) + CAMERA->GetPosition();
 
 		return Vector2(pos + scale / 2);
 	}
 		break;
 	case TransFormPIVOT::LEFT:
 	{
-		if (!_object->GetCameraAffect()) return  Vector2(pos.x - scale.x / 2, pos.y) + CAMERA->GetPosition();
 
 		return Vector2(pos.x - scale.x / 2, pos.y);
 	}
 		break;
 	case TransFormPIVOT::RIGHT:
 	{
-		if (!_object->GetCameraAffect()) return  Vector2(pos.x + scale.x / 2, pos.y) + CAMERA->GetPosition();
 
 		return Vector2(pos.x + scale.x / 2, pos.y);
 	}
 		break;
+	case TransFormPIVOT::TOP:
+	{
+
+		return Vector2(pos.x, pos.y + scale.y / 2);
+	}
+	break;
+	case TransFormPIVOT::BOTTOM:
+	{
+
+		return Vector2(pos.x, pos.y - scale.y / 2);
+	}
+	break;
 	}
 }
 
@@ -141,8 +144,7 @@ void Transform::SetWorldPos(Vector2 pos)
 
 RECT Transform::GetRect()
 {
-	if(!_object->GetCameraAffect())
-		return  RectMakeCenter(pos.x + CAMERA->GetPosition().x, pos.y + CAMERA->GetPosition().y, scale.x, scale.y);
+
 	return _rc;
 }
 
@@ -173,6 +175,6 @@ Vector2 Transform::GetWorldPosition()
 
 	// Vector2(scale.x * CAMERA->GetScale().x, scale.y * CAMERA->GetScale().y); 
 
-
+	// if (!_object->GetCameraAffect()) return scale * CAMERA->GetScale();
 	return scale;
 }

@@ -7,7 +7,7 @@ void Text::SetLayout()
 	_layout = Direct2D::GetInstance()->CreateTextLayout(_text, _fontName, _fontSize, _maxWidth, _maxHeight, _locale);
 }
 
-void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHeight, ColorF::Enum color, float alpha, wstring fontName, wstring localeName)
+void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHeight, ColorF color, float alpha, wstring fontName, wstring localeName)
 {
 	_text = text;
 	_fontName = fontName;
@@ -22,7 +22,7 @@ void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHei
 	_trans->SetScale(Vector2(maxWidth, maxHeight));
 
 	//Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color, alpha), &_brush);
-	GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(ColorF(color, alpha), &_brush);
+	GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(color, &_brush);
 }
 
 void Text::ChangeText(wstring text)
@@ -41,12 +41,10 @@ void Text::Render()
 {
 	//auto renderTarger = Direct2D::GetInstance()->GetRenderTarger();
 	ID2D1HwndRenderTarget* renderTarger = GRAPHICMANAGER->GetRenderTarget();
-
-	Matrix3x2F trans = Matrix3x2F::Translation(_trans->GetPos().x, _trans->GetPos().y);
 	
-	if (_isCameraEffect) renderTarger->SetTransform(Matrix3x2F::Identity() * trans * CAMERA->GetMatrix());
-	else renderTarger->SetTransform(Matrix3x2F::Identity() * trans);
-
+	if (_object->GetCameraAffect()) renderTarger->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
+	else renderTarger->SetTransform(Matrix3x2F::Identity());
+	
 	renderTarger->DrawTextLayout(Point2F(_trans->GetPos().x, _trans->GetPos().y), _layout, _brush);
 }
 
@@ -68,15 +66,6 @@ void Text::SetColor(ColorF color, int startPoint, int length)
 	//Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color.r, color.b, color.g, color.a), &brush);
 	//GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(ColorF(color.r, color.b, color.g, color.a), &brush);
 	GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(color, &brush);
-	_layout->SetDrawingEffect((IUnknown*)brush, { (UINT32)startPoint, (UINT32)length });
-	brush->Release();
-}
-
-void Text::SetColor(ColorF::Enum color, int startPoint, int length, float alpha)
-{
-	ID2D1SolidColorBrush* brush;
-	//Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color.r, color.b, color.g, color.a), &brush);
-	GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(ColorF(color, alpha), &brush);
 	_layout->SetDrawingEffect((IUnknown*)brush, { (UINT32)startPoint, (UINT32)length });
 	brush->Release();
 }

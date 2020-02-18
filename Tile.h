@@ -14,7 +14,9 @@ typedef enum class TileAttribute : byte
     WALL,
     INTERACTION,
     NPC_NONE_MOVE,
+    DEAD_BODY,
     LADDER,
+    DOOR,
     NONE,
 }TAttribute;
 
@@ -24,6 +26,7 @@ private:
     int _idX;
     int _idY;
     int _id;
+    int _index;
 
     //F = G + H
     float _f;      //醚 厚侩
@@ -36,8 +39,13 @@ private:
 
     Tile* _node;
     
-    Tile* _tileParent;
-    vector<Tile*> _vTileChild;
+    Tile* _tileObj;
+
+    //Tile* _tileParent;
+    //vector<Tile*> _vTileChild;
+
+    int _tileParentIdx;
+    vector<int> _vTileChildIdx;
 
     TAttribute _attribute;   //鸥老加己
     string _imgName;   //鸥老加己
@@ -50,7 +58,10 @@ public:
         _h(0), _idX(0), _idY(0) 
     {
         _sprite = AddComponent<Sprite>();
-        //_parent = nullptr;
+        //_tileParent = nullptr;
+        _tileParentIdx = -1;
+
+        _tileObj = nullptr;
     }
 
     ~Tile() {};
@@ -69,6 +80,9 @@ public:
     void SetIdX(int idx) { _idX = idx; }
     int GetIdY() { return _idY; }
     void SetIdY(int idy) { _idY = idy; }
+
+    int GetIndex() { return _index; }
+    void SetIndex(int idx) { _index = idx; }
 
     void SetCenter(Vector2 center) { _trans->SetPos(center); }
     Vector2 GetCenter() { return _trans->GetPos(); }
@@ -92,6 +106,7 @@ public:
     bool GetIsClose() { return _isClose; }
 
     void SetPhysics();
+    PhysicsBody* GetPhysics() { return _physics; }
 
 
     void SetId(int id) { _id = id; }
@@ -108,10 +123,18 @@ public:
 
     Sprite* GetSprite() { return _sprite; }
 
-    void SetTileParent(Tile* parent) { _tileParent = parent; }
-    Tile* GetTileParent() { return _tileParent; }
+    /*void SetTileParent(Tile* parent) { _tileParent = parent; }
+    Tile* GetTileParent() { return _tileParent; }*/
+    void SetTileParent(int parent) { _tileParentIdx = parent; }
+    int GetTileParent() { return _tileParentIdx; }
 
-    vector<Tile*> GetTileChildren() { return _vTileChild; }
+    //vector<Tile*> GetTileChildren() { return _vTileChild; }
+    //void AddTileChildren(Tile* child);
+    vector<int> GetTileChildren() { return _vTileChildIdx; }
     void AddTileChildren(Tile* child);
-    void ClearNodeChildren() { _vTileChild.clear(); };
+
+    Tile* GetTileObject() { return _tileObj; }
+    void SetTileObject(Tile* obj) { _tileObj = obj; }
+    //void ClearTileChildren() { _vTileChild.clear(); }
+    void ClearTileChildren() { _vTileChildIdx.clear(); }
 };

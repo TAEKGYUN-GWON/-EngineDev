@@ -41,29 +41,7 @@ void GraphicsManager::Release()
 	SafeRelease(_wicFactory);
 }
 
-Graphic* GraphicsManager::AddImage(string key, wstring file)
-{
-	Graphic* graphic = FindImage(key);
-
-	if (graphic) return graphic;
-
-	ID2D1Bitmap* bitmap = CreateD2DBitmap(file);
-	//ID2D1Bitmap* bitmap = Direct2D::getSingleton()->CreateBitmap(file);
-
-	if (bitmap)
-	{
-		graphic = new Graphic;
-		graphic->Init(bitmap, key, file);
-
-		_mImageList.insert(make_pair(key, graphic));
-		return graphic;
-	}
-
-	SafeRelease(bitmap);
-	return nullptr;
-}
-
-Graphic * GraphicsManager::AddFrameImage(string key, wstring file, int maxFrameX, int maxFrameY)
+Graphic * GraphicsManager::AddImage(string key, wstring file, int maxFrameX, int maxFrameY)
 {
 	Graphic* graphic = FindImage(key);
 

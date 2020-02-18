@@ -13,7 +13,7 @@ loadingScene::~loadingScene()
 
 HRESULT loadingScene::init()
 {
-	_background = GRAPHICMANAGER->AddFrameImage("load", L"resource/img/UI/load2.png", 68, 1);
+	_background = GRAPHICMANAGER->AddImage("load", L"resource/img/UI/load2.png", 68, 1);
 
 	CreateThread(
 		NULL,			//스레드의 보안속성(자식윈도우가 있을때) 핸들로 자식인지 부모인지 파악

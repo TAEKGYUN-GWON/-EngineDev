@@ -1,8 +1,8 @@
 #pragma once
 #include "Scene.h"
 #include <commdlg.h> //OPENFILENAME을 위한 헤더
+#include "PaletteBtn.h"
 
-class PaletteBtn;
 class Player;
 
 #define SET_TILE_WIDTH 64
@@ -14,19 +14,23 @@ class Player;
 enum class SamplePage : byte
 {
     Terrain_1,
-    Terrain_2,
+    Ladder,
+    Door,
     Object,
     PAGE_END,
 };
 
 enum class EraserType : byte
 {
-    //Single,
-    //Group,
-    //NoDeleteImage,
-    //OnlyDeleteImage,
     Terrain,
     Object,
+    End,
+};
+
+enum class DrawType : byte
+{
+    Single,
+    Drag,
     End,
 };
 
@@ -39,7 +43,8 @@ private:
 
     PaletteBtn* _currentTile;
     vector<PaletteBtn*> _vSetTer_1;
-    vector<PaletteBtn*> _vSetTer_2;
+    vector<PaletteBtn*> _vSetLadder;
+    vector<PaletteBtn*> _vSetDoor;
     vector<PaletteBtn*> _vSetObj;
 
     vector<Tile*> _vTiles;
@@ -49,12 +54,14 @@ private:
 
     SamplePage _page;
     EraserType _eraser;
-
-    POINT _prevMouse;
+    DrawType _drawType;
 
     RECT _rcLoad;
     RECT _rcSave;
     RECT _rcEraserType;
+    RECT _rcClear;
+
+    bool _isShowRect;
 
 private:
     void ClassificationAttribute();
@@ -75,4 +82,6 @@ public:
     void RemoveObject();
 
     void SetPage();
+    void SetPaletteAndAddImage(string folderPath, PAT pat, TAttribute atr, vector<PaletteBtn*>& vec, Vector2 maxFrame = Vector2(1, 1), Vector2 scale = Vector2(1, 1));
+    void SetTileParentObject(int index, Vector2 imgPos, int imgDepth);
 };

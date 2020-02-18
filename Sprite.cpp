@@ -12,7 +12,7 @@ Sprite::Sprite()
 	_isFlipX = false;
 	_isFillRect = false;
 	_isShowRect = true;
-	_isCameraAffect = true;
+	_isCameraEffect = true;
 
 	_alpha = 1.0f;
 	_scale = Vector2(1, 1);
@@ -34,8 +34,8 @@ void Sprite::Render()
 {
 	if (_isShowRect)
 	{
-		if (_isFillRect) GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _pivot, _isCameraAffect);
-		else GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _pivot, _strokeWidth, _isCameraAffect);
+		if (_isFillRect) GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _pivot, _isCameraEffect);
+		else GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _pivot, _strokeWidth, _isCameraEffect);
 	}
 
 	if (_imgKey.empty()) return;
@@ -43,12 +43,12 @@ void Sprite::Render()
 	if (_isFrame)
 	{
 		//GRAPHICMANAGER->DrawFrameImage(_imgKey, _object->GetTrans()->GetPos(), _curFrameX, _curFrameY, _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _isFlipX, _alpha, _pivot, _isCameraAffect);
-		_graphic->FrameRender(_pos, _curFrameX, _curFrameY, _scale, _object->GetTrans()->GetRotateDegree(), _isFlipX, _alpha, _pivot, _isCameraAffect);
+		_graphic->FrameRender(_pos, _curFrameX, _curFrameY, _scale, _object->GetTrans()->GetRotateDegree(), _isFlipX, _alpha, _pivot, _isCameraEffect);
 	}
 	else
 	{
 		//GRAPHICMANAGER->DrawImage(_imgKey, _object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateRadian(), _isFlipX, _alpha, _pivot);
-		_graphic->Render(_pos, _scale, _object->GetTrans()->GetRotateDegree(), _isFlipX, _alpha, _pivot, _isCameraAffect);
+		_graphic->Render(_pos, _scale, _object->GetTrans()->GetRotateDegree(), _isFlipX, _alpha, _pivot, _isCameraEffect);
 	}
 }
 
@@ -112,6 +112,7 @@ void Sprite::SetImgName(string key)
 	_imgKey = key;
 	_graphic = GRAPHICMANAGER->FindImage(_imgKey);
 	_maxFrameX = _graphic->GetMaxFrameX();
+	_maxFrameY = _graphic->GetMaxFrameY();
 	_curFrameX = 0;
 
 	_pos = _object->GetTrans()->GetPos();

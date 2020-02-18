@@ -94,6 +94,12 @@
     <Filter Include="playGround\TrainScene">
       <UniqueIdentifier>{4d5cb9d2-8fff-40db-a740-6221a97e4a49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Player\State">
+      <UniqueIdentifier>{19d5ce83-31d9-4802-858b-c7e8b04aa2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\UndergroundScene">
+      <UniqueIdentifier>{cf96aa26-ad43-4ab4-a280-983c827cd8a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -288,6 +294,18 @@
     <ClInclude Include="PaletteBtnScript.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>playGround\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdle.h">
+      <Filter>playGround\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMove.h">
+      <Filter>playGround\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="UndergroundScene.h">
+      <Filter>playGround\UndergroundScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -451,6 +469,18 @@
     </ClCompile>
     <ClCompile Include="PaletteBtnScript.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>playGround\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerIdle.cpp">
+      <Filter>playGround\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMove.cpp">
+      <Filter>playGround\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="UndergroundScene.cpp">
+      <Filter>playGround\UndergroundScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

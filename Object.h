@@ -64,7 +64,7 @@ public:
 
     inline bool GetAllowInit() { return _allowInit; }
 
-    inline void SetCameraAffect(bool active) { _cameraAffect = active; }
+    void SetCameraAffect(bool active);
     inline bool GetCameraAffect() { return _cameraAffect; }
 
     void AddChild(Object* child);

@@ -10,7 +10,9 @@ typedef enum class TransFormPIVOT
 	RIGHT_TOP,
 	RIGHT_BOTTOM,
 	LEFT,
-	RIGHT
+	RIGHT,
+	TOP,
+	BOTTOM
 }TF_PIVOT;
 
 class Transform : public Component

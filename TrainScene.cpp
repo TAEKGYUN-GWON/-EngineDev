@@ -7,7 +7,7 @@ void TrainScene::Init()
 {
 	Scene::Init();
 
-	GRAPHICMANAGER->AddFrameImage("btnSelect", L"btnSelect.png", 1, 2);
+	GRAPHICMANAGER->AddImage("btnSelect", L"btnSelect.png", 1, 2);
 
 	_train = Object::CreateObject<Train>();
 	_train->Init();
@@ -32,6 +32,8 @@ void TrainScene::Release()
 
 void TrainScene::Update()
 {
+	CAMERA->Control();
+
 	Scene::Update();
 }
 

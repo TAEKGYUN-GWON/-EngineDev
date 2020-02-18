@@ -74,8 +74,7 @@ public:
 	HRESULT initRenderTarget();
 	void Release();
 
-	Graphic* AddImage(string key, wstring file);
-	Graphic* AddFrameImage(string key, wstring file, int maxFrameX, int maxFrameY);
+	Graphic* AddImage(string key, wstring file, int maxFrameX = 1, int maxFrameY = 1);
 
 	Graphic* FindImage(string strKey);
 	BOOL DeleteImage(string strKey);

@@ -1,15 +1,23 @@
 #pragma once
 #include "Object.h"
 
+typedef enum class PaletteAttribute : byte
+{
+	Terrain,
+	Object,
+	Ladder,
+	None,
+}PAT;
+
 class PaletteBtn : public Object
 {
 private:
 	//PhysicsBody* _physics;
 	Sprite* _sprite;
 	TAttribute _attribute;
+	PAT _pAType;
 	string _imgKey;
 
-	bool _isObject;
 	POINT _imgSize;
 
 public:
@@ -21,15 +29,14 @@ public:
 
 	void SetAttribute(TAttribute atribute) { _attribute = atribute; }
 	void SetImageSize(POINT size) { _imgSize = size; }
-	void SetIsObject(bool isObj) { _isObject = isObj; }
 	void SetImageKey(string imgKey) { _imgKey = imgKey; }
+	void SetPaletteAttributeType(PAT pat) { _pAType = pat; }
 
 	TAttribute GetAttribute() { return _attribute; }
 	POINT GetImageSize() { return _imgSize; }
 	Sprite* GetSprite() { return _sprite; }
 	string GetImageKey() { return _imgKey; }
-	bool GetIsObject() { return _isObject; }
-
+	PAT GetPaletteAttributeType() { return _pAType; }
 	//PhysicsBody* GetPhysics() { return _physics; }
 };
 

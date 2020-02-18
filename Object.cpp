@@ -145,6 +145,13 @@ void Object::SetIsRelese()
 
 }
 
+void Object::SetCameraAffect(bool active)
+{
+    _cameraAffect = active;
+    for (auto d : _draw)
+        d->SetCameraEffected(active);
+}
+
 void Object::AddChild(Object* child)
 {
     _children.push_back(child);
