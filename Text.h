@@ -25,8 +25,8 @@ private:
 	float _fontSize;
 	float _maxWidth;
 	float _maxHeight;
-	IDWriteTextLayout* _layout;
-	ID2D1SolidColorBrush* _brush;
+	shared_ptr<IDWriteTextLayout> _layout;
+	shared_ptr<ID2D1SolidColorBrush> _brush;
 
 private:
 	void SetLayout();

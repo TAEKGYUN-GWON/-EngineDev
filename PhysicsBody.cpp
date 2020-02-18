@@ -113,6 +113,7 @@ void PhysicsBody::Render()
 }
 
 
+
 Vector2 PhysicsBody::GetBodyPosition()
 {
 	return Vector2(_body->GetPosition().x * 100.f, _body->GetPosition().y * 100.f);

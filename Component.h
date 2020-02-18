@@ -10,7 +10,7 @@ protected:
 public:
 	virtual void Init() {};
 	virtual void Update() {};
-	virtual void Release() { delete this; };
+	virtual void Release() { };
 	inline void setGameObject(Object* obj) { _object = obj; }
 	inline Object* GetGameObject() { return _object; }
 	inline string GetName() { return _name; }

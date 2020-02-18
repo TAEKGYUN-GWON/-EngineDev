@@ -44,7 +44,7 @@ void TestScene::Update()
 	//cout << "DT : " << TIMEMANAGER->getElapsedTime() << endl;
 
 
-	if (KEYMANAGER->isOnceKeyDown('1'))
+	if (KEYMANAGER->isStayKeyDown('1'))
 		ActiveTest();
 
 	if (KEYMANAGER->isOnceKeyDown('2'))
@@ -145,6 +145,7 @@ void TestScene::UnActiveTest()
 
 void TestScene::RemoveTest()
 {
+	if(_children.size()>100)
 	for (int i = 0; i < 100; i++)
 	{
 		_children[i]->SetIsRelese();

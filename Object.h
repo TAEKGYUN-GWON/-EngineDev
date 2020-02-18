@@ -13,7 +13,7 @@ protected:
 
     Transform* _trans;
     vector<DrawComponent*> _draw;
-    vector <Component*> _components;
+    vector <shared_ptr<Component>> _components;
     string _name;
     string _tag;
     bool _isActive = true;

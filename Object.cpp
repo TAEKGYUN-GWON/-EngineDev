@@ -14,7 +14,7 @@ void Object::Init()
 
 	if (!_allowInit) return;
 
-	for (Component* c : _components) c->Init();
+	for (auto c : _components) c->Init();
 
 	_allowInit = false;
 }
@@ -163,10 +163,10 @@ void Object::RemoveComponent(Component* component)
 {
 	for (auto iter = _components.begin(); iter != _components.end(); iter++)
 	{
-		if (component != *iter)
+		if (component != (*iter).get())
 			continue;
+		(*iter).reset();
 		_components.erase(iter);
-		delete(component);
 		return;
 	}
 }
