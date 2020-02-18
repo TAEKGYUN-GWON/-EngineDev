@@ -41,7 +41,7 @@ void Transform::Init()
 {
     SetRect();
     UpdateMatrix();
-
+    _rotate = 0;
 }
 
 void Transform::Update()

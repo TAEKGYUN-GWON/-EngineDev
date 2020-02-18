@@ -24,7 +24,7 @@ void StartScene::Init()
 	CAMERA->SetScale(Vector2(2, 2));
 	CAMERA->SetPos(Vector2(430, 204));
 	SCENEMANAGER->addScene("t", new TestScene);
-	SCENEMANAGER->addScene("tt", new Maptool);
+	//SCENEMANAGER->addScene("tt", new Maptool);
 	SCENEMANAGER->addScene("t1", new ProceduralTest);
 	Knight* test = Object::CreateObject<Knight>();
 	test->Init(WINSIZE / 2);

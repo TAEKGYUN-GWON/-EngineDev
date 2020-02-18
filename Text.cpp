@@ -4,7 +4,7 @@
 void Text::SetLayout()
 {
     if (_layout) _layout->Release();
-    _layout = make_shared<IDWriteTextLayout>(Direct2D::GetInstance()->CreateTextLayout(_text, _fontName, _fontSize, _maxWidth, _maxHeight, _locale));
+    _layout = shared_ptr<IDWriteTextLayout>(Direct2D::GetInstance()->CreateTextLayout(_text, _fontName, _fontSize, _maxWidth, _maxHeight, _locale));
 }
 
 void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHeight, ColorF color, float alpha, wstring fontName, wstring localeName)

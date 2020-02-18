@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "TestScene.h"
-
+#include"StartScene.h"
 
 void TestScene::Init()
 {
@@ -51,7 +51,7 @@ void TestScene::Init()
 	//	s->Init(true, true);
 	//	s->SetImgName("s");
 	//}
-
+	SCENEMANAGER->addScene("PG", new StartScene);
 }
 
 
@@ -74,7 +74,8 @@ void TestScene::Update()
 
 	if (KEYMANAGER->isOnceKeyDown('4'))
 		test->Release();
-
+	if (KEYMANAGER->isOnceKeyDown('C'))
+		SCENEMANAGER->changeScene("PG");
 	//mgr->Update(); 
 	//if (KEYMANAGER->isOnceKeyDown('4')) SCENEMANAGER->changeScene("Shop");
 	//if (KEYMANAGER->isOnceKeyDown('S'))
