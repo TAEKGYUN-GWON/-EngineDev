@@ -109,11 +109,11 @@ void ProceduralTest::Update()
 
 void ProceduralTest::Release()
 {
-	tiles.clear();
-	rooms.clear();
-	selRooms.clear();
-	subRooms.clear();
-	_vFloors.clear();
+	//tiles.clear();
+	//rooms.clear();
+	//selRooms.clear();
+	//subRooms.clear();
+	//_vFloors.clear();
 	Scene::Release();
 }
 

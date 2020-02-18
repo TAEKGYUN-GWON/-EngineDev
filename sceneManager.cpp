@@ -81,15 +81,6 @@ HRESULT sceneManager::changeScene(string sceneName)
 	if (_currentScene != nullptr)
 	{
 		_currentScene->Release();
-		for (mapSceneIter c = _mSceneList.begin(); c !=_mSceneList.end();++c)
-		{
-			if (c->second == _currentScene)
-			{
-				_mSceneList.erase(c);
-				break;
-			}
-
-		}
 	}
 
 	//현재 씬에 바꾸려는 씬을 담는다
