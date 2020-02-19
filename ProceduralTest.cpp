@@ -109,11 +109,11 @@ void ProceduralTest::Update()
 
 void ProceduralTest::Release()
 {
-	//tiles.clear();
-	//rooms.clear();
-	//selRooms.clear();
-	//subRooms.clear();
-	//_vFloors.clear();
+	tiles.clear();
+	rooms.clear();
+	selRooms.clear();
+	subRooms.clear();
+	_vFloors.clear();
 	Scene::Release();
 }
 
@@ -212,7 +212,7 @@ void ProceduralTest::SetTile()
 			tiles.push_back(tile);
 		}
 	}
-	_ast->Init(tiles, MAP_TILE_MAX_X, MAP_TILE_MAX_Y);
+	_ast->Init(&tiles, MAP_TILE_MAX_X, MAP_TILE_MAX_Y);
 }
 
 void ProceduralTest::Exploration()
@@ -694,7 +694,7 @@ void ProceduralTest::SetTileObjet()
 	//"ArchwayBodyIce"
 
 	{
-		Vector2 vec2BossIdx((int)mainRooms[hubSelect]->GetTrans()->GetPosToPivot(TF_PIVOT::TOP).x / TILE_WIDTH, ((int)mainRooms[hubSelect]->GetTrans()->GetPosToPivot(TF_PIVOT::TOP).y / TILE_HEIGHT)+1);
+		Vector2 vec2BossIdx((int)mainRooms[hubSelect]->GetTrans()->GetPosToPivot(TF_PIVOT::TOP).x / TILE_WIDTH, ((int)mainRooms[hubSelect]->GetTrans()->GetPosToPivot(TF_PIVOT::TOP).y / TILE_HEIGHT) + 1);
 
 		int bossIdx = vec2BossIdx.x + vec2BossIdx.y * MAP_TILE_MAX_X;
 		//tiles[idx - MAP_TILE_MAX_X]->
@@ -711,7 +711,7 @@ void ProceduralTest::SetTileObjet()
 		tiles[bossIdx + 1]->GetSprite()->SetImgName("None");
 
 		tiles[bossIdx - 1 - MAP_TILE_MAX_X]->GetSprite()->SetImgName("None");
-		tiles[bossIdx + 1 - MAP_TILE_MAX_X*2]->GetSprite()->SetImgName("None");
+		tiles[bossIdx + 1 - MAP_TILE_MAX_X * 2]->GetSprite()->SetImgName("None");
 
 		tiles[bossIdx - MAP_TILE_MAX_X]->GetSprite()->SetImgName("None");
 		tiles[bossIdx - MAP_TILE_MAX_X * 2]->GetSprite()->SetImgName("None");

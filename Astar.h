@@ -16,14 +16,11 @@ private:
 	int maxX;
 	int maxY;
 
-	vector<Tile*>_vTotalList;
-	vector<Tile*>::iterator _viTotalList;
+	vector<Tile*>*_vTotalList;
 
 	vector <Tile*> _OpenList;
-	vector <Tile*>::iterator _iOpenList;
 
 	vector <Tile*> _ClosedList;
-	vector <Tile*>::iterator _iClosedList;
 
 	list<Vector2> _pathList;
 
@@ -39,8 +36,9 @@ public:
 	Astar();
 	~Astar();
 
-	void Init(vector<Tile*> tiles, int x, int y);
-	void SetTiles(vector<Tile*> tiles);
+	void Init(vector<Tile*>* tiles, int x, int y);
+	void Release();
+	void SetTiles(vector<Tile*>* tiles);
 
 	void InitTotalList();
 

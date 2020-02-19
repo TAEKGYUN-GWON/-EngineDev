@@ -88,6 +88,9 @@
     <Filter Include="playGround\Enemy">
       <UniqueIdentifier>{e5261a87-3d26-4b7d-b7f2-ab76d4ffa30a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Ability">
+      <UniqueIdentifier>{7bab9707-ec5a-42d1-929d-b23bac5ac797}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -261,22 +264,25 @@
     <ClInclude Include="RoomScript.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="RoomScript.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Probe.h">
       <Filter>playGround\procedural</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>playGround\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Ability.h">
-      <Filter>playGround</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyState.h">
       <Filter>playGround\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Knight.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomScript.h">
+      <Filter>playGround\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.h">
+      <Filter>playGround\Ability</Filter>
+    </ClInclude>
+    <ClInclude Include="Rogue.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -422,22 +428,25 @@
     <ClCompile Include="RoomScript.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="RoomScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Probe.cpp">
       <Filter>playGround\procedural</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>playGround\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Ability.cpp">
-      <Filter>playGround</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyState.cpp">
       <Filter>playGround\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Knight.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomScript.cpp">
+      <Filter>playGround\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="Ability.cpp">
+      <Filter>playGround\Ability</Filter>
+    </ClCompile>
+    <ClCompile Include="Rogue.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

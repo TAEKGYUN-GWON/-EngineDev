@@ -65,6 +65,13 @@ void Object::Release()
 		child->Release();
 	}
 
+	for (Object* c : _removeList)
+	{
+		c->Release();
+	}
+
+	_removeList.clear();
+
 	if (_components.size())
 	{
 		for (int i = _components.size() - 1; i >= 0; i--)

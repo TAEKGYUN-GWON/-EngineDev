@@ -178,7 +178,7 @@ void TestScene::RemoveTest()
 {
 	for (int i = 0; i < 100; i++)
 	{
-		_children[i]->SetIsRelese();
+		//_children[i]->SetIsRelese();
 	}
 	//test->Release();
 }

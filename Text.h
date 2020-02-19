@@ -25,8 +25,8 @@ private:
     float _fontSize;
     float _maxWidth;
     float _maxHeight;
-    shared_ptr<IDWriteTextLayout> _layout;
-    shared_ptr<ID2D1SolidColorBrush> _brush;
+    IDWriteTextLayout* _layout;
+    ID2D1SolidColorBrush* _brush;
 
 private:
     void SetLayout();
@@ -44,4 +44,5 @@ public:
 
     virtual void Init();
     virtual void Render();
+    virtual void Release();
 };

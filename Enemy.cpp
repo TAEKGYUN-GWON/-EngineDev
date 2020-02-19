@@ -10,6 +10,8 @@ void Enemy::Init()
 	_distance = _atkDistance = _speed = _angle = _isAtkFrame = _FPS = 0;
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init(true, true);
+	_physics = AddComponent<PhysicsBody>();
+	_ability = make_shared<Ability>();
 }
 
 void Enemy::Update()
@@ -27,6 +29,13 @@ void Enemy::Release()
 }
 
 
+
+void Enemy::BasicUpdate()
+{
+	if (_state->GetStateToString() == "Attack")
+		if (_sprite->GetCurrentFrameX() == _atkFrame)
+			_isAtkFrame = true;
+}
 
 void Enemy::AngleDetection()
 {
@@ -58,7 +67,9 @@ void Enemy::SetPath(list<Vector2> path)
 
 void Enemy::SetImg(string stateName)
 {
-
-	_sprite->SetImgName(_name + stateName);
-	
+	if(_state->GetStateToString() != "Hurt")
+		_sprite->SetImgName(_name + stateName);
+	else
+		_sprite->SetImgName(_name + "Idle");
+	BasicUpdate();
 }

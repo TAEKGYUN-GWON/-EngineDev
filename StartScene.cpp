@@ -4,6 +4,7 @@
 #include "Maptool.h"
 #include "TestScene.h"
 #include "Knight.h"
+#include "Rogue.h"
 void StartScene::Init()
 {
 	Scene::Init();
@@ -11,7 +12,7 @@ void StartScene::Init()
 	//GRAPHICMANAGER->AddFrameImage("will", L"blueNumber.png", 4, 1);
 	//GRAPHICMANAGER->AddImage("will", L"blueNumber.png");
 	//GRAPHICMANAGER->AddFrameImage("eagle", L"BossUp.png",32,1);
-	//GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
+	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
 	wstring dir = L"Resource/Wizard/Tile/";
 	for (int i = 1; i <= 4; i++)
@@ -21,18 +22,31 @@ void StartScene::Init()
 		GRAPHICMANAGER->AddImage(str + to_string(i), dir + item);
 	}
 
-	CAMERA->SetScale(Vector2(2, 2));
-	CAMERA->SetPos(Vector2(430, 204));
+	//CAMERA->SetScale(Vector2(0.1, 0.1));
+	//CAMERA->SetPos(Vector2(430, 204));
 	SCENEMANAGER->addScene("t", new TestScene);
 	//SCENEMANAGER->addScene("tt", new Maptool);
 	SCENEMANAGER->addScene("t1", new ProceduralTest);
-	Knight* test = Object::CreateObject<Knight>();
-	test->Init(WINSIZE / 2);
-	//_obj = Object::CreateObject<Object>();
-	//_obj->GetTrans()->SetPos(WINSIZEX / 2, WINSIZEY / 2);
-	//_obj->GetTrans()->SetScale(100, 100);
-	//_obj->AddComponent<Sprite>();
 
+	Rogue* test = Object::CreateObject<Rogue>();
+	test->Init(WINSIZE / 2);
+
+	//_obj = Object::CreateObject<Object>();
+	//_obj->GetTrans()->SetPos(WINSIZEX / 2-100, WINSIZEY / 2);
+	//_obj->GetTrans()->SetScale(100, 100);
+	//_obj->SetName("1");
+	//auto s = _obj->AddComponent<Sprite>();
+	//s->Init();
+	//s->SetImgName("eagle");
+	//
+	//
+	//Object* obj = Object::CreateObject<Object>();
+	//obj->Init();
+	//obj->SetName("2");
+	//obj->GetTrans()->SetPos(WINSIZE / 2);
+	//s = obj->AddComponent<Sprite>();
+	//s->Init();
+	//s->SetImgName("eagle");
 }
 
 void StartScene::Update()
@@ -75,7 +89,7 @@ void StartScene::Render()
 
 
 	//GRAPHICMANAGER->DrawFrameImage("will", Vector2(WINSIZEX / 2, WINSIZEY / 2), 0, 0, Vector2(0.7f, 0.5f));
-	GRAPHICMANAGER->DrawImage("eagle", Vector2(400, 500), Vector2(1, 1), 0.0f);
+	//GRAPHICMANAGER->DrawImage("eagle", Vector2(400, 500), Vector2(1, 1), 0.0f);
 }
 
 void StartScene::Release()

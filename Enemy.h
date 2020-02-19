@@ -21,7 +21,7 @@ class Enemy :	public Object
 {
 protected:
 
-	Ability* _ability;
+	shared_ptr<Ability> _ability;
 	shared_ptr<EnemyState> _state;
 	E_AtkType _atkType;
 	E_Dir _dir;
@@ -43,8 +43,9 @@ public:
 	virtual void Update();
 	virtual void Release();
 	virtual void Attack() {};
+	virtual void AttackExit() { OffAtkFrame(); }
 	
-	virtual void BasicUpdate() {};
+	virtual void BasicUpdate();
 
 	void AngleDetection();
 
@@ -54,7 +55,7 @@ public:
 
 	string GetStateName();
 	
-	Ability* GetAbility() { return _ability; }
+	shared_ptr<Ability> GetAbility() { return _ability; }
 
 	E_AtkType GetAtkType() { return _atkType; }
 	void SetAtkType(E_AtkType atkType) { _atkType = atkType; }

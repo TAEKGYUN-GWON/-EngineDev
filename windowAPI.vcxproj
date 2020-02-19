@@ -172,6 +172,7 @@
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Probe.h" />
     <ClInclude Include="ProceduralTest.h" />
+    <ClInclude Include="Rogue.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="RoomScript.h" />
     <ClInclude Include="Scene.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Probe.cpp" />
     <ClCompile Include="ProceduralTest.cpp" />
+    <ClCompile Include="Rogue.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomScript.cpp" />
     <ClCompile Include="Scene.cpp" />

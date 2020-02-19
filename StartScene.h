@@ -4,7 +4,7 @@
 class StartScene : public Scene
 {
 private:
-	//Object* _obj;
+	Object* _obj;
 
 public:
 	virtual void Init();

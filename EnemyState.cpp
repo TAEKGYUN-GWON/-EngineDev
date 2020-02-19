@@ -102,7 +102,7 @@ void EnemyAttack::Stay()
 
 void EnemyAttack::Exit()
 {
-	_enemy->OffAtkFrame();
+	_enemy->AttackExit();
 }
 
 

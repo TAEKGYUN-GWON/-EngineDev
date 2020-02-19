@@ -79,7 +79,7 @@ void Probe::SetTileAttribute()
 	for (int i = 0; i < 9; i++)
 	{
 		Vector2 tileIdx((_trans->GetPos().x / TILE_WIDTH) + i % 3, (_trans->GetPos().y / TILE_HEIGHT) + i / 3);
-		auto t = tiles[(int)tileIdx.x + (MAP_TILE_MAX_X) * (int)tileIdx.y];
+		auto t = (*tiles)[(int)tileIdx.x + (MAP_TILE_MAX_X) * (int)tileIdx.y];
 		t->SetAttribute(Attribute::NONE);
 		t->SetName("Road");
 		auto s = t->GetSprite();

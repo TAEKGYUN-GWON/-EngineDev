@@ -406,38 +406,38 @@ void Maptool::SetUp()
 
 void Maptool::SetMap()
 {
-	if (_ptMouse.x > WINSIZEX - 300) return;
-	
-	int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y  / TILE_HEIGHT);
-	
-	if (_vTiles[index]->GetChildren().size() > 0) return;
-	
-	SetAttribute(index, _currentTile.startPos, _currentTile.size, FindTile(_currentTile.imgKey)->attribute);
-	
-	_vTiles[index]->AddChild(Object::CreateObject<Object>());
-	
-	_vTiles[index]->GetChildren()[0]->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos() + Vector2(0, TILE_HEIGHT / 2));
-	if (_currentTile.pivot == RIGHT_BOTTOM) _vTiles[index]->GetChildren()[0]->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos() + Vector2(TILE_WIDTH / 2, TILE_HEIGHT / 2));
-	
-	//_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameWidth(), GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameHeight());
-	_vTiles[index]->GetChildren()[0]->GetTrans()->SetRect();
-	
-	_vTagTiles[index] = *FindTile(_currentTile.imgKey);
-	
-	if (_currentTile.isFrame)
-	{
-		_vTiles[index]->GetChildren()[0]->AddComponent<Sprite>()->Init(true, true);
-		_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetImgName(_currentTile.imgKey);
-		_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetFPS(0.5f);
-	}
-	else _vTiles[index]->GetChildren()[0]->AddComponent<Sprite>()->SetImgName(_currentTile.imgKey);
-	
-	_vTiles[index]->SetImgName(_currentTile.imgKey);
-	_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPosition(_vTiles[index]->GetChildren()[0]->GetTrans()->GetPos());
-	_vTiles[index]->GetChildren()[0]->GetTrans()->SetScale(_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameWidth(),
-		_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameHeight());
-	//_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetScale(_tiles[index]->GetChildren()[0]->GetTrans()->GetScale());
-	_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPivot(_currentTile.pivot);
+	//if (_ptMouse.x > WINSIZEX - 300) return;
+	//
+	//int index = ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y  / TILE_HEIGHT);
+	//
+	//if (_vTiles[index]->GetChildren().size() > 0) return;
+	//
+	//SetAttribute(index, _currentTile.startPos, _currentTile.size, FindTile(_currentTile.imgKey)->attribute);
+	//
+	//_vTiles[index]->AddChild(Object::CreateObject<Object>());
+	//
+	//_vTiles[index]->GetChildren()[0]->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos() + Vector2(0, TILE_HEIGHT / 2));
+	//if (_currentTile.pivot == RIGHT_BOTTOM) _vTiles[index]->GetChildren()[0]->GetTrans()->SetPos(_vTiles[index]->GetTrans()->GetPos() + Vector2(TILE_WIDTH / 2, TILE_HEIGHT / 2));
+	//
+	////_tiles[index]->GetChildren()[0]->GetTrans()->SetScale(GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameWidth(), GRAPHICMANAGER->FindImage(_currentTile.imgKey)->GetFrameHeight());
+	//_vTiles[index]->GetChildren()[0]->GetTrans()->SetRect();
+	//
+	//_vTagTiles[index] = *FindTile(_currentTile.imgKey);
+	//
+	//if (_currentTile.isFrame)
+	//{
+	//	_vTiles[index]->GetChildren()[0]->AddComponent<Sprite>()->Init(true, true);
+	//	_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetImgName(_currentTile.imgKey);
+	//	_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetFPS(0.5f);
+	//}
+	//else _vTiles[index]->GetChildren()[0]->AddComponent<Sprite>()->SetImgName(_currentTile.imgKey);
+	//
+	//_vTiles[index]->SetImgName(_currentTile.imgKey);
+	//_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPosition(_vTiles[index]->GetChildren()[0]->GetTrans()->GetPos());
+	//_vTiles[index]->GetChildren()[0]->GetTrans()->SetScale(_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameWidth(),
+	//	_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->GetFrameHeight());
+	////_tiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetScale(_tiles[index]->GetChildren()[0]->GetTrans()->GetScale());
+	//_vTiles[index]->GetChildren()[0]->GetComponent<Sprite>()->SetPivot(_currentTile.pivot);
 }
 
 void Maptool::ClickSetTile()
