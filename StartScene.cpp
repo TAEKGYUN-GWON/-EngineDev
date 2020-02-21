@@ -5,6 +5,8 @@
 #include "TestScene.h"
 #include "Knight.h"
 #include "Rogue.h"
+#include "Sorcerer.h"
+
 void StartScene::Init()
 {
 	Scene::Init();
@@ -28,7 +30,7 @@ void StartScene::Init()
 	//SCENEMANAGER->addScene("tt", new Maptool);
 	SCENEMANAGER->addScene("t1", new ProceduralTest);
 
-	Rogue* test = Object::CreateObject<Rogue>();
+	Sorcerer* test = Object::CreateObject<Sorcerer>();
 	test->Init(WINSIZE / 2);
 
 	//_obj = Object::CreateObject<Object>();
@@ -47,12 +49,15 @@ void StartScene::Init()
 	//s = obj->AddComponent<Sprite>();
 	//s->Init();
 	//s->SetImgName("eagle");
+	_bar = new ProgressBar;
+	_bar->Init("gaugeUp", "gaugeDown", Vector2(200, 200));
+	current = max = 100;
 }
 
 void StartScene::Update()
 {
 	Scene::Update();
-
+	_bar->SetGauge(current -= 3.0f * TIMEMANAGER->getElapsedTime(), max);
 	if(KEYMANAGER->isOnceKeyDown('Y')) SCENEMANAGER->changeScene("tt");
 	if(KEYMANAGER->isOnceKeyDown('T')) SCENEMANAGER->changeScene("t");
 	if(KEYMANAGER->isOnceKeyDown('P')) SCENEMANAGER->changeScene("t1");
@@ -62,7 +67,7 @@ void StartScene::Update()
 void StartScene::Render()
 {
 	Scene::Render();
-
+	_bar->Render();
 	GRAPHICMANAGER->Text(Vector2(100, 100), L"1) Dungeon Scene", 20, 300, 50, ColorF::AliceBlue);
 	GRAPHICMANAGER->Text(Vector2(100, 150), L"2) Town Scene", 20, 300, 50, ColorF::AntiqueWhite);
 	GRAPHICMANAGER->Text(Vector2(100, 200), L"3) Entrance Scene", 20, 300, 50, ColorF::Aqua);

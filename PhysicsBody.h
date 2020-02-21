@@ -22,6 +22,7 @@ public:
 	void Init(BodyType type, float32 friction, float32 density=1, float32 restitution = 0 , BOOL isBullet = FALSE, BOOL isSensor = FALSE);
 	void SetBodyPosition();
 	virtual void Render()override;
+	virtual void Release();
 
 	//바디 포지션 가져오기
 	Vector2 GetBodyPosition();

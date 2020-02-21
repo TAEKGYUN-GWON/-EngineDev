@@ -32,6 +32,7 @@ void Enemy::Release()
 
 void Enemy::BasicUpdate()
 {
+	_ability->Update();
 	if (_state->GetStateToString() == "Attack")
 		if (_sprite->GetCurrentFrameX() == _atkFrame)
 			_isAtkFrame = true;
@@ -39,7 +40,7 @@ void Enemy::BasicUpdate()
 
 void Enemy::AngleDetection()
 {
-	if ((_angle > PI / 2 && _angle <= PI) || (_angle >= -PI && _angle < -PI / 2)) _dir = E_Dir::LEFT;
+	if ((_trans->GetRotateRadian() > PI / 2 && _trans->GetRotateRadian() <= PI) || (_trans->GetRotateRadian() >= -PI && _trans->GetRotateRadian() < -PI / 2)) _dir = E_Dir::LEFT;
 	else _dir = E_Dir::RIGHT;
 
 	if (_dir == E_Dir::LEFT) _sprite->SetFlipX(true);

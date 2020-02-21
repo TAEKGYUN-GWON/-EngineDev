@@ -14,6 +14,7 @@ void Knight::Init(Vector2 pos)
 	_angle = 0;
 	wstring dir = L"Resource/Wizard/Enemy/";
 	GRAPHICMANAGER->AddFrameImage(_name + "Idle", dir + L"Knight_Idle.png", 1, 1);
+	GRAPHICMANAGER->AddFrameImage(_name + "Hurt", dir + L"Knight_Idle.png", 1, 1);
 	GRAPHICMANAGER->AddFrameImage(_name + "Move", dir + L"Knight_Move_7x1.png", 7, 1);
 	GRAPHICMANAGER->AddFrameImage(_name + "Death", dir + L"Knight_Death_7x1.png", 7, 1);
 	GRAPHICMANAGER->AddFrameImage(_name + "Attack", dir + L"Knight_Attack_5x1.png", 5, 1);
@@ -45,6 +46,7 @@ void Knight::Init(Vector2 pos)
 
 	_rightAtk->SetIsActive(false);
 	_state->Enter();
+	_ability->Init(120, 15);
 }
 //
 //void Knight::Update()

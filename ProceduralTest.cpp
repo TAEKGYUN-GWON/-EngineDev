@@ -1077,6 +1077,14 @@ void ProceduralTest::SetScene()
 	if (timer >= 2.5f &&
 		timer <= 2.6f)
 		SetTileImg();
+
+	if (timer >= 3.f &&
+		timer <= 3.1f)
+	{
+		for (Room* r : selRooms)
+			r->DeActivePhysics();
+	}
+
 #endif
 
 	if (startDel && rooms.size())

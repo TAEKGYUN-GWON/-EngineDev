@@ -9,6 +9,7 @@ void EnemyIdle::Enter()
 	_maxTimer = RND->getFromFloatTo(2, 4);
 	_enemy->SetImg(_name);
 
+
 }
 
 void EnemyIdle::Stay()
@@ -26,6 +27,7 @@ void EnemyIdle::Stay()
 		_enemy->ChangeState(make_shared <EnemyMove>(_enemy));
 		return;
 	}
+	_enemy->GetPhysics()->SetBodyPosition();
 }
 
 void EnemyIdle::Exit()
@@ -61,10 +63,12 @@ void EnemyMove::Stay()
 
 	if (_path->size())
 	{
+		_enemy->GetTrans()->SetRotateToRadian(Vector2::GetAngle(_enemy->GetTrans()->GetPos(), *(*_path).begin()));
+
 		Vector2 direction = *(*_path).begin() - _enemy->GetTrans()->GetPos();
 		direction = direction.Nomalized();
 		_enemy->GetTrans()->Move(direction * _enemy->GetSpeed() * TIMEMANAGER->getElapsedTime());
-		
+		_enemy->GetPhysics()->SetBodyPosition();
 		int distance = Vector2::Distance(*(*_path).begin(), _enemy->GetTrans()->GetPos());
 		
 		if (distance <= 10)
@@ -109,14 +113,27 @@ void EnemyAttack::Exit()
 //hurt
 void EnemyHurt::Enter()
 {
+	_timer = 0;
+	_maxTimer = 1.f;
+	_name = "Hurt";
+	_enemy->SetImg(_name);
 }
 
 void EnemyHurt::Stay()
 {
+	_timer += TIMEMANAGER->getElapsedTime();
+	
+	if (_timer >= _maxTimer)
+	{
+		_enemy->ChangeState(make_shared <EnemyIdle>(_enemy));
+		return;
+	}
+
 }
 
 void EnemyHurt::Exit()
 {
+
 }
 
 

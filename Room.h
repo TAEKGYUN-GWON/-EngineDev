@@ -1,8 +1,10 @@
 #pragma once
 #include "Object.h"
 #include "Probe.h"
+
 #define MAP_MAX_WIDTH 5000
 #define MAP_MAX_HEIGHT 3000
+class EnemyManager;
 
 struct RoomObjectInfo
 {
@@ -23,7 +25,7 @@ private:
 	bool _isSubRoom;
 	bool _isHubForBossRoom;
 	multimap<string, RoomObjectInfo> _roomObjects;
-
+	EnemyManager* _eMgr;
 public:
 	virtual void Init();
 	virtual void Update();
@@ -37,6 +39,10 @@ public:
 	void SetIsSubRoom(bool active) { _isSubRoom = active; }
 	void SetHubForBossRoom(bool active) { _isHubForBossRoom = active; }
 	void SetObject();
+
+	void SetRoomEnemy();
+
+	void DeActivePhysics();
 
 	multimap<string, RoomObjectInfo> GetRoomObjects() { return _roomObjects; }
 

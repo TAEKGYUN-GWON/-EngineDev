@@ -26,7 +26,7 @@ protected:
     vector<Object*> _children;
     vector<Object*> _removeList;
     vector<Object*> _activeList;
-    vector<Object*> _unActiveList;
+    vector<Object*> _deActiveList;
 
 public:
     ~Object() {};
@@ -68,10 +68,12 @@ public:
     inline bool GetCameraAffect() { return _cameraAffect; }
 
     void AddChild(Object* child);
+  
+    
     void RemoveComponent(Component* component);
     void RemoveChild(Object* child);
     void RemoveToActiveList(Object* child);
-    void RemoveToUnActiveList(Object* child);
+    void RemoveToDeActiveList(Object* child);
 
     Object* GetChildFromName(string name);
     vector<Object*>GetChildrenFromTag(string tag);

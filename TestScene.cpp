@@ -145,7 +145,7 @@ void TestScene::Render()
 	swprintf(buffer, 128, L"ActiveList : %d", _activeList.size());
 	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 300, 50, ColorF::Azure);
 
-	swprintf(buffer, 128, L"UnActive : %d", _unActiveList.size());
+	swprintf(buffer, 128, L"UnActive : %d", _deActiveList.size());
 	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 300), buffer, 20, 300, 50, ColorF::Azure);
 
 	swprintf(buffer, 128, L"RemoveList : %d", _removeList.size());
@@ -170,7 +170,7 @@ void TestScene::UnActiveTest()
 {
 	for (int i = 0; i < 100; i++)
 	{
-		_unActiveList[i]->SetIsActive(true);
+		_deActiveList[i]->SetIsActive(true);
 	}
 }
 

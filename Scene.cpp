@@ -53,7 +53,7 @@ void Scene::Release()
 	}
 	_children.clear();
 	_activeList.clear();
-	_unActiveList.clear();
+	_deActiveList.clear();
 
 	for (Object* c : _removeList)
 	{

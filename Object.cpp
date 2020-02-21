@@ -53,7 +53,7 @@ void Object::Release()
 		if (_isActive)
 			_parent->RemoveToActiveList(this);
 		else
-			_parent->RemoveToUnActiveList(this);
+			_parent->RemoveToDeActiveList(this);
 
 		_parent->RemoveChild(this);
 	}
@@ -105,11 +105,11 @@ void Object::SetIsActive(bool active)
 	if (!_isActive)
 	{
 		_parent->RemoveToActiveList(this);
-		_parent->_unActiveList.push_back(this);
+		_parent->_deActiveList.push_back(this);
 	}
 	else
 	{
-		_parent->RemoveToUnActiveList(this);
+		_parent->RemoveToDeActiveList(this);
 		_parent->_activeList.push_back(this);
 	}
 	if (GetComponent<PhysicsBody>())
@@ -140,7 +140,7 @@ void Object::SetIsRelese()
 			//	auto p = GetComponent<PhysicsBody>();
 			//	p->SetBodyActive(false);
 		}
-		_parent->RemoveToUnActiveList(this);
+		_parent->RemoveToDeActiveList(this);
 		_parent->RemoveChild(this);
 	}
 	_parent->_removeList.push_back(this);
@@ -158,8 +158,8 @@ void Object::AddChild(Object* child)
 	}
 	else
 	{
-		_unActiveList.push_back(child);
-		child->_parent->RemoveToUnActiveList(child);
+		_deActiveList.push_back(child);
+		child->_parent->RemoveToDeActiveList(child);
 	}
 
 	child->_parent->RemoveChild(child);
@@ -174,6 +174,7 @@ void Object::RemoveComponent(Component* component)
 	{
 		if (component != (*iter).get())
 			continue;
+		(*iter)->Release();
 		(*iter).reset();
 		_components.erase(iter);
 		return;
@@ -207,13 +208,13 @@ void Object::RemoveToActiveList(Object* child)
 
 }
 
-void Object::RemoveToUnActiveList(Object* child)
+void Object::RemoveToDeActiveList(Object* child)
 {
-	for (int i = 0; i < _unActiveList.size(); i++)
+	for (int i = 0; i < _deActiveList.size(); i++)
 	{
-		if (_unActiveList[i] == child)
+		if (_deActiveList[i] == child)
 		{
-			_unActiveList.erase(_unActiveList.begin() + i);
+			_deActiveList.erase(_deActiveList.begin() + i);
 			break;
 		}
 	}
@@ -251,7 +252,7 @@ void Object::SetParent(Object* parent)
 	if (_isActive)
 		parent->_activeList.push_back(this);
 	else
-		parent->_unActiveList.push_back(this);
+		parent->_deActiveList.push_back(this);
 }
 
 void Object::DelParent()
@@ -259,7 +260,7 @@ void Object::DelParent()
 	if (_isActive)
 		_parent->RemoveToActiveList(this);
 	else
-		_parent->RemoveToUnActiveList(this);
+		_parent->RemoveToDeActiveList(this);
 
 	_parent->RemoveChild(this);
 

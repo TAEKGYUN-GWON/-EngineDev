@@ -91,6 +91,12 @@
     <Filter Include="playGround\Ability">
       <UniqueIdentifier>{7bab9707-ec5a-42d1-929d-b23bac5ac797}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Player">
+      <UniqueIdentifier>{f68427e6-5de5-4fc9-bc4c-102aeddbc296}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\ProgressBar">
+      <UniqueIdentifier>{7343fc74-e38a-4ef0-84ef-1dc7b4fe859f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -261,9 +267,6 @@
     <ClInclude Include="BspNode.h">
       <Filter>playGround\BSP</Filter>
     </ClInclude>
-    <ClInclude Include="RoomScript.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Probe.h">
       <Filter>playGround\procedural</Filter>
     </ClInclude>
@@ -283,7 +286,22 @@
       <Filter>playGround\Ability</Filter>
     </ClInclude>
     <ClInclude Include="Rogue.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomScript.h">
+      <Filter>playGround\procedural</Filter>
+    </ClInclude>
+    <ClInclude Include="Sorcerer.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>playGround\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>2DGameFramework\ProgressBar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -425,9 +443,6 @@
     <ClCompile Include="BspNode.cpp">
       <Filter>playGround\BSP</Filter>
     </ClCompile>
-    <ClCompile Include="RoomScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Probe.cpp">
       <Filter>playGround\procedural</Filter>
     </ClCompile>
@@ -447,7 +462,22 @@
       <Filter>playGround\Ability</Filter>
     </ClCompile>
     <ClCompile Include="Rogue.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomScript.cpp">
+      <Filter>playGround\procedural</Filter>
+    </ClCompile>
+    <ClCompile Include="Sorcerer.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>playGround\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>2DGameFramework\ProgressBar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

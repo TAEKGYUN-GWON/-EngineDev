@@ -60,22 +60,24 @@ public:
 	E_AtkType GetAtkType() { return _atkType; }
 	void SetAtkType(E_AtkType atkType) { _atkType = atkType; }
 
-
-	void SetDistance(float distance) { _distance = distance; }
-	float GetDistance() { return _distance; }
-	float GetAtkDistance() { return _atkDistance; }
-	
-	float GetSpeed() { return _speed; }
-
-	void SetAngle(float angle) { _angle = angle; }
-	float GetAngle() { return _angle; }
-	list<Vector2>* GetPath() { return &_path; }
-	void SetPath(list<Vector2> path);
-	
 	void SetImg(string stateName);
 	void OffAtkFrame() { _isAtkFrame = false; }
 	bool GetAtkFrame() { return _isAtkFrame; }
 	Sprite* GetSprite() { return _sprite; }
 	PhysicsBody* GetPhysics() { return _physics; }
 	E_Dir GetDir() { return _dir; }
+
+	float GetDistance() { return _distance; }
+	float GetAtkDistance() { return _atkDistance; }
+	float GetSpeed() { return _speed; }
+	float GetAngle() { return _angle; }
+	list<Vector2>* GetPath() { return &_path; }
+
+	//에너미 매니저
+	void SetDistance(float distance) { _distance = distance; }
+	void SetAngle(float angle) { _angle = angle; }
+	void SetPath(list<Vector2> path);
+
+	
+	
 };

@@ -15,6 +15,7 @@ void Rogue::Init(Vector2 pos)
 
 	wstring dir = L"Resource/Wizard/Enemy/";
 	GRAPHICMANAGER->AddFrameImage(_name + "Idle", dir + L"Rogue_Idle.png", 1, 1);
+	GRAPHICMANAGER->AddFrameImage(_name + "Hurt", dir + L"Rogue_Idle.png", 1, 1);
 	GRAPHICMANAGER->AddFrameImage(_name + "Move", dir + L"RogueRunRight0_6x1.png", 6, 1);
 	GRAPHICMANAGER->AddFrameImage(_name + "Death", dir + L"RogueDead0_7x1.png", 7, 1);
 	GRAPHICMANAGER->AddFrameImage(_name + "Attack", dir + L"RogueAttack0_3x1.png", 3, 1);
@@ -47,7 +48,7 @@ void Rogue::Init(Vector2 pos)
 	_rightAtk->SetIsActive(false);
 	_state->Enter();
 
-
+	_ability->Init(50, 30);
 }
 void Rogue::Update()
 {

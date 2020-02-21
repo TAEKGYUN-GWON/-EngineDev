@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Room.h"
 #include "RoomScript.h"
+#include "EnemyManager.h"
 void Room::Init()
 {
 	Object::Init();
@@ -13,11 +14,14 @@ void Room::Init()
 	_physics->Init(BodyType::DYNAMIC, 1.f, 1.f, 0.f, false, true);
 	_physics->GetBody()->SetFixedRotation(true);
 	AddComponent<RoomScript>();
+	_eMgr = new EnemyManager;
 	//	_physics->SetBodyActive(false);
 }
 
 void Room::Update()
 {
+	if(_eMgr->GetIsActive()) _eMgr->Update();
+
 	return;
 }
 
@@ -71,4 +75,15 @@ void Room::SetObject()
 	}
 
 
+}
+
+void Room::SetRoomEnemy()
+{
+	_eMgr->SetIsActive(true);
+	_eMgr->Init(this);
+}
+
+void Room::DeActivePhysics()
+{
+	_physics->SetBodyActive(false);
 }

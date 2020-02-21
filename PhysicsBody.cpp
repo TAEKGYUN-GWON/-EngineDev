@@ -112,6 +112,11 @@ void PhysicsBody::Render()
 		GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), scale, _body->GetAngle() * RadToDeg, ColorF(0x008000,0.7f), PIVOT::CENTER, 3.f);
 }
 
+void PhysicsBody::Release()
+{
+	DrawComponent::Release();
+}
+
 
 Vector2 PhysicsBody::GetBodyPosition()
 {
