@@ -51,8 +51,6 @@ public:
 			curFrameX = 0;
 			curFrameY = 0;
 			isFlipX = false;
-			//imgKey = nullptr;
-			//imgPath = nullptr;
 		}
 	}GRAPHIC_INFO, *LPGRAPHIC_INFO;
 
@@ -65,10 +63,13 @@ public:
 
 	HRESULT Init(ID2D1Bitmap* bitmap, string key, wstring path, int maxFrameX = 1, int maxFrameY = 1);
 	void Release();
-	//void Render(float x, float y);
 	void Render(float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void Render(Vector2 pos, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
 	void Render(Vector2 pos, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
+
+	// progress bar 에 사용하려고 만든 Render
+	void Render(Vector2 dest, Vector2 sour, Vector2 srcSize, Vector2 scale = Vector2(1, 1), PIVOT pivot = PIVOT::CENTER, float alpha = 1.0f, float angle = 0.0f, bool cameraAffect = true);
+
 	void FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
 	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);

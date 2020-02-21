@@ -5,6 +5,7 @@
 #include <filesystem>
 #include "Maptool.h"
 #include "StartScene.h"
+#include "ProgressBar.h"
 
 void UndergroundScene::Init()
 {
@@ -27,12 +28,17 @@ void UndergroundScene::Init()
 
 	SCENEMANAGER->GetNowScene()->GetWorld()->SetGravity(b2Vec2(0.0f, 15.0f));
 	//SCENEMANAGER->GetNowScene()->GetWorld()->SetGravity(b2Vec2(0.0f, 100.0f));
+
+	_bar = new ProgressBar;
+	_bar->Init("gaugeUp", "gaugeDown", Vector2(200, 200));
+	_bar->Init("gaugeUp", "gaugeDown", L"Resource/Folder/", L"Resource/Folder/", Vector2(200, 200));
+	current = max = 100;
 }
 
 void UndergroundScene::Release()
 {
 	_vTiles.clear();
-
+	_bar->Release();
 	Scene::Release();
 }
 
@@ -42,6 +48,8 @@ void UndergroundScene::Update()
 	//CAMERA->Control();
 
 	Scene::Update();
+
+	_bar->SetGauge(current -= 3.0f * TIMEMANAGER->getElapsedTime(), max);
 
 
 	// tile draw rect
@@ -71,6 +79,8 @@ void UndergroundScene::Update()
 void UndergroundScene::Render()
 {
 	Scene::Render();
+
+	_bar->Render();
 }
 
 void UndergroundScene::MapLoad()

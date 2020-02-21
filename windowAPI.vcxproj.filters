@@ -231,9 +231,6 @@
     <ClInclude Include="loadingScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Direct2D.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="UiObject.h">
       <Filter>2DGameFramework\Object</Filter>
     </ClInclude>
@@ -317,6 +314,9 @@
     </ClInclude>
     <ClInclude Include="ProgressBar.h">
       <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2D.h">
+      <Filter>2DGameFramework\image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -422,9 +422,6 @@
     <ClCompile Include="loadingScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Direct2D.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="UiObject.cpp">
       <Filter>2DGameFramework\Object</Filter>
     </ClCompile>
@@ -505,6 +502,9 @@
     </ClCompile>
     <ClCompile Include="ProgressBar.cpp">
       <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2D.cpp">
+      <Filter>2DGameFramework\image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

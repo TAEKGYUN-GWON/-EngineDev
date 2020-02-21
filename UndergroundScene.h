@@ -3,6 +3,7 @@
 
 class Player;
 class Tile;
+class ProgressBar;
 
 class UndergroundScene : public Scene
 {
@@ -10,6 +11,9 @@ private:
 	Player* _player;
 	vector<Tile*> _vTiles;
 	bool _isShowRect;
+	ProgressBar* _bar;
+	float current, max;
+
 private:
 	void MapLoad();
 	void AddImage();

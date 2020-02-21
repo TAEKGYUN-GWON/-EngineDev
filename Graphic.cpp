@@ -169,6 +169,43 @@ void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float 
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha);
 }
 
+void Graphic::Render(Vector2 dest, Vector2 sour, Vector2 srcSize, Vector2 scale, PIVOT pivot, float alpha, float angle, bool cameraAffect)
+{
+	Matrix3x2F scale_ = Matrix3x2F::Scale(scale.x, scale.y);
+	Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F());
+	Matrix3x2F trans = Matrix3x2F::Translation(dest.x, dest.y);
+
+	D2D1_RECT_F dxArea;
+
+	switch (pivot)
+	{
+	case LEFT_TOP:
+		dxArea = RectF(0, 0, srcSize.x, srcSize.y);
+		break;
+	case CENTER:
+		dxArea = RectF(-srcSize.x / 2, -srcSize.y / 2, srcSize.x / 2, srcSize.y / 2);
+		break;
+	case TOP:
+		dxArea = RectF(-srcSize.x / 2, 0, srcSize.x / 2, srcSize.y);
+		break;
+	case BOTTOM:
+		dxArea = RectF(-srcSize.x / 2, -srcSize.y, srcSize.x / 2, 0);
+		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-srcSize.x, -srcSize.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -srcSize.y, srcSize.x, 0);
+		break;
+	}
+
+	D2D1_RECT_F dxSrc = RectF(sour.x, sour.y, srcSize.x, srcSize.y);
+
+	_RT->SetTransform(scale_ * rotation * trans);
+	if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
+	_RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
+}
+
 void Graphic::FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot)
 {
 	_graphicInfo->curFrameX = curFrameX;
