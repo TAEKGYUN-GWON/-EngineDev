@@ -52,13 +52,16 @@ void Tile::Render()
 	Object::Render();
 }
 
-void Tile::SetPhysics()
+void Tile::SetPhysics(bool isDynamic)
 {
 	if (_physics) return;
 
 	_physics = AddComponent<PhysicsBody>();
 
-	_physics->Init(BodyType::STATIC, 1, 1);
+	if(!isDynamic) _physics->Init(BodyType::STATIC, 1, 1);
+
+	else _physics->Init(BodyType::DYNAMIC, 1, 1);
+
 }
 
 void Tile::SetImgName(string imgKey)

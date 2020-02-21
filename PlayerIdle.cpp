@@ -2,6 +2,7 @@
 #include "PlayerIdle.h"
 #include "Player.h"
 #include "PlayerMove.h"
+#include "PlayerAttack.h"
 
 void PlayerIdle::Enter()
 {
@@ -13,14 +14,24 @@ void PlayerIdle::Enter()
 
 void PlayerIdle::Update()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	if (KEYMANAGER->isStayKeyDown('D') or KEYMANAGER->isStayKeyDown('A'))
 	{
-		//_obj->ChangeState(new PlayerMove(_obj));
 		_obj->ChangeState(make_shared<PlayerMove>(_obj));
+		return;
 	}
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+
+	if (_obj->GetIsLadderCollider())
 	{
-		_obj->ChangeState(make_shared<PlayerMove>(_obj));
+		if (KEYMANAGER->isStayKeyDown('W') or KEYMANAGER->isStayKeyDown('S'))
+		{
+			_obj->ChangeState(make_shared<PlayerMove>(_obj));
+			return;
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		_obj->ChangeState(make_shared<PlayerAttack>(_obj));
 	}
 }
 

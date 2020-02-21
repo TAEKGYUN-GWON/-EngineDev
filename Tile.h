@@ -105,7 +105,7 @@ public:
     void SetIsClose(bool isClose) { _isClose = isClose; }
     bool GetIsClose() { return _isClose; }
 
-    void SetPhysics();
+    void SetPhysics(bool isDynamic = false);
     PhysicsBody* GetPhysics() { return _physics; }
 
 

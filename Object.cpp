@@ -1,3 +1,4 @@
+
 #include "stdafx.h"
 #include "Object.h"
 
@@ -14,7 +15,7 @@ void Object::Init()
 
     if (!_allowInit) return;
 
-    for (Component* c : _components) c->Init();
+    for (auto c : _components) c->Init();
 
     _allowInit = false;
 }
@@ -24,7 +25,10 @@ void Object::Update()
     for (Object* c : _removeList)
     {
         if (c->GetComponent<PhysicsBody>())
+        {
             SCENEMANAGER->GetNowScene()->GetWorld()->DestroyBody(c->GetComponent<PhysicsBody>()->GetBody());
+            c->RemoveComponent(c->GetComponent<PhysicsBody>());
+        }
         c->Release();
     }
     if (_removeList.size())
@@ -43,13 +47,9 @@ void Object::Update()
 
 void Object::Release()
 {
+    //cout << "萵葬鍔天天天天" << endl;
     if (_parent != nullptr)
     {
-        if (GetComponent<PhysicsBody>())
-        {
-            SetIsRelese();
-            return;
-        }
         if (_isActive)
             _parent->RemoveToActiveList(this);
         else
@@ -65,11 +65,21 @@ void Object::Release()
         child->Release();
     }
 
+    for (Object* c : _removeList)
+    {
+        c->Release();
+    }
+
+    _removeList.clear();
+
     if (_components.size())
+    {
         for (int i = _components.size() - 1; i >= 0; i--)
         {
             _components[i]->Release();
         }
+    }
+    _draw.clear();
     delete this;
 }
 
@@ -94,19 +104,11 @@ void Object::SetIsActive(bool active)
 
     if (!_isActive)
     {
-        for (Object* c : _parent->_unActiveList)
-        {
-            if (c == this)return;
-        }
         _parent->RemoveToActiveList(this);
         _parent->_unActiveList.push_back(this);
     }
     else
     {
-        for (Object* c : _parent->_activeList)
-        {
-            if (c == this)return;
-        }
         _parent->RemoveToUnActiveList(this);
         _parent->_activeList.push_back(this);
     }
@@ -145,13 +147,6 @@ void Object::SetIsRelese()
 
 }
 
-void Object::SetCameraAffect(bool active)
-{
-    _cameraAffect = active;
-    for (auto d : _draw)
-        d->SetCameraEffected(active);
-}
-
 void Object::AddChild(Object* child)
 {
     _children.push_back(child);
@@ -177,10 +172,10 @@ void Object::RemoveComponent(Component* component)
 {
     for (auto iter = _components.begin(); iter != _components.end(); iter++)
     {
-        if (component != *iter)
+        if (component != (*iter).get())
             continue;
+        (*iter).reset();
         _components.erase(iter);
-        delete(component);
         return;
     }
 }

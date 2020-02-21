@@ -11,7 +11,7 @@ Sprite::Sprite()
 
 	_isFlipX = false;
 	_isFillRect = false;
-	_isShowRect = true;
+	_isShowRect = false;
 	_isCameraEffect = true;
 
 	_alpha = 1.0f;

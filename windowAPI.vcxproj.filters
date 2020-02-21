@@ -306,6 +306,18 @@
     <ClInclude Include="UndergroundScene.h">
       <Filter>playGround\UndergroundScene</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerCollider.h">
+      <Filter>playGround\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="LadderScript.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttack.h">
+      <Filter>playGround\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -481,6 +493,18 @@
     </ClCompile>
     <ClCompile Include="UndergroundScene.cpp">
       <Filter>playGround\UndergroundScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCollider.cpp">
+      <Filter>playGround\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="LadderScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttack.cpp">
+      <Filter>playGround\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

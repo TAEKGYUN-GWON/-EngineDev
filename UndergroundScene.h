@@ -10,7 +10,6 @@ private:
 	Player* _player;
 	vector<Tile*> _vTiles;
 	bool _isShowRect;
-
 private:
 	void MapLoad();
 	void AddImage();
@@ -21,5 +20,7 @@ public:
 	virtual void Release();
 	virtual void Update();
 	virtual void Render();
+
+	vector<Tile*> GetTiles() { return _vTiles; }
 };
 

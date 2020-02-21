@@ -4,6 +4,8 @@
 #include <filesystem>
 #include "PaletteBtn.h"
 #include "Player.h"
+#include "UndergroundScene.h"
+#include "StartScene.h"
 
 //using namespace filesystem;
 
@@ -16,6 +18,9 @@ void Maptool::Init()
 	//setWindowsSize(WINSTARTX, WINSTARTY, 720, 500);
 
 	GRAPHICMANAGER->AddImage("blank", L"Resource/Blank.png");
+
+	SCENEMANAGER->addScene("underground", new UndergroundScene);
+	SCENEMANAGER->addScene("startScene", new StartScene);
 
 	ClassificationAttribute();
 
@@ -40,7 +45,11 @@ void Maptool::Init()
 
 void Maptool::Release()
 {
-	Object::Release();
+	_vSetTer_1.clear();
+	_vSetLadder.clear();
+	_vSetDoor.clear();
+	_vSetObj.clear();
+	Scene::Release();
 }
 
 void Maptool::Update()
@@ -285,6 +294,11 @@ void Maptool::Update()
 		SCENEMANAGER->changeScene("underground");
 		return;
 	}
+	if (KEYMANAGER->isOnceKeyUp('P'))
+	{
+		SCENEMANAGER->changeScene("startScene");
+		return;
+	}
 
 	// tile draw rect
 	if (KEYMANAGER->isOnceKeyUp(VK_F1))
@@ -440,6 +454,7 @@ void Maptool::Save()
 		outFile << t->GetSprite()->GetPosition().x << endl;
 		outFile << t->GetSprite()->GetPosition().y << endl;
 		outFile << t->GetSprite()->GetDepth() << endl;
+		outFile << t->GetIndex() << endl;
 
 		outFile << (int)t->GetTileObject()->GetAttribute() << endl;
 		outFile << t->GetTileObject()->GetImgName() << endl;
@@ -511,6 +526,9 @@ void Maptool::Load()
 
 		inFile.getline(buffer, 256);
 		t->GetSprite()->SetDepth(atoi(buffer));
+
+		inFile.getline(buffer, 256);
+		t->SetIndex(atoi(buffer));
 
 		// tile object setting
 		inFile.getline(buffer, 256);
@@ -902,47 +920,84 @@ void Maptool::SetPage()
 	{
 	case SamplePage::Terrain_1:
 	{
-		for (auto t2 : _vSetLadder) t2->SetIsActive(false);
-		for (auto obj : _vSetObj) obj->SetIsActive(false);
-		for (auto door : _vSetDoor) door->SetIsActive(false);
+		for (auto t2 : _vSetLadder)
+			if(t2->GetIsActive()) t2->SetIsActive(false);
 
-		for (auto t1 : _vSetTer_1) t1->SetIsActive(true);
+		for (auto obj : _vSetObj)
+			if (obj->GetIsActive())	obj->SetIsActive(false);
+
+		for (auto door : _vSetDoor)
+			if (door->GetIsActive()) door->SetIsActive(false);
+
+		for (auto t1 : _vSetTer_1) 
+			if (!t1->GetIsActive())
+			{
+				t1->SetIsActive(true);
+				t1->SetAllowsRender(true);
+			}
 	}
 	break;
 	case SamplePage::Ladder:
 	{
-		for (auto t1 : _vSetTer_1) t1->SetIsActive(false);
-		for (auto obj : _vSetObj) obj->SetIsActive(false);
-		for (auto door : _vSetDoor) door->SetIsActive(false);
+		for (auto t1 : _vSetTer_1) 
+			if (t1->GetIsActive())
+			{
+				t1->SetIsActive(false);
+				t1->SetAllowsRender(false);
+			}
+		for (auto obj : _vSetObj) 
+			if (obj->GetIsActive())	obj->SetIsActive(false);
+		for (auto door : _vSetDoor) 
+			if (door->GetIsActive()) door->SetIsActive(false);
 
-		for (auto t2 : _vSetLadder) t2->SetIsActive(true);
+		for (auto t2 : _vSetLadder) 
+			if (!t2->GetIsActive())	t2->SetIsActive(true);
 	}
 	break;
 	case SamplePage::Door:
 	{
-		for (auto t1 : _vSetTer_1) t1->SetIsActive(false);
-		for (auto obj : _vSetObj) obj->SetIsActive(false);
-		for (auto t2 : _vSetLadder) t2->SetIsActive(false);
+		for (auto t1 : _vSetTer_1) 
+			if (t1->GetIsActive())
+			{
+				t1->SetIsActive(false);
+				t1->SetAllowsRender(false);
+			}
+		for (auto obj : _vSetObj) 
+			if (obj->GetIsActive())	obj->SetIsActive(false);
+		for (auto t2 : _vSetLadder) 
+			if (t2->GetIsActive()) t2->SetIsActive(false);
 
-		for (auto door : _vSetDoor) door->SetIsActive(true);
+		for (auto door : _vSetDoor) 
+			if (!door->GetIsActive())	door->SetIsActive(true);
 	}
 	break;
 	case SamplePage::Object:
 	{
-		for (auto t1 : _vSetTer_1) t1->SetIsActive(false);
-		for (auto t2 : _vSetLadder) t2->SetIsActive(false);
-		for (auto door : _vSetDoor) door->SetIsActive(false);
+		for (auto t1 : _vSetTer_1) 
+			if (t1->GetIsActive())
+			{
+				t1->SetIsActive(false);
+				t1->SetAllowsRender(false);
+			}
+		for (auto t2 : _vSetLadder) 
+			if (t2->GetIsActive()) t2->SetIsActive(false);
+		for (auto door : _vSetDoor) 
+			if (door->GetIsActive()) door->SetIsActive(false);
 
-		for (auto obj : _vSetObj) obj->SetIsActive(true);
+		for (auto obj : _vSetObj) 
+			if (!obj->GetIsActive())	obj->SetIsActive(true);
 	}
 	break;
 	}
+
+	int a = 0;
 }
 
 void Maptool::SetPaletteAndAddImage(string folderPath, PAT pat, TAttribute atr, vector<PaletteBtn*>& vec, Vector2 maxFrame, Vector2 scale)
 {
 	string imgKey;
 	wstring path;
+	wstring name;
 
 	for (auto d : filesystem::directory_iterator(folderPath))
 	{
@@ -962,8 +1017,11 @@ void Maptool::SetPaletteAndAddImage(string folderPath, PAT pat, TAttribute atr, 
 		palette->GetSprite()->SetDepth(5);
 		palette->SetImageSize(POINT{ GRAPHICMANAGER->FindImage(imgKey)->GetFrameWidth(), GRAPHICMANAGER->FindImage(imgKey)->GetFrameHeight() });
 
+		//name.assign(imgKey.begin(), imgKey.end());
 		//palette->AddComponent<Text>();
-		//palette->GetComponent<Text>()->CreateText(L"sdkaaaa", 20, 40, 20, ColorF::Red);
+		//palette->GetComponent<Text>()->CreateText(name, 10, 40, 20, ColorF::Blue);
+		//palette->GetComponent<Text>()->GetTransform()->SetPos(palette->GetTrans()->GetPos() + Vector2(-40, 0));
+		//palette->GetComponent<Text>()->SetAnchor(AnchorPoint::CENTER);
 		//palette->GetComponent<Text>()->SetDepth(7);
 
 		vec.push_back(palette);

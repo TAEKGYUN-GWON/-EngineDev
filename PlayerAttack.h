@@ -3,13 +3,12 @@
 
 class Player;
 
-class PlayerMove : public PlayerState
+class PlayerAttack : public PlayerState
 {
 private:
-	float _speed;
 
 public:
-	PlayerMove(Player* obj) : PlayerState(obj) {}
+	PlayerAttack(Player* obj) : PlayerState(obj) {}
 
 	virtual void Enter() override;
 	virtual void Update() override;

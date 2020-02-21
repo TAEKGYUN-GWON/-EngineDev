@@ -48,6 +48,12 @@ void Text::Render()
 	renderTarger->DrawTextLayout(Point2F(_trans->GetPos().x, _trans->GetPos().y), _layout, _brush);
 }
 
+void Text::Release()
+{
+	_layout->Release();
+	_brush->Release();
+}
+
 void Text::SetFontSize(float fontSize, int startPoint, int length)
 {
 	_layout->SetFontSize(fontSize, { (UINT32)startPoint, (UINT32)length });

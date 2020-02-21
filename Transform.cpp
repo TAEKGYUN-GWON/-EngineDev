@@ -39,6 +39,7 @@ Transform::Transform()
 
 void Transform::Init()
 {
+	_rotate = 0;
 	SetRect();
 	UpdateMatrix();
 
@@ -108,13 +109,13 @@ Vector2 Transform::GetPosToPivot(TransFormPIVOT pivot)
 	case TransFormPIVOT::TOP:
 	{
 
-		return Vector2(pos.x, pos.y + scale.y / 2);
+		return Vector2(pos.x, pos.y - scale.y / 2);
 	}
 	break;
 	case TransFormPIVOT::BOTTOM:
 	{
 
-		return Vector2(pos.x, pos.y - scale.y / 2);
+		return Vector2(pos.x, pos.y + scale.y / 2);
 	}
 	break;
 	}

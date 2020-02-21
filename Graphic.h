@@ -69,8 +69,6 @@ public:
 	void Render(float x, float y, PIVOT pivot = PIVOT::CENTER);
 	void Render(Vector2 pos, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
 	void Render(Vector2 pos, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
-	void RenderUI(float x, float y, PIVOT pivot = PIVOT::CENTER);
-	void RenderUI(Vector2 pos, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot = PIVOT::CENTER);
 	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
 	void FrameRender(Vector2 pos, int curFrameX, int curFrameY, Vector2 scale, float angle, bool flipX = false, float alpha = 1.0f, PIVOT pivot = PIVOT::CENTER, bool cameraAffect = true);
@@ -107,4 +105,6 @@ public:
 	LPGRAPHIC_INFO GetGraphicInfo() { return _graphicInfo; }
 
 	string GetImageKey() { return _graphicInfo->imgKey; }
+
+	ID2D1Bitmap* GetBitmap() { return _graphicInfo->bitmap; }
 };

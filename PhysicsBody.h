@@ -1,10 +1,11 @@
 #pragma once
 #include"DrawComponent.h"
-enum BodyType
+enum class BodyType
 {
 	DYNAMIC,
 	STATIC,
-	KINEMATIC
+	KINEMATIC,
+	CIRCLE,
 };
 
 

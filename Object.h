@@ -13,7 +13,7 @@ protected:
 
     Transform* _trans;
     vector<DrawComponent*> _draw;
-    vector <Component*> _components;
+    vector <shared_ptr<Component>> _components;
     string _name;
     string _tag;
     bool _isActive = true;
@@ -64,7 +64,7 @@ public:
 
     inline bool GetAllowInit() { return _allowInit; }
 
-    void SetCameraAffect(bool active);
+    inline void SetCameraAffect(bool active) { _cameraAffect = active; }
     inline bool GetCameraAffect() { return _cameraAffect; }
 
     void AddChild(Object* child);

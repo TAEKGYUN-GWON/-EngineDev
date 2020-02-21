@@ -22,9 +22,11 @@ private:
 	wstring _text;
 	wstring _fontName;
 	wstring _locale;
+
 	float _fontSize;
 	float _maxWidth;
 	float _maxHeight;
+
 	IDWriteTextLayout* _layout;
 	ID2D1SolidColorBrush* _brush;
 
@@ -44,5 +46,6 @@ public:
 
 	virtual void Init();
 	virtual void Render();
+	virtual void Release();
 };
 
