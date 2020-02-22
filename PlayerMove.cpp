@@ -2,7 +2,9 @@
 #include "PlayerMove.h"
 #include "Player.h"
 #include "PlayerIdle.h"
+#include "PlayerAttack.h"
 #include "UndergroundScene.h"
+#include "PlayerDead.h"
 
 void PlayerMove::Enter()
 {
@@ -10,6 +12,7 @@ void PlayerMove::Enter()
 
 	_obj->GetLegs()->GetComponent<Sprite>()->SetImgName("Legs_Run");
 	_obj->GetLegs()->GetComponent<Sprite>()->SetFPS(1.5f);
+	_obj->GetPhysicsBody()->GetBody()->SetGravityScale(1);
 
 	_speed = 200.0f;
 }
@@ -31,7 +34,6 @@ void PlayerMove::Update()
 
 		_obj->SetDirection(Dir::Right);
 		_obj->GetPhysicsBody()->ApplyForce(Vector2::b2Down);
-		_obj->GetPhysicsBody()->GetBody()->SetGravityScale(1);
 	}
 	else if (KEYMANAGER->isStayKeyDown('A'))
 	{
@@ -48,79 +50,27 @@ void PlayerMove::Update()
 
 		_obj->SetDirection(Dir::Left);
 		_obj->GetPhysicsBody()->ApplyForce(Vector2::b2Down);
-		_obj->GetPhysicsBody()->GetBody()->SetGravityScale(1);
-	}
-
-	if (_obj->GetIsLadderCollider())
-	{
-		if (KEYMANAGER->isStayKeyDown('W'))
-		{
-			if (SCENEMANAGER->GetNowScene()->GetName().compare("underground") == 0)
-			{
-				UndergroundScene* scene = (UndergroundScene*)SCENEMANAGER->GetNowScene();
-
-				int index = ((int)_obj->GetTrans()->GetPos().x / TILE_WIDTH) + TILE_NUM_X * ((int)_obj->GetTrans()->GetPos().y / TILE_HEIGHT);
-				int nowIndex = ((int)_obj->GetJudgingFloor()->GetTrans()->GetPos().x / TILE_WIDTH) + TILE_NUM_X * ((int)_obj->GetJudgingFloor()->GetTrans()->GetPos().y / TILE_HEIGHT);
-				int upIndex = nowIndex - TILE_NUM_X;
-				int downIndex = nowIndex + TILE_NUM_X;
-
-				if (scene->GetTiles()[downIndex]->GetAttribute() == TAttribute::WALL)
-					scene->GetTiles()[downIndex]->GetPhysics()->SetSensor(false);
-
-				if (scene->GetTiles()[upIndex]->GetTileObject()->GetAttribute() == TAttribute::LADDER)
-				{
-					if (scene->GetTiles()[index - TILE_NUM_X]->GetAttribute() == TAttribute::WALL)
-						scene->GetTiles()[index - TILE_NUM_X]->GetPhysics()->SetSensor(true);
-
-					_obj->GetTrans()->pos.x = _obj->GetLadderPosition().x;
-					_obj->SetDirection(Dir::Up);
-					_obj->GetPhysicsBody()->GetBody()->SetGravityScale(0);
-				}
-				else _obj->SetIsLadderCollider(false);
-			}
-		}
-		else if (KEYMANAGER->isStayKeyDown('S'))
-		{
-			UndergroundScene* scene = (UndergroundScene*)SCENEMANAGER->GetNowScene();
-
-			// 2020.02.21 TODO : 내려가면서 사다리 끝일 때 바닥 파고 드는 거 좀 더 세세하게 잡자
-			int nowIndex = ((int)_obj->GetJudgingFloor()->GetTrans()->GetPos().x / TILE_WIDTH) + TILE_NUM_X * ((int)_obj->GetJudgingFloor()->GetTrans()->GetPos().y / TILE_HEIGHT);
-			int downIndex = nowIndex + TILE_NUM_X;
-
-			if (scene->GetTiles()[nowIndex]->GetTileObject()->GetAttribute() == TAttribute::LADDER)
-			{
-				if (scene->GetTiles()[downIndex]->GetTileObject()->GetAttribute() == TAttribute::LADDER &&
-					scene->GetTiles()[downIndex]->GetAttribute() == TAttribute::WALL)
-				{
-					scene->GetTiles()[downIndex]->GetPhysics()->SetSensor(true);
-					cout << downIndex << endl;
-				}
-
-				_obj->GetTrans()->pos.x = _obj->GetLadderPosition().x;
-				_obj->SetDirection(Dir::Down);
-				_obj->GetPhysicsBody()->GetBody()->SetGravityScale(0);
-			}
-			else _obj->SetIsLadderCollider(false);
-		}
 	}
 
 	_obj->GetTrans()->SetPos(_obj->GetTrans()->GetPos() + Vector2(cosf((int)_obj->GetDirection() * Deg2Rad), -sinf((int)_obj->GetDirection() * Deg2Rad)) * _speed * TIMEMANAGER->getElapsedTime());
 	_obj->GetPhysicsBody()->SetBodyPosition();
 
-	if (_obj->GetIsLadderCollider())
+	if (!KEYMANAGER->isStayKeyDown('A') && !KEYMANAGER->isStayKeyDown('D'))
 	{
-		if (!KEYMANAGER->isStayKeyDown('A') && !KEYMANAGER->isStayKeyDown('D') &&
-			!KEYMANAGER->isStayKeyDown('W') && !KEYMANAGER->isStayKeyDown('S'))
-		{
-			_obj->ChangeState(make_shared<PlayerIdle>(_obj));
-		}
+		_obj->ChangeState(make_shared<PlayerIdle>(_obj));
+		return;
 	}
-	else
+
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
-		if (!KEYMANAGER->isStayKeyDown('A') && !KEYMANAGER->isStayKeyDown('D'))
-		{
-			_obj->ChangeState(make_shared<PlayerIdle>(_obj));
-		}
+		_obj->ChangeState(make_shared<PlayerAttack>(_obj));
+		return;
+	}
+
+	if (_obj->GetAbility()->IsDead())
+	{
+		_obj->ChangeState(make_shared<PlayerDead>(_obj));
+		return;
 	}
 }
 

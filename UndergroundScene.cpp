@@ -5,13 +5,18 @@
 #include <filesystem>
 #include "Maptool.h"
 #include "StartScene.h"
-#include "ProgressBar.h"
+#include "UI.h"
+#include "EnemyNormal.h"
 
 void UndergroundScene::Init()
 {
 	Scene::Init();
 
+	//ShowCursor(false);
+
 	_name = "underground";
+
+	GRAPHICMANAGER->AddImage("cursor", L"Resource/UI/cursor.png");
 
 	_player = Object::CreateObject<Player>();
 	_player->Init();
@@ -21,6 +26,11 @@ void UndergroundScene::Init()
 	AddImage();
 	MapLoad();
 
+	_ui = new UI;
+	_ui->Init();
+
+	_cursorImg = GRAPHICMANAGER->FindImage("cursor");
+
 	SCENEMANAGER->addScene("maptool", new Maptool);
 	SCENEMANAGER->addScene("start", new StartScene);
 
@@ -29,16 +39,17 @@ void UndergroundScene::Init()
 	SCENEMANAGER->GetNowScene()->GetWorld()->SetGravity(b2Vec2(0.0f, 15.0f));
 	//SCENEMANAGER->GetNowScene()->GetWorld()->SetGravity(b2Vec2(0.0f, 100.0f));
 
-	_bar = new ProgressBar;
-	_bar->Init("gaugeUp", "gaugeDown", Vector2(200, 200));
-	_bar->Init("gaugeUp", "gaugeDown", L"Resource/Folder/", L"Resource/Folder/", Vector2(200, 200));
-	current = max = 100;
+	_enemy = Object::CreateObject<EnemyNormal>();
+	_enemy->Init();
+	_enemy->GetTrans()->SetPos(WINSIZEX / 2 - 300, 325);
+	_enemy->GetPhysics()->SetBodyPosition();
 }
 
 void UndergroundScene::Release()
 {
 	_vTiles.clear();
-	_bar->Release();
+	_ui->Release();
+
 	Scene::Release();
 }
 
@@ -46,11 +57,10 @@ void UndergroundScene::Update()
 {
 	CAMERA->SetPos(_player->GetTrans()->GetPos() - Vector2(WINSIZEX / 2, WINSIZEY / 2));
 	//CAMERA->Control();
-
+	
 	Scene::Update();
 
-	_bar->SetGauge(current -= 3.0f * TIMEMANAGER->getElapsedTime(), max);
-
+	_ui->Update();
 
 	// tile draw rect
 	if (KEYMANAGER->isOnceKeyUp(VK_F1))
@@ -80,7 +90,9 @@ void UndergroundScene::Render()
 {
 	Scene::Render();
 
-	_bar->Render();
+	_ui->Render();
+
+	_cursorImg->Render(MOUSEPOINTER->GetMouseWorldPosition().x, MOUSEPOINTER->GetMouseWorldPosition().y);
 }
 
 void UndergroundScene::MapLoad()
@@ -363,9 +375,18 @@ void UndergroundScene::MapLoad()
 
 		if (_vTiles[i]->GetTileObject()->GetAttribute() == TAttribute::LADDER)
 		{
-			_vTiles[i]->GetTileObject()->SetPhysics();
-			_vTiles[i]->GetTileObject()->GetPhysics()->SetBodyPosition();
-			_vTiles[i]->GetTileObject()->GetPhysics()->SetSensor(true);
+			if (_vTiles[i]->GetTileParent() == -1)
+			{
+				int children = _vTiles[i]->GetTileChildren().size();
+				Vector2 size = Vector2(TILE_WIDTH, (children + 1) * TILE_HEIGHT);
+				Vector2 pos = _vTiles[i]->GetTrans()->GetPos() + Vector2(0.0f, (size.y / 2) - (TILE_HEIGHT / 2));
+				_vTiles[i]->GetTileObject()->GetTrans()->SetScale(size);
+				_vTiles[i]->GetTileObject()->GetTrans()->SetPos(pos);
+
+				_vTiles[i]->GetTileObject()->SetPhysics();
+				_vTiles[i]->GetTileObject()->GetPhysics()->SetBodyPosition();
+				_vTiles[i]->GetTileObject()->GetPhysics()->SetSensor(true);
+			}
 		}
 
 		if (_vTiles[i]->GetTileObject()->GetAttribute() == TAttribute::INTERACTION ||
@@ -402,34 +423,6 @@ void UndergroundScene::MapLoad()
 		}
 	}
 	inFile.close();
-
-	/*for (int i = 0; i < _vTiles.size(); ++i)
-	{
-		if (_vTiles[i]->GetTileObject()->GetIsActive() == false) continue;
-
-		if (_vTiles[i]->GetTileObject()->GetAttribute() == TAttribute::INTERACTION ||
-			_vTiles[i]->GetTileObject()->GetAttribute() == TAttribute::DEAD_BODY)
-		{
-			if (_vTiles[i]->GetTileParent() == -1)
-			{
-				Vector2 size;
-				if (_vTiles[i]->GetTileChildren().size() >= 1)
-				{
-					size.x = abs(_vTiles[i]->GetTrans()->GetPos().x - _vTiles[_vTiles[i]->GetTileChildren()[0]]->GetTrans()->GetPos().x);
-					size.y = abs(_vTiles[i]->GetTrans()->GetPos().y - _vTiles[_vTiles[i]->GetTileChildren()[0]]->GetTrans()->GetPos().y);
-					cout << "size. x : " << size.x << " size.y : " << size.y << endl;
-				}
-
-				if (size.x <= 0.0f && size.y > 0.0f) size = Vector2(TILE_WIDTH, TILE_HEIGHT * 2);
-				else if (size.x > 0.0f && size.y <= 0.0f) size = Vector2(TILE_WIDTH * 2, TILE_HEIGHT);
-
-				_vTiles[i]->GetTileObject()->GetTrans()->SetScale(size);
-				_vTiles[i]->GetTileObject()->SetPhysics();
-				_vTiles[i]->GetTileObject()->GetPhysics()->SetBodyPosition();
-				_vTiles[i]->GetTileObject()->GetPhysics()->SetSensor(true);
-			}
-		}
-	}*/
 }
 
 void UndergroundScene::AddImage()

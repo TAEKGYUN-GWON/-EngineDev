@@ -1,6 +1,5 @@
 #pragma once
 #include "PlayerState.h"
-#include "Player.h"
 
 class PlayerIdle : public PlayerState
 {

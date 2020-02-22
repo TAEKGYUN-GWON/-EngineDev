@@ -172,6 +172,8 @@ void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float 
 void Graphic::Render(Vector2 dest, Vector2 sour, Vector2 srcSize, Vector2 scale, PIVOT pivot, float alpha, float angle, bool cameraAffect)
 {
 	Matrix3x2F scale_ = Matrix3x2F::Scale(scale.x, scale.y);
+	//if (flipX) scale_ = scale_ * Matrix3x2F::Scale(-1, 1);
+
 	Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F());
 	Matrix3x2F trans = Matrix3x2F::Translation(dest.x, dest.y);
 
@@ -203,7 +205,7 @@ void Graphic::Render(Vector2 dest, Vector2 sour, Vector2 srcSize, Vector2 scale,
 
 	_RT->SetTransform(scale_ * rotation * trans);
 	if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
-	_RT->DrawBitmap(_graphicInfo->bitmap, &dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, &dxSrc);
+	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR, dxSrc);
 }
 
 void Graphic::FrameRender(float x, float y, int curFrameX, int curFrameY, PIVOT pivot)

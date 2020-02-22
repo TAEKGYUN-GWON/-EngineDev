@@ -1,8 +1,6 @@
 #pragma once
 #include "PlayerState.h"
 
-class Player;
-
 class PlayerAttack : public PlayerState
 {
 private:

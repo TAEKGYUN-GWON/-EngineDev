@@ -26,7 +26,7 @@ using namespace std;
 #else
 #pragma comment(lib, "lib/x86_64/Release/Box2D.lib")
 #endif
-//rrr
+
 #include "commonMacroFunction.h"
 #include "randomFunction.h"
 #include "keyManager.h"
@@ -48,7 +48,7 @@ using namespace SEVENTEEN_UTIL;
 // ## 19.10.30 ## - 디파인문 -
 //=========================================
 
-#define WINNAME (LPCTSTR)(TEXT("Team Ω"))
+#define WINNAME (LPCTSTR)(TEXT("The Final Station"))
 #define WINSTARTX 50
 #define WINSTARTY 50
 #define WINSIZEX 1280
@@ -71,6 +71,7 @@ using namespace SEVENTEEN_UTIL;
 #include "Camera.h"
 #include"ObjectManager.h"
 #include "MousePointer.h"
+#include "Ability.h"
 
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()

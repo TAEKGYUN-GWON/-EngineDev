@@ -8,7 +8,10 @@
 void Player::Init()
 {
 	Object::Init();
+
 	_name = "Player";
+
+#pragma region AddImage
 	GRAPHICMANAGER->AddImage("Hero_Dead", L"Resource/Player/Hero_Dead.png", 10, 1);
 	GRAPHICMANAGER->AddImage("Hero_Idle", L"Resource/Player/Hero_Idle.png", 5, 1);
 	GRAPHICMANAGER->AddImage("Hero_Idle_d", L"Resource/Player/Hero_Idle_d.png", 5, 1);
@@ -19,21 +22,16 @@ void Player::Init()
 	GRAPHICMANAGER->AddImage("Hero_pistol_arm", L"Resource/Player/Hero_pistol_arm.png", 5, 1);
 	GRAPHICMANAGER->AddImage("Hero_Pistol_Superhit", L"Resource/Player/Hero_Pistol_Superhit.png", 5, 1);
 	GRAPHICMANAGER->AddImage("None", L"Resource/Terrain/None/None.png");
-
-	// test image
-	GRAPHICMANAGER->AddImage("Hero_Mlee_Pistol_7", L"Resource/Player/Hero Mlee Pistol_7.png", 1, 1);
+#pragma endregion
 
 	_trans->SetPos(WINSIZEX / 2 - 500, 325);
 
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init(true);
-	//_sprite->Init();
-	_sprite->SetShowRect(true);
 	_sprite->SetDepth(7);
-	//_sprite->SetImgName("Hero_Pistol_Superhit");
 	_sprite->SetImgName("None");
 
-	_trans->SetScale(24, 42);
+	_trans->SetScale(20, 42);
 
 	_legs = Object::CreateObject<Object>(this);
 	_legs->GetTrans()->SetPos(_trans->GetPos() + Vector2(0, 5.0f));
@@ -83,7 +81,14 @@ void Player::Init()
 
 	_isLadderCol = false;
 
+	_ability = new Ability(100, 100, 10);
+
 	AddComponent<PlayerCollider>();
+}
+
+void Player::Release()
+{
+	Object::Release();
 }
 
 void Player::Update()
@@ -97,7 +102,10 @@ void Player::Update()
 
 	_trans->SetPos(_physics->GetBodyPosition());
 
-	if (_state->GetState().compare("Attack") == 0)
+	if (KEYMANAGER->isStayKeyDown('V') && _ability->GetCurrentHP() > 0.0f) _ability->setHP(_ability->GetCurrentHP() - 5.0f);
+	if (KEYMANAGER->isStayKeyDown('B') && _ability->GetCurrentHP() < _ability->GetMaxHP()) _ability->setHP(_ability->GetCurrentHP() + 5.0f);
+
+	if (_state->GetState().compare("Dead") == 0 || _state->GetState().compare("Attack") == 0)
 	{
 		_body->SetIsActive(false);
 		_legs->SetIsActive(false);
@@ -113,6 +121,7 @@ void Player::Update()
 			_body->SetIsActive(true);
 			_legs->SetIsActive(true);
 			_arms->SetIsActive(true);
+
 			_sprite->SetImgName("None");
 		}
 
@@ -127,7 +136,6 @@ void Player::Update()
 
 		DirectionSprite();
 	}
-
 }
 
 void Player::Render()
@@ -142,20 +150,20 @@ void Player::Render()
 	//swprintf(buffer, 128, L"arm : %f", _arms->GetTrans()->GetRotateRadian());
 	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 130), buffer, 20, 200, 20, ColorF::White);
 
-	char buffer[128];
-	sprintf_s(buffer, "%s", _state->GetState().c_str());
-	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 200, 20, ColorF::Azure);
+	//char buffer[128];
+	//sprintf_s(buffer, "%s", _state->GetState().c_str());
+	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 200, 20, ColorF::Azure);
 
-	sprintf_s(buffer, "%d", _isLadderCol);
-	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 240), buffer, 20, 200, 20, ColorF::Azure);
+	//sprintf_s(buffer, "%d", _isLadderCol);
+	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 240), buffer, 20, 200, 20, ColorF::Azure);
 
-	sprintf_s(buffer, "index : %d", ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT));
-	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 180), buffer, 20, 200, 20, ColorF::Azure);
+	//sprintf_s(buffer, "index : %d", ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT));
+	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 180), buffer, 20, 200, 20, ColorF::Azure);
 	//
 	//sprintf_s(buffer, "x : %f \ny : %f", _judgingFloor->GetTrans()->GetPos().x, _judgingFloor->GetTrans()->GetPos().y);
 	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 120), buffer, 20, 200, 20, ColorF::Azure);
 	//
-	//sprintf_s(buffer, "x : %f \ny : %f", _trans->GetPos().x, _trans->GetPos().y);
+	//sprintf_s(buffer, "dis : %f", _ladderDistance);
 	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 70), buffer, 20, 200, 20, ColorF::Aqua);
 }
 

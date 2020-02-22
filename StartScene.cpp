@@ -10,6 +10,10 @@ void StartScene::Init()
 {
 	Scene::Init();
 
+	ShowCursor(false);
+
+	GRAPHICMANAGER->AddImage("cursor", L"Resource/UI/cursor.png");
+	GRAPHICMANAGER->AddImage("logo", L"Resource/UI/Logo dlc.png");
 	GRAPHICMANAGER->AddImage("eagle", L"eagle.png");
 
 	//SCENEMANAGER->addScene("t", new TestScene);
@@ -18,7 +22,7 @@ void StartScene::Init()
 	SCENEMANAGER->addScene("train", new TrainScene);
 	SCENEMANAGER->addScene("underground", new UndergroundScene);
 
-	//SCENEMANAGER->changeScene("train");
+	_cursorImg = GRAPHICMANAGER->FindImage("cursor");
 }
 
 void StartScene::Update()
@@ -37,7 +41,9 @@ void StartScene::Render()
 {
 	Scene::Render();
 
-	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2 - 130, WINSIZEY / 2 + 30), L"[ The Final Station ]", 30, 300, 50, ColorF::AliceBlue, TextPivot::CENTER_TOP);
+	GRAPHICMANAGER->DrawImage("logo", Vector2(WINSIZEX / 2 + 60, WINSIZEY / 2), 1.0f, PIVOT::CENTER, false);
+	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2 - 130, WINSIZEY / 2 + 30), L"[ The Final Station ]", 30, 300, 50, ColorF::AliceBlue, TextPivot::CENTER_TOP);
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2 - 180, WINSIZEY / 2 + 200), L"[ The Final Station ]", 30, 300, 50, ColorF(ColorF::AliceBlue, 0.6f), TextPivot::CENTER_TOP);
 
 	//wchar_t buffer[128];
 	//swprintf(buffer, 128, L"Camera X : %f\nCamera Y : %f", CAMERA->GetPosition().x, CAMERA->GetPosition().y);
@@ -52,11 +58,13 @@ void StartScene::Render()
 	//swprintf(buffer, 128, L"WorldMaoue X : %f\WorldMaoue Y : %f", pos.x, pos.y);
 	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 300), buffer, 20, 300, 50, ColorF::Azure);
 
-	GRAPHICMANAGER->DrawImage("eagle", Vector2(WINSIZEX / 2 - 20, WINSIZEY / 2 - 100), Vector2(1, 1), 0.0f);
+	//GRAPHICMANAGER->DrawImage("eagle", Vector2(WINSIZEX / 2 - 20, WINSIZEY / 2 - 100), Vector2(1, 1), 0.0f, false, 1.0f, PIVOT::CENTER, false);
+	GRAPHICMANAGER->DrawImage("eagle", Vector2(WINSIZEX / 2 - 280, WINSIZEY / 2 - 150), Vector2(1, 1), 0.0f, false, 1.0f, PIVOT::CENTER, false);
+
+	_cursorImg->Render(MOUSEPOINTER->GetMouseWorldPosition().x, MOUSEPOINTER->GetMouseWorldPosition().y);
 }
 
 void StartScene::Release()
 {
 	Scene::Release();
-
 }

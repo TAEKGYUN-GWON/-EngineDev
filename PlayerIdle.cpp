@@ -3,6 +3,9 @@
 #include "Player.h"
 #include "PlayerMove.h"
 #include "PlayerAttack.h"
+#include "PlayerLadder.h"
+#include "PlayerDead.h"
+#include "UndergroundScene.h"
 
 void PlayerIdle::Enter()
 {
@@ -22,17 +25,49 @@ void PlayerIdle::Update()
 
 	if (_obj->GetIsLadderCollider())
 	{
-		if (KEYMANAGER->isStayKeyDown('W') or KEYMANAGER->isStayKeyDown('S'))
+		_obj->SetLadderDistance(fabs(_obj->GetLadderPosition().x - _obj->GetTrans()->GetPos().x));
+		
+		if (_obj->GetLadderDistance() <= 10.0f)
 		{
-			_obj->ChangeState(make_shared<PlayerMove>(_obj));
-			return;
+			UndergroundScene* scene = (UndergroundScene*)SCENEMANAGER->GetNowScene();
+
+			int nowIndex = ((int)_obj->GetJudgingFloor()->GetTrans()->GetPos().x / TILE_WIDTH) + TILE_NUM_X * ((int)_obj->GetJudgingFloor()->GetTrans()->GetPos().y / TILE_HEIGHT);
+
+			if (KEYMANAGER->isStayKeyDown('W'))
+			{
+				if (scene->GetTiles()[nowIndex - TILE_NUM_X]->GetTileObject()->GetAttribute() == TAttribute::LADDER)
+				{
+					_obj->ChangeState(make_shared<PlayerLadder>(_obj));
+					return;
+				}
+			}
+			if (KEYMANAGER->isStayKeyDown('S'))
+			{
+				if (scene->GetTiles()[nowIndex + TILE_NUM_X]->GetTileObject()->GetAttribute() == TAttribute::LADDER)
+				{
+					_obj->ChangeState(make_shared<PlayerLadder>(_obj));
+					return;
+				}
+			}
 		}
 	}
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
 		_obj->ChangeState(make_shared<PlayerAttack>(_obj));
+		return;
 	}
+
+	if (_obj->GetAbility()->IsDead())
+	{
+		_obj->ChangeState(make_shared<PlayerDead>(_obj));
+		return;
+	}
+	//if (KEYMANAGER->isOnceKeyDown('L'))
+	//{
+	//	_obj->ChangeState(make_shared<PlayerDead>(_obj));
+	//	return;
+	//}
 }
 
 void PlayerIdle::Exit()

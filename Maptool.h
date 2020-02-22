@@ -3,8 +3,6 @@
 #include <commdlg.h> //OPENFILENAME을 위한 헤더
 #include "PaletteBtn.h"
 
-class Player;
-
 #define SET_TILE_WIDTH 64
 #define SET_TILE_HEIGHT 64
 
@@ -39,8 +37,6 @@ class Tile;
 class Maptool : public Scene
 {
 private:
-    Player* _player;
-
     PaletteBtn* _currentTile;
     vector<PaletteBtn*> _vSetTer_1;
     vector<PaletteBtn*> _vSetLadder;
@@ -48,6 +44,8 @@ private:
     vector<PaletteBtn*> _vSetObj;
 
     vector<Tile*> _vTiles;
+
+    Graphic* _cursorImg;
 
     Vector2 _startPos;
     Vector2 _endPos;

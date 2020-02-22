@@ -4,7 +4,7 @@
 class StartScene : public Scene
 {
 private:
-	//Object* _obj;
+	Graphic* _cursorImg;
 
 public:
 	virtual void Init();

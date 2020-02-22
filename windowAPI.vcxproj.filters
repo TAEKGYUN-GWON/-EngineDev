@@ -100,6 +100,15 @@
     <Filter Include="playGround\UndergroundScene">
       <UniqueIdentifier>{cf96aa26-ad43-4ab4-a280-983c827cd8a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Player\Collider">
+      <UniqueIdentifier>{14b902d4-8a9f-421f-9367-88663aa4decd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\UI">
+      <UniqueIdentifier>{0a64d658-f13e-4326-8e0a-5b2d0d614271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Enemy">
+      <UniqueIdentifier>{7d14389d-f9f2-42c7-8f21-b50ff76ccec7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -303,12 +312,6 @@
     <ClInclude Include="UndergroundScene.h">
       <Filter>playGround\UndergroundScene</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerCollider.h">
-      <Filter>playGround\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="LadderScript.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerAttack.h">
       <Filter>playGround\Player\State</Filter>
     </ClInclude>
@@ -317,6 +320,33 @@
     </ClInclude>
     <ClInclude Include="Direct2D.h">
       <Filter>2DGameFramework\image</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLadder.h">
+      <Filter>playGround\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCollider.h">
+      <Filter>playGround\Player\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="LadderScript.h">
+      <Filter>playGround\Player\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>playGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Ability.h">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDead.h">
+      <Filter>playGround\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyNormal.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>playGround\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -491,12 +521,6 @@
     <ClCompile Include="UndergroundScene.cpp">
       <Filter>playGround\UndergroundScene</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerCollider.cpp">
-      <Filter>playGround\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="LadderScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerAttack.cpp">
       <Filter>playGround\Player\State</Filter>
     </ClCompile>
@@ -505,6 +529,33 @@
     </ClCompile>
     <ClCompile Include="Direct2D.cpp">
       <Filter>2DGameFramework\image</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLadder.cpp">
+      <Filter>playGround\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCollider.cpp">
+      <Filter>playGround\Player\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="LadderScript.cpp">
+      <Filter>playGround\Player\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>playGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Ability.cpp">
+      <Filter>2DGameFramework\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerDead.cpp">
+      <Filter>playGround\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyNormal.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>playGround\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

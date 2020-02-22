@@ -3,16 +3,22 @@
 
 class Player;
 class Tile;
-class ProgressBar;
+class UI;
+class EnemyNormal;
 
 class UndergroundScene : public Scene
 {
 private:
 	Player* _player;
 	vector<Tile*> _vTiles;
+
+	Graphic* _cursorImg;
+
+	UI* _ui;
+
+	EnemyNormal* _enemy;
+
 	bool _isShowRect;
-	ProgressBar* _bar;
-	float current, max;
 
 private:
 	void MapLoad();

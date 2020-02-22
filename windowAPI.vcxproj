@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Ability.h" />
     <ClInclude Include="Astar.h" />
     <ClInclude Include="BoxWorldManager.h" />
     <ClInclude Include="BspNode.h" />
@@ -159,6 +160,9 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Direct2D.h" />
     <ClInclude Include="DrawComponent.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyNormal.h" />
+    <ClInclude Include="EnemyState.h" />
     <ClInclude Include="iniDataManager.h" />
     <ClInclude Include="JsonManager.h" />
     <ClInclude Include="LadderScript.h" />
@@ -173,7 +177,9 @@
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerAttack.h" />
+    <ClInclude Include="PlayerDead.h" />
     <ClInclude Include="PlayerIdle.h" />
+    <ClInclude Include="PlayerLadder.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="Probe.h" />
@@ -213,6 +219,7 @@
     <ClInclude Include="TrainScene.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="txtData.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="UiObject.h" />
     <ClInclude Include="UiObject.hpp" />
     <ClInclude Include="UndergroundScene.h" />
@@ -222,6 +229,7 @@
     <ClInclude Include="windowAPI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Ability.cpp" />
     <ClCompile Include="Astar.cpp" />
     <ClCompile Include="BoxWorldManager.cpp" />
     <ClCompile Include="BspNode.cpp" />
@@ -232,6 +240,9 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Direct2D.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyNormal.cpp" />
+    <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
     <ClCompile Include="JsonManager.cpp" />
     <ClCompile Include="LadderScript.cpp" />
@@ -244,7 +255,9 @@
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerAttack.cpp" />
+    <ClCompile Include="PlayerDead.cpp" />
     <ClCompile Include="PlayerIdle.cpp" />
+    <ClCompile Include="PlayerLadder.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="Probe.cpp" />
@@ -283,6 +296,7 @@
     <ClCompile Include="TrainScene.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="UiObject.cpp" />
     <ClCompile Include="UndergroundScene.cpp" />
     <ClCompile Include="utils.cpp" />

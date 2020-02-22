@@ -2,6 +2,7 @@
 #include "Object.h"
 
 class PlayerState;
+class Ability;
 
 typedef enum class Direction
 {
@@ -38,18 +39,21 @@ private:
 
 	float _armsAngle;
 	float _slopAngle;
-	float _distance;
+	float _ladderDistance;
 
 	bool _isLadderCol;
 
 	Vector2 _ladderPos;
+	Vector2 _ladderSize;
 
+	Ability* _ability;
 
 private:
 	void DirectionSprite();
 
 public:
 	virtual void Init();
+	virtual void Release();
 	virtual void Update();
 	virtual void Render();
 
@@ -59,8 +63,6 @@ public:
 	Object* GetLegs() { return _legs; }
 	Object* GetArms() { return _arms; }
 	Object* GetJudgingFloor() { return _judgingFloor; }
-
-	//PlayerState* GetState() { return _state; }
 
 	shared_ptr<PlayerState> GetState() { return _state; }
 	PlayerState* GetStateToPointer() { return _state.get(); }
@@ -80,5 +82,13 @@ public:
 
 	void SetLadderPosition(Vector2 pos) { _ladderPos = pos; }
 	Vector2 GetLadderPosition() { return _ladderPos; }
+
+	void SetLadderDistance(float dis) { _ladderDistance = dis; }
+	float GetLadderDistance() { return _ladderDistance; }
+
+	void SetLadderSize(Vector2 size) { _ladderSize = size; }
+	Vector2 GetLadderSize() { return _ladderSize; }
+
+	Ability* GetAbility() { return _ability; }
 };
 

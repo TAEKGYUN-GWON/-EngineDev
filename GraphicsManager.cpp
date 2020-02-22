@@ -297,13 +297,23 @@ void GraphicsManager::DrawRoundRect(Vector2 pos, Vector2 size, Vector2 radius, C
 	brush->Release();
 }
 
-void GraphicsManager::DrawEllipse(float x, float y, float radiusX, float radiusY, ColorF::Enum color, float strokeWidth)
+void GraphicsManager::DrawEllipse(float x, float y, float radiusX, float radiusY, ColorF color, float strokeWidth)
 {
 	ID2D1SolidColorBrush* brush;
-	_renderTarget->CreateSolidColorBrush(ColorF(color), &brush);
+	_renderTarget->CreateSolidColorBrush(color, &brush);
 
 	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
 	_renderTarget->DrawEllipse(Ellipse(Point2F(x, y), radiusX, radiusY), brush, strokeWidth);
+	brush->Release();
+}
+
+void GraphicsManager::DrawEllipse(Vector2 pos, Vector2 radius, ColorF color, float strokeWidth)
+{
+	ID2D1SolidColorBrush* brush;
+	_renderTarget->CreateSolidColorBrush(color, &brush);
+
+	_renderTarget->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
+	_renderTarget->DrawEllipse(Ellipse(Point2F(pos.x, pos.y), radius.x, radius.y), brush, strokeWidth);
 	brush->Release();
 }
 

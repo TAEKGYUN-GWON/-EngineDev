@@ -3,7 +3,6 @@
 #include "Tile.h"
 #include <filesystem>
 #include "PaletteBtn.h"
-#include "Player.h"
 #include "UndergroundScene.h"
 #include "StartScene.h"
 
@@ -16,6 +15,8 @@ void Maptool::Init()
 	Scene::Init();
 
 	//setWindowsSize(WINSTARTX, WINSTARTY, 720, 500);
+
+	GRAPHICMANAGER->AddImage("cursor", L"Resource/UI/cursor.png");
 
 	GRAPHICMANAGER->AddImage("blank", L"Resource/Blank.png");
 
@@ -39,8 +40,7 @@ void Maptool::Init()
 
 	_isShowRect = false;
 
-	_player = Object::CreateObject<Player>();
-	_player->Init();
+	_cursorImg = GRAPHICMANAGER->FindImage("cursor");
 }
 
 void Maptool::Release()
@@ -49,6 +49,7 @@ void Maptool::Release()
 	_vSetLadder.clear();
 	_vSetDoor.clear();
 	_vSetObj.clear();
+
 	Scene::Release();
 }
 
@@ -439,6 +440,8 @@ void Maptool::Render()
 
 	//swprintf(buffer, 128, L"%d", index);
 	//GRAPHICMANAGER->Text(Vector2(100, 100), buffer, 20, 200, 20, ColorF::White);
+
+	_cursorImg->Render(MOUSEPOINTER->GetMouseWorldPosition().x, MOUSEPOINTER->GetMouseWorldPosition().y);
 }
 
 void Maptool::Save()
@@ -601,7 +604,7 @@ void Maptool::SetUp()
 	ps->SetRectColor(ColorF::Aquamarine);
 	paletteBg->GetTrans()->SetPos(Vector2(WINSIZEX - 150, WINSIZEY / 2));
 	paletteBg->GetTrans()->SetScale(Vector2(300, WINSIZEY));
-	paletteBg->SetCameraAffect(false);
+	ps->SetCameraEffected(false);
 	ps->SetDepth(4);
 	ps->SetShowRect(true);
 
@@ -640,6 +643,7 @@ void Maptool::SetUp()
 		_vSetTer_1[i]->GetTrans()->SetPos(Vector2((i % SET_TILE_NUM_X) * SET_TILE_WIDTH + WINSIZEX - 245,
 			(i / SET_TILE_NUM_X) * SET_TILE_HEIGHT + 80));
 		_vSetTer_1[i]->GetSprite()->SetPosition(_vSetTer_1[i]->GetTrans()->GetPos());
+		_vSetTer_1[i]->GetSprite()->SetCameraEffected(false);
 		_vSetTer_1[i]->SetIsActive(true);
 	}
 	for (int i = 0; i < _vSetLadder.size(); ++i)
@@ -647,6 +651,7 @@ void Maptool::SetUp()
 		_vSetLadder[i]->GetTrans()->SetPos(Vector2((i % SET_TILE_NUM_X) * SET_TILE_WIDTH + WINSIZEX - 245,
 			(i / SET_TILE_NUM_X) * SET_TILE_HEIGHT + 80));
 		_vSetLadder[i]->GetSprite()->SetPosition(_vSetLadder[i]->GetTrans()->GetPos());
+		_vSetLadder[i]->GetSprite()->SetCameraEffected(false);
 		_vSetLadder[i]->SetIsActive(false);
 	}
 	for (int i = 0; i < _vSetDoor.size(); ++i)
@@ -654,6 +659,7 @@ void Maptool::SetUp()
 		_vSetDoor[i]->GetTrans()->SetPos(Vector2((i % SET_TILE_NUM_X) * SET_TILE_WIDTH + WINSIZEX - 245,
 			(i / SET_TILE_NUM_X) * SET_TILE_HEIGHT + 80));
 		_vSetDoor[i]->GetSprite()->SetPosition(_vSetDoor[i]->GetTrans()->GetPos());
+		_vSetDoor[i]->GetSprite()->SetCameraEffected(false);
 		_vSetDoor[i]->SetIsActive(false);
 	}
 	for (int i = 0; i < _vSetObj.size(); ++i)
@@ -661,6 +667,7 @@ void Maptool::SetUp()
 		_vSetObj[i]->GetTrans()->SetPos(Vector2((i % SET_TILE_NUM_X) * SET_TILE_WIDTH + WINSIZEX - 245,
 			(i / SET_TILE_NUM_X) * SET_TILE_HEIGHT + 80));
 		_vSetObj[i]->GetSprite()->SetPosition(_vSetObj[i]->GetTrans()->GetPos());
+		_vSetObj[i]->GetSprite()->SetCameraEffected(false);
 		_vSetObj[i]->SetIsActive(false);
 	}
 }

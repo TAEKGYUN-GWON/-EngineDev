@@ -14,10 +14,7 @@ void PlayerAttack::Enter()
 
 void PlayerAttack::Update()
 {
-	cout << _obj->GetSprite()->GetCurrentFrameX() << endl;
-
-	//if (_obj->GetSprite()->IsFrameEnd())
-	if (_obj->GetSprite()->GetCurrentFrameX() >= _obj->GetSprite()->GetMaxFrameX())
+	if (_obj->GetSprite()->IsFrameEnd())
 	{
 		_obj->ChangeState(make_shared<PlayerIdle>(_obj));
 	}
