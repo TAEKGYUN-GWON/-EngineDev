@@ -6,7 +6,8 @@
 #include "Knight.h"
 #include "Rogue.h"
 #include "Sorcerer.h"
-
+#include "Player.h"
+#include "ChaosCircle.h"
 void StartScene::Init()
 {
 	Scene::Init();
@@ -24,13 +25,21 @@ void StartScene::Init()
 		GRAPHICMANAGER->AddImage(str + to_string(i), dir + item);
 	}
 
-	//CAMERA->SetScale(Vector2(0.1, 0.1));
+	//CAMERA->SetScale(Vector2(2, 2));
 	//CAMERA->SetPos(Vector2(430, 204));
 	SCENEMANAGER->addScene("t", new TestScene);
 	//SCENEMANAGER->addScene("tt", new Maptool);
 	SCENEMANAGER->addScene("t1", new ProceduralTest);
 
-	Sorcerer* test = Object::CreateObject<Sorcerer>();
+	Object* wall = Object::CreateObject<Object>();
+	wall->SetName("Wall");
+	wall->Init();
+	wall->GetTrans()->SetPos(WINSIZE/2 +Vector2(100,100));
+	wall->GetTrans()->SetScale(50, 50);
+	auto p = wall->AddComponent<PhysicsBody>();
+	p->Init(BodyType::STATIC, 1);
+
+	Player* test = Object::CreateObject<Player>();
 	test->Init(WINSIZE / 2);
 
 	//_obj = Object::CreateObject<Object>();
@@ -61,7 +70,18 @@ void StartScene::Update()
 	if(KEYMANAGER->isOnceKeyDown('Y')) SCENEMANAGER->changeScene("tt");
 	if(KEYMANAGER->isOnceKeyDown('T')) SCENEMANAGER->changeScene("t");
 	if(KEYMANAGER->isOnceKeyDown('P')) SCENEMANAGER->changeScene("t1");
-	CAMERA->Control();
+	if (KEYMANAGER->isOnceKeyDown('B'))
+	{
+		Player* player = (Player*)GetChildFromName("Player");
+		float angle = Vector2::GetAngle(player->GetTrans()->GetPos(), _ptMouse);
+		player->GetPhysics()->ApplyForce(b2Vec2(cosf(angle), -sinf(angle))); 
+	}
+	if (KEYMANAGER->isOnceKeyDown('C'))
+	{
+		Player* player = (Player*)GetChildFromName("Player");
+		player->GetPhysics()->GetBody()->SetLinearVelocity(b2Vec2(0,0));
+	}
+	//CAMERA->Control();
 }
 
 void StartScene::Render()

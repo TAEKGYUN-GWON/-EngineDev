@@ -32,6 +32,7 @@ void Sprite::Init(BOOL isFrame, BOOL isLoop)
 
 void Sprite::Render()
 {
+	DrawComponent::Render();
 	PlayAnimation();
 	if (KEYMANAGER->isToggleKey(VK_F1))
 	{

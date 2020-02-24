@@ -21,8 +21,14 @@ void EnemyManager::Init(Room* owner)
 
 void EnemyManager::Update()
 {
-	for (Enemy* e : _vEnemys)
+	for (Enemy* e : _Enemys)
 	{
+		if (!e->GetIsActive())
+		{
+			e->SetIsRelese();
+			_Enemys.remove(e);
+			break;
+		}
 		e->SetPath(_ast->PathFinder(e->GetTrans()->GetPos(), SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos()));
 		e->SetAngle(Vector2::GetAngle(e->GetTrans()->GetPos(), SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos()));
 		e->SetDistance(Vector2::Distance(e->GetTrans()->GetPos(), SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos()));
@@ -31,14 +37,16 @@ void EnemyManager::Update()
 
 void EnemyManager::Release()
 {
-	for (Enemy* e : _vEnemys)
+	for (Enemy* e : _Enemys)
 		e->SetIsRelese();
 
-	_vEnemys.clear();
+	_Enemys.clear();
 
 	_ast->Release();
 
-	delete _ast;
+	_ast = nullptr;
+
+	_isActive = false;
 }
 
 void EnemyManager::SetEnemys()
@@ -57,7 +65,7 @@ void EnemyManager::SetEnemys()
 				_owner->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) - Vector2(TILE_WIDTH, TILE_HEIGHT));
 			
 			enemy->Init(pos);
-			_vEnemys.push_back(enemy);
+			_Enemys.push_back(enemy);
 		}
 		break;
 
@@ -69,7 +77,7 @@ void EnemyManager::SetEnemys()
 				_owner->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) - Vector2(TILE_WIDTH, TILE_HEIGHT));
 
 			enemy->Init(pos);
-			_vEnemys.push_back(enemy);
+			_Enemys.push_back(enemy);
 		}
 		break;
 
@@ -82,7 +90,7 @@ void EnemyManager::SetEnemys()
 				_owner->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) - Vector2(TILE_WIDTH, TILE_HEIGHT));
 
 			enemy->Init(pos);
-			_vEnemys.push_back(enemy);
+			_Enemys.push_back(enemy);
 		}
 		break;
 

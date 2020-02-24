@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ProceduralTest.h"
 #include "Probe.h"
-
+#include "Player.h"
 void ProceduralTest::Init()
 {
 	Scene::Init();
@@ -65,6 +65,9 @@ void ProceduralTest::Init()
 	obj->GetTrans()->SetScale(MAP_MAX_WIDTH, 10);
 	_vFloors.push_back(obj);
 
+	Player* test = Object::CreateObject<Player>();
+	test->Init(WINSIZE / 2);
+
 	_ast = new Astar;
 
 	for (Object* obj : _vFloors)
@@ -103,7 +106,7 @@ void ProceduralTest::Update()
 
 
 
-	CAMERA->Control();
+	CAMERA->SetPosition(SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos());
 
 }
 
@@ -117,9 +120,64 @@ void ProceduralTest::Release()
 	Scene::Release();
 }
 
+bool Compare(Object* a, Object* b)
+{
+	Transform* aT = a->GetComponent<Transform>();
+	Transform* bT = b->GetComponent<Transform>();
+
+	if (!aT) return false;
+	else if (!bT) return true;
+
+	return aT->GetPosToPivot(TF_PIVOT::BOTTOM).y < bT->GetPosToPivot(TF_PIVOT::BOTTOM).y;
+}
+
+bool Compare2(Object* a, Object* b)
+{
+
+	Sprite* aS = a->GetComponent<Sprite>();
+	Sprite* bS = b->GetComponent<Sprite>();
+
+	if (!aS)
+		return false;
+	else if (!bS)
+		return true;
+	if (a->GetTag() == "Tile" || b->GetTag() == "Tile")return false;
+
+	return aS->GetDepth() < bS->GetDepth();
+
+}
+
 void ProceduralTest::Render()
 {
-	Scene::Render();
+	vector<Object*>z_list;
+	for (auto c : _activeList)
+	{
+		if (c->GetTag() != "Tile") z_list.push_back(c);
+	}
+	//sort(_activeList.begin(), _activeList.end(), Compare2);
+	sort(z_list.begin(), z_list.end(), Compare);
+
+
+	for (Object* child : tiles)
+	{
+		if (child->GetTrans()->GetPos().x + 100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x - 100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
+			child->GetTrans()->GetPos().y + 100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y - 100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
+
+		else child->SetAllowsRender(true);
+
+		child->Render();
+	}
+
+
+	for (Object* child : z_list)
+	{
+		if (child->GetTrans()->GetPos().x + 100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x - 100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
+			child->GetTrans()->GetPos().y + 100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y - 100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
+
+		else child->SetAllowsRender(true);
+
+		child->Render();
+	}
 }
 void ProceduralTest::PhysicsUpdate()
 {
@@ -145,8 +203,33 @@ void ProceduralTest::PhysicsUpdate()
 	}
 
 #else
-	for (int i = 0; i < 50; i++)
+	if (timer <= 3.2f)
 	{
+		for (int i = 0; i < 50; i++)
+		{
+			_b2World->Step(timeStep, velocityIterations, positionIterations);
+			for (b2Body* body = _b2World->GetBodyList(); body; body = body->GetNext())
+			{
+
+				if (!body->GetUserData())
+				{
+					b2Body* deletedObject = body;
+					body = body->GetNext();
+					_b2World->DestroyBody(deletedObject);
+					continue;
+				}
+				if (((Object*)body->GetUserData())->GetTrans() != nullptr)
+				{
+					Transform* now = ((Object*)body->GetUserData())->GetTrans();
+					PhysicsBody* nowP = ((Object*)body->GetUserData())->GetComponent<PhysicsBody>();
+					now->SetPos(nowP->GetBodyPosition());
+				}
+			}
+		}
+	}
+	else
+	{
+
 		_b2World->Step(timeStep, velocityIterations, positionIterations);
 		for (b2Body* body = _b2World->GetBodyList(); body; body = body->GetNext())
 		{
@@ -166,6 +249,7 @@ void ProceduralTest::PhysicsUpdate()
 			}
 		}
 	}
+
 #endif
 
 }
@@ -207,7 +291,8 @@ void ProceduralTest::SetTile()
 
 			Tile* tile = Object::CreateObject<Tile>();
 			tile->Init(j, i);
-			tile->AddComponent<Sprite>();
+			auto s = tile->AddComponent<Sprite>();
+			s->SetDepth(1);
 			tile->SetAttribute(Attribute::NONE_MOVE);
 			tiles.push_back(tile);
 		}
@@ -632,7 +717,7 @@ void ProceduralTest::SetTileObjet()
 			if (o.first == "Carpet")
 			{
 				tiles[idx]->SetName("Carpet");
-				Object* child = Object::CreateObject<Object>();
+				Object* child = Object::CreateObject<Object>(tiles[idx]);
 				child->GetTrans()->SetPos(tiles[idx]->GetTrans()->GetPos());
 				auto s = child->AddComponent<Sprite>();
 				s->SetImgName("Carpet");
@@ -640,24 +725,31 @@ void ProceduralTest::SetTileObjet()
 			}
 			else if (o.first == "Grate")
 			{
-				Object* child = Object::CreateObject<Object>();
+				Object* child = Object::CreateObject<Object>(tiles[idx]);
 				child->GetTrans()->SetPos(tiles[idx]->GetTrans()->GetPos());
 				auto s = child->AddComponent<Sprite>();
 				s->SetImgName("Grate");
+
 				s->SetPosition(tiles[idx]->GetTrans()->GetPos() + (Vector2::up + Vector2::left) * 30);
 			}
 			else if (o.first == "SmallProps")
 			{
-				auto s = tiles[idx]->GetSprite();
+				Object* child = Object::CreateObject<Object>();
+				child->GetTrans()->SetPos(tiles[idx]->GetTrans()->GetPos());
+				auto s = child->AddComponent<Sprite>();
 				s->SetImgName("SmallProps");
+				s->SetDepth(2);
 				s->SetPivot(PIVOT::BOTTOM);
 				s->SetPosition(s->GetPosition() + Vector2::down * 15);
 				tiles[idx]->SetAttribute(Attribute::WALL);
 			}
 			else if (o.first == "PillarIce")
 			{
-				auto s = tiles[idx]->GetSprite();
+				Object* child = Object::CreateObject<Object>();
+				child->GetTrans()->SetPos(tiles[idx]->GetTrans()->GetPos());
+				auto s = child->AddComponent<Sprite>();
 				s->SetImgName("PillarIce");
+				s->SetDepth(2);
 				s->SetPivot(PIVOT::BOTTOM);
 				s->SetPosition(s->GetPosition() + Vector2::down * 15);
 				tiles[idx]->SetAttribute(Attribute::WALL);
@@ -672,15 +764,15 @@ void ProceduralTest::SetTileObjet()
 	{
 		if (t->GetWallType() != WallType::WALL_UP_2) continue;
 
-		int rand = RND->getInt(50);
+		int rand = RND->getInt(100);
 
 		if (rand != 7)continue;
 
 		int bannerType = RND->getInt(2);
-		Object* banner = Object::CreateObject<Object>(t);
+		Object* banner = Object::CreateObject<Object>();
 		banner->GetTrans()->SetPos(t->GetTrans()->GetPos());
 		auto s = banner->AddComponent<Sprite>();
-
+		s->SetDepth(2);
 		if (bannerType)
 			s->SetImgName("IceBanner");
 		else
@@ -1023,6 +1115,21 @@ void ProceduralTest::DelTile()
 
 }
 
+void ProceduralTest::SetPhysics()
+{
+	for (Room* r : selRooms)
+		r->DeActivePhysics();
+
+	for (Tile* t : tiles)
+	{
+		if (t->GetAttribute() != Attribute::WALL) continue;
+
+		auto p = t->AddComponent<PhysicsBody>();
+		p->Init(BodyType::STATIC, 1);
+	}
+	DelTile();
+}
+
 void ProceduralTest::SetScene()
 {
 
@@ -1080,10 +1187,7 @@ void ProceduralTest::SetScene()
 
 	if (timer >= 3.f &&
 		timer <= 3.1f)
-	{
-		for (Room* r : selRooms)
-			r->DeActivePhysics();
-	}
+		SetPhysics();
 
 #endif
 

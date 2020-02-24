@@ -8,7 +8,7 @@ void EnemyIdle::Enter()
 	_timer = 0;
 	_maxTimer = RND->getFromFloatTo(2, 4);
 	_enemy->SetImg(_name);
-
+	_enemy->GetPhysics()->SetBodyPosition();
 
 }
 

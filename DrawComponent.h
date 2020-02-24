@@ -12,7 +12,7 @@ protected:
 public:
 	DrawComponent();
 	~DrawComponent();
-	virtual void Render() = 0;
+	virtual void Render() { _isCameraEffect = _object->GetCameraAffect(); }
 	Transform* GetTransform() { return _trans; }
 	int GetDepth() { return _depth; }
 	void SetDepth(int depth) { _depth = depth; }

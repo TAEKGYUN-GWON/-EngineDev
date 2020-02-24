@@ -83,6 +83,7 @@ public:
 	void SetScale(Vector2 scale);
 	//void SetAngle(float angle) { _angle = angle; };
 	void SetPosition(Vector2 pos, string key);
+	void SetPosition(Vector2 pos);
 	void SetPos(Vector2 pos);
 	void MoveTo(Vector2 endPos, float time, bool isCenter = true);
 

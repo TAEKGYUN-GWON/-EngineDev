@@ -6,7 +6,7 @@ class Room;
 class EnemyManager
 {
 private:
-	vector<Enemy*> _vEnemys;
+	list<Enemy*> _Enemys;
 	Room* _owner;
 	Astar* _ast;
 	bool _isActive;

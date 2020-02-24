@@ -97,6 +97,12 @@
     <Filter Include="2DGameFramework\ProgressBar">
       <UniqueIdentifier>{7343fc74-e38a-4ef0-84ef-1dc7b4fe859f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Skill">
+      <UniqueIdentifier>{cd3ea119-ccca-43ea-8a40-2d9bd6257b78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2DGameFramework\Manager\Mouse">
+      <UniqueIdentifier>{b6e7d06c-961a-449c-a267-caab390f5e58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -303,6 +309,30 @@
     <ClInclude Include="ProgressBar.h">
       <Filter>2DGameFramework\ProgressBar</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>playGround\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyScript.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>playGround\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillObject.h">
+      <Filter>playGround\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaosCircle.h">
+      <Filter>playGround\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>2DGameFramework\Manager\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="WindBoomerang.h">
+      <Filter>playGround\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -478,6 +508,30 @@
     </ClCompile>
     <ClCompile Include="ProgressBar.cpp">
       <Filter>2DGameFramework\ProgressBar</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>playGround\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>playGround\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillObject.cpp">
+      <Filter>playGround\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaosCircle.cpp">
+      <Filter>playGround\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>2DGameFramework\Manager\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="WindBoomerang.cpp">
+      <Filter>playGround\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

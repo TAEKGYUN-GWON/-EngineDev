@@ -14,7 +14,7 @@ void Ability::Init(float maxHp, float atk)
 
 void Ability::Update()
 {
-	if (culHp < 0)
+	if (culHp <= 0)
 	{
 		culHp = 0;
 		isDead = true;
@@ -25,7 +25,7 @@ void Ability::Update()
 void Ability::SetDamage(float atk)
 {
 	culHp -= atk;
-	if (culHp < 0)
+	if (culHp <= 0)
 	{
 		culHp = 0;
 		isDead = true;

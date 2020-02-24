@@ -4,7 +4,7 @@
 
 //enum class EnemyAttackType;
 
-class EnemyState
+class EnemyState : public enable_shared_from_this<EnemyState>
 {
 protected:
 
@@ -22,7 +22,7 @@ public:
 
 	Enemy* GetEnemy() { return _enemy; }
 	string GetStateToString() { return _name; }
-	EnemyState* GetState() { return this; }
+	shared_ptr<EnemyState> GetState() { return shared_from_this(); }
 };
 
 class EnemyIdle : public EnemyState

@@ -73,6 +73,13 @@ void Camera::SetPosition(Vector2 pos, string key)
 	UpdateMatrix();
 }
 
+void Camera::SetPosition(Vector2 pos)
+{
+	_pos.x = pos.x - WINSIZEX / 2;
+	_pos.y = pos.y - WINSIZEY / 2;
+	UpdateMatrix();
+}
+
 void Camera::SetPos(Vector2 pos)
 {
 	_pos += pos * _scale;

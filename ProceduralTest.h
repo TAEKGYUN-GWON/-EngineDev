@@ -46,6 +46,7 @@ public:
 	void SetWall();
 	void SetTileImg();
 	void DelTile();
+	void SetPhysics();
 	vector<Tile*>* GetTiles() { return &tiles; }
 
 	void SetScene();

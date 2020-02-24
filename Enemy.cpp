@@ -32,10 +32,12 @@ void Enemy::Release()
 
 void Enemy::BasicUpdate()
 {
+	if (_ability->GetIsDead()) ChangeState(make_shared<EnemyDeath>(this));
 	_ability->Update();
 	if (_state->GetStateToString() == "Attack")
 		if (_sprite->GetCurrentFrameX() == _atkFrame)
 			_isAtkFrame = true;
+	
 }
 
 void Enemy::AngleDetection()
@@ -68,9 +70,8 @@ void Enemy::SetPath(list<Vector2> path)
 
 void Enemy::SetImg(string stateName)
 {
-	if(_state->GetStateToString() != "Hurt")
-		_sprite->SetImgName(_name + stateName);
-	else
-		_sprite->SetImgName(_name + "Idle");
+	
+	_sprite->SetImgName(_name + stateName);
+
 	BasicUpdate();
 }
