@@ -60,10 +60,16 @@ void Player::Init()
 	_arms->GetTrans()->SetScale(s->GetFrameWidth(), s->GetFrameHeight());
 
 	_cw = CursorWhere::None;
+	_atkType = AtkType::Pistol;
 
 	_physics = AddComponent<PhysicsBody>();
-	_physics->Init(BodyType::DYNAMIC, 3.0f, 3.0f);
+	_physics->Init(BodyType::DYNAMIC, 5.0f, 3.0f);
 	_physics->GetBody()->SetFixedRotation(true);
+
+	b2Filter b;
+	b.categoryBits = CATEGORY_PLAYER;
+	b.maskBits = MASK_PLAYER;
+	_physics->GetBody()->GetFixtureList()->SetFilterData(b);
 
 
 	_judgingFloor = Object::CreateObject<Object>(this);
@@ -81,7 +87,7 @@ void Player::Init()
 
 	_isLadderCol = false;
 
-	_ability = new Ability(100, 100, 10);
+	_ability = make_shared<Ability>(100, 100, 10, SPEED);
 
 	AddComponent<PlayerCollider>();
 }
@@ -150,12 +156,12 @@ void Player::Render()
 	//swprintf(buffer, 128, L"arm : %f", _arms->GetTrans()->GetRotateRadian());
 	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 130), buffer, 20, 200, 20, ColorF::White);
 
-	//char buffer[128];
-	//sprintf_s(buffer, "%s", _state->GetState().c_str());
-	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 200, 20, ColorF::Azure);
+	char buffer[128];
+	sprintf_s(buffer, "%s", _state->GetState().c_str());
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 200, 20, ColorF::Azure);
 
-	//sprintf_s(buffer, "%d", _isLadderCol);
-	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 240), buffer, 20, 200, 20, ColorF::Azure);
+	sprintf_s(buffer, "%d", _isLadderCol);
+	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 240), buffer, 20, 200, 20, ColorF::Azure);
 
 	//sprintf_s(buffer, "index : %d", ((int)MOUSEPOINTER->GetMouseWorldPosition().x / TILE_WIDTH) + TILE_NUM_X * ((int)MOUSEPOINTER->GetMouseWorldPosition().y / TILE_HEIGHT));
 	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 180), buffer, 20, 200, 20, ColorF::Azure);

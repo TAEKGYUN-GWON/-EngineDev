@@ -2,7 +2,8 @@
 #include "PlayerMove.h"
 #include "Player.h"
 #include "PlayerIdle.h"
-#include "PlayerAttack.h"
+//#include "PlayerAttack.h"
+#include "HandAttack.h"
 #include "UndergroundScene.h"
 #include "PlayerDead.h"
 
@@ -13,8 +14,7 @@ void PlayerMove::Enter()
 	_obj->GetLegs()->GetComponent<Sprite>()->SetImgName("Legs_Run");
 	_obj->GetLegs()->GetComponent<Sprite>()->SetFPS(1.5f);
 	_obj->GetPhysicsBody()->GetBody()->SetGravityScale(1);
-
-	_speed = 200.0f;
+	_obj->GetAbility()->SetSpeed(SPEED);
 }
 
 void PlayerMove::Update()
@@ -52,7 +52,8 @@ void PlayerMove::Update()
 		_obj->GetPhysicsBody()->ApplyForce(Vector2::b2Down);
 	}
 
-	_obj->GetTrans()->SetPos(_obj->GetTrans()->GetPos() + Vector2(cosf((int)_obj->GetDirection() * Deg2Rad), -sinf((int)_obj->GetDirection() * Deg2Rad)) * _speed * TIMEMANAGER->getElapsedTime());
+	_obj->GetTrans()->SetPos(_obj->GetTrans()->GetPos() + Vector2(cosf((int)_obj->GetDirection() * Deg2Rad), -sinf((int)_obj->GetDirection() * Deg2Rad)) * 
+		_obj->GetAbility()->GetSpeed() * TIMEMANAGER->getElapsedTime());
 	_obj->GetPhysicsBody()->SetBodyPosition();
 
 	if (!KEYMANAGER->isStayKeyDown('A') && !KEYMANAGER->isStayKeyDown('D'))
@@ -63,7 +64,8 @@ void PlayerMove::Update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
-		_obj->ChangeState(make_shared<PlayerAttack>(_obj));
+		_obj->SetAttackType(AtkType::Hand);
+		_obj->ChangeState(make_shared<HandAttack>(_obj));
 		return;
 	}
 

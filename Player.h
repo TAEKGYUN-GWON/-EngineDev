@@ -1,8 +1,17 @@
 #pragma once
 #include "Object.h"
 
+#define SPEED 200.f
+
 class PlayerState;
 class Ability;
+
+typedef enum class AttackType : byte
+{
+	Hand,
+	Pistol,
+	None,
+} AtkType;
 
 typedef enum class Direction
 {
@@ -36,6 +45,7 @@ private:
 
 	CursorWhere _cw;
 	Dir _dir;
+	AttackType _atkType;
 
 	float _armsAngle;
 	float _slopAngle;
@@ -46,7 +56,7 @@ private:
 	Vector2 _ladderPos;
 	Vector2 _ladderSize;
 
-	Ability* _ability;
+	shared_ptr<Ability> _ability;
 
 private:
 	void DirectionSprite();
@@ -72,10 +82,12 @@ public:
 
 	void SetSlopAngle(float angle) { _slopAngle = angle; }
 	void SetDirection(Dir dir) { _dir = dir; }
+	void SetAttackType(AtkType atk) { _atkType = atk; }
 
 	float GetSlopAngle() { return _slopAngle; }
 	CursorWhere GetCursorWhere() { return _cw; }
 	Direction GetDirection() { return _dir; }
+	AtkType GetAttackType() { return _atkType; }
 
 	void SetIsLadderCollider(bool isCol) { _isLadderCol = isCol; }
 	bool GetIsLadderCollider() { return _isLadderCol; }
@@ -89,6 +101,6 @@ public:
 	void SetLadderSize(Vector2 size) { _ladderSize = size; }
 	Vector2 GetLadderSize() { return _ladderSize; }
 
-	Ability* GetAbility() { return _ability; }
+	shared_ptr<Ability> GetAbility() { return _ability; }
 };
 

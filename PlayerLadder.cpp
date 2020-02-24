@@ -14,7 +14,7 @@ void PlayerLadder::Enter()
 
 	_obj->GetPhysicsBody()->GetBody()->SetGravityScale(0);
 
-	_speed = 0.0f;
+	_obj->GetAbility()->SetSpeed(0.0f);
 }
 
 void PlayerLadder::Update()
@@ -30,8 +30,6 @@ void PlayerLadder::Update()
 		int nowIndex = ((int)_obj->GetJudgingFloor()->GetTrans()->GetPos().x / TILE_WIDTH) + TILE_NUM_X * ((int)_obj->GetJudgingFloor()->GetTrans()->GetPos().y / TILE_HEIGHT);
 		int upIndex = nowIndex - TILE_NUM_X;
 		int downIndex = nowIndex + TILE_NUM_X;
-
-		_speed = 200.0f;
 
 		_distance = fabs(_obj->GetLadderPosition().y - _obj->GetTrans()->GetPos().y);
 
@@ -58,6 +56,7 @@ void PlayerLadder::Update()
 
 					_obj->GetTrans()->pos.x = _obj->GetLadderPosition().x;
 					_obj->SetDirection(Dir::Up);
+					_obj->GetAbility()->SetSpeed(200.0f);
 				}
 			}
 		}
@@ -67,8 +66,6 @@ void PlayerLadder::Update()
 	{
 		if (_obj->GetLegs()->GetComponent<Sprite>()->GetImgKey().compare("Legs_Idle") == 0)
 			_obj->GetLegs()->GetComponent<Sprite>()->SetImgName("Legs_Run");
-
-		_speed = 200.0f;
 
 		_distance = fabs(_obj->GetLadderPosition().y - _obj->GetTrans()->GetPos().y);
 
@@ -95,6 +92,7 @@ void PlayerLadder::Update()
 
 					_obj->GetTrans()->pos.x = _obj->GetLadderPosition().x;
 					_obj->SetDirection(Dir::Down);
+					_obj->GetAbility()->SetSpeed(200.0f);
 				}
 				else
 				{
@@ -107,13 +105,14 @@ void PlayerLadder::Update()
 
 	if (!KEYMANAGER->isStayKeyDown('W') && !KEYMANAGER->isStayKeyDown('S'))
 	{
-		_speed = 0.0f;
+		_obj->GetAbility()->SetSpeed(0.f);
 
 		if (_obj->GetLegs()->GetComponent<Sprite>()->GetImgKey().compare("Legs_Run") == 0)
 			_obj->GetLegs()->GetComponent<Sprite>()->SetImgName("Legs_Idle");
 	}
 
-	_obj->GetTrans()->SetPos(_obj->GetTrans()->GetPos() + Vector2(cosf((int)_obj->GetDirection() * Deg2Rad), -sinf((int)_obj->GetDirection() * Deg2Rad)) * _speed * TIMEMANAGER->getElapsedTime());
+	_obj->GetTrans()->SetPos(_obj->GetTrans()->GetPos() + Vector2(cosf((int)_obj->GetDirection() * Deg2Rad), -sinf((int)_obj->GetDirection() * Deg2Rad)) * 
+		_obj->GetAbility()->GetSpeed() * TIMEMANAGER->getElapsedTime());
 	_obj->GetPhysicsBody()->SetBodyPosition();
 
 	if (_obj->GetAbility()->IsDead())
@@ -124,7 +123,6 @@ void PlayerLadder::Update()
 		_obj->ChangeState(make_shared<PlayerDead>(_obj));
 		return;
 	}
-
 }
 
 void PlayerLadder::Exit()

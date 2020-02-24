@@ -4,7 +4,9 @@
 class StartScene : public Scene
 {
 private:
-	Graphic* _cursorImg;
+	shared_ptr<Graphic> _cursorImg;
+	shared_ptr<Graphic> _logoImg;
+	shared_ptr<Graphic> _eagleImg;
 
 public:
 	virtual void Init();

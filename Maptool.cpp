@@ -49,6 +49,7 @@ void Maptool::Release()
 	_vSetLadder.clear();
 	_vSetDoor.clear();
 	_vSetObj.clear();
+	_vSetPos.clear();
 
 	Scene::Release();
 }
@@ -289,6 +290,11 @@ void Maptool::Update()
 		_page = SamplePage::Object;
 		SetPage();
 	}
+	else if (KEYMANAGER->isOnceKeyUp('5'))
+	{
+		_page = SamplePage::Position;
+		SetPage();
+	}
 
 	if (KEYMANAGER->isOnceKeyUp('U'))
 	{
@@ -415,6 +421,14 @@ void Maptool::Render()
 			GRAPHICMANAGER->DrawRect(Vector2(_vSetObj[i]->GetTrans()->GetPos().x, _vSetObj[i]->GetTrans()->GetPos().y), Vector2(SET_TILE_WIDTH, SET_TILE_HEIGHT), 0.0f, textColor, PIVOT::CENTER, 1.0f, false);
 		}
 		break;
+	case SamplePage::Position:
+		for (int i = 0; i < _vSetPos.size(); ++i)
+		{
+			textColor = ColorF::Brown;
+			swprintf(buffer, 128, L"%s", L"[ Position ]");
+			GRAPHICMANAGER->DrawRect(Vector2(_vSetPos[i]->GetTrans()->GetPos().x, _vSetPos[i]->GetTrans()->GetPos().y), Vector2(SET_TILE_WIDTH, SET_TILE_HEIGHT), 0.0f, textColor, PIVOT::CENTER, 1.0f, false);
+		}
+		break;
 	}
 	GRAPHICMANAGER->Text(Vector2(WINSIZEX - 200, 10), buffer, 20, 100, 20, textColor, TextPivot::CENTER_TOP, L"¸¼Àº°íµñ", false);
 
@@ -430,6 +444,7 @@ void Maptool::Render()
 	GRAPHICMANAGER->DrawRect(Vector2(_rcEraserType.left, _rcEraserType.top), Vector2((_rcEraserType.right - _rcEraserType.left), (_rcEraserType.bottom - _rcEraserType.top)), 0.0f, ColorF::Green, PIVOT::LEFT_TOP, 1.0f, false);
 	if (_eraser == EraserType::Terrain) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : Terrain", 14);
 	else if (_eraser == EraserType::Object) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : Object", 14);
+	else if (_eraser == EraserType::Position) GRAPHICMANAGER->DrawTextD2D(Vector2(_rcEraserType.left + 8, _rcEraserType.top - 4), L"eraser type\n : Position", 14);
 
 	// draw clear button
 	GRAPHICMANAGER->DrawRect(Vector2(_rcClear.left, _rcClear.top), Vector2((_rcClear.right - _rcClear.left), (_rcClear.bottom - _rcClear.top)), 0.0f, ColorF::DarkGoldenrod, PIVOT::LEFT_TOP, 1.0f, false);
@@ -448,7 +463,7 @@ void Maptool::Save()
 {
 	ofstream outFile;
 	//outFile.open("test.map",ios::binary);
-	outFile.open("test.map");
+	outFile.open("test1.map");
 
 	for (Tile* t : _vTiles)
 	{
@@ -670,6 +685,14 @@ void Maptool::SetUp()
 		_vSetObj[i]->GetSprite()->SetCameraEffected(false);
 		_vSetObj[i]->SetIsActive(false);
 	}
+	for (int i = 0; i < _vSetPos.size(); ++i)
+	{
+		_vSetPos[i]->GetTrans()->SetPos(Vector2((i % SET_TILE_NUM_X) * SET_TILE_WIDTH + WINSIZEX - 245,
+			(i / SET_TILE_NUM_X) * SET_TILE_HEIGHT + 80));
+		_vSetPos[i]->GetSprite()->SetPosition(_vSetPos[i]->GetTrans()->GetPos());
+		_vSetPos[i]->GetSprite()->SetCameraEffected(false);
+		_vSetPos[i]->SetIsActive(false);
+	}
 }
 
 void Maptool::SetMap()
@@ -723,6 +746,14 @@ void Maptool::ClickSetTile()
 		_currentTile->SetImageSize(_vSetObj[index]->GetImageSize());
 		_currentTile->SetPaletteAttributeType(_vSetObj[index]->GetPaletteAttributeType());
 		break;
+	case SamplePage::Position:
+		if (index >= _vSetPos.size()) return;
+
+		_currentTile->SetImageKey(_vSetPos[index]->GetImageKey());
+		_currentTile->SetAttribute(_vSetPos[index]->GetAttribute());
+		_currentTile->SetImageSize(_vSetPos[index]->GetImageSize());
+		_currentTile->SetPaletteAttributeType(_vSetPos[index]->GetPaletteAttributeType());
+		break;
 	}
 
 	_currentTile->GetSprite()->SetImgName(_currentTile->GetImageKey());
@@ -743,7 +774,7 @@ void Maptool::RemoveObject()
 		_vTiles[index]->GetSprite()->SetImgName("None");
 		_vTiles[index]->SetAttribute(TAttribute::NONE);
 		break;
-	case EraserType::Object:
+	case EraserType::Object: case EraserType::Position:
 		if (!_vTiles[index]->GetTileObject()->GetIsActive()) return;
 		
 		Tile* p;
@@ -759,6 +790,7 @@ void Maptool::RemoveObject()
 			_vTiles[p->GetTileChildren()[i]]->GetTileObject()->SetImgName("None");
 			_vTiles[p->GetTileChildren()[i]]->GetTileObject()->GetSprite()->SetImgName("None");
 			_vTiles[p->GetTileChildren()[i]]->GetTileObject()->GetSprite()->SetDepth(0);
+			_vTiles[p->GetTileChildren()[i]]->GetTileObject()->GetSprite()->SetRectColor(ColorF::Blue);
 			_vTiles[p->GetTileChildren()[i]]->GetTileObject()->SetAttribute(TAttribute::NONE);
 			_vTiles[p->GetTileChildren()[i]]->GetTileObject()->SetTileParent(-1);
 			_vTiles[p->GetTileChildren()[i]]->GetTileObject()->SetIsActive(false);
@@ -835,7 +867,8 @@ void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
 	}
 	else if (palett.GetImageSize().y <= TILE_HEIGHT * 2)
 	{
-		if (_currentTile->GetPaletteAttributeType() == PAT::Object)
+		if (_currentTile->GetPaletteAttributeType() == PAT::Object ||
+			_currentTile->GetPaletteAttributeType() == PAT::Position)
 		{
 			if (curIdx - TILE_NUM_X < 0) return;
 
@@ -846,7 +879,6 @@ void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
 			_vTiles[curIdx]->AddTileChildren(_vTiles[curIdx - TILE_NUM_X]);
 
 			int c = _vTiles[curIdx]->GetTileChildren()[0];
-			//_vTiles[c]->GetTileObject()->SetImgName(_currentTile->GetImageKey());
 			_vTiles[c]->GetTileObject()->SetAttribute(_currentTile->GetAttribute());
 
 			if (_vTiles[c]->GetTileObject()->GetAttribute() == TAttribute::INTERACTION)
@@ -854,6 +886,12 @@ void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
 			
 			else if (_vTiles[c]->GetTileObject()->GetAttribute() == TAttribute::DOOR)
 				_vTiles[c]->GetTileObject()->GetSprite()->SetRectColor(ColorF::Lavender);
+
+			else if (_vTiles[c]->GetTileObject()->GetAttribute() == TAttribute::NPC)
+				_vTiles[c]->GetTileObject()->GetSprite()->SetRectColor(ColorF::Brown);
+
+			else if (_vTiles[c]->GetTileObject()->GetAttribute() == TAttribute::ENEMY)
+				_vTiles[c]->GetTileObject()->GetSprite()->SetRectColor(ColorF::DimGray);
 
 			_vTiles[c]->GetTileObject()->GetSprite()->SetFillRect(true);
 			_vTiles[c]->GetTileObject()->SetIsActive(true);
@@ -898,14 +936,6 @@ void Maptool::SetAttribute(int curIdx, PaletteBtn& palett)
 				_vTiles[c]->GetTileObject()->SetIsActive(true);
 			}
 
-			//for (Tile* c : _vTiles[curIdx]->GetTileChildren())
-			//{
-			//	c->GetTileObject()->SetImgName(_currentTile->GetImageKey());
-			//	c->GetTileObject()->SetAttribute(_currentTile->GetAttribute());
-			//	c->GetTileObject()->GetSprite()->SetDepth(1);
-			//	c->GetTileObject()->SetIsActive(true);
-			//}
-
 			SetTileParentObject(curIdx, _vTiles[curIdx]->GetTrans()->GetPos(), 1);
 		}
 		else if (_currentTile->GetPaletteAttributeType() == PAT::Terrain)
@@ -935,27 +965,35 @@ void Maptool::SetPage()
 
 		for (auto door : _vSetDoor)
 			if (door->GetIsActive()) door->SetIsActive(false);
+		for (auto pos : _vSetPos)
+			if (pos->GetIsActive())	pos->SetIsActive(false);
 
-		for (auto t1 : _vSetTer_1) 
+		for (auto t1 : _vSetTer_1)
+		{
 			if (!t1->GetIsActive())
 			{
 				t1->SetIsActive(true);
 				t1->SetAllowsRender(true);
 			}
+		}
 	}
 	break;
 	case SamplePage::Ladder:
 	{
-		for (auto t1 : _vSetTer_1) 
+		for (auto t1 : _vSetTer_1)
+		{
 			if (t1->GetIsActive())
 			{
 				t1->SetIsActive(false);
 				t1->SetAllowsRender(false);
 			}
+		}
 		for (auto obj : _vSetObj) 
 			if (obj->GetIsActive())	obj->SetIsActive(false);
 		for (auto door : _vSetDoor) 
 			if (door->GetIsActive()) door->SetIsActive(false);
+		for (auto pos : _vSetPos)
+			if (pos->GetIsActive())	pos->SetIsActive(false);
 
 		for (auto t2 : _vSetLadder) 
 			if (!t2->GetIsActive())	t2->SetIsActive(true);
@@ -963,16 +1001,20 @@ void Maptool::SetPage()
 	break;
 	case SamplePage::Door:
 	{
-		for (auto t1 : _vSetTer_1) 
+		for (auto t1 : _vSetTer_1)
+		{
 			if (t1->GetIsActive())
 			{
 				t1->SetIsActive(false);
 				t1->SetAllowsRender(false);
 			}
+		}
 		for (auto obj : _vSetObj) 
 			if (obj->GetIsActive())	obj->SetIsActive(false);
 		for (auto t2 : _vSetLadder) 
 			if (t2->GetIsActive()) t2->SetIsActive(false);
+		for (auto pos : _vSetPos)
+			if (pos->GetIsActive())	pos->SetIsActive(false);
 
 		for (auto door : _vSetDoor) 
 			if (!door->GetIsActive())	door->SetIsActive(true);
@@ -980,19 +1022,44 @@ void Maptool::SetPage()
 	break;
 	case SamplePage::Object:
 	{
-		for (auto t1 : _vSetTer_1) 
+		for (auto t1 : _vSetTer_1)
+		{
 			if (t1->GetIsActive())
 			{
 				t1->SetIsActive(false);
 				t1->SetAllowsRender(false);
 			}
+		}
 		for (auto t2 : _vSetLadder) 
 			if (t2->GetIsActive()) t2->SetIsActive(false);
 		for (auto door : _vSetDoor) 
 			if (door->GetIsActive()) door->SetIsActive(false);
+		for (auto pos : _vSetPos)
+			if (pos->GetIsActive())	pos->SetIsActive(false);
 
 		for (auto obj : _vSetObj) 
 			if (!obj->GetIsActive())	obj->SetIsActive(true);
+	}
+	break;
+	case SamplePage::Position:
+	{
+		for (auto t1 : _vSetTer_1)
+		{
+			if (t1->GetIsActive())
+			{
+				t1->SetIsActive(false);
+				t1->SetAllowsRender(false);
+			}
+		}
+		for (auto t2 : _vSetLadder)
+			if (t2->GetIsActive()) t2->SetIsActive(false);
+		for (auto door : _vSetDoor)
+			if (door->GetIsActive()) door->SetIsActive(false);
+		for (auto obj : _vSetObj)
+			if (obj->GetIsActive())	obj->SetIsActive(false);
+
+		for (auto pos : _vSetPos)
+			if (!pos->GetIsActive())	pos->SetIsActive(true);
 	}
 	break;
 	}
@@ -1062,6 +1129,18 @@ void Maptool::SetTileParentObject(int index, Vector2 imgPos, int imgDepth)
 		pO->GetSprite()->SetFillRect(true);
 	}
 
+	else if (pO->GetAttribute() == TAttribute::NPC)
+	{
+		pO->GetSprite()->SetRectColor(ColorF::Brown);
+		pO->GetSprite()->SetFillRect(true);
+	}
+
+	else if (pO->GetAttribute() == TAttribute::ENEMY)
+	{
+		pO->GetSprite()->SetRectColor(ColorF::DimGray);
+		pO->GetSprite()->SetFillRect(true);
+	}
+
 	pO->SetIsActive(true);
 }
 
@@ -1076,6 +1155,8 @@ void Maptool::ClassificationAttribute()
 	SetPaletteAndAddImage("Resource/Object/Door/", PAT::Object, TAttribute::DOOR, _vSetDoor);
 	SetPaletteAndAddImage("Resource/Object/Interaction/", PAT::Object, TAttribute::INTERACTION, _vSetObj);
 	SetPaletteAndAddImage("Resource/Object/Dead_Body/", PAT::Object, TAttribute::DEAD_BODY, _vSetObj);
+	SetPaletteAndAddImage("Resource/NPC/", PAT::Position, TAttribute::NPC, _vSetPos);
+	SetPaletteAndAddImage("Resource/Enemy/Maptool/", PAT::Position, TAttribute::ENEMY, _vSetPos);
 	SetPaletteAndAddImage("Resource/Object/Ladder/", PAT::Ladder, TAttribute::LADDER, _vSetLadder, Vector2(1, 3), Vector2(0.6f, 0.6f));
 
 	GRAPHICMANAGER->AddImage("map", L"Resource/Map/Base.png");

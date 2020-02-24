@@ -33,7 +33,6 @@ void PhysicsManager::BeginContact(b2Contact * contacts)
 		s->CollisionBegin(b);
 	for (auto s : b->GetComponents<Collider>())
 		s->CollisionBegin(a);
-
 }
 
 void PhysicsManager::PreSolve(b2Contact * contacts, const b2Manifold * oldManifold)

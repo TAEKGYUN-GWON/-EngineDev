@@ -6,7 +6,8 @@
 #include "Maptool.h"
 #include "StartScene.h"
 #include "UI.h"
-#include "EnemyNormal.h"
+//#include "EnemyNormal.h"
+#include "EnemyManager.h"
 
 void UndergroundScene::Init()
 {
@@ -16,12 +17,13 @@ void UndergroundScene::Init()
 
 	_name = "underground";
 
-	GRAPHICMANAGER->AddImage("cursor", L"Resource/UI/cursor.png");
-
 	_player = Object::CreateObject<Player>();
 	_player->Init();
 	_player->GetTrans()->SetPos(WINSIZEX / 2 - 500, 325);
 	_player->GetPhysicsBody()->SetBodyPosition();
+
+	_enemyMgr = new EnemyManager;
+	_enemyMgr->Init();
 
 	AddImage();
 	MapLoad();
@@ -29,7 +31,8 @@ void UndergroundScene::Init()
 	_ui = new UI;
 	_ui->Init();
 
-	_cursorImg = GRAPHICMANAGER->FindImage("cursor");
+	_cursorImg = new Graphic;
+	_cursorImg->Init(Direct2D::GetInstance()->CreateBitmap(L"Resource/UI/cursor.png"), "cursor", L"Resource/UI/cursor.png");
 
 	SCENEMANAGER->addScene("maptool", new Maptool);
 	SCENEMANAGER->addScene("start", new StartScene);
@@ -38,17 +41,18 @@ void UndergroundScene::Init()
 
 	SCENEMANAGER->GetNowScene()->GetWorld()->SetGravity(b2Vec2(0.0f, 15.0f));
 	//SCENEMANAGER->GetNowScene()->GetWorld()->SetGravity(b2Vec2(0.0f, 100.0f));
-
-	_enemy = Object::CreateObject<EnemyNormal>();
-	_enemy->Init();
-	_enemy->GetTrans()->SetPos(WINSIZEX / 2 - 300, 325);
-	_enemy->GetPhysics()->SetBodyPosition();
 }
 
 void UndergroundScene::Release()
 {
 	_vTiles.clear();
-	_ui->Release();
+	SAFE_OBJECT_RELEASE(_ui);
+	SAFE_OBJECT_RELEASE(_enemyMgr);
+	SAFE_OBJECT_RELEASE(_cursorImg);
+
+	SAFE_DELETE(_ui);
+	SAFE_DELETE(_enemyMgr);
+	SAFE_DELETE(_cursorImg);
 
 	Scene::Release();
 }
@@ -84,6 +88,8 @@ void UndergroundScene::Update()
 		SCENEMANAGER->changeScene("start");
 		return;
 	}
+
+	_enemyMgr->Update();
 }
 
 void UndergroundScene::Render()
@@ -93,6 +99,28 @@ void UndergroundScene::Render()
 	_ui->Render();
 
 	_cursorImg->Render(MOUSEPOINTER->GetMouseWorldPosition().x, MOUSEPOINTER->GetMouseWorldPosition().y);
+
+	//char buffer[128];
+	//for (auto t : _vTiles)
+	//{
+	//	sprintf_s(buffer, "%d", t->GetIndex());
+	//	GRAPHICMANAGER->Text(t->GetTrans()->GetPos(), buffer, 10, 20, 20, ColorF::Red, TextPivot::LEFT_TOP, L"¸¼Àº°íµñ", true);
+	//}
+
+	wchar_t buffer[128];
+	for (int i = 0; i < 25; ++i)
+	{
+		for (int j = 0; j < 33; ++j)
+		{
+			int index = (i + (int)CAMERA->GetPosition().y / TILE_HEIGHT) * TILE_NUM_X + (j + (int)CAMERA->GetPosition().x / TILE_WIDTH);
+
+			if (index < 0 || index >= TILE_NUM_X * TILE_NUM_Y) continue;
+
+			//sprintf_s(buffer, "%d", index);
+			swprintf(buffer, 128, L"%d", index);
+			GRAPHICMANAGER->DrawTextD2D(_vTiles[index]->GetTrans()->GetPos() + Vector2(-(TILE_WIDTH / 2) + 2, TILE_HEIGHT / 7), buffer, 10, ColorF::Yellow, TextPivot::LEFT_TOP, L"¸¼Àº°íµñ", true);
+		}
+	}
 }
 
 void UndergroundScene::MapLoad()
@@ -120,7 +148,7 @@ void UndergroundScene::MapLoad()
 		}
 	}
 
-	ifstream inFile("test.map");
+	ifstream inFile("test1.map");
 	Vector2 pos;
 	/*for (Tile* t : _vTiles)
 	{
@@ -334,6 +362,10 @@ void UndergroundScene::MapLoad()
 
 		if (_vTiles[i]->GetAttribute() == TAttribute::WALL)
 		{
+			b2Filter b;
+			b.categoryBits = CATEGORY_SCENERY;
+			b.maskBits = MASK_SCENERY;
+
 			if (_vTiles[i]->GetImgName().compare("Wall_RB") == 0)
 			{
 				_vTiles[i]->GetTrans()->SetPos(_vTiles[i]->GetTrans()->GetPos() + Vector2(14.5f, 14.5f));
@@ -341,6 +373,7 @@ void UndergroundScene::MapLoad()
 				_vTiles[i]->SetPhysics();
 				_vTiles[i]->GetPhysics()->SetBodyPosition();
 				_vTiles[i]->GetPhysics()->GetBody()->SetTransform(b2Vec2(_vTiles[i]->GetPhysics()->GetBody()->GetPosition().x, _vTiles[i]->GetPhysics()->GetBody()->GetPosition().y), PI / 4);
+				_vTiles[i]->GetPhysics()->GetBody()->GetFixtureList()->SetFilterData(b);
 			}
 			else if (_vTiles[i]->GetImgName().compare("Wall_RT") == 0)
 			{
@@ -349,6 +382,7 @@ void UndergroundScene::MapLoad()
 				_vTiles[i]->SetPhysics();
 				_vTiles[i]->GetPhysics()->SetBodyPosition();
 				_vTiles[i]->GetPhysics()->GetBody()->SetTransform(b2Vec2(_vTiles[i]->GetPhysics()->GetBody()->GetPosition().x, _vTiles[i]->GetPhysics()->GetBody()->GetPosition().y), PI / 4);
+				_vTiles[i]->GetPhysics()->GetBody()->GetFixtureList()->SetFilterData(b);
 			}
 			else if (_vTiles[i]->GetImgName().compare("Wall_LB") == 0)
 			{
@@ -357,6 +391,7 @@ void UndergroundScene::MapLoad()
 				_vTiles[i]->SetPhysics();
 				_vTiles[i]->GetPhysics()->SetBodyPosition();
 				_vTiles[i]->GetPhysics()->GetBody()->SetTransform(b2Vec2(_vTiles[i]->GetPhysics()->GetBody()->GetPosition().x, _vTiles[i]->GetPhysics()->GetBody()->GetPosition().y), PI / 4);
+				_vTiles[i]->GetPhysics()->GetBody()->GetFixtureList()->SetFilterData(b);
 			}
 			else if (_vTiles[i]->GetImgName().compare("Wall_LT") == 0)
 			{
@@ -365,16 +400,19 @@ void UndergroundScene::MapLoad()
 				_vTiles[i]->SetPhysics();
 				_vTiles[i]->GetPhysics()->SetBodyPosition();
 				_vTiles[i]->GetPhysics()->GetBody()->SetTransform(b2Vec2(_vTiles[i]->GetPhysics()->GetBody()->GetPosition().x, _vTiles[i]->GetPhysics()->GetBody()->GetPosition().y), PI / 4);
+				_vTiles[i]->GetPhysics()->GetBody()->GetFixtureList()->SetFilterData(b);
 			}
 			else
 			{
 				_vTiles[i]->SetPhysics();
 				_vTiles[i]->GetPhysics()->SetBodyPosition();
+				_vTiles[i]->GetPhysics()->GetBody()->GetFixtureList()->SetFilterData(b);
 			}
 		}
 
 		if (_vTiles[i]->GetTileObject()->GetAttribute() == TAttribute::LADDER)
 		{
+			cout << i << endl;
 			if (_vTiles[i]->GetTileParent() == -1)
 			{
 				int children = _vTiles[i]->GetTileChildren().size();
@@ -421,8 +459,39 @@ void UndergroundScene::MapLoad()
 				_vTiles[i]->GetTileObject()->GetPhysics()->SetSensor(true);
 			}
 		}
+
+		if (_vTiles[i]->GetTileObject()->GetAttribute() == TAttribute::ENEMY)
+		{
+			if (_vTiles[i]->GetTileParent() == -1)
+			{
+				_enemyMgr->SetEnemy(_vTiles[i]->GetTrans()->GetPos());
+				_vTiles[i]->GetTileObject()->SetImgName("None");
+				_vTiles[i]->GetTileObject()->GetSprite()->SetImgName("None");
+			}
+			_vTiles[i]->GetTileObject()->GetSprite()->SetRectColor(ColorF::Blue);
+			_vTiles[i]->GetTileObject()->GetSprite()->SetFillRect(false);
+			_vTiles[i]->GetTileObject()->SetIsActive(false);
+		}
 	}
 	inFile.close();
+
+	//for (int i = 0; i < _vTiles.size(); )
+	//{
+	//	if (_vTiles[i]->GetImgName().compare("None") == 0)
+	//	{
+	//		_vTiles.erase(_vTiles.begin() + i);
+	//		//_vTiles[i]->SetIsActive(false);
+	//	}
+	//	else i++;
+	//}
+
+	for (Tile* t : _vTiles)
+	{
+		if (t->GetImgName().compare("None") == 0)
+		{
+			t->SetIsActive(false);
+		}
+	}
 }
 
 void UndergroundScene::AddImage()
@@ -433,6 +502,8 @@ void UndergroundScene::AddImage()
 	DirectorySearch("Resource/Object/Door/");
 	DirectorySearch("Resource/Object/Interaction/");
 	DirectorySearch("Resource/Object/Dead_Body/");
+	DirectorySearch("Resource/NPC/");
+	DirectorySearch("Resource/Enemy/Maptool/");
 	DirectorySearch("Resource/Object/Ladder/", 1, 3);
 }
 

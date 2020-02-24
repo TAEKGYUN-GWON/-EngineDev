@@ -118,12 +118,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 
 		break;
-	case WM_LBUTTONDOWN:
-		_leftBtnDown = true;
-		break;
-	case WM_LBUTTONUP:
-		_leftBtnDown = false;
-		break;
 	case WM_MOUSEMOVE:
 		_ptMouse.x = static_cast<float>(LOWORD(lParam));
 		_ptMouse.y = static_cast<float>(HIWORD(lParam));

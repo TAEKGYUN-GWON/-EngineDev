@@ -2,15 +2,24 @@
 #include "Object.h"
 
 class EnemyState;
+class Ability;
+
+typedef enum class EnemyDirection
+{
+	Left = -1,
+	None,
+	Right,
+} E_Dir;
 
 class Enemy : public Object
 {
 protected:
+
 	Sprite* _sprite;
 	PhysicsBody* _physics;
-	Ability* _ability;
-
+	shared_ptr<Ability> _ability;
 	shared_ptr<EnemyState> _state;
+	EnemyDirection _dir;
 
 public:
 	Enemy() {}
@@ -21,12 +30,15 @@ public:
 	virtual void Update();
 	virtual void Render();
 
-	virtual Sprite* GetSprite() { return _sprite; }
-	virtual PhysicsBody* GetPhysics() { return _physics; }
-	virtual Ability* GetAbility() { return _ability; }
+	void SetDirection(E_Dir dir) { _dir = dir; }
+	E_Dir GetDirection() { return _dir; }
 
-	virtual void ChangeState(shared_ptr<EnemyState> state);
-
-	virtual shared_ptr<EnemyState> GetState() { return _state; }
+	Sprite* GetSprite() { return _sprite; }
+	PhysicsBody* GetPhysics() { return _physics; }
+	shared_ptr<Ability> GetAbility() { return _ability; }
+	
+	void ChangeState(shared_ptr<EnemyState> state);
+	
+	shared_ptr<EnemyState> GetState() { return _state; }
 };
 

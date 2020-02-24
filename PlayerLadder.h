@@ -4,7 +4,6 @@
 class PlayerLadder : public PlayerState
 {
 private:
-	float _speed;
 	float _distance;
 
 public:

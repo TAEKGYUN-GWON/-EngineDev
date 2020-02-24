@@ -20,7 +20,7 @@ void PhysicsBody::Init(BodyType type, float32 friction, float32 density, float32
 			bodyDef.userData = _object;
 			bodyDef.position.Set(bodyPosition.x, bodyPosition.y);
 			_body = SCENEMANAGER->GetNowScene()->GetWorld()->CreateBody(&bodyDef);  //bodyDef의 내용을 바탕으로 body를 만듬
-
+			
 			Vector2 bodySize = { _trans->GetScale().x / 2.f,_trans->GetScale().y / 2.f };
 			bodySize = Convert(bodySize);
 
@@ -123,7 +123,6 @@ void PhysicsBody::Init(BodyType type, float32 friction, float32 density, float32
 			break;
 		}
 	}
-
 }
 
 
@@ -168,7 +167,6 @@ void PhysicsBody::SetBodyActive(bool sleep)
 
 void PhysicsBody::SetSensor(bool sensor)
 {
-
 	_body->GetFixtureList()->SetSensor(sensor);
 }
 

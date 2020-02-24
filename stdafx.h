@@ -26,7 +26,7 @@ using namespace std;
 #else
 #pragma comment(lib, "lib/x86_64/Release/Box2D.lib")
 #endif
-
+//rrr
 #include "commonMacroFunction.h"
 #include "randomFunction.h"
 #include "keyManager.h"
@@ -48,7 +48,7 @@ using namespace SEVENTEEN_UTIL;
 // ## 19.10.30 ## - 디파인문 -
 //=========================================
 
-#define WINNAME (LPCTSTR)(TEXT("The Final Station"))
+#define WINNAME (LPCTSTR)(TEXT("Team Ω"))
 #define WINSTARTX 50
 #define WINSTARTY 50
 #define WINSIZEX 1280
@@ -72,6 +72,7 @@ using namespace SEVENTEEN_UTIL;
 #include"ObjectManager.h"
 #include "MousePointer.h"
 #include "Ability.h"
+#include "Image.h"
 
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()
@@ -92,6 +93,14 @@ using namespace SEVENTEEN_UTIL;
 #define SAFE_RELEASE(p) {if(p) {(p)->release(); (p) = NULL;}}
 #define SAFE_OBJECT_RELEASE(p) {if(p) {(p)->Release(); (p) = NULL;}}
 #define SAFE_DELETE_ARRAY(p) {if(p) { delete[](p); (p) = NULL;}}
+
+const short CATEGORY_PLAYER = 0x0001;	// 0000000000000001 in binary
+const short CATEGORY_ENEMY = 0x0002;	// 0000000000000010 in binary
+const short CATEGORY_SCENERY = 0x0004;	// 0000000000000100 in binary
+
+const short MASK_PLAYER = ~CATEGORY_ENEMY | CATEGORY_SCENERY;
+const short MASK_ENEMY = CATEGORY_PLAYER | CATEGORY_SCENERY;
+const short MASK_SCENERY = -1;
 
 template <typename T>
 inline void SafeRelease(T* &p) { if (p) p->Release(); p = NULL; }

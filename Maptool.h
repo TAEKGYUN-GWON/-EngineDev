@@ -15,13 +15,15 @@ enum class SamplePage : byte
     Ladder,
     Door,
     Object,
-    PAGE_END,
+    Position,
+    Page_end,
 };
 
 enum class EraserType : byte
 {
     Terrain,
     Object,
+    Position,
     End,
 };
 
@@ -42,6 +44,7 @@ private:
     vector<PaletteBtn*> _vSetLadder;
     vector<PaletteBtn*> _vSetDoor;
     vector<PaletteBtn*> _vSetObj;
+    vector<PaletteBtn*> _vSetPos;
 
     vector<Tile*> _vTiles;
 

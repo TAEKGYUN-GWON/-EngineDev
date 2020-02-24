@@ -2,6 +2,7 @@
 #include "PlayerCollider.h"
 #include "Tile.h"
 #include "Player.h"
+#include "EnemyNormal.h"
 
 void PlayerCollider::CollisionBegin(void* obj)
 {
@@ -33,6 +34,10 @@ void PlayerCollider::CollisionBegin(void* obj)
 		//{
 		//	//me->GetPhysicsBody()->GetBody()->SetGravityScale(100);
 		//}
+	}
+	if (to->GetTag().compare("Enemy") == 0)
+	{
+		EnemyNormal* e = (EnemyNormal*)obj;
 	}
 }
 

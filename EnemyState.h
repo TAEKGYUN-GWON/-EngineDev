@@ -1,12 +1,15 @@
 #pragma once
 
 class Enemy;
+class Player;
 
 class EnemyState abstract
 {
 protected:
 	Enemy* _enemy;
 	string _state;
+	Player* _player;
+	float _timer;
 
 public:
 	EnemyState() {}
@@ -23,6 +26,7 @@ public:
 class EnemyIdle : public EnemyState
 {
 private:
+	float _distance;
 
 public:
 	EnemyIdle(Enemy* obj) : EnemyState(obj) {}
@@ -36,6 +40,7 @@ public:
 class EnemyMove : public EnemyState
 {
 private:
+	Vector2 _v2Dis;
 
 public:
 	EnemyMove(Enemy* obj) : EnemyState(obj) {}
@@ -52,6 +57,18 @@ private:
 
 public:
 	EnemyAttack(Enemy* obj) : EnemyState(obj) {}
+
+	virtual void Enter() override;
+	virtual void Update() override;
+	virtual void Exit() override;
+};
+
+class EnemyDamage : public EnemyState
+{
+private:
+
+public:
+	EnemyDamage(Enemy* obj) : EnemyState(obj) {}
 
 	virtual void Enter() override;
 	virtual void Update() override;

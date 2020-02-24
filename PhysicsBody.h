@@ -26,7 +26,7 @@ public:
 
 	//바디 포지션 가져오기
 	Vector2 GetBodyPosition();
-	//사용 금지
+
 	Vector2 GetBodyScale();
 	//바디의 Rotate 가져오기
 	float GetBodyAngle() { return _body->GetAngle(); }

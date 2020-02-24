@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "PlayerMove.h"
 #include "PlayerAttack.h"
+#include "HandAttack.h"
 #include "PlayerLadder.h"
 #include "PlayerDead.h"
 #include "UndergroundScene.h"
@@ -54,7 +55,9 @@ void PlayerIdle::Update()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
 	{
-		_obj->ChangeState(make_shared<PlayerAttack>(_obj));
+		_obj->SetAttackType(AtkType::Hand);
+		_obj->ChangeState(make_shared<HandAttack>(_obj));
+		//_obj->ChangeState(make_shared<PlayerAttack>(_obj));
 		return;
 	}
 

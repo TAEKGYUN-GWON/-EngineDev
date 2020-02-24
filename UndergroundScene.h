@@ -4,7 +4,8 @@
 class Player;
 class Tile;
 class UI;
-class EnemyNormal;
+//class EnemyNormal;
+class EnemyManager;
 
 class UndergroundScene : public Scene
 {
@@ -16,7 +17,8 @@ private:
 
 	UI* _ui;
 
-	EnemyNormal* _enemy;
+	//EnemyNormal* _enemy;
+	EnemyManager* _enemyMgr;
 
 	bool _isShowRect;
 

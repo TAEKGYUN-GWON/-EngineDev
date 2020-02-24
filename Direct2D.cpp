@@ -28,6 +28,9 @@ Direct2D* Direct2D::GetInstance()
 
 ID2D1Bitmap* Direct2D::CreateBitmap(wstring imgPath)
 {
+	// 임시
+	_renderTarget = GRAPHICMANAGER->GetRenderTarget();
+
 	// 디코더 생성
 	IWICBitmapDecoder* decoder = nullptr;
 	_wicFactory->CreateDecoderFromFilename(imgPath.c_str(), NULL, GENERIC_READ,

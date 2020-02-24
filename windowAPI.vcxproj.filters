@@ -348,6 +348,18 @@
     <ClInclude Include="EnemyState.h">
       <Filter>playGround\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>2DGameFramework\image</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCollider.h">
+      <Filter>playGround\Player\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="HandAttack.h">
+      <Filter>playGround\Player\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -556,6 +568,18 @@
     </ClCompile>
     <ClCompile Include="EnemyState.cpp">
       <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>2DGameFramework\image</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackCollider.cpp">
+      <Filter>playGround\Player\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="HandAttack.cpp">
+      <Filter>playGround\Player\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

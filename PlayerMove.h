@@ -4,7 +4,6 @@
 class PlayerMove : public PlayerState
 {
 private:
-	float _speed;
 
 public:
 	PlayerMove(Player* obj) : PlayerState(obj) {}

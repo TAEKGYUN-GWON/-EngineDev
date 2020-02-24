@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Ability.h" />
     <ClInclude Include="Astar.h" />
+    <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="BoxWorldManager.h" />
     <ClInclude Include="BspNode.h" />
     <ClInclude Include="BSP_TestScene.h" />
@@ -161,8 +162,11 @@
     <ClInclude Include="Direct2D.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyNormal.h" />
     <ClInclude Include="EnemyState.h" />
+    <ClInclude Include="HandAttack.h" />
+    <ClInclude Include="Image.h" />
     <ClInclude Include="iniDataManager.h" />
     <ClInclude Include="JsonManager.h" />
     <ClInclude Include="LadderScript.h" />
@@ -231,6 +235,7 @@
   <ItemGroup>
     <ClCompile Include="Ability.cpp" />
     <ClCompile Include="Astar.cpp" />
+    <ClCompile Include="AttackCollider.cpp" />
     <ClCompile Include="BoxWorldManager.cpp" />
     <ClCompile Include="BspNode.cpp" />
     <ClCompile Include="BSP_TestScene.cpp" />
@@ -241,8 +246,11 @@
     <ClCompile Include="Direct2D.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnemyNormal.cpp" />
     <ClCompile Include="EnemyState.cpp" />
+    <ClCompile Include="HandAttack.cpp" />
+    <ClCompile Include="Image.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
     <ClCompile Include="JsonManager.cpp" />
     <ClCompile Include="LadderScript.cpp" />

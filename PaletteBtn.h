@@ -6,6 +6,7 @@ typedef enum class PaletteAttribute : byte
 	Terrain,
 	Object,
 	Ladder,
+	Position,
 	None,
 }PAT;
 

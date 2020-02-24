@@ -5,6 +5,12 @@
 void Enemy::Init()
 {
 	Object::Init();
+
+	_tag = "Enemy";
+
+	_sprite = AddComponent<Sprite>();
+
+	_physics = AddComponent<PhysicsBody>();
 }
 
 void Enemy::Release()
@@ -15,6 +21,9 @@ void Enemy::Release()
 void Enemy::Update()
 {
 	Object::Update();
+
+	if (_dir == E_Dir::Left) _sprite->SetFlipX(true);
+	else if (_dir == E_Dir::Right) _sprite->SetFlipX(false);
 }
 
 void Enemy::Render()
