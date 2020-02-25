@@ -9,11 +9,17 @@ void PlayerIdle::Enter()
 {
 	_name = "Idle";
 	_player->SetPlayerImg(_name);
-
+	_player->GetPhysics()->GetBody()->SetLinearVelocity(b2Vec2(0, 0));
 }
 
 void PlayerIdle::Stay()
 {
+	if (_player->GetAbility()->GetIsDead())
+	{
+		_player->ChangeState(make_shared<PlayerDeath>(_player));
+		return;
+	}
+
 	if (KEYMANAGER->isStayKeyDown('W'))
 	{
 		_player->SetDirection(P_DIR::UP);
@@ -65,6 +71,11 @@ void PlayerMove::Enter()
 
 void PlayerMove::Stay()
 {
+	if (_player->GetAbility()->GetIsDead())
+	{
+		_player->ChangeState(make_shared<PlayerDeath>(_player));
+		return;
+	}
 
 	if (KEYMANAGER->isStayKeyDown('D'))
 	{
@@ -181,6 +192,12 @@ void PlayerAttack::Enter()
 
 void PlayerAttack::Stay()
 {
+	if (_player->GetAbility()->GetIsDead())
+	{
+		_player->ChangeState(make_shared<PlayerDeath>(_player));
+		return;
+	}
+
 	if (_player->GetSprite()->GetCurrentFrameX() == _player->GetAtkFrame())
 	{
 		if (_player->GetCurrentSkill()->name == "WindBoomerang")
@@ -193,7 +210,7 @@ void PlayerAttack::Stay()
 				isAttack = true;
 			}
 		}
-		else if (_player->GetCurrentSkill()->name == "FireBall")
+		if (_player->GetCurrentSkill()->name == "FireBall")
 		{
 			if (!isAttack)
 			{
@@ -203,7 +220,7 @@ void PlayerAttack::Stay()
 				isAttack = true;
 			}
 		}
-		else if (_player->GetCurrentSkill()->name == "ChaosCircle")
+		if (_player->GetCurrentSkill()->name == "ChaosCircle")
 		{
 
 			ChaosCircle* chaos = Object::CreateObject<ChaosCircle>(_player);
@@ -238,6 +255,8 @@ void PlayerHurt::Enter()
 	else if (angle <= 0 * DegToRad && angle > -45 * DegToRad) _player->SetDirection(P_DIR::RIGHT);
 	else if (angle >= 0 * DegToRad && angle < 45 * DegToRad) _player->SetDirection(P_DIR::RIGHT);
 
+	_player->GetPhysics()->ApplyForce(b2Vec2(cosf(angle), -sinf(angle)) * 1);
+
 	_player->SetPlayerImg(_name);
 	_timer = 0;
 	_maxTimer = 0.5f;
@@ -245,6 +264,11 @@ void PlayerHurt::Enter()
 
 void PlayerHurt::Stay()
 {
+	if (_player->GetAbility()->GetIsDead())
+	{
+		_player->ChangeState(make_shared<PlayerDeath>(_player));
+		return;
+	}
 	_timer += TIMEMANAGER->getElapsedTime();
 
 	if (_timer >= _maxTimer)
@@ -255,6 +279,7 @@ void PlayerHurt::Stay()
 
 void PlayerHurt::Exit()
 {
+	_player->GetPhysics()->GetBody()->SetLinearVelocity(b2Vec2(0,0));
 }
 
 //Death
@@ -263,12 +288,20 @@ void PlayerDeath::Enter()
 	_name = "Death";
 	_player->SetFPS(1.5f);
 	_player->SetPlayerImg(_name);
+	_player->GetPhysics()->SetBodyActive(false);
 }
 
 void PlayerDeath::Stay()
 {
+	if (_player->GetSprite()->GetCurrentFrameX() == _player->GetSprite()->GetMaxFrameX())
+	{
+		_player->GetSprite()->Pause();
+		_player->SetIsDead(true);
+	}
 }
 
 void PlayerDeath::Exit()
 {
 }
+
+

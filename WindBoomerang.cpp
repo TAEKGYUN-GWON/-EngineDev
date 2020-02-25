@@ -13,8 +13,11 @@ void WindBoomerang::Init(Object* onwer)
 {
 
 	SkillObject::Init();
+	_name = "WindBoomerang";
 	_onwer = onwer;
 	_type = OnwerType::Player;
+	_skillType = SkillType::Continued;
+	_atk = 1.5;
 	_trans->SetScale(50, 50);
 	Player* player = (Player*)_onwer;
 	_trans->SetPos(player->GetTrans()->GetPos() + Vector2(cosf(player->GetAtkAngle()), -sinf(player->GetAtkAngle())) * 60);
@@ -23,6 +26,7 @@ void WindBoomerang::Init(Object* onwer)
 	_sprite = AddComponent<Sprite>();
 	//_sprite->SetScale(Vector2(1.3, 1.3));
 	_sprite->Init(true, true);
+	_sprite->SetFPS(2);
 	_sprite->SetImgName("WindBoomerang");
 	_timer = 0;
 	_angle = player->GetAtkAngle();

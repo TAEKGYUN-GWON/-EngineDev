@@ -7,14 +7,17 @@ void ChaosCircle::Init(Object* onwer)
 	SkillObject::Init();
 	_onwer = onwer;
 	_type = OnwerType::Player;
+	_skillType = SkillType::Continued;
+	_atk = 1.3f;
 	_trans->SetScale(100, 100);
 	Player* player = (Player*)_onwer;
 	_trans->SetPos(player->GetTrans()->GetPos() + Vector2(cosf(player->GetAtkAngle()), -sinf(player->GetAtkAngle())) * player->GetTrans()->GetScale());
-	
+	_name = "ChaosCircle";
 	GRAPHICMANAGER->AddFrameImage("ChaosCircle", L"Resource/Wizard/Skill/ChaosCircle_0_12x1.png", 12, 1);
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init(true, true);
 	_sprite->SetImgName("ChaosCircle");
+	_sprite->SetFPS(2);
 	_timer = 0;
 	_maxTimer = 2.5f;
 	_speed = 70.f;

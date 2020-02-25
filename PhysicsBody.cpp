@@ -130,8 +130,9 @@ Vector2 PhysicsBody::GetBodyScale()
 
 void PhysicsBody::SetBodyActive(bool sleep)
 {
+	bool a = _body->IsActive();
 	_body->SetActive(sleep);
-	_bodyActive = sleep;
+	_bodyActive = _body->IsActive();
 }
 
 void PhysicsBody::SetSensor(bool sensor)

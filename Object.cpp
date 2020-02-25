@@ -114,6 +114,7 @@ void Object::SetIsActive(bool active)
 	}
 	if (GetComponent<PhysicsBody>())
 	{
+		if(GetComponent<PhysicsBody>()->GetBodyActive() != _isActive)
 		GetComponent<PhysicsBody>()->SetBodyActive(_isActive);
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "singletonBase.h"
-
+#define E 2.71828
 #define ZOOM_MIN 0.01f
 #define ZOOM_MAX 2.5f
 
@@ -16,6 +16,7 @@ private:
 	float				_shakingTime;
 	float				_shakeCount;
 	float				_amount;
+	float				shakePower;
 	bool				_isShaking;
 
 private:

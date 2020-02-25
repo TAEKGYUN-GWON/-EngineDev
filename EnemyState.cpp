@@ -9,16 +9,31 @@ void EnemyIdle::Enter()
 	_maxTimer = RND->getFromFloatTo(2, 4);
 	_enemy->SetImg(_name);
 	_enemy->GetPhysics()->SetBodyPosition();
-
+	_enemy->GetPhysics()->GetBody()->SetLinearVelocity(b2Vec2(0, 0));
 }
 
 void EnemyIdle::Stay()
 {
+	if (_enemy->GetAbility()->GetIsDead())
+	{
+		_enemy->ChangeState(make_shared <EnemyDeath>(_enemy));
+		return;
+	}
 	_timer += TIMEMANAGER->getElapsedTime();
 
 	if (_enemy->GetDistance() <= _enemy->GetAtkDistance())
 	{
-		_enemy->ChangeState(make_shared <EnemyAttack>(_enemy));
+		if (_enemy->GetAtkType() == E_AtkType::CLOSE)
+			_enemy->ChangeState(make_shared <EnemyAttack>(_enemy));
+		else
+		{
+			if (_enemy->GetTimer() >= _enemy->GetMaxTimer())
+			{
+				_enemy->SetTimer(0);
+				_enemy->ChangeState(make_shared <EnemyAttack>(_enemy));
+			}
+
+		}
 		return;
 	}
 
@@ -39,14 +54,24 @@ void EnemyIdle::Exit()
 void EnemyMove::Enter()
 {
 	_name = "Move";
+	_path.clear();
 	_path = _enemy->GetPath();
 	_timer = 0;
 	_maxTimer = RND->getFromFloatTo(2, 4);
 	_enemy->SetImg(_name);
+	_enemy->SetIsMove(true);
+	moveTimer = 0;
 }
 
 void EnemyMove::Stay()
 {
+	
+	if (_enemy->GetAbility()->GetIsDead())
+	{
+		_enemy->ChangeState(make_shared <EnemyDeath>(_enemy));
+		return;
+	}
+
 	_timer += TIMEMANAGER->getElapsedTime();
 
 	if (_timer >= _maxTimer)
@@ -57,23 +82,45 @@ void EnemyMove::Stay()
 
 	if (_enemy->GetDistance() <= _enemy->GetAtkDistance())
 	{
-		_enemy->ChangeState(make_shared <EnemyAttack>(_enemy));
+		if(_enemy->GetAtkType() == E_AtkType::CLOSE)
+			_enemy->ChangeState(make_shared <EnemyAttack>(_enemy));
+		else
+		{
+			if (_enemy->GetTimer() >= _enemy->GetMaxTimer())
+			{
+				_enemy->SetTimer(0);
+				_enemy->ChangeState(make_shared <EnemyAttack>(_enemy));
+			}
+				
+		}
 		return;
 	}
 
-	if (_path->size())
-	{
-		_enemy->GetTrans()->SetRotateToRadian(Vector2::GetAngle(_enemy->GetTrans()->GetPos(), *(*_path).begin()));
+	_enemy->SetIsMove(false);
 
-		Vector2 direction = *(*_path).begin() - _enemy->GetTrans()->GetPos();
-		direction = direction.Nomalized();
-		_enemy->GetTrans()->Move(direction * _enemy->GetSpeed() * TIMEMANAGER->getElapsedTime());
-		_enemy->GetPhysics()->SetBodyPosition();
-		int distance = Vector2::Distance(*(*_path).begin(), _enemy->GetTrans()->GetPos());
-		
-		if (distance <= 10)
-			_path->pop_front();
+	moveTimer += TIMEMANAGER->getElapsedTime();
+
+	if (moveTimer > 0.5f) {
+		_enemy->SetIsMove(true);
+		moveTimer = 0;
 	}
+	//_enemy->Move();
+	//if (_path.size())
+	//{
+	//	_enemy->SetDirAngle(Vector2::GetAngle(_enemy->GetTrans()->GetPos(), *_path.begin()));
+
+	//	float angle = Vector2::GetAngle(_enemy->GetTrans()->GetPos(), *_path.begin());
+	//	//direction = direction.Nomalized();
+	//	_enemy->GetTrans()->Move(Vector2(cosf(angle),-sinf(angle)) * _enemy->GetSpeed() * TIMEMANAGER->getElapsedTime());
+	//	_enemy->GetPhysics()->SetBodyPosition();
+	//	int distance = Vector2::Distance(*_path.begin(), _enemy->GetTrans()->GetPos());
+	//	
+	//	if (distance <= 1)
+	//		_path.pop_front();
+	//}
+	//else
+	//	_path = _enemy->GetPath();
+
 }
 
 void EnemyMove::Exit()
@@ -87,11 +134,20 @@ void EnemyAttack::Enter()
 {
 	_name = "Attack";
 	_type = _enemy->GetAtkType();
+
 	_enemy->SetImg(_name);
 }
 
 void EnemyAttack::Stay()
 {
+	 _enemy->SetDirAngle(_enemy->GetAngle());
+
+	if (_enemy->GetAbility()->GetIsDead())
+	{
+		_enemy->ChangeState(make_shared <EnemyDeath>(_enemy));
+		return;
+	}
+
 	if (_enemy->GetAtkFrame())
 	{
 		_enemy->Attack();
@@ -114,13 +170,21 @@ void EnemyAttack::Exit()
 void EnemyHurt::Enter()
 {
 	_timer = 0;
-	_maxTimer = 1.f;
+	_maxTimer = 0.5f;
 	_name = "Hurt";
 	_enemy->SetImg(_name);
+	_enemy->SetIsHurt(true);
+	_enemy->GetPhysics()->ApplyForce(b2Vec2(cosf(_enemy->GetHurtAngle()), -sinf(_enemy->GetHurtAngle())) );
 }
 
 void EnemyHurt::Stay()
 {
+	if (_enemy->GetAbility()->GetIsDead())
+	{
+		_enemy->ChangeState(make_shared <EnemyDeath>(_enemy));
+		return;
+	}
+
 	_timer += TIMEMANAGER->getElapsedTime();
 	
 	if (_timer >= _maxTimer)
@@ -133,7 +197,8 @@ void EnemyHurt::Stay()
 
 void EnemyHurt::Exit()
 {
-
+	_enemy->SetIsHurt(false);
+	_enemy->GetPhysics()->GetBody()->SetLinearVelocity(b2Vec2(0, 0));
 }
 
 
@@ -145,12 +210,14 @@ void EnemyDeath::Enter()
 	_maxTimer = 1.5f;
 	_name = "Death";
 	_enemy->SetImg(_name);
+	_enemy->GetPhysics()->SetBodyActive(false);
 }
 
 void EnemyDeath::Stay()
 {
+	if (_enemy->GetSprite()->GetCurrentFrameX() == _enemy->GetSprite()->GetMaxFrameX()) _enemy->GetSprite()->Pause();
 
-	if (_enemy->GetComponent<Sprite>()->GetCurrentFrameX() >= _enemy->GetComponent<Sprite>()->GetMaxFrameX())
+	if (_enemy->GetComponent<Sprite>()->GetCurrentFrameX() == _enemy->GetComponent<Sprite>()->GetMaxFrameX())
 		_timer += TIMEMANAGER->getElapsedTime();
 	
 

@@ -192,8 +192,13 @@ list<Vector2> Astar::PathFinder(Vector2 start, Vector2 end)
 {
 	InitTotalList();
 
-	Vector2 startId((int)(start.x / TILE_WIDTH), (int)(start.y / TILE_HEIGHT));
-	Vector2 endId((int)(end.x / TILE_WIDTH), (int)(end.y / TILE_HEIGHT));
+	Vector2 startId = start / TILE_WIDTH;
+
+	Vector2 endId = end / TILE_WIDTH;
+
+	startId = startId.Vector2ToPOINT();
+
+	endId = endId.Vector2ToPOINT();
 
 	//_miTotalList = _mTotalList.find(startId);
 	//_startTile = _miTotalList->second;
@@ -221,7 +226,9 @@ list<Vector2> Astar::PathFinder(Vector2 start, Vector2 end)
 			if (t == _endTile)
 			{
 				theEnd = true;
+				AddOpenList(t);
 				SetPathcList();
+
 				break;
 			}
 			else
@@ -366,6 +373,7 @@ list<Vector2> Astar::PathFinderForIndexFor4Way(Vector2 start, Vector2 end)
 			if (t == _endTile)
 			{
 				theEnd = true;
+				AddOpenList(t);
 				SetPathcList();
 				break;
 			}
@@ -403,7 +411,7 @@ bool Astar::CanOpenRight(Vector2 idx)
 	if (idx.x + (int)1 >= maxX) return false;
 
 	if ((*_vTotalList)[((int)idx.x + maxX * (int)idx.y) + 1]->GetAttribute() == Attribute::WALL ||
-		(*_vTotalList)[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute::NPC_NONE) return false;
+		(*_vTotalList)[((int)idx.x + maxX * (int)idx.y) + 1]->GetAttribute() == Attribute::NPC_NONE) return false;
 
 	if ((*_vTotalList)[((int)idx.x + maxX * (int)idx.y) + 1]->GetIsClose()) return false;
 
@@ -419,7 +427,7 @@ bool Astar::CanOpenUp(Vector2 idx)
 	if (idx.y - (int)1 <= -1) return false;
 
 	if ((*_vTotalList)[((int)idx.x + maxX * (int)idx.y) - maxX]->GetAttribute() == Attribute::WALL ||
-		(*_vTotalList)[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute::NPC_NONE) return false;
+		(*_vTotalList)[((int)idx.x + maxX * (int)idx.y) - maxX]->GetAttribute() == Attribute::NPC_NONE) return false;
 
 	if ((*_vTotalList)[((int)idx.x + maxX * (int)idx.y) - maxX]->GetIsClose()) return false;
 
@@ -435,7 +443,7 @@ bool Astar::CanOpenDown(Vector2 idx)
 	if (idx.y + (int)1 >= maxY) return false;
 
 	if ((*_vTotalList)[((int)idx.x + maxX * (int)idx.y) + maxX]->GetAttribute() == Attribute::WALL ||
-		(*_vTotalList)[((int)idx.x + maxX * (int)idx.y) - 1]->GetAttribute() == Attribute::NPC_NONE) return false;
+		(*_vTotalList)[((int)idx.x + maxX * (int)idx.y) + maxX]->GetAttribute() == Attribute::NPC_NONE) return false;
 
 	if ((*_vTotalList)[((int)idx.x + maxX * (int)idx.y) + maxX]->GetIsClose()) return false;
 

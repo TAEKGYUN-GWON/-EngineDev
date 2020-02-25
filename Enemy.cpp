@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "EnemyState.h"
+#include "EnemyScript.h"
 void Enemy::Init()
 {
 	Object::Init();
@@ -10,17 +11,23 @@ void Enemy::Init()
 	_distance = _atkDistance = _speed = _angle = _isAtkFrame = _FPS = 0;
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init(true, true);
+	_dirAngle = 0;
 	_physics = AddComponent<PhysicsBody>();
-	_ability = make_shared<Ability>();
+	//_ability = make_shared<Ability>();
+	_ability = new Ability();
+	AddComponent<EnemyScript>();
 }
 
 void Enemy::Update()
 {
 	Object::Update();
+
+	if (_state->GetStateToString() != "Hurt" && _isHurt)return;
 	BasicUpdate();
 	AngleDetection();
 	_state->Stay();
-
+	if (_state->GetStateToString() == "Move") Move();
+	_timer += TIMEMANAGER->getElapsedTime();
 }
 
 void Enemy::Release()
@@ -32,17 +39,18 @@ void Enemy::Release()
 
 void Enemy::BasicUpdate()
 {
-	if (_ability->GetIsDead()) ChangeState(make_shared<EnemyDeath>(this));
+
 	_ability->Update();
 	if (_state->GetStateToString() == "Attack")
 		if (_sprite->GetCurrentFrameX() == _atkFrame)
 			_isAtkFrame = true;
+//	_timer += TIMEMANAGER->getElapsedTime();
 	
 }
 
 void Enemy::AngleDetection()
 {
-	if ((_trans->GetRotateRadian() > PI / 2 && _trans->GetRotateRadian() <= PI) || (_trans->GetRotateRadian() >= -PI && _trans->GetRotateRadian() < -PI / 2)) _dir = E_Dir::LEFT;
+	if ((_dirAngle > PI / 2 && _dirAngle <= PI) || (_dirAngle >= -PI && _dirAngle < -PI / 2)) _dir = E_Dir::LEFT;
 	else _dir = E_Dir::RIGHT;
 
 	if (_dir == E_Dir::LEFT) _sprite->SetFlipX(true);
@@ -66,6 +74,22 @@ void Enemy::SetPath(list<Vector2> path)
 {
 	_path.clear();
 	_path = path;
+}
+
+void Enemy::Move()
+{
+	if (_path.size())
+	{
+		Vector2 dir = *_path.begin() - _trans->GetPos();
+
+		_trans->Move(dir.Nomalized() * _speed * TIMEMANAGER->getElapsedTime());
+		_physics->SetBodyPosition();
+
+		if (Vector2::Distance(*_path.begin(), _trans->GetPos()) <= 1)
+		{
+			_path.erase(_path.begin());
+		}
+	}
 }
 
 void Enemy::SetImg(string stateName)

@@ -8,7 +8,7 @@ private:
 
 public:
 	virtual void Init(Vector2 pos);
-	//virtual void Update();
+	virtual void Update();
 	//virtual void Release();
 	virtual void Attack();
 	virtual void AttackExit();

@@ -75,6 +75,7 @@ void Camera::SetPosition(Vector2 pos, string key)
 
 void Camera::SetPosition(Vector2 pos)
 {
+	pos *= _scale;
 	_pos.x = pos.x - WINSIZEX / 2;
 	_pos.y = pos.y - WINSIZEY / 2;
 	UpdateMatrix();
@@ -164,7 +165,6 @@ void Camera::ShakingSetting(Vector2 prevPos, float time, float amount)
 
 void Camera::SetScale(Vector2 scale)
 {
-
 	_scale += scale;
 
 	float a = Clamp(_scale.x, ZOOM_MIN, ZOOM_MAX);
@@ -179,6 +179,7 @@ void Camera::SetScale(Vector2 scale)
 	//_pos *= _scale;
 
 	UpdateMatrix();
+
 }
 
 void Camera::MoveTo(Vector2 endPos, float time, bool isCenter)

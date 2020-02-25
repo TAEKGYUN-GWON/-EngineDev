@@ -5,6 +5,7 @@
 #include "Rogue.h"
 #include "ProceduralTest.h"
 #include "Room.h"
+#include "EnemyState.h"
 void EnemyManager::Init(Room* owner)
 {
 	_owner = owner;
@@ -23,14 +24,24 @@ void EnemyManager::Update()
 {
 	for (Enemy* e : _Enemys)
 	{
-		if (!e->GetIsActive())
+		//if (!e->GetIsActive())
+		//{
+		//	e->SetIsRelese();
+		//	_Enemys.remove(e);
+		//	break;
+		//}
+		if (e->GetIsMove())
 		{
-			e->SetIsRelese();
-			_Enemys.remove(e);
-			break;
+			if (Vector2::Distance(SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos(), e->GetTrans()->GetPos()) > 20 &&
+				Vector2::Distance(SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos(), e->GetTrans()->GetPos()) < 300)
+			{
+				e->SetPath(_ast->PathFinder(e->GetTrans()->GetPos(), SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos()));
+			}
 		}
-		e->SetPath(_ast->PathFinder(e->GetTrans()->GetPos(), SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos()));
-		e->SetAngle(Vector2::GetAngle(e->GetTrans()->GetPos(), SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos()));
+		
+		if(e->GetName()=="Knight")	e->SetAngle(Vector2::GetAngle( SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos(), e->GetTrans()->GetPos()));
+		else e->SetAngle(Vector2::GetAngle(e->GetTrans()->GetPos(), SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos()));
+
 		e->SetDistance(Vector2::Distance(e->GetTrans()->GetPos(), SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos()));
 	}
 }
@@ -52,9 +63,10 @@ void EnemyManager::Release()
 void EnemyManager::SetEnemys()
 {
 	int some = RND->getFromIntTo(3, 7);
-	for (int i = 0; i < some; i++)
+	for (int i = 0; i < 1; i++)
 	{
-		int type = RND->getInt(3);
+		//int type = RND->getInt(3);
+		int type = 0;
 
 		switch (type)
 		{

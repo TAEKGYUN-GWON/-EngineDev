@@ -17,6 +17,6 @@ public:
 	void SetIsActive(bool active) { _isActive = active; }
 	bool GetIsActive() { return _isActive; }
 	void SetEnemys();
-
+	int GetEnemySize() { return _Enemys.size(); }
 };
 

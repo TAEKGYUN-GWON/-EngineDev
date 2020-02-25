@@ -3,6 +3,7 @@
 #include "Tile.h"
 #include "Room.h"
 #include "Astar.h"
+#include "Player.h"
 class Probe;
 #define CREATE_ROOM_MAX 50
 #define SELECT_ROOM 10
@@ -27,7 +28,7 @@ private:
 	bool startDel;
 	bool startExploration;
 	int count;
-
+	Player* _player;
 	vector<Object*> _vFloors;
 public:
 	virtual void Init();
@@ -47,7 +48,10 @@ public:
 	void SetTileImg();
 	void DelTile();
 	void SetPhysics();
+	void SetPlayer();
 	vector<Tile*>* GetTiles() { return &tiles; }
+
+	void SetEnemy();
 
 	void SetScene();
 }; 

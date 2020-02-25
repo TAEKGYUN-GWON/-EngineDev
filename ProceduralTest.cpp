@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ProceduralTest.h"
 #include "Probe.h"
-#include "Player.h"
+
 void ProceduralTest::Init()
 {
 	Scene::Init();
@@ -20,7 +20,6 @@ void ProceduralTest::Init()
 	GRAPHICMANAGER->AddImage("WallUp_1", Tiledir + L"WallUp_1.png");
 	GRAPHICMANAGER->AddImage("WallUp_2", Tiledir + L"WallUp_2.png");
 	GRAPHICMANAGER->AddImage("WallUp", Tiledir + L"WallUp.png");
-
 
 
 	GRAPHICMANAGER->AddImage("WallDown", Tiledir + L"WallDown.png");
@@ -65,8 +64,7 @@ void ProceduralTest::Init()
 	obj->GetTrans()->SetScale(MAP_MAX_WIDTH, 10);
 	_vFloors.push_back(obj);
 
-	Player* test = Object::CreateObject<Player>();
-	test->Init(WINSIZE / 2);
+	CAMERA->SetScale(Vector2(0.5,0.5));
 
 	_ast = new Astar;
 
@@ -92,21 +90,19 @@ void ProceduralTest::Init()
 void ProceduralTest::Update()
 {
 	Scene::Update();
+	
+	if (KEYMANAGER->isOnceKeyDown('G')) cout << TIMEMANAGER->GetFps() << endl;
 
-	SetScene();
-
-	if (KEYMANAGER->isOnceKeyDown('5'))
-		DelTile();
-
+	if (timer < 3.5f) SetScene();
+	else
+	{
+		SetEnemy();
+	}
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		SCENEMANAGER->changeScene("PG");
 		return;
 	}
-
-
-
-	CAMERA->SetPosition(SCENEMANAGER->GetNowScene()->GetChildFromName("Player")->GetTrans()->GetPos());
 
 }
 
@@ -160,6 +156,7 @@ void ProceduralTest::Render()
 
 	for (Object* child : tiles)
 	{
+		if (!child->GetIsActive())continue;
 		if (child->GetTrans()->GetPos().x + 100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x - 100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
 			child->GetTrans()->GetPos().y + 100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y - 100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
 
@@ -179,6 +176,7 @@ void ProceduralTest::Render()
 		child->Render();
 	}
 }
+
 void ProceduralTest::PhysicsUpdate()
 {
 #ifdef _DEBUG
@@ -241,11 +239,14 @@ void ProceduralTest::PhysicsUpdate()
 				_b2World->DestroyBody(deletedObject);
 				continue;
 			}
-			if (((Object*)body->GetUserData())->GetTrans() != nullptr)
+			else
 			{
-				Transform* now = ((Object*)body->GetUserData())->GetTrans();
-				PhysicsBody* nowP = ((Object*)body->GetUserData())->GetComponent<PhysicsBody>();
-				now->SetPos(nowP->GetBodyPosition());
+				if (((Object*)body->GetUserData())->GetTrans() != nullptr)
+				{
+					Transform* now = ((Object*)body->GetUserData())->GetTrans();
+					PhysicsBody* nowP = ((Object*)body->GetUserData())->GetComponent<PhysicsBody>();
+					now->SetPos(nowP->GetBodyPosition());
+				}
 			}
 		}
 	}
@@ -253,6 +254,7 @@ void ProceduralTest::PhysicsUpdate()
 #endif
 
 }
+
 void ProceduralTest::PushRoom()
 {
 	for (Room* r : rooms)
@@ -356,167 +358,6 @@ void ProceduralTest::SetSubRoom()
 
 void ProceduralTest::SetTileProperty()
 {
-#pragma region ¹«´ý
-	//for (int i = 0; i < tiles.size(); i++)
-	//{
-	//	for (Room* r : subRooms)
-	//	{
-	//		if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < tiles[i]->GetTrans()->GetPos() &&
-	//			r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > tiles[i]->GetTrans()->GetPos())
-	//		{
-	//			tiles[i]->SetAttribute(Attribute::NONE);
-	//			auto s = tiles[i]->GetSprite();
-	//			s->SetFillRect(true);
-	//			s->SetRectColor(ColorF::Coral);
-
-	//		}
-
-
-	//	}
-
-	//	for (Room* r : selRooms)
-	//	{
-	//		if (r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) < tiles[i]->GetTrans()->GetPos() &&
-	//			r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) > tiles[i]->GetTrans()->GetPos())
-	//		{
-	//			tiles[i]->SetAttribute(Attribute::NONE);
-	//			auto s = tiles[i]->GetSprite();
-	//			s->SetFillRect(true);
-	//			s->SetRectColor(ColorF::Coral);
-
-	//		}
-
-	//	}
-
-	//}
-
-	/*for (Room* r : subRooms)
-	{
-		Vector2 rStartIdx = r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) / Vector2(TILE_WIDTH, TILE_HEIGHT);
-		Vector2 rEndIdx = r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM) / Vector2(TILE_WIDTH, TILE_HEIGHT);
-		Vector2 difference = rEndIdx - rStartIdx;
-		for (int i = 0; i < (int)difference.x * (int)difference.y; i++)
-		{
-			int idx = (i % (int)difference.x + (int)rStartIdx.x) + (i / (int)difference.x + (int)rStartIdx.y) * MAP_TILE_MAX_X;
-
-
-			if (tiles[idx]->GetIdY() == (int)rStartIdx.y)
-			{
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_UP_2);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Green);
-			}
-
-
-			else if (tiles[idx]->GetIdY() == (int)rStartIdx.y + 1)
-			{
-				//if (tiles[idx]->GetWallType() == WallType::WALL_LEFT || tiles[idx]->GetWallType() == WallType::None)continue;
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_UP_1);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Green);
-			}
-
-			else if (tiles[idx]->GetIdY() == (int)rEndIdx.y)
-			{
-				//if (tiles[idx]->GetWallType() == WallType::None)continue;
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_DOWN);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::AliceBlue);
-			}
-
-
-			else if (tiles[idx]->GetIdX() == (int)rStartIdx.x)
-			{
-			//	if (tiles[idx]->GetWallType() == WallType::None)continue;
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_LEFT);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::SeaGreen);
-			}
-
-			else if (tiles[idx]->GetIdX() == (int)rEndIdx.x)
-			{
-				//if (tiles[idx]->GetWallType() == WallType::None)continue;
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_RIGHT);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::SeaGreen);
-			}
-			else
-			{
-				tiles[idx]->SetAttribute(Attribute::NONE);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Coral);
-			}
-
-			if (tiles[idx]->GetIdX() == (int)rStartIdx.x && tiles[idx]->GetIdY() == (int)rStartIdx.y)
-			{
-				//if (tiles[idx]->GetAttribute() == Attribute::NONE)continue;
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_LEFT_EDGE);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Aqua);
-
-
-			}
-			if (tiles[idx]->GetIdX() == (int)rStartIdx.x && tiles[idx]->GetIdY() == (int)rStartIdx.y + 1)
-			{
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_LEFT);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Aqua);
-			}
-
-			if (tiles[idx]->GetIdX() == (int)rStartIdx.x && tiles[idx]->GetIdY() == (int)rEndIdx.y)
-			{
-
-				//if (tiles[idx]->GetAttribute() == Attribute::NONE)continue;
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_LEFT_DOWN_EDGE);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Aqua);
-
-			}
-
-			if (tiles[idx]->GetIdX() == (int)rEndIdx.x && tiles[idx]->GetIdY() == (int)rStartIdx.y)
-			{
-				//if (tiles[idx]->GetAttribute() == Attribute::NONE)continue;
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_RIGHT_EDGE);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Aqua);
-			}
-
-			if (tiles[idx]->GetIdX() == (int)rEndIdx.x && tiles[idx]->GetIdY() == (int)rEndIdx.y)
-			{
-			//	if (tiles[idx]->GetAttribute() == Attribute::NONE)continue;
-				tiles[idx]->SetAttribute(Attribute::WALL);
-				tiles[idx]->SetWallType(WallType::WALL_RIGHT_DOWN_EDGE);
-				auto s = tiles[idx]->GetSprite();
-				s->SetFillRect(true);
-				s->SetRectColor(ColorF::Aqua);
-			}
-
-
-
-		}
-
-	}*/
-
-#pragma endregion
 
 
 #pragma region ¼¿·ºÆ®
@@ -1108,17 +949,19 @@ void ProceduralTest::DelTile()
 	{
 		if (tiles[i]->GetAttribute() == Attribute::NONE_MOVE)
 		{
-			tiles[i]->Release();
-			tiles.erase(tiles.begin() + i);
+			tiles[i]->SetIsActive(false);
 		}
 	}
-
+	
 }
 
 void ProceduralTest::SetPhysics()
 {
 	for (Room* r : selRooms)
+	{
 		r->DeActivePhysics();
+		r->GetComponent<Sprite>()->SetFillRect(false);
+	}
 
 	for (Tile* t : tiles)
 	{
@@ -1128,6 +971,40 @@ void ProceduralTest::SetPhysics()
 		p->Init(BodyType::STATIC, 1);
 	}
 	DelTile();
+	SetPlayer();
+}
+
+void ProceduralTest::SetPlayer()
+{
+	if (_player) return;
+	int rand = RND->getInt(subRooms.size());
+	_player = Object::CreateObject<Player>();
+	_player->Init(subRooms[rand]->GetTrans()->GetPos());
+
+}
+
+void ProceduralTest::SetEnemy()
+{
+	for (Room* r : mainRooms)
+	{
+		if (_player->GetTrans()->GetPos() >= r->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT_TOP) &&
+			_player->GetTrans()->GetPos() <= r->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT_BOTTOM))
+		{
+			r->SetRoomEnemy();
+			if (r->GetIsActiveEnemy())
+			{
+				CAMERA->SetPosition(Vector2(r->GetTrans()->GetPos().x, _player->GetTrans()->GetPos().y));
+				_player->SetIsBattle(true);
+			}
+			else
+				_player->SetIsBattle(false);
+		}
+		else
+		{
+			if (r->GetIsActiveEnemy()) r->SetIsActiveEnemy(false);
+			_player->SetIsBattle(false);
+		}
+	}
 }
 
 void ProceduralTest::SetScene()

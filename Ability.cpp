@@ -9,7 +9,7 @@ void Ability::Init(float maxHp, float atk)
 
 	this->atk = atk;
 
-	isDead = true;
+	isDead = false;
 }
 
 void Ability::Update()

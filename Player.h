@@ -37,11 +37,17 @@ private:
 	int _atkFrame;
 	bool _isAtkFrame;
 	bool _isCollisionToWall;
+	bool _isDead;
+	bool _isBattle;
 public:
 
 	virtual void Init(Vector2 pos);
 	virtual void Update();
+	virtual void Render();
 	virtual void Release();
+
+	void SetIsBattle(bool active) { _isBattle = active; }
+	bool GetIsBattle() { return _isBattle; }
 
 	void OffAtkFrame() { _isAtkFrame = false; }
 	bool GetIsAtkFrame() { return _isAtkFrame; }
@@ -73,7 +79,7 @@ public:
 
 	void SetIsCollToWall(bool active) { _isCollisionToWall = active; }
 	bool GetIsCollToWall() { return _isCollisionToWall; }
-
+	void SetIsDead(bool active) { _isDead = active; }
 	void BasicUpdate();
 	void WindUpCoolDown();
 	void FlipDetection();

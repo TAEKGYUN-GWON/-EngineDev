@@ -160,10 +160,12 @@
     <ClInclude Include="Direct2D.h" />
     <ClInclude Include="DrawComponent.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyAtkScript.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyScript.h" />
     <ClInclude Include="EnemyState.h" />
     <ClInclude Include="FireBall.h" />
+    <ClInclude Include="IceBall.h" />
     <ClInclude Include="iniDataManager.h" />
     <ClInclude Include="JsonManager.h" />
     <ClInclude Include="Knight.h" />
@@ -188,6 +190,7 @@
     <ClInclude Include="Graphic.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="SkillObject.h" />
+    <ClInclude Include="SkillScript.h" />
     <ClInclude Include="Sorcerer.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="GraphicsManager.h" />
@@ -236,10 +239,12 @@
     <ClCompile Include="Direct2D.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyAtkScript.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="EnemyScript.cpp" />
     <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="IceBall.cpp" />
     <ClCompile Include="iniDataManager.cpp" />
     <ClCompile Include="JsonManager.cpp" />
     <ClCompile Include="Knight.cpp" />
@@ -262,6 +267,7 @@
     <ClCompile Include="Graphic.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="SkillObject.cpp" />
+    <ClCompile Include="SkillScript.cpp" />
     <ClCompile Include="Sorcerer.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="GraphicsManager.cpp" />

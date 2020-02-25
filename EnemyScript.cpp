@@ -6,12 +6,15 @@
 
 void EnemyScript::CollisionBegin(void* obj)
 {
+
 }
 
 void EnemyScript::CollisionPreSolve(void* obj)
 {
+
 }
 
 void EnemyScript::CollisionEnd(void* obj)
 {
+
 }

@@ -21,7 +21,7 @@ void Room::Init()
 void Room::Update()
 {
 	if(_eMgr->GetIsActive()) _eMgr->Update();
-
+	if(!_eMgr->GetEnemySize())_isActiveEnemy = false;
 	return;
 }
 
@@ -79,8 +79,10 @@ void Room::SetObject()
 
 void Room::SetRoomEnemy()
 {
+	if (_eMgr->GetIsActive()) return;
 	_eMgr->SetIsActive(true);
 	_eMgr->Init(this);
+	_isActiveEnemy = true;
 }
 
 void Room::DeActivePhysics()

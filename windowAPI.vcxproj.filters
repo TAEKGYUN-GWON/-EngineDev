@@ -103,6 +103,12 @@
     <Filter Include="2DGameFramework\Manager\Mouse">
       <UniqueIdentifier>{b6e7d06c-961a-449c-a267-caab390f5e58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\Skill\Player">
+      <UniqueIdentifier>{5fbf3bca-2264-47fe-a5db-f63af41002a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Skill\Enemy">
+      <UniqueIdentifier>{7d398713-bec3-4e5a-9a14-ec958758442f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -312,25 +318,34 @@
     <ClInclude Include="PlayerState.h">
       <Filter>playGround\Player</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyScript.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerScript.h">
       <Filter>playGround\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillObject.h">
-      <Filter>playGround\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="ChaosCircle.h">
-      <Filter>playGround\Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="FireBall.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
       <Filter>2DGameFramework\Manager\Mouse</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyScript.h">
+      <Filter>playGround\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ChaosCircle.h">
+      <Filter>playGround\Skill\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>playGround\Skill\Player</Filter>
+    </ClInclude>
     <ClInclude Include="WindBoomerang.h">
+      <Filter>playGround\Skill\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="IceBall.h">
+      <Filter>playGround\Skill\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillObject.h">
+      <Filter>playGround\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAtkScript.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillScript.h">
       <Filter>playGround\Skill</Filter>
     </ClInclude>
   </ItemGroup>
@@ -512,25 +527,34 @@
     <ClCompile Include="PlayerState.cpp">
       <Filter>playGround\Player</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerScript.cpp">
       <Filter>playGround\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillObject.cpp">
-      <Filter>playGround\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="ChaosCircle.cpp">
-      <Filter>playGround\Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="FireBall.cpp">
-      <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Mouse.cpp">
       <Filter>2DGameFramework\Manager\Mouse</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyScript.cpp">
+      <Filter>playGround\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ChaosCircle.cpp">
+      <Filter>playGround\Skill\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>playGround\Skill\Player</Filter>
+    </ClCompile>
     <ClCompile Include="WindBoomerang.cpp">
+      <Filter>playGround\Skill\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="IceBall.cpp">
+      <Filter>playGround\Skill\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillObject.cpp">
+      <Filter>playGround\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAtkScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillScript.cpp">
       <Filter>playGround\Skill</Filter>
     </ClCompile>
   </ItemGroup>

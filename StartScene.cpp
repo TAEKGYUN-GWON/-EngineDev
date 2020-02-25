@@ -25,7 +25,7 @@ void StartScene::Init()
 		GRAPHICMANAGER->AddImage(str + to_string(i), dir + item);
 	}
 
-	//CAMERA->SetScale(Vector2(2, 2));
+	//CAMERA->SetScale(Vector2(1, 1));
 	//CAMERA->SetPos(Vector2(430, 204));
 	SCENEMANAGER->addScene("t", new TestScene);
 	//SCENEMANAGER->addScene("tt", new Maptool);
@@ -38,6 +38,9 @@ void StartScene::Init()
 	wall->GetTrans()->SetScale(50, 50);
 	auto p = wall->AddComponent<PhysicsBody>();
 	p->Init(BodyType::STATIC, 1);
+
+	Rogue* so = Object::CreateObject<Rogue>();
+	so->Init(WINSIZE / 3);
 
 	Player* test = Object::CreateObject<Player>();
 	test->Init(WINSIZE / 2);
@@ -81,32 +84,32 @@ void StartScene::Update()
 		Player* player = (Player*)GetChildFromName("Player");
 		player->GetPhysics()->GetBody()->SetLinearVelocity(b2Vec2(0,0));
 	}
-	//CAMERA->Control();
+	CAMERA->Update();
 }
 
 void StartScene::Render()
 {
 	Scene::Render();
 	_bar->Render();
-	GRAPHICMANAGER->Text(Vector2(100, 100), L"1) Dungeon Scene", 20, 300, 50, ColorF::AliceBlue);
-	GRAPHICMANAGER->Text(Vector2(100, 150), L"2) Town Scene", 20, 300, 50, ColorF::AntiqueWhite);
-	GRAPHICMANAGER->Text(Vector2(100, 200), L"3) Entrance Scene", 20, 300, 50, ColorF::Aqua);
-	GRAPHICMANAGER->Text(Vector2(100, 250), L"4) Shop Scene", 20, 300, 50, ColorF::Aquamarine);
-	GRAPHICMANAGER->Text(Vector2(100, 300), L"5) Maptool Scene", 20, 300, 50, ColorF::Azure);
-
-
-	wchar_t buffer[128];
-	swprintf(buffer, 128, L"Camera X : %f\nCamera Y : %f", CAMERA->GetPosition().x, CAMERA->GetPosition().y);
-	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 100), buffer, 20, 300, 50, ColorF::Azure);
-
-
-	swprintf(buffer, 128, L"Maoue X : %f\Mouse Y : %f", MOUSEPOINTER->GetMouseWorldPosition().x, MOUSEPOINTER->GetMouseWorldPosition().y);
-	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 300, 50, ColorF::Azure);
-
-	Vector2 pos = CAMERA->GetPosition() + _ptMouse;
-
-	swprintf(buffer, 128, L"WorldMaoue X : %f\WorldMaoue Y : %f", pos.x, pos.y);
-	GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 300), buffer, 20, 300, 50, ColorF::Azure);
+	//GRAPHICMANAGER->Text(Vector2(100, 100), L"1) Dungeon Scene", 20, 300, 50, ColorF::AliceBlue);
+	//GRAPHICMANAGER->Text(Vector2(100, 150), L"2) Town Scene", 20, 300, 50, ColorF::AntiqueWhite);
+	//GRAPHICMANAGER->Text(Vector2(100, 200), L"3) Entrance Scene", 20, 300, 50, ColorF::Aqua);
+	//GRAPHICMANAGER->Text(Vector2(100, 250), L"4) Shop Scene", 20, 300, 50, ColorF::Aquamarine);
+	//GRAPHICMANAGER->Text(Vector2(100, 300), L"5) Maptool Scene", 20, 300, 50, ColorF::Azure);
+	//
+	//
+	//wchar_t buffer[128];
+	//swprintf(buffer, 128, L"Camera X : %f\nCamera Y : %f", CAMERA->GetPosition().x, CAMERA->GetPosition().y);
+	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 100), buffer, 20, 300, 50, ColorF::Azure);
+	//
+	//
+	//swprintf(buffer, 128, L"Maoue X : %f\Mouse Y : %f", MOUSEPOINTER->GetMouseWorldPosition().x, MOUSEPOINTER->GetMouseWorldPosition().y);
+	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 200), buffer, 20, 300, 50, ColorF::Azure);
+	//
+	//Vector2 pos = CAMERA->GetPosition() + _ptMouse;
+	//
+	//swprintf(buffer, 128, L"WorldMaoue X : %f\WorldMaoue Y : %f", pos.x, pos.y);
+	//GRAPHICMANAGER->Text(Vector2(WINSIZEX / 2, 300), buffer, 20, 300, 50, ColorF::Azure);
 
 
 	//swprintf(buffer, 128, L"%d %d", GRAPHICMANAGER->FindImage("will")->GetFrameWidth(), GRAPHICMANAGER->FindImage("will")->GetFrameHeight());

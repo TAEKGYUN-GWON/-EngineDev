@@ -20,15 +20,16 @@ void Player::Init(Vector2 pos)
 	_sprite = AddComponent<Sprite>();
 	_sprite->Init(true, true);
 	_sprite->SetFPS(_FPS);
+	_sprite->SetScale(Vector2(1.3, 1.3));
 	_sprite->SetDepth(2);
 	wstring dir = L"Resource/Wizard/Player/";
 	_ability = make_shared<Ability>();
 	_ability->Init(100, 15);
 	_state = make_shared<PlayerIdle>(this);
 
+	_skills.push_back(new P_Skill("WindBoomerang", 0.2f));
+	_skills.push_back(new P_Skill("FireBall", 1.6f));
 	_skills.push_back(new P_Skill("ChaosCircle", 7));
-	_skills.push_back(new P_Skill("FireBall", 2));
-	_skills.push_back(new P_Skill("WindBoomerang", 0.5f));
 
 	_curSkill = FindSkill("WindBoomerang");
 
@@ -56,8 +57,20 @@ void Player::Init(Vector2 pos)
 
 void Player::Update()
 {
+	if (_isDead) return;
 	Object::Update();
 	BasicUpdate();
+}
+
+void Player::Render()
+{
+	Object::Render();
+	char buffer[256];
+	for (int i = 0; i < 3; i++)
+	{
+		sprintf_s(buffer, "%d CoolDown : %f", i + 1, _skills[i]->curTime);
+		GRAPHICMANAGER->Text(Vector2(WINSIZE / 2) + Vector2(0, i * 100), buffer, 20, 100, 20, ColorF::WhiteSmoke);
+	}
 }
 
 void Player::Release()
@@ -108,7 +121,10 @@ void Player::Move()
 
 void Player::BasicUpdate()
 {
+
+	//if (!_isBattle) CAMERA->SetPosition(_trans->GetPos());
 	AtkAngleDetection();
+	_ability->Update();
 	_state->Stay();
 	_sprite->SetPosition(_trans->GetPos() + Vector2::up * 12);
 	FlipDetection();
@@ -182,7 +198,11 @@ P_Skill* Player::FindSkill(string name)
 
 void Player::ChangeCurrentSkill()
 {
-	if (KEYMANAGER->isOnceKeyDown('1')) _curSkill = FindSkill("WindBoomerang");
-	if (KEYMANAGER->isOnceKeyDown('2')) _curSkill = FindSkill("FireBall");
-	if (KEYMANAGER->isOnceKeyDown('3')) _curSkill = FindSkill("ChaosCircle");
+	if (KEYMANAGER->isOnceKeyDown(VK_RBUTTON))
+	{
+		if(_curSkill->name == "WindBoomerang") _curSkill = FindSkill("FireBall");
+		else if (_curSkill->name == "FireBall") _curSkill = FindSkill("ChaosCircle");
+		else if (_curSkill->name == "ChaosCircle") _curSkill = FindSkill("WindBoomerang");
+
+	}
 }

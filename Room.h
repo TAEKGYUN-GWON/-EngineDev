@@ -24,6 +24,7 @@ private:
 	bool _isMainRoom;
 	bool _isSubRoom;
 	bool _isHubForBossRoom;
+	bool _isActiveEnemy;
 	multimap<string, RoomObjectInfo> _roomObjects;
 	EnemyManager* _eMgr;
 public:
@@ -42,6 +43,8 @@ public:
 
 	void SetRoomEnemy();
 
+	bool GetIsActiveEnemy() { return _isActiveEnemy; }
+	void SetIsActiveEnemy(bool active) { _isActiveEnemy = active; }
 	void DeActivePhysics();
 
 	multimap<string, RoomObjectInfo> GetRoomObjects() { return _roomObjects; }

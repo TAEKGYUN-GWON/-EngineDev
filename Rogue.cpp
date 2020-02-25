@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "Rogue.h"
 #include "EnemyState.h"
-
+#include "EnemyAtkScript.h"
 void Rogue::Init(Vector2 pos)
 {
 	Enemy::Init();
 	_name = "Rogue";
-	_atkDistance = 5.f;
-	_distance = 100;
+	_atkDistance = 75;
+	_distance = 1;
 	_FPS = 1.3f;
 	_speed = 80.f;
 	_atkFrame = 0;
@@ -22,33 +22,38 @@ void Rogue::Init(Vector2 pos)
 
 	_sprite->SetPivot(PIVOT::BOTTOM);
 	_trans->SetPos(pos);
-	_trans->SetScale(Vector2(20, 10));
+	_trans->SetScale(Vector2(40, 15));
+	_sprite->SetScale(Vector2(1.3, 1.3));
 	_sprite->SetPosition(_trans->GetPos());
 	_physics->Init(BodyType::DYNAMIC, 1, 1);
+	_physics->GetBody()->SetFixedRotation(true);
 
 	_leftAtk = Object::CreateObject<Object>(this);
 	_leftAtk->Init();
 	auto t = _leftAtk->GetTrans();
-	t->SetScale(10, 15);
+	t->SetScale(20, 30);
 	t->SetPos(_trans->GetPos() + Vector2::left * (5 + (t->GetScale().x / 2) + (_trans->GetScale().x / 2)));
 	auto p = _leftAtk->AddComponent<PhysicsBody>();
 	p->Init(BodyType::DYNAMIC, 1);
+	p->SetSensor(true);
 	p->GetBody()->SetFixedRotation(true);
+	_leftAtk->AddComponent<EnemyAtkScript>();
 	_leftAtk->SetIsActive(false);
 
 	_rightAtk = Object::CreateObject<Object>(this);
 	_rightAtk->Init();
 	t = _rightAtk->GetTrans();
-	t->SetScale(10, 15);
+	t->SetScale(20, 30);
 	t->SetPos(_trans->GetPos() + Vector2::right * (5 + (t->GetScale().x / 2) + (_trans->GetScale().x / 2)));
 	p = _rightAtk->AddComponent<PhysicsBody>();
 	p->Init(BodyType::DYNAMIC, 1);
+	p->SetSensor(true);
 	p->GetBody()->SetFixedRotation(true);
-
+	_rightAtk->AddComponent<EnemyAtkScript>();
 	_rightAtk->SetIsActive(false);
 	_state->Enter();
 
-	_ability->Init(50, 30);
+	_ability->Init(50, 10);
 }
 void Rogue::Update()
 {
@@ -63,10 +68,18 @@ void Rogue::Update()
 		_FPS = 1.3;
 		_sprite->SetFPS(_FPS);
 	}
-	if (KEYMANAGER->isOnceKeyDown('1'))
-		_distance = 5;
-	if (KEYMANAGER->isOnceKeyDown('2'))
-		_distance = 100;
+
+	if (_state->GetStateToString() == "Hurt" or _state->GetStateToString() == "Death")
+	{
+		_leftAtk->SetIsActive(false);
+		_rightAtk->SetIsActive(false);
+	}
+
+	_leftAtk->GetTrans()->SetPos(_trans->GetPos() + Vector2::left * (5 + (_leftAtk->GetTrans()->GetScale().x / 2) + (_trans->GetScale().x / 2)));
+	_leftAtk->GetComponent<PhysicsBody>()->SetBodyPosition();
+
+	_rightAtk->GetTrans()->SetPos(_trans->GetPos() + Vector2::right * (5 + (_rightAtk->GetTrans()->GetScale().x / 2) + (_trans->GetScale().x / 2)));
+	_rightAtk->GetComponent<PhysicsBody>()->SetBodyPosition();
 }
 void Rogue::Attack()
 {
@@ -86,6 +99,7 @@ void Rogue::Attack()
 void Rogue::AttackExit()
 {
 	Enemy::AttackExit();
+	if (_isHurt)return;
 	_leftAtk->SetIsActive(false);
 	_rightAtk->SetIsActive(false);
 }
@@ -96,9 +110,5 @@ void Rogue::BasicUpdate()
 	//if (_state->GetStateToString() == "Idle")
 	_sprite->SetPosition(_trans->GetPos() + Vector2::down * 13);
 
-	_leftAtk->GetTrans()->SetPos(_trans->GetPos() + Vector2::left * (5 + (_leftAtk->GetTrans()->GetScale().x / 2) + (_trans->GetScale().x / 2)));
-	_leftAtk->GetComponent<PhysicsBody>()->SetBodyPosition();
 
-	_rightAtk->GetTrans()->SetPos(_trans->GetPos() + Vector2::right * (5 + (_rightAtk->GetTrans()->GetScale().x / 2) + (_trans->GetScale().x / 2)));
-	_rightAtk->GetComponent<PhysicsBody>()->SetBodyPosition();
 }
