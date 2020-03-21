@@ -4,6 +4,7 @@
 #include "Room.h"
 #include "Astar.h"
 #include "Player.h"
+#include "UiManager.h"
 class Probe;
 #define CREATE_ROOM_MAX 50
 #define SELECT_ROOM 10
@@ -22,6 +23,8 @@ private:
 	vector<Room*> subRooms;
 	Room* currentRoom;
 	float maxY;
+	float _alpha;
+	bool alphaFlip;
 	float timer;
 	bool endPush; 
 	bool endCreate;
@@ -30,6 +33,7 @@ private:
 	int count;
 	Player* _player;
 	vector<Object*> _vFloors;
+	UiManager* _uiMgr;
 public:
 	virtual void Init();
 	virtual void Update();
@@ -50,7 +54,7 @@ public:
 	void SetPhysics();
 	void SetPlayer();
 	vector<Tile*>* GetTiles() { return &tiles; }
-
+	void SendAPlayerBossRoom();
 	void SetEnemy();
 
 	void SetScene();

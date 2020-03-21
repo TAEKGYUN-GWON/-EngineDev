@@ -48,6 +48,12 @@ void PlayerIdle::Stay()
 		return;
 	}
 
+	if (KEYMANAGER->isStayKeyDown(VK_SPACE))
+	{
+		_player->ChangeState(make_shared<PlayerDash>(_player));
+		return;
+	}
+
 	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
 	{
 		if (_player->GetCurrentSkill()->curTime >= _player->GetCurrentSkill()->cooldownTime)
@@ -67,6 +73,7 @@ void PlayerMove::Enter()
 	_name = "Move";
 	_player->SetFPS(2.f);
 	_player->SetPlayerImg(_name);
+	SOUNDMANAGER->play("PlayerFootstep");
 }
 
 void PlayerMove::Stay()
@@ -145,10 +152,14 @@ void PlayerMove::Stay()
 
 		//if (!_player->GetIsCollToWall()) _player->Move();
 	}
-
 	else
 	{
 		_player->ChangeState(make_shared<PlayerIdle>(_player));
+		return;
+	}
+	if (KEYMANAGER->isStayKeyDown(VK_SPACE))
+	{
+		_player->ChangeState(make_shared<PlayerDash>(_player));
 		return;
 	}
 
@@ -166,6 +177,7 @@ void PlayerMove::Stay()
 
 void PlayerMove::Exit()
 {
+	SOUNDMANAGER->stop("PlayerFootstep");
 }
 
 //Attack;
@@ -204,6 +216,7 @@ void PlayerAttack::Stay()
 		{
 			if (!isAttack)
 			{
+				SOUNDMANAGER->play("Spin");
 				WindBoomerang* chaos = Object::CreateObject<WindBoomerang>(_player);
 				_player->GetCurrentSkill()->curTime = 0;
 				chaos->Init(_player);
@@ -214,6 +227,7 @@ void PlayerAttack::Stay()
 		{
 			if (!isAttack)
 			{
+				SOUNDMANAGER->play("FireBlast");
 				FireBall* chaos = Object::CreateObject<FireBall>(_player);
 				_player->GetCurrentSkill()->curTime = 0;
 				chaos->Init(_player);
@@ -222,10 +236,14 @@ void PlayerAttack::Stay()
 		}
 		if (_player->GetCurrentSkill()->name == "ChaosCircle")
 		{
-
-			ChaosCircle* chaos = Object::CreateObject<ChaosCircle>(_player);
-			_player->GetCurrentSkill()->curTime = 0;
-			chaos->Init(_player);
+			if (!isAttack)
+			{
+				SOUNDMANAGER->play("WhipSwing");
+				ChaosCircle* chaos = Object::CreateObject<ChaosCircle>(_player);
+				_player->GetCurrentSkill()->curTime = 0;
+				chaos->Init(_player);
+				isAttack = true;
+			}
 		}
 		
 
@@ -241,7 +259,7 @@ void PlayerAttack::Exit()
 void PlayerHurt::Enter()
 {
 	_name = "Hurt";
-
+	SOUNDMANAGER->play("FireBlast");
 	float angle = _player->GetHurtAngle();
 
 	if (angle >= 45 * DegToRad && angle < 135 * DegToRad) _player->SetDirection(P_DIR::UP);
@@ -260,6 +278,7 @@ void PlayerHurt::Enter()
 	_player->SetPlayerImg(_name);
 	_timer = 0;
 	_maxTimer = 0.5f;
+	CAMERA->ShakingSetting(0.5, 3);
 }
 
 void PlayerHurt::Stay()
@@ -289,6 +308,7 @@ void PlayerDeath::Enter()
 	_player->SetFPS(1.5f);
 	_player->SetPlayerImg(_name);
 	_player->GetPhysics()->SetBodyActive(false);
+	SOUNDMANAGER->play("PlayerDead");
 }
 
 void PlayerDeath::Stay()
@@ -302,6 +322,80 @@ void PlayerDeath::Stay()
 
 void PlayerDeath::Exit()
 {
+
 }
 
+void PlayerDash::Enter()
+{
+	_name = "Dash";
+	SOUNDMANAGER->play("AirJet");
+	_player->SetFPS(1.5f);
+	_player->SetPlayerImg(_name);
+	switch (_player->GetDirection())
+	{
+	case P_DIR::UP:
+	{
+		EFFECTMANAGER->SetEffect("DashAirBurst", _player->GetTrans()->GetPosToPivot(TF_PIVOT::BOTTOM), -PI / 2, 2.3f);
+		lastPos = _player->GetTrans()->GetPos() + Vector2::up * 140;
+	}
+		break;
+	case P_DIR::DOWN:
+	{
+		EFFECTMANAGER->SetEffect("DashAirBurst", _player->GetTrans()->GetPosToPivot(TF_PIVOT::TOP), PI/2, 2.3f);
+		lastPos = _player->GetTrans()->GetPos() + Vector2::down * 140;
+	}
+		break;
+	case P_DIR::LEFT:
+	{
+		EFFECTMANAGER->SetEffect("DashAirBurst", _player->GetTrans()->GetPosToPivot(TF_PIVOT::RIGHT) + Vector2::right * 10, 0, 2.3f);
+		lastPos = _player->GetTrans()->GetPos() + Vector2::left * 140;
+	}
+		break;
+	case P_DIR::RIGHT:
+	{
+		EFFECTMANAGER->SetEffect("DashAirBurst", _player->GetTrans()->GetPosToPivot(TF_PIVOT::LEFT) + Vector2::left *10, PI, 2.3f);
+		lastPos = _player->GetTrans()->GetPos() + Vector2::right * 140;
+	}
+		break;
+	}
+	speed = 500;
+}
 
+void PlayerDash::Stay()
+{
+
+	switch (_player->GetDirection())
+	{
+	case P_DIR::UP:
+	{
+		_player->GetTrans()->Move(Vector2::up * speed * TIMEMANAGER->getElapsedTime());
+		_player->GetPhysics()->SetBodyPosition();
+	}
+	break;
+	case P_DIR::DOWN:
+	{
+		_player->GetTrans()->Move(Vector2::down * speed * TIMEMANAGER->getElapsedTime());
+		_player->GetPhysics()->SetBodyPosition();
+	}
+	break;
+	case P_DIR::LEFT:
+	{
+		_player->GetTrans()->Move(Vector2::left * speed * TIMEMANAGER->getElapsedTime());
+		_player->GetPhysics()->SetBodyPosition();
+	}
+	break;
+	case P_DIR::RIGHT:
+	{
+		_player->GetTrans()->Move(Vector2::right * speed * TIMEMANAGER->getElapsedTime());
+		_player->GetPhysics()->SetBodyPosition();
+	}
+	break;
+	}
+
+	if (Vector2::Distance(_player->GetTrans()->GetPos(), lastPos) < 5)_player->ChangeState(make_shared<PlayerIdle>(_player));
+
+}
+
+void PlayerDash::Exit()
+{
+}

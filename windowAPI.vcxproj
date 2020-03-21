@@ -159,6 +159,8 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Direct2D.h" />
     <ClInclude Include="DrawComponent.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyAtkScript.h" />
     <ClInclude Include="EnemyManager.h" />
@@ -218,6 +220,7 @@
     <ClInclude Include="timer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="txtData.h" />
+    <ClInclude Include="UiManager.h" />
     <ClInclude Include="UiObject.h" />
     <ClInclude Include="UiObject.hpp" />
     <ClInclude Include="utils.h" />
@@ -238,6 +241,8 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Direct2D.cpp" />
     <ClCompile Include="DrawComponent.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyAtkScript.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -294,6 +299,7 @@
     <ClCompile Include="timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="UiManager.cpp" />
     <ClCompile Include="UiObject.cpp" />
     <ClCompile Include="utils.cpp" />
     <ClCompile Include="Vector2.cpp" />

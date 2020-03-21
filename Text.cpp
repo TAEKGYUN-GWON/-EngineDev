@@ -20,7 +20,7 @@ void Text::CreateText(wstring text, float fontSize, float maxWidth, float maxHei
 
     _trans = _object->GetTrans();
     _trans->SetScale(Vector2(maxWidth, maxHeight));
-
+    pos = _object->GetTrans()->GetPos();
     //Direct2D::GetInstance()->GetRenderTarger()->CreateSolidColorBrush(ColorF(color, alpha), &_brush);
     GRAPHICMANAGER->GetRenderTarget()->CreateSolidColorBrush(color, &_brush);
 }
@@ -42,10 +42,12 @@ void Text::Render()
     //auto renderTarger = Direct2D::GetInstance()->GetRenderTarger();
     ID2D1HwndRenderTarget* renderTarger = GRAPHICMANAGER->GetRenderTarget();
 
-    if (_object->GetCameraAffect()) renderTarger->SetTransform(Matrix3x2F::Identity() * CAMERA->GetMatrix());
+    Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
+
+    if (_object->GetCameraAffect()) renderTarger->SetTransform(Matrix3x2F::Identity() * trans* CAMERA->GetMatrix());
     else renderTarger->SetTransform(Matrix3x2F::Identity());
 
-    renderTarger->DrawTextLayout(Point2F(_trans->GetPos().x, _trans->GetPos().y), _layout, _brush);
+    renderTarger->DrawTextLayout(Point2F(pos.x, pos.y), _layout, _brush);
 }
 
 void Text::Release()

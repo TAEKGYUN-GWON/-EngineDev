@@ -109,6 +109,12 @@
     <Filter Include="playGround\Skill\Enemy">
       <UniqueIdentifier>{7d398713-bec3-4e5a-9a14-ec958758442f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playGround\UI">
+      <UniqueIdentifier>{c1f51e9b-05e3-4978-8aa7-47e504db78b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="playGround\Effect">
+      <UniqueIdentifier>{22c66131-7f9a-4c7f-b064-8b12e0783eab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -348,6 +354,15 @@
     <ClInclude Include="SkillScript.h">
       <Filter>playGround\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="UiManager.h">
+      <Filter>playGround\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>playGround\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>playGround\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -556,6 +571,15 @@
     </ClCompile>
     <ClCompile Include="SkillScript.cpp">
       <Filter>playGround\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="UiManager.cpp">
+      <Filter>playGround\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>playGround\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>playGround\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

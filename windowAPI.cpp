@@ -55,7 +55,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 	GRAPHICMANAGER->init();
 	Graphic::SetRendertarget();
 	SCENEMANAGER->init();
-	OBJECTMANAGER->Init();
 	SOUNDMANAGER->init();
 	CAMERA->init();
 	KEYMANAGER->init();
@@ -80,7 +79,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpszCmd
 			sceneManager::getSingleton()->GetNowScene()->PhysicsUpdate();
 			sceneManager::getSingleton()->GetNowScene()->Update();
 			CAMERA->Update();
-
+			SOUNDMANAGER->update();
 			ID2D1RenderTarget* renderTarget = GRAPHICMANAGER->GetRenderTarget();
 			renderTarget->BeginDraw();
 			renderTarget->SetTransform(D2D1::Matrix3x2F::Identity());

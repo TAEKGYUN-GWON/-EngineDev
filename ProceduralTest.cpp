@@ -84,7 +84,12 @@ void ProceduralTest::Init()
 	for (int i = 0; i < SELECT_ROOM; i++)
 		SelRoom();
 	SetTile();
+	_uiMgr = new UiManager;
+	_alpha = 1;
+	alphaFlip = false;
+	SOUNDMANAGER->play("Ice", 0.5f);
 
+	SOUNDMANAGER->isPlaySound("Ice");
 }
 
 void ProceduralTest::Update()
@@ -93,21 +98,45 @@ void ProceduralTest::Update()
 	
 	if (KEYMANAGER->isOnceKeyDown('G')) cout << TIMEMANAGER->GetFps() << endl;
 
-	if (timer < 3.5f) SetScene();
-	else
-	{
-		SetEnemy();
-	}
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		SCENEMANAGER->changeScene("PG");
 		return;
+	}
+	_uiMgr->Update();
+
+	if (timer < 3.5f)
+	{
+		SetScene();
+		if (!alphaFlip)
+		{
+
+			if (_alpha < 0.2)
+			{
+				alphaFlip = true;
+			}
+				_alpha -= 1 * TIMEMANAGER->getElapsedTime();
+		}
+		else
+		{
+			if (_alpha > 1)
+			{
+				alphaFlip = false;
+			}
+				_alpha += 1 * TIMEMANAGER->getElapsedTime();
+		}
+	}
+	else
+	{
+		SetEnemy();
+		SendAPlayerBossRoom();
 	}
 
 }
 
 void ProceduralTest::Release()
 {
+	_uiMgr->Release();
 	tiles.clear();
 	rooms.clear();
 	selRooms.clear();
@@ -145,6 +174,15 @@ bool Compare2(Object* a, Object* b)
 
 void ProceduralTest::Render()
 {
+
+	if (timer < 3.5f)
+	{
+		GRAPHICMANAGER->DrawImage("Loading", WINSIZE / 2, 1, PIVOT::CENTER, false);
+
+		GRAPHICMANAGER->Text(WINSIZE / 2 + Vector2::left * 130 + Vector2::up * 20, L"Loading . . .", 30, 300, 50, ColorF(ColorF::White, _alpha), TextPivot::CENTER, L"Silkscreen");
+		return;
+	}
+
 	vector<Object*>z_list;
 	for (auto c : _activeList)
 	{
@@ -168,13 +206,18 @@ void ProceduralTest::Render()
 
 	for (Object* child : z_list)
 	{
-		if (child->GetTrans()->GetPos().x + 100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x - 100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
-			child->GetTrans()->GetPos().y + 100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y - 100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
+		if (child->GetCameraAffect())
+		{
+			if (child->GetTrans()->GetPos().x + 100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x - 100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
+				child->GetTrans()->GetPos().y + 100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y - 100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
 
-		else child->SetAllowsRender(true);
-
+			else child->SetAllowsRender(true);
+		}
 		child->Render();
+		
 	}
+	_uiMgr->Render();
+	
 }
 
 void ProceduralTest::PhysicsUpdate()
@@ -980,7 +1023,15 @@ void ProceduralTest::SetPlayer()
 	int rand = RND->getInt(subRooms.size());
 	_player = Object::CreateObject<Player>();
 	_player->Init(subRooms[rand]->GetTrans()->GetPos());
+	_uiMgr->Init(_player);
+}
 
+void ProceduralTest::SendAPlayerBossRoom()
+{
+	Vector2 idxToVec2 = _player->GetTrans()->GetPos() / TILE_WIDTH;
+	idxToVec2 = idxToVec2.Vector2ToPOINT();
+	int idx = idxToVec2.x + idxToVec2.y * MAP_TILE_MAX_X;
+	if (tiles[idx]->GetWallType() == WallType::BOSS_HUB) SCENEMANAGER->changeScene("PG");
 }
 
 void ProceduralTest::SetEnemy()

@@ -34,7 +34,7 @@ void Sprite::Render()
 {
 	DrawComponent::Render();
 	PlayAnimation();
-	if (KEYMANAGER->isToggleKey(VK_F1))
+	if (KEYMANAGER->isToggleKey(VK_F1) || _isShowRect)
 	{
 		if (_isFillRect) GRAPHICMANAGER->DrawFillRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _pivot, _isCameraEffect);
 		else GRAPHICMANAGER->DrawRect(_object->GetTrans()->GetPos(), _object->GetTrans()->GetScale(), _object->GetTrans()->GetRotateDegree(), _color, _pivot, _strokeWidth, _isCameraEffect);
@@ -56,7 +56,6 @@ void Sprite::Render()
 
 void Sprite::Update()
 {
-
 }
 
 void Sprite::Start()

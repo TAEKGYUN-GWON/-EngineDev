@@ -7,7 +7,7 @@ void Player::Init(Vector2 pos)
 	Object::Init();
 	AddComponent<PlayerScript>();
 	_trans->SetPos(pos);
-	_trans->SetScale(Vector2(15, 10));
+	_trans->SetScale(Vector2(25, 15));
 	_physics = AddComponent<PhysicsBody>();
 	_physics->Init(BodyType::DYNAMIC, 3,3);
 	_physics->GetBody()->SetFixedRotation(true);
@@ -22,17 +22,37 @@ void Player::Init(Vector2 pos)
 	_sprite->SetFPS(_FPS);
 	_sprite->SetScale(Vector2(1.3, 1.3));
 	_sprite->SetDepth(2);
-	wstring dir = L"Resource/Wizard/Player/";
 	_ability = make_shared<Ability>();
-	_ability->Init(100, 15);
+	_ability->Init(400, 15);
 	_state = make_shared<PlayerIdle>(this);
 
 	_skills.push_back(new P_Skill("WindBoomerang", 0.2f));
 	_skills.push_back(new P_Skill("FireBall", 1.6f));
 	_skills.push_back(new P_Skill("ChaosCircle", 7));
 
-	_curSkill = FindSkill("WindBoomerang");
+	wstring dir = L"Resource/Wizard/UI/";
 
+	GRAPHICMANAGER->AddImage("Maker1", dir + L"PlayerMarker.png");
+	GRAPHICMANAGER->AddImage("Maker2", dir + L"PlayerMarker2.png");
+	GRAPHICMANAGER->AddImage("Maker3", dir + L"PlayerMarker3.png");
+	_curSkill = FindSkill("WindBoomerang");
+	_maker = Object::CreateObject<Object>(this);
+	_maker->GetTrans()->SetPos(_trans->GetPosToPivot(TF_PIVOT::BOTTOM));
+	auto s = _maker->AddComponent<Sprite>();
+	s->Init();
+	s->SetImgName("Maker1");
+	s->SetScale(Vector2(2, 2));
+	s->SetAlpha(0.7);
+	//s = _maker->AddComponent<Sprite>();
+	//s->Init();
+	//s->SetImgName("Maker2");
+	//s->SetScale(Vector2(2, 2));
+	s = _maker->AddComponent<Sprite>();
+	s->Init();
+	s->SetImgName("Maker3");
+	s->SetScale(Vector2(2, 2));
+	s->SetAlpha(0.7);
+	dir = L"Resource/Wizard/Player/";
 	//_isCollisionToWall = true;
 	GRAPHICMANAGER->AddFrameImage(_name + "SideIdle", dir + L"PlayerSideIdle.png", 1, 1);
 	GRAPHICMANAGER->AddFrameImage(_name + "UpIdle", dir + L"PlayerUpIdle.png", 1, 1);
@@ -50,7 +70,13 @@ void Player::Init(Vector2 pos)
 	GRAPHICMANAGER->AddFrameImage(_name + "UpAttack", dir + L"PlayerAtkUp_11x1.png", 11, 1);
 	GRAPHICMANAGER->AddFrameImage(_name + "DownAttack", dir + L"PlayerAtkDown_9x1.png", 9, 1);
 
+	GRAPHICMANAGER->AddFrameImage(_name + "SideDash", dir + L"WizardDashSide_2x1.png", 2, 1);
+	GRAPHICMANAGER->AddFrameImage(_name + "UpDash", dir + L"WizardDashUp.png", 1, 1);
+	GRAPHICMANAGER->AddFrameImage(_name + "DownDash", dir + L"WizardDashDown.png", 1, 1);
+
 	GRAPHICMANAGER->AddFrameImage(_name + "Death", dir + L"Death_11x1.png", 11, 1);
+
+	GRAPHICMANAGER->AddFrameImage("DashAirBurst", dir + L"DashAirBurst_5x1.png", 5, 1);
 
 	_state->Enter();
 }
@@ -64,13 +90,13 @@ void Player::Update()
 
 void Player::Render()
 {
-	Object::Render();
-	char buffer[256];
-	for (int i = 0; i < 3; i++)
+	for (Object* child : _activeList)
 	{
-		sprintf_s(buffer, "%d CoolDown : %f", i + 1, _skills[i]->curTime);
-		GRAPHICMANAGER->Text(Vector2(WINSIZE / 2) + Vector2(0, i * 100), buffer, 20, 100, 20, ColorF::WhiteSmoke);
+		child->Render();
 	}
+	if (_allowRender)
+		for (auto d : _draw)
+			d->Render();
 }
 
 void Player::Release()
@@ -122,14 +148,19 @@ void Player::Move()
 void Player::BasicUpdate()
 {
 
-	//if (!_isBattle) CAMERA->SetPosition(_trans->GetPos());
+	//
+	if (!_isBattle) CAMERA->SetPosition(_trans->GetPos());
 	AtkAngleDetection();
 	_ability->Update();
 	_state->Stay();
-	_sprite->SetPosition(_trans->GetPos() + Vector2::up * 12);
+	_sprite->SetPosition(_trans->GetPos() + Vector2::up * 15);
 	FlipDetection();
 	WindUpCoolDown();
 	ChangeCurrentSkill();
+	_maker->GetTrans()->SetPos(_trans->GetPosToPivot(TF_PIVOT::BOTTOM));
+	_maker->GetTrans()->SetRotateToRadian(-Vector2::GetAngle(MOUSEPOINTER->GetMouseWorldPosition(),_maker->GetTrans()->GetPos())- PI / 2);
+	for (Sprite* s : _maker->GetComponents<Sprite>())
+		s->SetPosition(_maker->GetTrans()->GetPos());
 }
 
 void Player::WindUpCoolDown()

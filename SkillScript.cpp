@@ -5,57 +5,6 @@
 #include "Enemy.h"
 #include "PlayerState.h"
 #include "EnemyState.h"
-#pragma region 원래모습
-/*
-
-switch (me->GetOwnerType())
-	{
-	case OnwerType::Player:
-	{
-		Player* player = (Player*)me->GetOnwer();
-		Enemy* enemy = (Enemy*)obj;
-		switch (me->GetSkillType())
-		{
-		case SkillType::Continued:
-		{
-			me->SetIsCollision(true);
-			enemy->GetAbility()->SetDamage(player->GetAbility()->GetAtk() + me->GetAtk());
-		}
-		break;
-		case SkillType::One_time:
-		{
-			me->SetIsCollision(true);
-			enemy->GetAbility()->SetDamage(player->GetAbility()->GetAtk() + me->GetAtk());
-		}
-		break;
-		}
-	}
-	break;
-	case OnwerType::Enemy:
-	{
-		Enemy* enemy = (Enemy*)me->GetOnwer();
-		Player* player = (Player*)obj;
-		switch (me->GetSkillType())
-		{
-		case SkillType::Continued:
-		{
-			me->SetIsCollision(true);
-			enemy->GetAbility()->SetDamage(player->GetAbility()->GetAtk() + me->GetAtk());
-		}
-		break;
-		case SkillType::One_time:
-		{
-			me->SetIsCollision(true);
-			player->GetAbility()->SetDamage(enemy->GetAbility()->GetAtk() + me->GetAtk());
-		}
-		break;
-		}
-	}
-	break;
-	}
-
-*/
-#pragma endregion
 
 void SkillScript::CollisionBegin(void* obj)
 {
@@ -102,7 +51,6 @@ void SkillScript::CollisionBegin(void* obj)
 	}
 	break;
 	}
-
 }
 
 void SkillScript::CollisionPreSolve(void* obj)

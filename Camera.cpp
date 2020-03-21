@@ -140,25 +140,24 @@ void Camera::ShakingCamera()
 		//_pos.x = RND->getFromFloatTo(-3.f, 3.f) * _amount + _prevPos.x;
 		//_pos.y = RND->getFromFloatTo(-3.f, 3.f) * _amount + _prevPos.y;
 
-		_lastPos.x = RND->getFromFloatTo(-1.f, 1.f) * _amount + _prevPos.x;
-		_lastPos.y = RND->getFromFloatTo(-1.f, 1.f) * _amount + _prevPos.y;
+		_lastPos.x = RND->getFromFloatTo(-1.f, 1.f) * _amount + _pos.x;
+		_lastPos.y = RND->getFromFloatTo(-1.f, 1.f) * _amount + _pos.y;
 		
-		_pos = Vector2::Lerp(_prevPos, _lastPos, 1.0f);
+		_pos = Vector2::Lerp(_pos, _lastPos, 1.0f);
 		
 		_shakingTime -= TIMEMANAGER->getElapsedTime();
 	}
 	else
 	{
 		_isShaking = false;
-		_pos = _prevPos;
+		//_pos = _prevPos;
 	}
 #pragma endregion
 }
 
-void Camera::ShakingSetting(Vector2 prevPos, float time, float amount)
+void Camera::ShakingSetting(float time, float amount)
 {
 	_isShaking = true;
-	_prevPos = prevPos;
 	_shakingTime = time;
 	_amount = amount;
 }

@@ -7,6 +7,19 @@ soundManager::soundManager()
 	_channel(NULL),
 	_sound(NULL)
 {
+	//FMOD 엔진 초기화
+	System_Create(&_system);
+
+	_system->init(TOTALSOUNDBUFFER, FMOD_INIT_NORMAL, NULL);
+
+	_sound = new Sound * [TOTALSOUNDBUFFER];
+	_channel = new Channel * [TOTALSOUNDBUFFER];
+
+	memset(_sound, 0, sizeof(Sound*) * TOTALSOUNDBUFFER);
+	memset(_channel, 0, sizeof(Channel*) * TOTALSOUNDBUFFER);
+
+
+
 }
 
 
@@ -16,18 +29,6 @@ soundManager::~soundManager()
 
 HRESULT soundManager::init()
 {
-	//FMOD 엔진 초기화
-	System_Create(&_system);
-
-	_system->init(TOTALSOUNDBUFFER, FMOD_INIT_NORMAL, NULL);
-
-	_sound = new Sound*[TOTALSOUNDBUFFER];
-	_channel = new Channel*[TOTALSOUNDBUFFER];
-
-	memset(_sound, 0, sizeof(Sound*) * TOTALSOUNDBUFFER);
-	memset(_channel, 0, sizeof(Channel*) * TOTALSOUNDBUFFER);
-
-
 	return S_OK;
 }
 

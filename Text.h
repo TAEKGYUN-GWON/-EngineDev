@@ -19,6 +19,7 @@ class Transform;
 class Text : public DrawComponent
 {
 private:
+    Vector2 pos;
     wstring _text;
     wstring _fontName;
     wstring _locale;
@@ -41,7 +42,8 @@ public:
     void SetColor(ColorF color, int startPoint, int length);
     void SetUnderline(bool isUnderline, int startPoint, int length);
     void SetAnchor(AnchorPoint anchor);
-
+    void SetPos(Vector2 pos) { this->pos = pos; }
+    Vector2 GetPos(){ return pos; }
     virtual void Init();
     virtual void Render();
     virtual void Release();

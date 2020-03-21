@@ -47,6 +47,19 @@ public:
 	virtual void Exit();
 };
 
+class PlayerDash : public PlayerState
+{
+
+private:
+	Vector2 lastPos;
+	float speed;
+public:
+	PlayerDash(Player* player) : PlayerState(player) {}
+	virtual void Enter();
+	virtual void Stay();
+	virtual void Exit();
+};
+
 
 class PlayerAttack : public PlayerState
 {

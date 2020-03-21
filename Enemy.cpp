@@ -81,11 +81,11 @@ void Enemy::Move()
 	if (_path.size())
 	{
 		Vector2 dir = *_path.begin() - _trans->GetPos();
-
+		_dirAngle = Vector2::GetAngle(_trans->GetPos(), *_path.begin());
 		_trans->Move(dir.Nomalized() * _speed * TIMEMANAGER->getElapsedTime());
 		_physics->SetBodyPosition();
 
-		if (Vector2::Distance(*_path.begin(), _trans->GetPos()) <= 1)
+		if (Vector2::Distance(*_path.begin(), _trans->GetPos()) <= 5)
 		{
 			_path.erase(_path.begin());
 		}

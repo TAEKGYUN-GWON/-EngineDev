@@ -14,7 +14,10 @@ void FireBall::Init(Object* onwer)
 	Player* player = (Player*)_onwer;
 	_trans->SetPos(player->GetTrans()->GetPos() + Vector2(cosf(player->GetAtkAngle()), -sinf(player->GetAtkAngle())) * 4 *(player->GetTrans()->GetScale()));
 	_trans->SetRotateToRadian(-player->GetAtkAngle());
-	GRAPHICMANAGER->AddFrameImage("FireBall", L"Resource/Wizard/Skill/Fireball_0_5x1.png", 5, 1);
+
+	wstring dir = L"Resource/Wizard/Skill/";
+	GRAPHICMANAGER->AddFrameImage("FireBall", dir + L"Fireball_0_5x1.png", 5, 1);
+	GRAPHICMANAGER->AddFrameImage("FireExplosion", dir + L"FireExplosion_8x1.png", 8, 1);
 	_sprite = AddComponent<Sprite>();
 	//_sprite->SetScale(Vector2(1.3, 1.3));
 	_sprite->Init(true, true);
@@ -31,11 +34,24 @@ void FireBall::Init(Object* onwer)
 	_physics->GetBody()->SetFixedRotation(true);
 	_moveAngle = player->GetAtkAngle();
 }
-
 void FireBall::Move()
 {
 	_timer += TIMEMANAGER->getElapsedTime();
-	if (_timer >= _maxTimer)SetIsRelese();
+	if (_isCollision)
+	{
+		EFFECTMANAGER->SetEffect("FireExplosion", _trans->GetPos(), 0, 1.5);
+		if (_trans->GetPos() > CAMERA->GetPosition() && _trans->GetPos() < CAMERA->GetPosition() + WINSIZE) CAMERA->ShakingSetting(0.8, 5);
+		SOUNDMANAGER->play("FireballExplode");
+		return;
+	}
+	if (_timer >= _maxTimer)
+	{
+		SetIsRelese();
+		EFFECTMANAGER->SetEffect("FireExplosion", _trans->GetPos(), 0, 1.5);
+		if (_trans->GetPos() > CAMERA->GetPosition() && _trans->GetPos() < CAMERA->GetPosition() + WINSIZE) CAMERA->ShakingSetting(0.8, 5);
+		SOUNDMANAGER->play("FireballExplode");
+		return;
+	}
 	_trans->Move(Vector2(cosf(_moveAngle), -sinf(_moveAngle)) * _speed * TIMEMANAGER->getElapsedTime());
 	_physics->SetBodyPosition();
 	_sprite->SetPosition(_trans->GetPos());

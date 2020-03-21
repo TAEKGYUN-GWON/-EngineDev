@@ -80,7 +80,7 @@ public:
 	void Control();
 	void UpdateMatrix();
 	
-	void ShakingSetting(Vector2 prevPos, float time, float amount);
+	void ShakingSetting( float time, float amount);
 	void SetScale(Vector2 scale);
 	//void SetAngle(float angle) { _angle = angle; };
 	void SetPosition(Vector2 pos, string key);

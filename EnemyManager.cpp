@@ -63,10 +63,10 @@ void EnemyManager::Release()
 void EnemyManager::SetEnemys()
 {
 	int some = RND->getFromIntTo(3, 7);
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < some; i++)
 	{
-		//int type = RND->getInt(3);
-		int type = 0;
+		int type = RND->getInt(3);
+		//int type = 0;
 
 		switch (type)
 		{

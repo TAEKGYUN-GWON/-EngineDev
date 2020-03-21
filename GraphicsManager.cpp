@@ -16,6 +16,7 @@ HRESULT GraphicsManager::init()
 	DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(*&_wFactory), (IUnknown**)&_wFactory);
 
 	AddTextFormat(L"¸¼Àº°íµñ", 20);
+	AddTextFormat(L"Silkscreen", 20);
 	AddTextFormat(L"³ª´®½ºÄù¾î¶ó¿îµå", 20);
 	AddTextFormat(L"±Ã¼­Ã¼", 20);
 
@@ -346,6 +347,9 @@ void GraphicsManager::DrawFillRect(Vector2 pos, Vector2 size, float angle, Color
 		break;
 	case CENTER:
 		_renderTarget->FillRectangle(RectF(pos.x - size.x / 2, pos.y - size.y / 2, pos.x + size.x / 2, pos.y + size.y / 2), brush);
+		break;
+	case BOTTOM:
+		_renderTarget->FillRectangle(RectF(pos.x - size.x / 2, pos.y - size.y , pos.x + size.x / 2, pos.y + size.y), brush);
 		break;
 	}
 	brush->Release();

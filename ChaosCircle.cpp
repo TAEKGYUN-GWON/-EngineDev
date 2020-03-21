@@ -8,7 +8,7 @@ void ChaosCircle::Init(Object* onwer)
 	_onwer = onwer;
 	_type = OnwerType::Player;
 	_skillType = SkillType::Continued;
-	_atk = 1.3f;
+	_atk = 0.3f;
 	_trans->SetScale(100, 100);
 	Player* player = (Player*)_onwer;
 	_trans->SetPos(player->GetTrans()->GetPos() + Vector2(cosf(player->GetAtkAngle()), -sinf(player->GetAtkAngle())) * player->GetTrans()->GetScale());
@@ -50,7 +50,10 @@ void ChaosCircle::Move()
 	else
 	{
 		if (_sprite->GetCurrentFrameX() == _sprite->GetMaxFrameX())
+		{
 			SetIsRelese(); 
+			SOUNDMANAGER->stop("WhipSwing");
+		}
 	}
 
 	_trans->Move(Vector2(cosf(_moveAngle), -sinf(_moveAngle)) * _speed * TIMEMANAGER->getElapsedTime());

@@ -17,7 +17,9 @@
 #include <map>
 #include <fstream>
 #include <string>
-#include<iomanip>
+#include <iomanip>
+#include <queue>
+#include <vector>
 
 using namespace std;
 #include "Box2D/Box2D.h"
@@ -69,8 +71,9 @@ using namespace SEVENTEEN_UTIL;
 #include "PhysicsManager.h"
 #include "GraphicsManager.h"
 #include "Camera.h"
-#include"ObjectManager.h"
+#include "ObjectManager.h"
 #include "MousePointer.h"
+#include "EffectManager.h"
 
 #define RND randomFunction::getSingleton()
 #define KEYMANAGER keyManager::getSingleton()
@@ -85,6 +88,7 @@ using namespace SEVENTEEN_UTIL;
 #define OBJECTMANAGER ObjectManager::getSingleton()
 #define INIDATAMANAGER iniDataManager::getSingleton()
 #define MOUSEPOINTER MousePointer::getSingleton()
+#define EFFECTMANAGER EffectManager::getSingleton()
 
 
 #define SAFE_DELETE(p) {if(p) {delete(p); (p)=NULL;}}

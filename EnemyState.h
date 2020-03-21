@@ -41,7 +41,6 @@ class EnemyMove : public EnemyState
 {
 
 private:
-	list<Vector2> _path;
 	float moveTimer;
 public:
 	EnemyMove(Enemy* enemy) : EnemyState(enemy) {}

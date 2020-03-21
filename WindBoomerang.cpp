@@ -46,7 +46,11 @@ void WindBoomerang::Move()
 {
 	_timer += TIMEMANAGER->getElapsedTime();
 
-	if (_timer >= _maxTimer) SetIsRelese();
+	if (_timer >= _maxTimer)
+	{
+		SOUNDMANAGER->stop("Spin");
+		SetIsRelese();
+	}
 
 	_angle += 0.05f * _speed * TIMEMANAGER->getElapsedTime();
 	_trans->SetPos(_onwer->GetTrans()->GetPos() + Vector2(cosf(_angle), -sinf(_angle)) * 60);

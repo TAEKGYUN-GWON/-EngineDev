@@ -16,6 +16,8 @@ void SkillObject::Update()
 	Object::Update();
 
 
+	Move();
+
 	if (_isCollision)
 	{
 		if (_skillType == SkillType::One_time)
@@ -38,7 +40,6 @@ void SkillObject::Update()
 		if (!_physics->GetBodyActive() && _name != "ChaosCircle") _physics->SetBodyActive(true);
 	}
 
-	Move();
 }
 
 void SkillObject::WindUpCollCoolDown()

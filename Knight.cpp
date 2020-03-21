@@ -62,6 +62,7 @@ void Knight::Init(Vector2 pos)
 //
 void Knight::Update()
 {
+	
 	Enemy::Update();
 
 	if (_state->GetStateToString() == "Hurt" or _state->GetStateToString() == "Death")
@@ -85,6 +86,7 @@ void Knight::Update()
 
 void Knight::Attack()
 {
+	
 	switch (_dir)
 	{
 	case EnemyDirection::LEFT:

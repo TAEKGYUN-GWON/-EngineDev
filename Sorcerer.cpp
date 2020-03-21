@@ -9,7 +9,7 @@ void Sorcerer::Init(Vector2 pos)
 	_ability->Init(80, 10);
 	_name = "Sorcerer";
 	_atkDistance =100.f;
-	_distance = 1;
+	_distance = 111;
 	_FPS = 1.3f;
 	_speed = 30.f;
 	_atkFrame = 4;

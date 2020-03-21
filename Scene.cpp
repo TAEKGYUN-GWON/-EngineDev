@@ -10,8 +10,10 @@ Scene::~Scene()
 {
 }
 
+
 void Scene::Init()
 {
+	EFFECTMANAGER->Init();
 	//if (_allowRelease)_allowRelease = false;
 	_b2World = new b2World(b2Vec2(0,0));
 	timeStep = 1.0f / 60.0f;
@@ -21,11 +23,21 @@ void Scene::Init()
 	_b2World->SetContactListener(PHYSICSMANAGER);
 	_b2World->SetAllowSleeping(true);
 	_b2World->SetContinuousPhysics(true);
+	wstring dir = L"Resource/Wizard/UI/";
+	GRAPHICMANAGER->AddImage("mouse",dir+L"MouseCursor0.png");
+	mouse = Object::CreateObject<Object>();
+	mouse->Init();
+	auto s = mouse->AddComponent<Sprite>();
+	s->Init();
+	s->SetScale(Vector2(2,2));
+	s->SetImgName("mouse");
+	s->SetDepth(2);
 }
 
 
 void Scene::Release()
 {
+	EFFECTMANAGER->Release();
 	//if (SCENEMANAGER->GetNowScene() == this)
 	//{
 	//	_allowRelease = true;
@@ -62,7 +74,6 @@ void Scene::Release()
 
 	_removeList.clear();
 
-
 	delete _b2World;
 	Object::Release();
 }
@@ -85,7 +96,12 @@ void Scene::Update()
 		if (child->GetAllowInit()) child->Init();
 		child->Update();
 	}*/
+	//mouse->SetCameraAffect(false);
+	mouse->GetTrans()->SetPos(MOUSEPOINTER->GetMouseWorldPosition());
+	mouse->GetComponent<Sprite>()->SetPosition(mouse->GetTrans()->GetPos());
 
+	ShowCursor(false);
+	EFFECTMANAGER->Update();
 }
 
 void Scene::PhysicsUpdate()
@@ -112,9 +128,9 @@ void Scene::PhysicsUpdate()
 }
 
 
-bool CompareToDepth(Object* a, Object* b)
-{
 
+bool Scene::CompareToBottomPos(Object* a, Object* b)
+{
 	Sprite* aS = a->GetComponent<Sprite>();
 	Sprite* bS = b->GetComponent<Sprite>();
 
@@ -124,10 +140,9 @@ bool CompareToDepth(Object* a, Object* b)
 		return true;
 
 	return aS->GetDepth() < bS->GetDepth();
-
 }
 
-bool CompareToBottomPos(Object* a, Object* b)
+bool Scene::CompareToDepth(Object* a, Object* b)
 {
 	Transform* aT = a->GetComponent<Transform>();
 	Transform* bT = b->GetComponent<Transform>();
@@ -135,21 +150,27 @@ bool CompareToBottomPos(Object* a, Object* b)
 	if (!aT) return false;
 	else if (!bT) return true;
 
-	return aT->GetPosToPivot(TF_PIVOT::BOTTOM).y< bT->GetPosToPivot(TF_PIVOT::BOTTOM).y;
+	return aT->GetPosToPivot(TF_PIVOT::BOTTOM).y < bT->GetPosToPivot(TF_PIVOT::BOTTOM).y;
 }
+
 
 void Scene::Render()
 {
 	//if (_allowRelease) return;
 	//sort(_children.begin(), _children.end(), CompareToBottomPos);
+
 	sort(_activeList.begin(), _activeList.end(), CompareToBottomPos);
 
 	for (Object* child : _activeList)
 	{
-		if (child->GetTrans()->GetPos().x+100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x-100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
-			child->GetTrans()->GetPos().y+100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y-100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
+		if (child->GetCameraAffect())
+		{
+			if (child->GetTrans()->GetPos().x+100 < CAMERA->GetPosition().x || child->GetTrans()->GetPos().x-100 > CAMERA->GetPosition().x + WINSIZE.x / CAMERA->GetScale().x ||
+				child->GetTrans()->GetPos().y+100 < CAMERA->GetPosition().y || child->GetTrans()->GetPos().y-100 > CAMERA->GetPosition().y + WINSIZE.y / CAMERA->GetScale().x) child->SetAllowsRender(false);
 
-		else child->SetAllowsRender(true);
+			else child->SetAllowsRender(true);
+
+		}
 
 		child->Render();
 	}

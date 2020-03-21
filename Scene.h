@@ -8,12 +8,15 @@ protected:
 	float32 timeStep;
 	int32 velocityIterations;
 	int32 positionIterations;
+	Object* mouse;
 public:
 	Scene();
 	virtual ~Scene();
 
 	//마이크로소프트 전용 디버깅 반환자인데
 	//S_OK, E_FAIL, SUCCDED 등으로 초기화가 잘됐는지 아닌지 출력창에 호출함.
+	static bool CompareToBottomPos(Object* a, Object* b);
+	static bool CompareToDepth(Object* a, Object* b);
 
 	virtual void Init();			//초기화 전용 함수
 	virtual void Release();			//메모리 해제 함수

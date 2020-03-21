@@ -209,6 +209,50 @@ void Graphic::Render(Vector2 pos, Vector2 scale, float angle, bool flipX, float 
 	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha);
 }
 
+void Graphic::Render(Vector2 pos, Vector2 scale, float angle, Vector2 angleAnchor, bool flipX, float alpha, PIVOT pivot, bool cameraAffect)
+{
+	// 20200117 이렇게 크기 잡지말고 제대로 잡자..!
+	//_graphicInfo->size.x = scale.x;
+	//_graphicInfo->size.y = scale.y;
+
+	//Matrix3x2F scale_ = Matrix3x2F::Scale(1, 1);
+	Matrix3x2F scale_ = Matrix3x2F::Scale(scale.x, scale.y);
+
+	// 20200117 TODO : Flip부터 잡아보자
+	if (flipX) scale_ = scale_ * Matrix3x2F::Scale(-1, 1);
+
+	Matrix3x2F rotation = Matrix3x2F::Rotation(angle, Point2F(angleAnchor.x, angleAnchor.y));
+	Matrix3x2F trans = Matrix3x2F::Translation(pos.x, pos.y);
+
+	D2D1_RECT_F dxArea;
+
+	switch (pivot)
+	{
+	case LEFT_TOP:
+		dxArea = RectF(0, 0, _graphicInfo->size.x, _graphicInfo->size.y);
+		break;
+	case CENTER:
+		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y / 2, _graphicInfo->size.x / 2, _graphicInfo->size.y / 2);
+		break;
+	case TOP:
+		dxArea = RectF(-_graphicInfo->size.x / 2, 0, _graphicInfo->size.x / 2, _graphicInfo->size.y);
+		break;
+	case BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x / 2, -_graphicInfo->size.y, _graphicInfo->size.x / 2, 0);
+		break;
+	case RIGHT_BOTTOM:
+		dxArea = RectF(-_graphicInfo->size.x, -_graphicInfo->size.y, 0, 0);
+		break;
+	case LEFT_BOTTOM:
+		dxArea = RectF(0, -_graphicInfo->size.y, _graphicInfo->size.x, 0);
+		break;
+	}
+
+	_RT->SetTransform(scale_ * rotation * trans);
+	if (cameraAffect) _RT->SetTransform(scale_ * rotation * trans * CAMERA->GetMatrix());
+	if (_graphicInfo->bitmap) _RT->DrawBitmap(_graphicInfo->bitmap, dxArea, alpha);
+}
+
 void Graphic::Render(Vector2 dest, Vector2 sour, Vector2 srcSize, Vector2 scale, PIVOT pivot, float alpha, float angle, bool cameraAffect)
 {
 	Matrix3x2F scale_ = Matrix3x2F::Scale(scale.x, scale.y);

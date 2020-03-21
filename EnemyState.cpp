@@ -54,8 +54,6 @@ void EnemyIdle::Exit()
 void EnemyMove::Enter()
 {
 	_name = "Move";
-	_path.clear();
-	_path = _enemy->GetPath();
 	_timer = 0;
 	_maxTimer = RND->getFromFloatTo(2, 4);
 	_enemy->SetImg(_name);
@@ -104,22 +102,6 @@ void EnemyMove::Stay()
 		_enemy->SetIsMove(true);
 		moveTimer = 0;
 	}
-	//_enemy->Move();
-	//if (_path.size())
-	//{
-	//	_enemy->SetDirAngle(Vector2::GetAngle(_enemy->GetTrans()->GetPos(), *_path.begin()));
-
-	//	float angle = Vector2::GetAngle(_enemy->GetTrans()->GetPos(), *_path.begin());
-	//	//direction = direction.Nomalized();
-	//	_enemy->GetTrans()->Move(Vector2(cosf(angle),-sinf(angle)) * _enemy->GetSpeed() * TIMEMANAGER->getElapsedTime());
-	//	_enemy->GetPhysics()->SetBodyPosition();
-	//	int distance = Vector2::Distance(*_path.begin(), _enemy->GetTrans()->GetPos());
-	//	
-	//	if (distance <= 1)
-	//		_path.pop_front();
-	//}
-	//else
-	//	_path = _enemy->GetPath();
 
 }
 
@@ -136,6 +118,7 @@ void EnemyAttack::Enter()
 	_type = _enemy->GetAtkType();
 
 	_enemy->SetImg(_name);
+	SOUNDMANAGER->play(_enemy->GetName()+"Attack");
 }
 
 void EnemyAttack::Stay()
@@ -169,6 +152,7 @@ void EnemyAttack::Exit()
 //hurt
 void EnemyHurt::Enter()
 {
+	SOUNDMANAGER->play("EnemyHurt");
 	_timer = 0;
 	_maxTimer = 0.5f;
 	_name = "Hurt";
@@ -206,6 +190,7 @@ void EnemyHurt::Exit()
 //death
 void EnemyDeath::Enter()
 {
+	SOUNDMANAGER->play("EnemyDead");
 	_timer = 0;
 	_maxTimer = 1.5f;
 	_name = "Death";

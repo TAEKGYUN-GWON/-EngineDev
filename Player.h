@@ -39,6 +39,8 @@ private:
 	bool _isCollisionToWall;
 	bool _isDead;
 	bool _isBattle;
+	Object* _maker;
+
 public:
 
 	virtual void Init(Vector2 pos);
@@ -88,6 +90,7 @@ public:
 	void SetFPS(float FPS) { _FPS = FPS; }
 	P_Skill* FindSkill(string name);
 	P_Skill* GetCurrentSkill() { return _curSkill; };
+	vector<P_Skill*> GetSkills() { return _skills; }
 	void ChangeCurrentSkill();
 
 };
