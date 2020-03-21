@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Maptool.h"
 #include "Tile.h"
-#include "Player.h"
 void Maptool::Init()
 {
 	Scene::Init();
@@ -18,8 +17,6 @@ void Maptool::Init()
 	s->SetFillRect(true);
 	s->SetShowRect(true);
 	s->SetDepth(3);
-	Player* player = Object::CreateObject<Player>();
-	player->Init(Vector2(WINSIZE/2));
 	GRAPHICMANAGER->AddImage("bg", L"Resource/Wizard/Boss/bg.png");
 }
 

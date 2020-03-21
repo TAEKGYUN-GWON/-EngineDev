@@ -13,8 +13,6 @@ Scene::~Scene()
 
 void Scene::Init()
 {
-	EFFECTMANAGER->Init();
-	//if (_allowRelease)_allowRelease = false;
 	_b2World = new b2World(b2Vec2(0,0));
 	timeStep = 1.0f / 60.0f;
 	velocityIterations = 8;
@@ -23,29 +21,11 @@ void Scene::Init()
 	_b2World->SetContactListener(PHYSICSMANAGER);
 	_b2World->SetAllowSleeping(true);
 	_b2World->SetContinuousPhysics(true);
-	wstring dir = L"Resource/Wizard/UI/";
-	GRAPHICMANAGER->AddImage("mouse",dir+L"MouseCursor0.png");
-	mouse = Object::CreateObject<Object>();
-	mouse->Init();
-	auto s = mouse->AddComponent<Sprite>();
-	s->Init();
-	s->SetScale(Vector2(2,2));
-	s->SetImgName("mouse");
-	s->SetDepth(2);
 }
 
 
 void Scene::Release()
 {
-	EFFECTMANAGER->Release();
-	//if (SCENEMANAGER->GetNowScene() == this)
-	//{
-	//	_allowRelease = true;
-	//	return;
-	//}
-	//Object::Release();
-	
-	//shared_ptr<int> a;
 
 	for (b2Body* body = _b2World->GetBodyList(); body!=nullptr;)
 	{
@@ -81,27 +61,6 @@ void Scene::Release()
 void Scene::Update()
 {
 	Object::Update();
-	/*for (Object* c : _removeList)
-	{
-		if (c->GetComponent<PhysicsBody>())
-		{
-			c->GetComponent<PhysicsBody>()->GetBody()->GetWorld()->DestroyBody(GetComponent<PhysicsBody>()->GetBody());
-		}
-		c->Release();
-	}
-	_removeList.clear();
-
-	for (Object* child : _ActiveList)
-	{
-		if (child->GetAllowInit()) child->Init();
-		child->Update();
-	}*/
-	//mouse->SetCameraAffect(false);
-	mouse->GetTrans()->SetPos(MOUSEPOINTER->GetMouseWorldPosition());
-	mouse->GetComponent<Sprite>()->SetPosition(mouse->GetTrans()->GetPos());
-
-	ShowCursor(false);
-	EFFECTMANAGER->Update();
 }
 
 void Scene::PhysicsUpdate()
@@ -156,8 +115,6 @@ bool Scene::CompareToDepth(Object* a, Object* b)
 
 void Scene::Render()
 {
-	//if (_allowRelease) return;
-	//sort(_children.begin(), _children.end(), CompareToBottomPos);
 
 	sort(_activeList.begin(), _activeList.end(), CompareToBottomPos);
 
