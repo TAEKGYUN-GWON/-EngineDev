@@ -107,11 +107,6 @@ void ObjectManager::Render(string sceneName)
 
 	z_oderList z_List;
 
-	//for (Object* vIter : vSceneObjec)
-	//{
-	//	z_List.insert(make_pair(vIter->GetTrans()->bottomPos.y, vIter));
-	//}
-
 	for (auto i : z_List)
 	{
 		i.second->Render();

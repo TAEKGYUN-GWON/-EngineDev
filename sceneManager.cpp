@@ -57,8 +57,6 @@ Scene * sceneManager::addScene(string sceneName, Scene * scene)
 
 	if (iter != _mSceneList.end())
 	{
-		//if (iter->second)
-		//	iter->second->Release();
 		_mSceneList.erase(iter);
 	}
 	
